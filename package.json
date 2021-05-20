@@ -4,6 +4,7 @@
   "description": "Smart Contracts for the WatchIt Economy",
   "main": "index.js",
   "scripts": {
+    "lint": "standard",
     "test": "hardhat test"
   },
   "keywords": [],
