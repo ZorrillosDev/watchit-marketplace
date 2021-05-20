@@ -19,7 +19,7 @@ contract Tokens is ERC1155, AccessControl {
   }
 
   function setURI(string memory newuri) public {
-    require(hasRole(URI_SETTER_ROLE, msg.sender));
+    require(hasRole(URI_SETTER_ROLE, msg.sender), "URI cannot be updated.");
     _setURI(newuri);
   }
 
