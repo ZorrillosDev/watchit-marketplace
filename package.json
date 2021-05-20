@@ -22,6 +22,7 @@
     "env": "mocha"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.1.0"
+    "@openzeppelin/contracts": "^4.1.0",
+    "@openzeppelin/test-helpers": "^0.5.11"
   }
 }

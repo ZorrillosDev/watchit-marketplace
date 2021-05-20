@@ -44,5 +44,21 @@ describe('Tokens', function () {
       const nextTokenId = await tokens.nextTokenId()
       expect(nextTokenId).to.equal(initialTokenId.add(1))
     })
+
+    it('increments nextTokenId properly after batch mint', async function () {
+      const initialTokenId = await tokens.nextTokenId()
+
+      const amounts = [
+        1,
+        10,
+        100,
+        10000000,
+        "1000000000000000"
+      ];
+      await tokens.mintBatch(owner.address, amounts, [])
+
+      const nextTokenId = await tokens.nextTokenId()
+      expect(nextTokenId).to.equal(initialTokenId.add(5))
+    })
   })
 })
