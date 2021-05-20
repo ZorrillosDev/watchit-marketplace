@@ -7,7 +7,7 @@ describe('Tokens', function () {
   let owner, addr1
 
   before(async function () {
-    [owner, addr1] = await ethers.getSigners();
+    [owner, addr1] = await ethers.getSigners()
     const Tokens = await ethers.getContractFactory('Tokens')
     tokens = await Tokens.deploy()
     await tokens.deployed()
@@ -17,7 +17,7 @@ describe('Tokens', function () {
     it('Can update the URI with proper permissions', async function () {
       // owner is the default ethers account but let's
       // call .connect explicitly here anyway
-      await tokens.connect(owner).setURI("test.com")
+      await tokens.connect(owner).setURI('test.com')
 
       // TODO: Learn more about what all this means in the transaction result.
       // const result = await tokens.connect...
@@ -26,7 +26,7 @@ describe('Tokens', function () {
 
     it('Cannot update the URI without proper permissions', async function () {
       try {
-        await tokens.connect(addr1).setURI("test2.com")
+        await tokens.connect(addr1).setURI('test2.com')
       } catch (err) {
         expect(err.message).to.contain('revert URI cannot be updated')
       }
@@ -53,8 +53,8 @@ describe('Tokens', function () {
         10,
         100,
         10000000,
-        "1000000000000000"
-      ];
+        '1000000000000000'
+      ]
       await tokens.mintBatch(owner.address, amounts, [])
 
       const nextTokenId = await tokens.nextTokenId()
