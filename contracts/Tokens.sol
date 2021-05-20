@@ -34,11 +34,16 @@ contract Tokens is ERC1155, AccessControl {
     nextTokenId += 1;
   }
 
-  function mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
+  function mintBatch(address to, uint256[] memory amounts, bytes memory data)
     public
   {
     require(hasRole(MINTER_ROLE, msg.sender));
-    _mintBatch(to, ids, amounts, data);
+    uint256 [] idList;
+    for(; nextTokenId < amounts.length; nextTokenId++){
+      idList.push(nextTokenId);
+    }
+
+    _mintBatch(to, idList, amounts, data);
   }
 
   function supportsInterface(bytes4 interfaceId)
