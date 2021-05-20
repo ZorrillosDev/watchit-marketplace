@@ -1,14 +1,16 @@
-const { expect } = require("chai");
+/* global ethers */
 
-describe("Greeter", function() {
-  it("Should return the new greeting once it's changed", async function() {
-    const Greeter = await ethers.getContractFactory("Greeter");
-    const greeter = await Greeter.deploy("Hello, world!");
+// const { expect } = require('chai')
 
-    await greeter.deployed();
-    expect(await greeter.greet()).to.equal("Hello, world!");
+// TODO: Run IPFS?
 
-    await greeter.setGreeting("Hola, mundo!");
-    expect(await greeter.greet()).to.equal("Hola, mundo!");
-  });
-});
+describe('Tokens', function () {
+  describe('Minting', function () {
+    it('Should mint fungible ERC1155 tokens', async function () {
+      const Tokens = await ethers.getContractFactory('Tokens')
+      const tokens = await Tokens.deploy()
+
+      await tokens.deployed()
+    })
+  })
+})
