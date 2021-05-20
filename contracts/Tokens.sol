@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "hardhat/console.sol";
 
 
-contract MyCollectible is ERC1155, AccessControl {
+contract Tokens is ERC1155, AccessControl {
   bytes32 public constant URI_SETTER_ROLE = keccak256("URI_SETTER_ROLE");
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
@@ -19,7 +19,7 @@ contract MyCollectible is ERC1155, AccessControl {
   }
 
   function setURI(string memory newuri) public {
-    require(hasRole(URI_SETTER_ROLE, msg.sender));
+    require(hasRole(URI_SETTER_ROLE, msg.sender), "URI cannot be updated.");
     _setURI(newuri);
   }
 
