@@ -32,4 +32,33 @@ describe('Tokens', function () {
       }
     })
   })
+
+  describe('Minting', function () {
+    it('increments the nextTokenId after each mint', async function () {
+      const initialTokenId = await tokens.nextTokenId()
+
+      // TODO: ERC1155 Metadata
+      // see: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md#erc-1155-metadata-uri-json-schema
+      await tokens.mint(owner.address, 1, [])
+
+      const nextTokenId = await tokens.nextTokenId()
+      expect(nextTokenId).to.equal(initialTokenId.add(1))
+    })
+
+    it('increments nextTokenId properly after batch mint', async function () {
+      const initialTokenId = await tokens.nextTokenId()
+
+      const amounts = [
+        1,
+        10,
+        100,
+        10000000,
+        "1000000000000000"
+      ];
+      await tokens.mintBatch(owner.address, amounts, [])
+
+      const nextTokenId = await tokens.nextTokenId()
+      expect(nextTokenId).to.equal(initialTokenId.add(amounts.length))
+    })
+  })
 })
