@@ -12,6 +12,8 @@ contract Tokens is ERC1155, AccessControl {
   bytes32 public constant URI_SETTER_ROLE = keccak256("URI_SETTER_ROLE");
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
+  uint256 public nextTokenId = 1;
+
   constructor() ERC1155("") {
       _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
       _setupRole(URI_SETTER_ROLE, msg.sender);
@@ -23,17 +25,19 @@ contract Tokens is ERC1155, AccessControl {
     _setURI(newuri);
   }
 
-  function mint(address account, uint256 id, uint256 amount, bytes memory data)
+  function mint(address account, uint256 amount, bytes memory data)
     public
   {
-    require(hasRole(URI_SETTER_ROLE, msg.sender));
-    _mint(account, id, amount, data);
+    require(hasRole(MINTER_ROLE, msg.sender));
+
+    _mint(account, nextTokenId, amount, data);
+    nextTokenId += 1;
   }
 
   function mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
     public
   {
-    require(hasRole(URI_SETTER_ROLE, msg.sender));
+    require(hasRole(MINTER_ROLE, msg.sender));
     _mintBatch(to, ids, amounts, data);
   }
 
