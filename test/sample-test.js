@@ -58,7 +58,7 @@ describe('Tokens', function () {
       await tokens.mintBatch(owner.address, amounts, [])
 
       const nextTokenId = await tokens.nextTokenId()
-      expect(nextTokenId).to.equal(initialTokenId.add(5))
+      expect(nextTokenId).to.equal(initialTokenId.add(amounts.length))
     })
   })
 })
