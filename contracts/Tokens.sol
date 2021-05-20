@@ -38,12 +38,17 @@ contract Tokens is ERC1155, AccessControl {
     public
   {
     require(hasRole(MINTER_ROLE, msg.sender));
-    uint256 [] idList;
-    for(; nextTokenId < amounts.length; nextTokenId++){
-      idList.push(nextTokenId);
+
+    uint[] storage ids;
+    uint numToMint = amounts.length;
+
+    uint i = 0;
+    for (i = 0; i < numToMint; i++) {
+      ids.push(nextTokenId + i);
     }
 
-    _mintBatch(to, idList, amounts, data);
+    _mintBatch(to, ids, amounts, data);
+    nextTokenId += numToMint;
   }
 
   function supportsInterface(bytes4 interfaceId)
