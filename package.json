@@ -1,7 +1,7 @@
 {
-  "name": "hardhat-experiment",
-  "version": "1.0.0",
-  "description": "",
+  "name": "watchit-contracts",
+  "version": "0.1.0",
+  "description": "Smart Contracts for the WatchIt Economy",
   "main": "index.js",
   "scripts": {
     "test": "hardhat test"
