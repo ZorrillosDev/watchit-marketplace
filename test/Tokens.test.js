@@ -40,7 +40,7 @@ describe('Tokens', function () {
   })
 
   describe('Minting', function () {
-    // TODO: test contention
+    // TODO: test convention
     // see: https://github.com/mawrkus/js-unit-testing-guide
     it('should have a valid token uri', async function () {
       await tokens.setURI(tokenUri)
