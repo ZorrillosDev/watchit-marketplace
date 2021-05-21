@@ -20,10 +20,16 @@
     "ethereum-waffle": "^3.3.0",
     "ethers": "^5.1.4",
     "hardhat": "^2.3.0",
-    "solhint": "^3.3.4",
+    "husky": "^6.0.0",
     "nyc": "^15.1.0",
+    "solhint": "^3.3.4",
     "solidity-coverage": "^0.7.16",
     "standard": "^16.0.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test"
+    }
   },
   "standard": {
     "env": "mocha"
