@@ -12,7 +12,7 @@ describe('Tokens', function () {
 
   before(async function () {
     [owner, addr1] = await ethers.getSigners()
-    const Tokens = await ethers.getContractFactory('WTokens')
+    const Tokens = await ethers.getContractFactory('Tokens')
     tokens = await Tokens.deploy()
     await tokens.deployed()
   })
