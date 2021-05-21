@@ -40,8 +40,9 @@ describe('Tokens', function () {
   })
 
   describe('Minting', function () {
-
-    it('mint valid token uri', async function () {
+    // TODO: test contention
+    // see: https://github.com/mawrkus/js-unit-testing-guide
+    it('should have a valid token uri', async function () {
       await tokens.setURI(tokenUri)
       await tokens.mint(owner.address, 1, [])
       const nextTokenId = await tokens.nextTokenId()
