@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "hardhat/console.sol";
 
 
-contract Tokens is ERC1155, AccessControl {
+contract WTokens is ERC1155, AccessControl {
   bytes32 public constant URI_SETTER_ROLE = keccak256("URI_SETTER_ROLE");
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
