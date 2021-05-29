@@ -73,11 +73,14 @@ describe('Tokens', function () {
 
     })
 
-    it('can retrieve uri only by owner', async function(){
-      const [_, tokenIdA]  = await nftMinter(tokenUriA)
-      const b = await tokens.balanceOf(owner.address, tokenIdA - 1)
-      console.log(b.toString())
-      // await tokens.getNFTUri(tokenIdA)
+    it('can retrieve NFT uri only by owner', async function(){
+      try{
+        // Minter by default owner
+        const [_, tokenIdA] = await nftMinter(tokenUriA)
+        await tokens.connect(addr1).getNFTUri(tokenIdA)
+      } catch (err){
+        expect(err.message).to.contain('Only owner can view NFT url')
+      }
     })
 
     it('should increments the nextTokenId after each mint', async function () {
