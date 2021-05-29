@@ -66,8 +66,8 @@ describe('Tokens', function () {
       const [tokenUriBResult, _] = await nftMinter(tokenUriB)
       expect(tokenUriBResult).to.equal(tokenUriB)
 
-      const rawFetchA = await tokens.getNFTUri(tokenIdA - 1)
-      const rawFetchB = await tokens.getNFTUri(tokenIdA)
+      const rawFetchA = await tokens.getNFTUri(tokenIdA - 1) // nextTokenId 2 - 1 = 1 to check before id
+      const rawFetchB = await tokens.getNFTUri(tokenIdA) // eg. nextTokenId 2
       expect(rawFetchA).to.equal(tokenUriA)
       expect(rawFetchB).to.equal(tokenUriB)
 
