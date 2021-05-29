@@ -14,7 +14,7 @@ describe('Tokens', function () {
   const nftMinter = async function(tokenUri){
     await tokens.mintNFT(owner.address, tokenUri, [])
     const nextTokenId = await tokens.nextTokenId()
-    return await tokens.nftURICollection(nextTokenId - 1)
+    return [await tokens.nftURICollection(nextTokenId - 1), nextTokenId]
   }
 
 
@@ -62,11 +62,16 @@ describe('Tokens', function () {
     // see: https://github.com/mawrkus/js-unit-testing-guide
 
     it('should mint NFT valid mapping CID', async function(){
-      const tokenUriAResult = await nftMinter(tokenUriA)
+      const [tokenUriAResult, tokenIdA]  = await nftMinter(tokenUriA)
       expect(tokenUriAResult).to.equal(tokenUriA)
-      const tokenUriBResult = await nftMinter(tokenUriB)
+      const [tokenUriBResult, tokenIdB] = await nftMinter(tokenUriB)
       expect(tokenUriBResult).to.equal(tokenUriB)
-      expect(tokenUriAResult).to.equal(tokenUriA)
+
+      const rawFetchA = await tokens.nftURICollection(tokenIdA - 1)
+      const rawFetchB = await tokens.nftURICollection(tokenIdA)
+      expect(rawFetchA).to.equal(tokenUriA)
+      expect(rawFetchB).to.equal(tokenUriB)
+
     })
 
     it('should increments the nextTokenId after each mint', async function () {
