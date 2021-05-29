@@ -13,7 +13,7 @@ contract Tokens is ERC1155, AccessControl {
   bytes32 public constant URI_SETTER_ROLE = keccak256("URI_SETTER_ROLE");
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
   bytes32 public constant NFT_MINTER_ROLE = keccak256("NFT_MINTER_ROLE");
-  mapping(uint256=>string) public nftURICollection;
+  mapping(uint256=>string) private nftURICollection;
 
   // Reserve first 10 tokens watchit
   uint256 public nextTokenId = 11;
@@ -28,6 +28,15 @@ contract Tokens is ERC1155, AccessControl {
   function setURI(string memory newuri) public {
     require(hasRole(URI_SETTER_ROLE, msg.sender), "URI cannot be updated.");
     _setURI(newuri);
+  }
+
+  function isOwnerOf(uint256 id) public view returns(bool){
+      return balanceOf(msg.sender, id) > 0;
+  }
+
+  function getNFTUri(uint256 id) public view virtual returns (string memory){
+    require(isOwnerOf(id), "Only owner can view NFT url");
+    return nftURICollection[id];
   }
 
   function _setNFTUri(string memory _uri) private{

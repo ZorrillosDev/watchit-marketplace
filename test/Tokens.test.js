@@ -11,10 +11,10 @@ describe('Tokens', function () {
   const tokenUriA = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwAWT'
   const tokenUriB = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwRST'
 
-  const nftMinter = async function(tokenUri){
-    await tokens.mintNFT(owner.address, tokenUri, [])
+  const nftMinter = async function(tokenUri, minter = owner.address){
+    await tokens.mintNFT(minter, tokenUri, [])
     const nextTokenId = await tokens.nextTokenId()
-    return [await tokens.nftURICollection(nextTokenId - 1), nextTokenId]
+    return [await tokens.getNFTUri(nextTokenId - 1), nextTokenId]
   }
 
 
@@ -31,7 +31,6 @@ describe('Tokens', function () {
         try {
           await tokens.connect(addr1).mintNFT(owner.address, tokenUriA, [])
         } catch (err) {
-          console.log(err.message)
           expect(err.message).to.contain('NFT cannot be created')
         }
       })
@@ -64,14 +63,21 @@ describe('Tokens', function () {
     it('should mint NFT valid mapping CID', async function(){
       const [tokenUriAResult, tokenIdA]  = await nftMinter(tokenUriA)
       expect(tokenUriAResult).to.equal(tokenUriA)
-      const [tokenUriBResult, tokenIdB] = await nftMinter(tokenUriB)
+      const [tokenUriBResult, _] = await nftMinter(tokenUriB)
       expect(tokenUriBResult).to.equal(tokenUriB)
 
-      const rawFetchA = await tokens.nftURICollection(tokenIdA - 1)
-      const rawFetchB = await tokens.nftURICollection(tokenIdA)
+      const rawFetchA = await tokens.getNFTUri(tokenIdA - 1)
+      const rawFetchB = await tokens.getNFTUri(tokenIdA)
       expect(rawFetchA).to.equal(tokenUriA)
       expect(rawFetchB).to.equal(tokenUriB)
 
+    })
+
+    it('can retrieve uri only by owner', async function(){
+      const [_, tokenIdA]  = await nftMinter(tokenUriA)
+      const b = await tokens.balanceOf(owner.address, tokenIdA - 1)
+      console.log(b.toString())
+      // await tokens.getNFTUri(tokenIdA)
     })
 
     it('should increments the nextTokenId after each mint', async function () {
