@@ -10,23 +10,35 @@ import "hardhat/console.sol";
 
 contract Tokens is ERC1155, AccessControl {
   uint256 private constant NFT_SUPPLY = 1;
+  bytes32 public constant URI_SETTER_ROLE = keccak256("URI_SETTER_ROLE");
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
   bytes32 public constant NFT_MINTER_ROLE = keccak256("NFT_MINTER_ROLE");
+  mapping(uint256=>string) public nftURICollection;
 
   // Reserve first 10 tokens watchit
   uint256 public nextTokenId = 11;
 
   constructor() ERC1155("") {
       _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+      _setupRole(URI_SETTER_ROLE, msg.sender);
       _setupRole(MINTER_ROLE, msg.sender);
       _setupRole(NFT_MINTER_ROLE, msg.sender);
   }
 
-  function mintNFT(address account, string memory uri, bytes memory data)
+  function setURI(string memory newuri) public {
+    require(hasRole(URI_SETTER_ROLE, msg.sender), "URI cannot be updated.");
+    _setURI(newuri);
+  }
+
+  function _setNFTUri(string memory _uri) private{
+    nftURICollection[nextTokenId] = _uri;
+  }
+
+  function mintNFT(address account, string memory _uri, bytes memory data)
   public
   {
     require(hasRole(NFT_MINTER_ROLE, msg.sender), 'NFT cannot be created');
-    _setURI(uri); // Add uri in NFT process only
+    _setNFTUri(_uri); // allow only nft set uri
     mint(account, NFT_SUPPLY, data);
   }
 
