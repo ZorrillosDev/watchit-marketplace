@@ -18,46 +18,34 @@ describe('Tokens', function () {
   })
 
   describe('Roles', function () {
-    describe('URI_SETTER_ROLE', function () {
-      it('can update the URI with proper permissions', async function () {
-        // owner is the default ethers account but let's
-        // call .connect explicitly here anyway
-        await tokens.connect(owner).setURI(tokenUri)
-
-        // TODO: Learn more about what all this means in the transaction result.
-        // const result = await tokens.connect...
-        // console.log(result)
-      })
-
-      it('cannot update the URI without proper permissions', async function () {
+    describe('NFT_MINTER_ROLE', function(){
+      it('cannot mint NFT without proper permissions', async function () {
         try {
-          await tokens.connect(addr1).setURI(tokenUri)
+          await tokens.connect(addr1).mintNFT(owner.address, tokenUri, [])
         } catch (err) {
-          expect(err.message).to.contain('revert URI cannot be updated')
+          expect(err.message).to.contain('NFT cannot be created')
         }
       })
     })
   })
 
   describe('Minting', function () {
-    // TODO: test convention
     // see: https://github.com/mawrkus/js-unit-testing-guide
-    it('should have a valid token uri', async function () {
-      await tokens.setURI(tokenUri)
-      await tokens.mint(owner.address, 1, [])
+    it('should have a valid NFT uri', async function () {
+      await tokens.mintNFT(owner.address, tokenUri, [])
       const nextTokenId = await tokens.nextTokenId()
       const tokenURI = await tokens.uri(nextTokenId - 1)
       expect(tokenURI).to.equal(tokenUri)
     })
 
-    it('increments the nextTokenId after each mint', async function () {
+    it('should increments the nextTokenId after each mint', async function () {
       const initialTokenId = await tokens.nextTokenId()
       await tokens.mint(owner.address, 1, [])
       const nextTokenId = await tokens.nextTokenId()
       expect(nextTokenId).to.equal(initialTokenId.add(1))
     })
 
-    it('increments nextTokenId properly after batch mint', async function () {
+    it('should increments nextTokenId properly after batch mint', async function () {
       const initialTokenId = await tokens.nextTokenId()
       const amounts = [
         1,
