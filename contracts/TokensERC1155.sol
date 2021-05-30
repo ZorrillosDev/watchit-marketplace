@@ -9,15 +9,20 @@ import "hardhat/console.sol";
 
 
 contract Tokens is ERC1155, AccessControl {
+  uint256 private constant NFT_SUPPLY = 1;
   bytes32 public constant URI_SETTER_ROLE = keccak256("URI_SETTER_ROLE");
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+  bytes32 public constant NFT_MINTER_ROLE = keccak256("NFT_MINTER_ROLE");
+  mapping(uint256=>string) private nftURICollection;
 
-  uint256 public nextTokenId = 1;
+  // Reserve first 10 tokens watchit
+  uint256 public nextTokenId = 11;
 
   constructor() ERC1155("") {
       _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
       _setupRole(URI_SETTER_ROLE, msg.sender);
       _setupRole(MINTER_ROLE, msg.sender);
+      _setupRole(NFT_MINTER_ROLE, msg.sender);
   }
 
   function setURI(string memory newuri) public {
@@ -25,11 +30,31 @@ contract Tokens is ERC1155, AccessControl {
     _setURI(newuri);
   }
 
+  function isOwnerOf(uint256 id) public view returns(bool){
+      return balanceOf(msg.sender, id) > 0;
+  }
+
+  function getNFTUri(uint256 id) public view virtual returns (string memory){
+    require(isOwnerOf(id), "Only owner can view NFT url");
+    return nftURICollection[id];
+  }
+
+  function _setNFTUri(string memory _uri) private{
+    nftURICollection[nextTokenId] = _uri;
+  }
+
+  function mintNFT(address account, string memory _uri, bytes memory data)
+  public
+  {
+    require(hasRole(NFT_MINTER_ROLE, msg.sender), 'NFT cannot be created');
+    _setNFTUri(_uri); // allow only nft set uri
+    mint(account, NFT_SUPPLY, data);
+  }
+
   function mint(address account, uint256 amount, bytes memory data)
     public
   {
     require(hasRole(MINTER_ROLE, msg.sender));
-
     _mint(account, nextTokenId, amount, data);
     nextTokenId += 1;
   }
