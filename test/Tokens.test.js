@@ -17,6 +17,10 @@ describe('Tokens', function () {
     return [await tokens.getNFTUri(nextTokenId - 1), nextTokenId]
   }
 
+  const burnToken = async function(address, tokenId){
+    tokens.burnNFT(address, tokenId - 1)
+  }
+
 
   before(async function () {
     [owner, addr1] = await ethers.getSigners()
@@ -36,8 +40,26 @@ describe('Tokens', function () {
       })
     })
 
+    describe('DEFAULT_ADMIN_ROLE', function(){
+      it('can burn token with proper permissions', async function () {
+        // owner is the default ethers account but let's
+        // call .connect explicitly here anyway
+        const [_, nextTokenId] = await nftMinter(tokenUriA)
+        await tokens.burnNFT(owner.address, nextTokenId - 1)
+      })
+
+      it('cannot update the URI without proper permissions', async function () {
+        try {
+          const [_, nextTokenId] = await nftMinter(tokenUriA)
+          await tokens.connect(addr1).burnNFT(owner.address, nextTokenId - 1)
+        } catch (err) {
+          expect(err.message).to.contain('Token cannot be burned')
+        }
+      })
+    })
+
     describe('URI_SETTER_ROLE', function () {
-      it('Can update the URI with proper permissions', async function () {
+      it('can update the URI with proper permissions', async function () {
         // owner is the default ethers account but let's
         // call .connect explicitly here anyway
         await tokens.connect(owner).setURI(tokenUriA)
@@ -47,7 +69,7 @@ describe('Tokens', function () {
         // console.log(result)
       })
 
-      it('Cannot update the URI without proper permissions', async function () {
+      it('cannot update the URI without proper permissions', async function () {
         try {
           await tokens.connect(addr1).setURI(tokenUriA)
         } catch (err) {
