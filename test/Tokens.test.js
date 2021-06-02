@@ -1,7 +1,7 @@
 /* global ethers */
 
 const { expect } = require('chai')
-
+// see: https://github.com/mawrkus/js-unit-testing-guide
 describe('Tokens', function () {
   let tokens
   let owner, addr1
@@ -57,31 +57,50 @@ describe('Tokens', function () {
     })
   })
 
-  describe('Minting', function () {
-    // see: https://github.com/mawrkus/js-unit-testing-guide
 
-    it('should mint NFT valid mapping CID', async function(){
-      const [tokenUriAResult, tokenIdA]  = await nftMinter(tokenUriA)
-      expect(tokenUriAResult).to.equal(tokenUriA)
-      const [tokenUriBResult, _] = await nftMinter(tokenUriB)
-      expect(tokenUriBResult).to.equal(tokenUriB)
+  describe('NonFungibleTokens', function() {
 
-      const rawFetchA = await tokens.getNFTUri(tokenIdA - 1) // nextTokenId 2 - 1 = 1 to check before id
-      const rawFetchB = await tokens.getNFTUri(tokenIdA) // eg. nextTokenId 2
-      expect(rawFetchA).to.equal(tokenUriA)
-      expect(rawFetchB).to.equal(tokenUriB)
-
+    describe('Burn', function () {
+      it('should decrement balance after burn NFT ', async function(){
+        const [_, nextTokenId] = await nftMinter(tokenUriA)
+        const currentTokenId = nextTokenId - 1;
+        await tokens.burnNFT(owner.address, currentTokenId) // Burn token
+        const newBurnedBalance = await tokens.balanceOf(owner.address, currentTokenId)
+        expect(newBurnedBalance.toString()).to.equal('0')
+      })
     })
 
-    it('can retrieve NFT uri only by owner', async function(){
-      try{
-        // Minter by default owner
-        const [_, tokenIdA] = await nftMinter(tokenUriA)
-        await tokens.connect(addr1).getNFTUri(tokenIdA)
-      } catch (err){
-        expect(err.message).to.contain('Only owner can view NFT url')
-      }
+    describe('Mint', function () {
+      it('should mint NFT valid mapping CID', async function () {
+        const [tokenUriAResult, tokenIdA] = await nftMinter(tokenUriA)
+        expect(tokenUriAResult).to.equal(tokenUriA)
+        const [tokenUriBResult, _] = await nftMinter(tokenUriB)
+        expect(tokenUriBResult).to.equal(tokenUriB)
+
+        const rawFetchA = await tokens.getNFTUri(tokenIdA - 1) // nextTokenId 2 - 1 = 1 to check before id
+        const rawFetchB = await tokens.getNFTUri(tokenIdA) // eg. nextTokenId 2
+        expect(rawFetchA).to.equal(tokenUriA)
+        expect(rawFetchB).to.equal(tokenUriB)
+
+      })
     })
+
+    describe('Query', function(){
+      it('can retrieve NFT uri only by owner', async function(){
+        try{
+          // Minter by default owner
+          const [_, tokenIdA] = await nftMinter(tokenUriA)
+          await tokens.connect(addr1).getNFTUri(tokenIdA)
+        } catch (err){
+          expect(err.message).to.contain('Only owner can view NFT url')
+        }
+      })
+    })
+  })
+
+
+
+  describe('FungibleTokens', function () {
 
     it('should increments the nextTokenId after each mint', async function () {
       const initialTokenId = await tokens.nextTokenId()

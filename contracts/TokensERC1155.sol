@@ -16,7 +16,8 @@ contract Tokens is ERC1155, AccessControl {
   mapping(uint256=>string) private nftURICollection;
 
   // Reserve first 10 tokens watchit
-  uint256 public nextTokenId = 11;
+  uint256 private constant RESERVED = 11;
+  uint256 public nextTokenId = RESERVED;
 
   constructor() ERC1155("") {
       _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
@@ -32,6 +33,11 @@ contract Tokens is ERC1155, AccessControl {
 
   function isOwnerOf(uint256 id) public view returns(bool){
       return balanceOf(msg.sender, id) > 0;
+  }
+
+  function burnNFT(address account, uint256 id) public {
+    require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), 'Token cannot be burned.');
+    _burn(account, id, NFT_SUPPLY);
   }
 
   function getNFTUri(uint256 id) public view virtual returns (string memory){
