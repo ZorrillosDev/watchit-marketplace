@@ -48,7 +48,7 @@ describe('Tokens', function () {
         await tokens.burnNFT(owner.address, nextTokenId - 1)
       })
 
-      it('cannot update the URI without proper permissions', async function () {
+      it('cannot burn token without proper permissions', async function () {
         try {
           const [_, nextTokenId] = await nftMinter(tokenUriA)
           await tokens.connect(addr1).burnNFT(owner.address, nextTokenId - 1)
