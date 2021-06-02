@@ -123,27 +123,28 @@ describe('Tokens', function () {
 
 
   describe('FungibleTokens', function () {
+    describe('Mint', function () {
+      it('should increments the nextTokenId after each mint', async function () {
+        const initialTokenId = await tokens.nextTokenId()
+        await tokens.mint(owner.address, 1, [])
+        const nextTokenId = await tokens.nextTokenId()
+        expect(nextTokenId).to.equal(initialTokenId.add(1))
+      })
 
-    it('should increments the nextTokenId after each mint', async function () {
-      const initialTokenId = await tokens.nextTokenId()
-      await tokens.mint(owner.address, 1, [])
-      const nextTokenId = await tokens.nextTokenId()
-      expect(nextTokenId).to.equal(initialTokenId.add(1))
-    })
+      it('should increments nextTokenId properly after batch mint', async function () {
+        const initialTokenId = await tokens.nextTokenId()
+        const amounts = [
+          1,
+          10,
+          100,
+          10000000,
+          '1000000000000000'
+        ]
 
-    it('should increments nextTokenId properly after batch mint', async function () {
-      const initialTokenId = await tokens.nextTokenId()
-      const amounts = [
-        1,
-        10,
-        100,
-        10000000,
-        '1000000000000000'
-      ]
-
-      await tokens.mintBatch(owner.address, amounts, [])
-      const nextTokenId = await tokens.nextTokenId()
-      expect(nextTokenId).to.equal(initialTokenId.add(amounts.length))
+        await tokens.mintBatch(owner.address, amounts, [])
+        const nextTokenId = await tokens.nextTokenId()
+        expect(nextTokenId).to.equal(initialTokenId.add(amounts.length))
+      })
     })
   })
 })
