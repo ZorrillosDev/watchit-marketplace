@@ -86,7 +86,7 @@ describe('Tokens', function () {
     })
 
     describe('Query', function(){
-      it('can retrieve NFT uri only by owner', async function(){
+      it('should retrieve NFT uri only by owner', async function(){
         try{
           // Minter by default owner
           const [_, tokenIdA] = await nftMinter(tokenUriA)
