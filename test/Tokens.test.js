@@ -39,9 +39,9 @@ describe('Tokens', function () {
       it('can burn token with proper permissions', async function () {
         // owner is the default ethers account but let's
         // call .connect explicitly here anyway
-        await tokens.mintNFT(addr1.address, tokenUriA, [])
+        await tokens.mintNFT(owner.address, tokenUriA, [])
         const nextTokenId = await tokens.nextTokenId()
-        await tokens.connect(owner).burnNFT(addr1.address, nextTokenId - 1)
+        await tokens.burnNFT(owner.address, nextTokenId - 1)
       })
 
       it('cannot burn token without proper permissions', async function () {
