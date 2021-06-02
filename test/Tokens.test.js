@@ -17,11 +17,6 @@ describe('Tokens', function () {
     return [await tokens.getNFTUri(nextTokenId - 1), nextTokenId]
   }
 
-  const burnToken = async function(address, tokenId){
-    tokens.burnNFT(address, tokenId - 1)
-  }
-
-
   before(async function () {
     [owner, addr1] = await ethers.getSigners()
     const Tokens = await ethers.getContractFactory('Tokens')
