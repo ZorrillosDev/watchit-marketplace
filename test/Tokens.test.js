@@ -39,8 +39,9 @@ describe('Tokens', function () {
       it('can burn token with proper permissions', async function () {
         // owner is the default ethers account but let's
         // call .connect explicitly here anyway
-        const [_, nextTokenId] = await nftMinter(tokenUriA)
-        await tokens.burnNFT(owner.address, nextTokenId - 1)
+        await tokens.mintNFT(addr1.address, tokenUriA, [])
+        const nextTokenId = await tokens.nextTokenId()
+        await tokens.connect(owner).burnNFT(addr1.address, nextTokenId - 1)
       })
 
       it('cannot burn token without proper permissions', async function () {
@@ -79,10 +80,11 @@ describe('Tokens', function () {
 
     describe('Burn', function () {
       it('should decrement balance after burn NFT ', async function(){
-        const [_, nextTokenId] = await nftMinter(tokenUriA)
+        await tokens.mintNFT(addr1.address, tokenUriA, [])
+        const nextTokenId = await tokens.nextTokenId()
         const currentTokenId = nextTokenId - 1;
-        await tokens.burnNFT(owner.address, currentTokenId) // Burn token
-        const newBurnedBalance = await tokens.balanceOf(owner.address, currentTokenId)
+        await tokens.connect(owner).burnNFT(addr1.address, currentTokenId) // Burn token
+        const newBurnedBalance = await tokens.balanceOf(addr1.address, currentTokenId)
         expect(newBurnedBalance.toString()).to.equal('0')
       })
     })

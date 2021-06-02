@@ -36,7 +36,8 @@ contract Tokens is ERC1155, AccessControl {
   }
 
   function burnNFT(address account, uint256 id) public {
-    require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), 'Token cannot be burned.');
+    require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), 'Token cannot be burned');
+    require(account != msg.sender, 'Token cannot be burned');
     _burn(account, id, NFT_SUPPLY);
   }
 
@@ -73,8 +74,7 @@ contract Tokens is ERC1155, AccessControl {
     uint[] storage ids;
     uint numToMint = amounts.length;
 
-    uint i = 0;
-    for (i = 0; i < numToMint; i++) {
+    for (uint i = 0; i < numToMint; i++) {
       ids.push(nextTokenId + i);
     }
 
