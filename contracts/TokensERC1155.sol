@@ -14,9 +14,11 @@ contract Tokens is ERC1155, AccessControl {
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
   bytes32 public constant NFT_MINTER_ROLE = keccak256("NFT_MINTER_ROLE");
   mapping(uint256=>string) private nftURICollection;
+  mapping(uint256=>address) private creators;
 
   // Reserve first 10 tokens watchit
-  uint256 public nextTokenId = 11;
+  uint256 private constant RESERVED = 11;
+  uint256 public nextTokenId = RESERVED;
 
   constructor() ERC1155("") {
       _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
@@ -34,10 +36,26 @@ contract Tokens is ERC1155, AccessControl {
       return balanceOf(msg.sender, id) > 0;
   }
 
+  function isCreatorOf(uint256 id) public view returns(bool){
+    return creators[id] != address(0);
+  }
+
+  function burnNFT(address account, uint256 id) public {
+    bool isAdmin = hasRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    require((isAdmin || (isOwnerOf(id) && isCreatorOf(id))), 'Token cannot be burned');
+    _burn(account, id, NFT_SUPPLY);
+  }
+
+  function _setCreator(address _to, uint256 _id) internal {
+    require(creators[_id] == msg.sender, 'Only creators allowed');
+    creators[_id] = _to;
+  }
+
   function getNFTUri(uint256 id) public view virtual returns (string memory){
     require(isOwnerOf(id), "Only owner can view NFT url");
     return nftURICollection[id];
   }
+
 
   function _setNFTUri(string memory _uri) private{
     nftURICollection[nextTokenId] = _uri;
@@ -55,6 +73,7 @@ contract Tokens is ERC1155, AccessControl {
     public
   {
     require(hasRole(MINTER_ROLE, msg.sender));
+    creators[nextTokenId] = account;
     _mint(account, nextTokenId, amount, data);
     nextTokenId += 1;
   }
@@ -67,8 +86,7 @@ contract Tokens is ERC1155, AccessControl {
     uint[] storage ids;
     uint numToMint = amounts.length;
 
-    uint i = 0;
-    for (i = 0; i < numToMint; i++) {
+    for (uint i = 0; i < numToMint; i++) {
       ids.push(nextTokenId + i);
     }
 

@@ -30,7 +30,7 @@ module.exports = {
       }
     }},
   gasReporter: {
-    currency: 'USD',
+    currency: 'EUR',
     showTimeSpent: true,
     coinmarketcap: '6ffc3d5b-865e-482d-a05c-144ba7fe319e'
   }
