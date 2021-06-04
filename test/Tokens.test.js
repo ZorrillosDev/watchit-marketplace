@@ -49,7 +49,7 @@ describe('Tokens', function () {
           const [_, nextTokenId] = await nftMinter(tokenUriA)
           await tokens.connect(addr1).burnNFT(owner.address, nextTokenId - 1)
         } catch (err) {
-          expect(err.message).to.contain('Token cannot be burned')
+          expect(err.message).to.contain('NFT cannot be burned')
         }
       })
     })
@@ -104,6 +104,26 @@ describe('Tokens', function () {
       })
     })
 
+    describe('Transfer', function(){
+      it('should be transferable', async function(){
+        const [_, tokenIdA] = await nftMinter(tokenUriA)
+        const currentToken = tokenIdA - 1;
+        await tokens.connect(owner).transferNFT(owner.address, addr1.address, currentToken, [])
+        const isOwner = await tokens.connect(addr1).isOwnerOf(currentToken)
+        expect(isOwner.toString()).to.equal('true')
+      })
+
+      it('should fail for try to transfer not owned NFT', async function(){
+        try{
+          const [_, tokenIdA] = await nftMinter(tokenUriA)
+          const currentToken = tokenIdA - 1;
+          await tokens.connect(addr1).transferNFT(addr1.address, owner.address, currentToken, [])
+        } catch (err) {
+          expect(err.message).to.contain('Only owner can transfer NFT')
+        }
+      })
+    })
+
     describe('Query', function(){
       it('should retrieve NFT uri only by owner', async function(){
         try{
@@ -113,6 +133,17 @@ describe('Tokens', function () {
         } catch (err){
           expect(err.message).to.contain('Only owner can view NFT url')
         }
+      })
+
+      it('should fail if NFT doesnt exist in collection', async function(){
+        const isValidNFT = await tokens.isValidNFT(1000000000);
+        expect(isValidNFT.toString()).to.equal('false')
+      })
+
+      it('should not fail if NFT exist in collection', async function(){
+        const [_, tokenIdA] = await nftMinter(tokenUriA)
+        const isValidNFT = await tokens.isValidNFT(tokenIdA - 1);
+        expect(isValidNFT.toString()).to.equal('true')
       })
     })
   })

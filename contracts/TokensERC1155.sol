@@ -32,6 +32,10 @@ contract Tokens is ERC1155, AccessControl {
     _setURI(newuri);
   }
 
+  function isValidNFT(uint256 id) public view returns(bool){
+    return bytes(nftURICollection[id]).length > 0;
+  }
+
   function isOwnerOf(uint256 id) public view returns(bool){
       return balanceOf(msg.sender, id) > 0;
   }
@@ -42,8 +46,22 @@ contract Tokens is ERC1155, AccessControl {
 
   function burnNFT(address account, uint256 id) public {
     bool isAdmin = hasRole(DEFAULT_ADMIN_ROLE, msg.sender);
-    require((isAdmin || (isOwnerOf(id) && isCreatorOf(id))), 'Token cannot be burned');
+    require((isAdmin || (isOwnerOf(id) && isCreatorOf(id))), 'NFT cannot be burned');
+    creators[id] = address(0);
     _burn(account, id, NFT_SUPPLY);
+  }
+
+  function transferNFT(
+    address from,
+    address to,
+    uint256 id,
+    bytes memory data
+  )
+    public
+    virtual
+  {
+    require((isOwnerOf(id) && isValidNFT(id)), 'Only owner can transfer NFT');
+    safeTransferFrom(from, to, id, NFT_SUPPLY, data);
   }
 
   function _setCreator(address _to, uint256 _id) internal {
