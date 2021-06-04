@@ -49,7 +49,7 @@ describe('Tokens', function () {
           const [_, nextTokenId] = await nftMinter(tokenUriA)
           await tokens.connect(addr1).burnNFT(owner.address, nextTokenId - 1)
         } catch (err) {
-          expect(err.message).to.contain('Token cannot be burned')
+          expect(err.message).to.contain('NFT cannot be burned')
         }
       })
     })
@@ -104,6 +104,15 @@ describe('Tokens', function () {
       })
     })
 
+    describe('Transfer', function(){
+      it('should be transferable', async function(){
+        const [_, tokenIdA] = await nftMinter(tokenUriA)
+        const currentToken = tokenIdA - 1;
+        tokens.connect(owner).transferNFT(owner.address, addr1.address, currentToken, [])
+        expect(tokens.connect(addr1).isOwnerOf(currentToken))
+      })
+    })
+
     describe('Query', function(){
       it('should retrieve NFT uri only by owner', async function(){
         try{
@@ -113,6 +122,11 @@ describe('Tokens', function () {
         } catch (err){
           expect(err.message).to.contain('Only owner can view NFT url')
         }
+      })
+
+      it('should fail if NFT doesnt exist in collection', async function(){
+        const isNFT = await tokens.isNFT(1000000000);
+        expect(isNFT.toString()).to.equal('false')
       })
     })
   })
