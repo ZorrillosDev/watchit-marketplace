@@ -108,8 +108,19 @@ describe('Tokens', function () {
       it('should be transferable', async function(){
         const [_, tokenIdA] = await nftMinter(tokenUriA)
         const currentToken = tokenIdA - 1;
-        tokens.connect(owner).transferNFT(owner.address, addr1.address, currentToken, [])
-        expect(tokens.connect(addr1).isOwnerOf(currentToken))
+        await tokens.connect(owner).transferNFT(owner.address, addr1.address, currentToken, [])
+        const isOwner = await tokens.connect(addr1).isOwnerOf(currentToken)
+        expect(isOwner.toString()).to.equal('true')
+      })
+
+      it('should fail for not owner from transfer', async function(){
+        try{
+          const [_, tokenIdA] = await nftMinter(tokenUriA)
+          const currentToken = tokenIdA - 1;
+          await tokens.connect(addr1).transferNFT(addr1.address, owner.address, currentToken, [])
+        } catch (err) {
+          expect(err.message).to.contain('Only owner can transfer NFT')
+        }
       })
     })
 
