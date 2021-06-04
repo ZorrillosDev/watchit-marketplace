@@ -136,14 +136,14 @@ describe('Tokens', function () {
       })
 
       it('should fail if NFT doesnt exist in collection', async function(){
-        const isNFT = await tokens.isNFT(1000000000);
-        expect(isNFT.toString()).to.equal('false')
+        const isValidNFT = await tokens.isValidNFT(1000000000);
+        expect(isValidNFT.toString()).to.equal('false')
       })
 
       it('should not fail if NFT exist in collection', async function(){
         const [_, tokenIdA] = await nftMinter(tokenUriA)
-        const isNFT = await tokens.isNFT(tokenIdA - 1);
-        expect(isNFT.toString()).to.equal('true')
+        const isValidNFT = await tokens.isValidNFT(tokenIdA - 1);
+        expect(isValidNFT.toString()).to.equal('true')
       })
     })
   })

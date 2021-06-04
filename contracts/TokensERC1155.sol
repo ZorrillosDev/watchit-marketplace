@@ -32,7 +32,7 @@ contract Tokens is ERC1155, AccessControl {
     _setURI(newuri);
   }
 
-  function isNFT(uint256 id) public view returns(bool){
+  function isValidNFT(uint256 id) public view returns(bool){
     return bytes(nftURICollection[id]).length > 0;
   }
 
@@ -60,7 +60,7 @@ contract Tokens is ERC1155, AccessControl {
     public
     virtual
   {
-    require((isOwnerOf(id) && isNFT(id)), 'Only owner can transfer NFT');
+    require((isOwnerOf(id) && isValidNFT(id)), 'Only owner can transfer NFT');
     safeTransferFrom(from, to, id, NFT_SUPPLY, data);
   }
 
