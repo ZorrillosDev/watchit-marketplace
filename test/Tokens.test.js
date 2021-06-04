@@ -128,6 +128,12 @@ describe('Tokens', function () {
         const isNFT = await tokens.isNFT(1000000000);
         expect(isNFT.toString()).to.equal('false')
       })
+
+      it('should not fail if NFT exist in collection', async function(){
+        const [_, tokenIdA] = await nftMinter(tokenUriA)
+        const isNFT = await tokens.isNFT(tokenIdA - 1);
+        expect(isNFT.toString()).to.equal('true')
+      })
     })
   })
 
