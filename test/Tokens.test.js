@@ -113,7 +113,7 @@ describe('Tokens', function () {
         expect(isOwner.toString()).to.equal('true')
       })
 
-      it('should fail for not owner from transfer', async function(){
+      it('should fail for try to transfer not owned NFT', async function(){
         try{
           const [_, tokenIdA] = await nftMinter(tokenUriA)
           const currentToken = tokenIdA - 1;
