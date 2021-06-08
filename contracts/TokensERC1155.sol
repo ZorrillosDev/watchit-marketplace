@@ -64,8 +64,8 @@ contract Tokens is ERC1155, AccessControl {
     safeTransferFrom(from, to, id, NFT_SUPPLY, data);
   }
 
-  function _setCreator(address _to) private {
-    creators[nextTokenId] = _to;
+  function _setCreator(address _to, uint256 id) private {
+    creators[id] = _to;
   }
 
   function getNFTUri(uint256 id) public view virtual returns (string memory){
@@ -74,21 +74,21 @@ contract Tokens is ERC1155, AccessControl {
   }
 
 
-  function _setNFTUri(string memory _uri) private {
-    nftURICollection[nextTokenId] = _uri;
+  function _setNFTUri(string memory _uri, uint256 id) private {
+    nftURICollection[id] = _uri;
   }
 
-  function _defineNFT(string memory _uri, address account) private {
+  function _defineNFT(string memory _uri, address account, uint256 id) private {
     // One only function to handle NFT internal definition
-    _setNFTUri(_uri); // set uri for current NFT
-    _setCreator(account); // set creator for current NFT
+    _setNFTUri(_uri, id); // set uri for current NFT
+    _setCreator(account, id); // set creator for current NFT
   }
 
   function mintNFT(address account, string memory _uri, bytes memory data)
   public
   {
     require(hasRole(NFT_MINTER_ROLE, msg.sender), 'NFT cannot be created');
-    _defineNFT(_uri, account);
+    _defineNFT(_uri, account, nextTokenId);
     mint(account, NFT_SUPPLY, data);
   }
 
@@ -96,14 +96,14 @@ contract Tokens is ERC1155, AccessControl {
   public
   {
     require(hasRole(NFT_MINTER_ROLE, msg.sender), 'NFT cannot be created');
-    uint[] storage amounts;
     uint numToMint = _uris.length;
+    uint[] memory amounts = new uint[](numToMint);
     uint[] memory ids = new uint[](numToMint);
 
     for (uint i = 0; i < numToMint; i++) {
-      _defineNFT(_uris[i], to);
+      _defineNFT(_uris[i], to, nextTokenId + i);
       ids[i] = nextTokenId + i;
-      amounts.push(NFT_SUPPLY);
+      amounts[i] = NFT_SUPPLY;
     }
 
     _mintBatch(to, ids, amounts, data);

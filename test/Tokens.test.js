@@ -10,6 +10,8 @@ describe('Tokens', function () {
   // see: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md#erc-1155-metadata-uri-json-schema
   const tokenUriA = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwAWT'
   const tokenUriB = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwRST'
+  const tokenUriC = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwRYU'
+  const tokenUriD = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwRHJ'
 
   const nftMinter = async function(tokenUri, minter = owner.address){
     await tokens.mintNFT(minter, tokenUri, [])
@@ -105,10 +107,15 @@ describe('Tokens', function () {
 
 
       it('should mint NFT batch', async function () {
-        const uris = [tokenUriA, tokenUriB]
+        const uris = [tokenUriA, tokenUriB, tokenUriC, tokenUriD]
         const initialTokenId = await tokens.nextTokenId()
         await tokens.mintBatchNFT(owner.address, uris, [])
         const nextTokenId = await tokens.nextTokenId()
+
+        // const rawFetchA = await tokens.getNFTUri(nextTokenId - 4) // nextTokenId 2 - 1 = 1 to check before id
+        // const rawFetchB = await tokens.getNFTUri(nextTokenId - 3) // eg. nextTokenId 2
+        // expect(rawFetchA).to.equal(tokenUriA)
+        // expect(rawFetchB).to.equal(tokenUriB)
         expect(nextTokenId).to.equal(initialTokenId.add(uris.length))
 
 
