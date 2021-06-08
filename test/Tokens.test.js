@@ -102,6 +102,17 @@ describe('Tokens', function () {
         expect(rawFetchB).to.equal(tokenUriB)
 
       })
+
+
+      it('should mint NFT batch', async function () {
+        const uris = [tokenUriA, tokenUriB]
+        const initialTokenId = await tokens.nextTokenId()
+        await tokens.mintBatchNFT(owner.address, uris, [])
+        const nextTokenId = await tokens.nextTokenId()
+        expect(nextTokenId).to.equal(initialTokenId.add(uris.length))
+
+
+      })
     })
 
     describe('Transfer', function(){
