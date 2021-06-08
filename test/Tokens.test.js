@@ -112,10 +112,10 @@ describe('Tokens', function () {
         await tokens.mintBatchNFT(owner.address, uris, [])
         const nextTokenId = await tokens.nextTokenId()
 
-        // const rawFetchA = await tokens.getNFTUri(nextTokenId - 4) // nextTokenId 2 - 1 = 1 to check before id
-        // const rawFetchB = await tokens.getNFTUri(nextTokenId - 3) // eg. nextTokenId 2
-        // expect(rawFetchA).to.equal(tokenUriA)
-        // expect(rawFetchB).to.equal(tokenUriB)
+        const rawFetchA = await tokens.getNFTUri(nextTokenId - 4) // nextTokenId 2 - 1 = 1 to check before id
+        const rawFetchB = await tokens.getNFTUri(nextTokenId - 3) // eg. nextTokenId 2
+        expect(rawFetchA).to.equal(tokenUriA)
+        expect(rawFetchB).to.equal(tokenUriB)
         expect(nextTokenId).to.equal(initialTokenId.add(uris.length))
 
 
