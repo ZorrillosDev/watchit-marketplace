@@ -13,12 +13,11 @@ contract Tokens is ERC1155, AccessControl {
   bytes32 public constant URI_SETTER_ROLE = keccak256("URI_SETTER_ROLE");
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
   bytes32 public constant NFT_MINTER_ROLE = keccak256("NFT_MINTER_ROLE");
-  mapping(uint256=>string) private nftURICollection;
+  mapping(uint256=>bytes32) private nftURICollection;
   mapping(uint256=>address) private creators;
 
   // Reserve first 10 tokens watchit
-  uint8 private constant RESERVED = 11;
-  uint256 public nextTokenId = RESERVED;
+  uint256 public nextTokenId = 11;
 
   constructor() ERC1155("") {
       _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
@@ -33,7 +32,7 @@ contract Tokens is ERC1155, AccessControl {
   }
 
   function isValidNFT(uint256 id) public view returns(bool){
-    return bytes(nftURICollection[id]).length > 0;
+    return nftURICollection[id] != "";
   }
 
   function isOwnerOf(uint256 id) public view returns(bool){
@@ -68,23 +67,23 @@ contract Tokens is ERC1155, AccessControl {
     creators[id] = _to;
   }
 
-  function getNFTUri(uint256 id) public view virtual returns (string memory){
+  function getNFTUri(uint256 id) public view virtual returns (bytes32){
     require(isOwnerOf(id), "Only owner can view NFT url");
     return nftURICollection[id];
   }
 
 
-  function _setNFTUri(string memory _uri, uint256 id) private {
+  function _setNFTUri(bytes32 _uri, uint256 id) private {
     nftURICollection[id] = _uri;
   }
 
-  function _defineNFT(string memory _uri, address account, uint256 id) private {
+  function _defineNFT(bytes32 _uri, address account, uint256 id) private {
     // One only function to handle NFT internal definition
     _setNFTUri(_uri, id); // set uri for current NFT
     _setCreator(account, id); // set creator for current NFT
   }
 
-  function mintNFT(address account, string memory _uri, bytes memory data)
+  function mintNFT(address account, bytes32  _uri, bytes memory data)
   public
   {
     require(hasRole(NFT_MINTER_ROLE, msg.sender), 'NFT cannot be created');
@@ -92,7 +91,7 @@ contract Tokens is ERC1155, AccessControl {
     mint(account, NFT_SUPPLY, data);
   }
 
-  function mintBatchNFT(address to, string[] memory _uris, bytes memory data)
+  function mintBatchNFT(address to, bytes32[] memory _uris, bytes memory data)
   public
   {
     require(hasRole(NFT_MINTER_ROLE, msg.sender), 'NFT cannot be created');
@@ -100,7 +99,7 @@ contract Tokens is ERC1155, AccessControl {
     uint[] memory amounts = new uint[](numToMint);
     uint[] memory ids = new uint[](numToMint);
 
-    for (uint i = 0; i < numToMint; i++) {
+    for (uint16 i = 0; i < numToMint; i++) {
       _defineNFT(_uris[i], to, nextTokenId + i);
       ids[i] = nextTokenId + i;
       amounts[i] = NFT_SUPPLY;
@@ -127,7 +126,7 @@ contract Tokens is ERC1155, AccessControl {
     uint numToMint = amounts.length;
     uint[] memory ids = new uint[](numToMint);
 
-    for (uint i = 0; i < numToMint; i++) {
+    for (uint16 i = 0; i < numToMint; i++) {
       ids[i] = nextTokenId + i;
     }
 
