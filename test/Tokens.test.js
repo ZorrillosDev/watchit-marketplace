@@ -1,6 +1,8 @@
 /* global ethers */
 
 const { expect } = require('chai')
+const bs58 = require('bs58')
+const utils = ethers.utils
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe('Tokens', function () {
   let tokens
@@ -10,9 +12,13 @@ describe('Tokens', function () {
   // see: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md#erc-1155-metadata-uri-json-schema
   const tokenUriA = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwAWT'
   const tokenUriB = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwRST'
+  const tokenUriC = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwRYU'
+  const tokenUriD = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwRHJ'
 
+  const toBase58 = (string)=> `0x${Buffer.from(bs58.decode(string).slice(2)).toString('hex')}`;
+  const fromBase58 = (b58)=> bs58.encode(Buffer.from(`1220${b58.slice(2)}`, "hex"));
   const nftMinter = async function(tokenUri, minter = owner.address){
-    await tokens.mintNFT(minter, tokenUri, [])
+    await tokens.mintNFT(minter, toBase58(tokenUri), [])
     const nextTokenId = await tokens.nextTokenId()
     return [await tokens.getNFTUri(nextTokenId - 1), nextTokenId]
   }
@@ -28,7 +34,7 @@ describe('Tokens', function () {
     describe('NFT_MINTER_ROLE', function(){
       it('cannot mint NFT without proper permissions', async function () {
         try {
-          await tokens.connect(addr1).mintNFT(owner.address, tokenUriA, [])
+          await tokens.connect(addr1).mintNFT(owner.address, toBase58(tokenUriA), [])
         } catch (err) {
           expect(err.message).to.contain('NFT cannot be created')
         }
@@ -39,7 +45,7 @@ describe('Tokens', function () {
       it('can burn token with proper permissions', async function () {
         // owner is the default ethers account but let's
         // call .connect explicitly here anyway
-        await tokens.mintNFT(owner.address, tokenUriA, [])
+        await tokens.mintNFT(owner.address, toBase58(tokenUriA), [])
         const nextTokenId = await tokens.nextTokenId()
         await tokens.burnNFT(owner.address, nextTokenId - 1)
       })
@@ -80,7 +86,7 @@ describe('Tokens', function () {
 
     describe('Burn', function () {
       it('should decrement balance after burn NFT ', async function(){
-        await tokens.mintNFT(addr1.address, tokenUriA, [])
+        await tokens.mintNFT(addr1.address,toBase58( tokenUriA), [])
         const nextTokenId = await tokens.nextTokenId()
         const currentTokenId = nextTokenId - 1;
         await tokens.connect(owner).burnNFT(addr1.address, currentTokenId) // Burn token
@@ -92,14 +98,30 @@ describe('Tokens', function () {
     describe('Mint', function () {
       it('should mint NFT valid mapping CID', async function () {
         const [tokenUriAResult, tokenIdA] = await nftMinter(tokenUriA)
-        expect(tokenUriAResult).to.equal(tokenUriA)
+        expect(fromBase58(tokenUriAResult)).to.equal(tokenUriA)
         const [tokenUriBResult, _] = await nftMinter(tokenUriB)
-        expect(tokenUriBResult).to.equal(tokenUriB)
+        expect(fromBase58(tokenUriBResult)).to.equal(tokenUriB)
 
         const rawFetchA = await tokens.getNFTUri(tokenIdA - 1) // nextTokenId 2 - 1 = 1 to check before id
         const rawFetchB = await tokens.getNFTUri(tokenIdA) // eg. nextTokenId 2
-        expect(rawFetchA).to.equal(tokenUriA)
-        expect(rawFetchB).to.equal(tokenUriB)
+        expect(fromBase58(rawFetchA)).to.equal(tokenUriA)
+        expect(fromBase58(rawFetchB)).to.equal(tokenUriB)
+
+      })
+
+
+      it('should mint NFT batch', async function () {
+        const uris = [tokenUriA, tokenUriB, tokenUriC, tokenUriD]
+        const initialTokenId = await tokens.nextTokenId()
+        await tokens.mintBatchNFT(owner.address, uris.map(toBase58), [])
+        const nextTokenId = await tokens.nextTokenId()
+
+        const rawFetchA = await tokens.getNFTUri(nextTokenId - 4) // nextTokenId 4 - 4 = 0 first uri index
+        const rawFetchB = await tokens.getNFTUri(nextTokenId - 3) // eg. nextTokenId  4 -3 = 1 second uri index
+        expect(fromBase58(rawFetchA)).to.equal(tokenUriA)
+        expect(fromBase58(rawFetchB)).to.equal(tokenUriB)
+        expect(nextTokenId).to.equal(initialTokenId.add(uris.length))
+
 
       })
     })
