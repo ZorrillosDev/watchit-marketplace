@@ -1,6 +1,7 @@
 /* global ethers */
 
 const { expect } = require('chai')
+const bs58 = require('bs58')
 const utils = ethers.utils
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe('Tokens', function () {
@@ -9,13 +10,13 @@ describe('Tokens', function () {
   // Example token uri. CID is not valid one.
   // TODO: ERC1155 Metadata
   // see: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md#erc-1155-metadata-uri-json-schema
-  const tokenUriA = 'QmPXME1oRto'
-  const tokenUriB = 'QmPXME1oRto'
-  const tokenUriC = 'QmPXME1oRto'
-  const tokenUriD = 'QmPXME1oRto'
+  const tokenUriA = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwAWT'
+  const tokenUriB = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwRST'
+  const tokenUriC = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwRYU'
+  const tokenUriD = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwRHJ'
 
-  const toFormat32 = (string)=> utils.formatBytes32String(string);
-  const fromFormat32 = (b32)=> utils.parseBytes32String(b32);
+  const toFormat32 = (string)=> `0x${bs58.decode(string).slice(2).toString('hex')}`;
+  const fromFormat32 = (b58)=> bs58.encode(Buffer.from(`1220${b58.slice(2)}`, "hex"));
   const nftMinter = async function(tokenUri, minter = owner.address){
     await tokens.mintNFT(minter, toFormat32(tokenUri), [])
     const nextTokenId = await tokens.nextTokenId()
