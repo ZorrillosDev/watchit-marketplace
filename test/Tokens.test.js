@@ -9,15 +9,13 @@ describe('Tokens', function () {
   // Example token uri. CID is not valid one.
   // TODO: ERC1155 Metadata
   // see: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md#erc-1155-metadata-uri-json-schema
-  const tokenUriA = 'QmPXME1oRto'
-  const tokenUriB = 'QmPXME1oRto'
-  const tokenUriC = 'QmPXME1oRto'
-  const tokenUriD = 'QmPXME1oRto'
+  const tokenUriA = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwAWT'
+  const tokenUriB = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwRST'
+  const tokenUriC = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwRYU'
+  const tokenUriD = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwRHJ'
 
-  const toFormat32 = (string)=> utils.formatBytes32String(string);
-  const fromFormat32 = (b32)=> utils.parseBytes32String(b32);
   const nftMinter = async function(tokenUri, minter = owner.address){
-    await tokens.mintNFT(minter, toFormat32(tokenUri), [])
+    await tokens.mintNFT(minter, tokenUri, [])
     const nextTokenId = await tokens.nextTokenId()
     return [await tokens.getNFTUri(nextTokenId - 1), nextTokenId]
   }
@@ -33,7 +31,7 @@ describe('Tokens', function () {
     describe('NFT_MINTER_ROLE', function(){
       it('cannot mint NFT without proper permissions', async function () {
         try {
-          await tokens.connect(addr1).mintNFT(owner.address, toFormat32(tokenUriA), [])
+          await tokens.connect(addr1).mintNFT(owner.address, tokenUriA, [])
         } catch (err) {
           expect(err.message).to.contain('NFT cannot be created')
         }
@@ -44,7 +42,7 @@ describe('Tokens', function () {
       it('can burn token with proper permissions', async function () {
         // owner is the default ethers account but let's
         // call .connect explicitly here anyway
-        await tokens.mintNFT(owner.address, toFormat32(tokenUriA), [])
+        await tokens.mintNFT(owner.address, tokenUriA, [])
         const nextTokenId = await tokens.nextTokenId()
         await tokens.burnNFT(owner.address, nextTokenId - 1)
       })
@@ -85,7 +83,7 @@ describe('Tokens', function () {
 
     describe('Burn', function () {
       it('should decrement balance after burn NFT ', async function(){
-        await tokens.mintNFT(addr1.address,toFormat32( tokenUriA), [])
+        await tokens.mintNFT(addr1.address, tokenUriA, [])
         const nextTokenId = await tokens.nextTokenId()
         const currentTokenId = nextTokenId - 1;
         await tokens.connect(owner).burnNFT(addr1.address, currentTokenId) // Burn token
@@ -97,14 +95,14 @@ describe('Tokens', function () {
     describe('Mint', function () {
       it('should mint NFT valid mapping CID', async function () {
         const [tokenUriAResult, tokenIdA] = await nftMinter(tokenUriA)
-        expect(fromFormat32(tokenUriAResult)).to.equal(tokenUriA)
+        expect(tokenUriAResult).to.equal(tokenUriA)
         const [tokenUriBResult, _] = await nftMinter(tokenUriB)
-        expect(fromFormat32(tokenUriBResult)).to.equal(tokenUriB)
+        expect(tokenUriBResult).to.equal(tokenUriB)
 
         const rawFetchA = await tokens.getNFTUri(tokenIdA - 1) // nextTokenId 2 - 1 = 1 to check before id
         const rawFetchB = await tokens.getNFTUri(tokenIdA) // eg. nextTokenId 2
-        expect(fromFormat32(rawFetchA)).to.equal(tokenUriA)
-        expect(fromFormat32(rawFetchB)).to.equal(tokenUriB)
+        expect(rawFetchA).to.equal(tokenUriA)
+        expect(rawFetchB).to.equal(tokenUriB)
 
       })
 
@@ -112,13 +110,13 @@ describe('Tokens', function () {
       it('should mint NFT batch', async function () {
         const uris = [tokenUriA, tokenUriB, tokenUriC, tokenUriD]
         const initialTokenId = await tokens.nextTokenId()
-        await tokens.mintBatchNFT(owner.address, uris.map(toFormat32), [])
+        await tokens.mintBatchNFT(owner.address, uris, [])
         const nextTokenId = await tokens.nextTokenId()
 
         const rawFetchA = await tokens.getNFTUri(nextTokenId - 4) // nextTokenId 2 - 1 = 1 to check before id
         const rawFetchB = await tokens.getNFTUri(nextTokenId - 3) // eg. nextTokenId 2
-        expect(fromFormat32(rawFetchA)).to.equal(tokenUriA)
-        expect(fromFormat32(rawFetchB)).to.equal(tokenUriB)
+        expect(rawFetchA).to.equal(tokenUriA)
+        expect(rawFetchB).to.equal(tokenUriB)
         expect(nextTokenId).to.equal(initialTokenId.add(uris.length))
 
 
