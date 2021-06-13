@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 import "./TokensERC1155NFT.sol";
 
-abstract contract TokensERC1155Mintable is TokensERC1155NFT  {
+abstract contract Mintable is TokensERC1155NFT  {
     // Reserve first 10 tokens watchit
     uint256 public nextTokenId = 11;
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
