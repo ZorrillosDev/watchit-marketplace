@@ -3,8 +3,6 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
 import "hardhat/console.sol";
 
 
@@ -75,7 +73,6 @@ contract Tokens is ERC1155, AccessControl {
     require((isOwnerOf(id) && isValidNFT(id)), 'Only owner can transfer NFT');
     safeTransferFrom(from, to, id, NFT_SUPPLY, data);
   }
-
 
   function burn(address account, uint256 id, uint256 amount) public {
     _burn(account, id, amount); //TODO
