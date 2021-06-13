@@ -43,26 +43,6 @@ contract Tokens is ERC1155, AccessControl {
     return creators[id] != address(0);
   }
 
-  function burnNFT(address account, uint256 id) public {
-    bool isAdmin = hasRole(DEFAULT_ADMIN_ROLE, msg.sender);
-    require((isAdmin || (isOwnerOf(id) && isCreatorOf(id))), 'NFT cannot be burned');
-    creators[id] = address(0);
-    _burn(account, id, NFT_SUPPLY);
-  }
-
-  function transferNFT(
-    address from,
-    address to,
-    uint256 id,
-    bytes memory data
-  )
-    public
-    virtual
-  {
-    require((isOwnerOf(id) && isValidNFT(id)), 'Only owner can transfer NFT');
-    safeTransferFrom(from, to, id, NFT_SUPPLY, data);
-  }
-
   function _setCreator(address _to, uint256 id) private {
     creators[id] = _to;
   }
@@ -81,6 +61,35 @@ contract Tokens is ERC1155, AccessControl {
     // One only function to handle NFT internal definition
     _setNFTUri(_uri, id); // set uri for current NFT
     _setCreator(account, id); // set creator for current NFT
+  }
+
+  function transferNFT(
+    address from,
+    address to,
+    uint256 id,
+    bytes memory data
+  )
+  public
+  virtual
+  {
+    require((isOwnerOf(id) && isValidNFT(id)), 'Only owner can transfer NFT');
+    safeTransferFrom(from, to, id, NFT_SUPPLY, data);
+  }
+
+
+  function burn(address account, uint256 id, uint256 amount) public {
+    _burn(account, id, amount); //TODO
+  }
+
+  function burnNFT(address account, uint256 id) public {
+    bool isAdmin = hasRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    require((isAdmin || (isOwnerOf(id) && isCreatorOf(id))), 'NFT cannot be burned');
+    creators[id] = address(0);
+    _burn(account, id, NFT_SUPPLY);
+  }
+
+  function burnBatchNFT(address account, uint256[] memory ids, uint256[] memory amounts) public {
+    _burnBatch(account, ids, amounts); // TODO
   }
 
   function mintNFT(address account, bytes32  _uri, bytes memory data)
