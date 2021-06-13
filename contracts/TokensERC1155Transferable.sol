@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 import "./TokensERC1155NFT.sol";
 
-abstract contract Transferable is TokensERC1155NFT  {
+abstract contract Transferable is NFT  {
 
     function transferNFT(
         address from,

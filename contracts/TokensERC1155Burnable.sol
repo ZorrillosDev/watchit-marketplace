@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 import "./TokensERC1155NFT.sol";
 
-abstract contract Burnable is TokensERC1155NFT  {
+abstract contract Burnable is NFT  {
     function burn(address account, uint256 id, uint256 amount) public {
         _burn(account, id, amount); //TODO
     }

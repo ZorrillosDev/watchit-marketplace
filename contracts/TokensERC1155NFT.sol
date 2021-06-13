@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
-abstract contract TokensERC1155NFT is ERC1155, AccessControl {
+abstract contract NFT is ERC1155, AccessControl {
     uint8 internal constant NFT_SUPPLY = 1;
     mapping(uint256=>bytes32) private nftURICollection;
     mapping(uint256=>address) private creators;
