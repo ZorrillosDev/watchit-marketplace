@@ -6,8 +6,8 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 
 abstract contract TokensERC1155NFT is ERC1155, AccessControl {
     uint8 internal constant NFT_SUPPLY = 1;
-    mapping(uint256=>bytes32) internal nftURICollection;
-    mapping(uint256=>address) internal creators;
+    mapping(uint256=>bytes32) private nftURICollection;
+    mapping(uint256=>address) private creators;
 
     function isValidNFT(uint256 id) public view returns(bool){
         return nftURICollection[id] != "";
@@ -26,11 +26,11 @@ abstract contract TokensERC1155NFT is ERC1155, AccessControl {
         return nftURICollection[id];
     }
 
-    function _setCreator(address _to, uint256 id) internal {
+    function _setCreator(address _to, uint256 id) private {
         creators[id] = _to;
     }
 
-    function _setNFTUri(bytes32 _uri, uint256 id) internal {
+    function _setNFTUri(bytes32 _uri, uint256 id) private {
         nftURICollection[id] = _uri;
     }
 
