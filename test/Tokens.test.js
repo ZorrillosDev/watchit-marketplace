@@ -3,9 +3,10 @@
 const { expect } = require('chai')
 const bs58 = require('bs58')
 const utils = ethers.utils
+
 // see: https://github.com/mawrkus/js-unit-testing-guide
-describe('Tokens', function () {
-  let tokens
+describe('NFT', function () {
+  let tokens, tokensF;
   let owner, addr1
   // Example token uri. CID is not valid one.
   // TODO: ERC1155 Metadata
@@ -25,21 +26,17 @@ describe('Tokens', function () {
 
   before(async function () {
     [owner, addr1] = await ethers.getSigners()
-    const Tokens = await ethers.getContractFactory('Tokens')
-    tokens = await Tokens.deploy()
+    const TokensNFT = await ethers.getContractFactory('NFToken')
+    tokens = await TokensNFT.deploy()
     await tokens.deployed()
+
+    const TokensFT = await ethers.getContractFactory('FToken')
+    tokensF = await TokensFT.deploy()
+    await tokens.deployed()
+
   })
 
   describe('Roles', function () {
-    describe('NFT_MINTER_ROLE', function(){
-      it('cannot mint NFT without proper permissions', async function () {
-        try {
-          await tokens.connect(addr1).mintNFT(owner.address, toBase58(tokenUriA), [])
-        } catch (err) {
-          expect(err.message).to.contain('NFT cannot be created')
-        }
-      })
-    })
 
     describe('DEFAULT_ADMIN_ROLE', function(){
       it('can burn token with proper permissions', async function () {
@@ -83,6 +80,18 @@ describe('Tokens', function () {
 
 
   describe('NonFungibleTokens', function() {
+
+    describe('Roles', function () {
+      describe('NFT_MINTER_ROLE', function(){
+        it('cannot mint NFT without proper permissions', async function () {
+          try {
+            await tokens.connect(addr1).mintNFT(owner.address, toBase58(tokenUriA), [])
+          } catch (err) {
+            expect(err.message).to.contain('NFT cannot be created')
+          }
+        })
+      })
+    })
 
     describe('Burn', function () {
       it('should decrement balance after burn NFT ', async function(){
@@ -171,18 +180,17 @@ describe('Tokens', function () {
   })
 
 
-
   describe('FungibleTokens', function () {
     describe('Mint', function () {
       it('should increments the nextTokenId after each mint', async function () {
-        const initialTokenId = await tokens.nextTokenId()
-        await tokens.mint(owner.address, 1, [])
-        const nextTokenId = await tokens.nextTokenId()
+        const initialTokenId = await tokensF.nextTokenId()
+        await tokensF.mint(owner.address, 1, [])
+        const nextTokenId = await tokensF.nextTokenId()
         expect(nextTokenId).to.equal(initialTokenId.add(1))
       })
 
       it('should increments nextTokenId properly after batch mint', async function () {
-        const initialTokenId = await tokens.nextTokenId()
+        const initialTokenId = await tokensF.nextTokenId()
         const amounts = [
           1,
           10,
@@ -191,8 +199,8 @@ describe('Tokens', function () {
           '1000000000000000'
         ]
 
-        await tokens.mintBatch(owner.address, amounts, [])
-        const nextTokenId = await tokens.nextTokenId()
+        await tokensF.mintBatch(owner.address, amounts, [])
+        const nextTokenId = await tokensF.nextTokenId()
         expect(nextTokenId).to.equal(initialTokenId.add(amounts.length))
       })
     })

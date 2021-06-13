@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-import "./TokensERC1155NFT.sol";
+import "./TokensERC1155.sol";
 
 abstract contract Transferable is NFT  {
 
