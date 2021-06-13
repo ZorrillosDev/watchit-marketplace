@@ -41,15 +41,14 @@ contract Tokens is ERC1155, AccessControl {
     return creators[id] != address(0);
   }
 
-  function _setCreator(address _to, uint256 id) private {
-    creators[id] = _to;
-  }
-
   function getNFTUri(uint256 id) public view virtual returns (bytes32){
     require(isOwnerOf(id), "Only owner can view NFT url");
     return nftURICollection[id];
   }
 
+  function _setCreator(address _to, uint256 id) private {
+    creators[id] = _to;
+  }
 
   function _setNFTUri(bytes32 _uri, uint256 id) private {
     nftURICollection[id] = _uri;
