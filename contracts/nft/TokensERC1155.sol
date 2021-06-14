@@ -26,18 +26,10 @@ abstract contract NFT is ERC1155Upgradeable, AccessControl {
         return nftURICollection[id];
     }
 
-    function _setCreator(address _to, uint256 id) private {
-        creators[id] = _to;
-    }
-
-    function _setNFTUri(bytes32 _uri, uint256 id) private {
-        nftURICollection[id] = _uri;
-    }
-
     function _defineNFT(bytes32 _uri, address account, uint256 id) internal {
         // One only function to handle NFT internal definition
-        _setNFTUri(_uri, id); // set uri for current NFT
-        _setCreator(account, id); // set creator for current NFT
+        nftURICollection[id] = _uri; // set uri for current NFT
+        creators[id] = account; // set creator for current NFT
     }
 
     function _msgSender() internal view override(Context, ContextUpgradeable) returns (address) {
