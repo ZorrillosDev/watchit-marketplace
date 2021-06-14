@@ -2,10 +2,14 @@
 pragma solidity ^0.8.0;
 import "./TokensERC1155.sol";
 
-abstract contract Mintable is FT  {
+abstract contract MintableFT is FT  {
     // Reserve first 10 tokens watchit
-    uint256 public nextTokenId = 11;
+    uint256 public nextTokenId;
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+
+    function __ER1155_init_unchained() internal initializer {
+        nextTokenId = 11;
+    }
 
     function mint(address account, uint256 amount, bytes memory data)
     public

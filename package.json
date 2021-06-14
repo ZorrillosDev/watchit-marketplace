@@ -16,6 +16,9 @@
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@openzeppelin/contracts-upgradeable": "^4.1.0",
+    "@openzeppelin/hardhat-upgrades": "^1.8.2",
+    "bs58": "^4.0.1",
     "chai": "^4.3.4",
     "eth-gas-reporter": "^0.2.22",
     "ethereum-waffle": "^3.3.0",

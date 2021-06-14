@@ -2,11 +2,9 @@
 
 const { expect } = require('chai')
 const bs58 = require('bs58')
-const utils = ethers.utils
-
 // see: https://github.com/mawrkus/js-unit-testing-guide
-describe('NFT', function () {
-  let tokens, tokensF;
+describe('Tokens', function () {
+  let tokens, tokensNF, tokensF;
   let owner, addr1
   // Example token uri. CID is not valid one.
   // TODO: ERC1155 Metadata
@@ -19,87 +17,123 @@ describe('NFT', function () {
   const toBase58 = (string)=> `0x${Buffer.from(bs58.decode(string).slice(2)).toString('hex')}`;
   const fromBase58 = (b58)=> bs58.encode(Buffer.from(`1220${b58.slice(2)}`, "hex"));
   const nftMinter = async function(tokenUri, minter = owner.address){
-    await tokens.mintNFT(minter, toBase58(tokenUri), [])
-    const nextTokenId = await tokens.nextTokenId()
-    return [await tokens.getNFTUri(nextTokenId - 1), nextTokenId]
+    await tokensNF.mint(minter, toBase58(tokenUri), [])
+    const nextTokenId = await tokensNF.nextTokenId()
+    return [await tokensNF.getNFTUri(nextTokenId - 1), nextTokenId]
+  }
+
+
+  const deployContract = async (contractName) => {
+    const _contractFactory = await ethers.getContractFactory(contractName)
+    const _contract = await _contractFactory.deploy()
+    await _contract.deployed()
+    console.log(`${contractName} address: ${_contract.address}`)
+    return _contract
+  }
+
+  const deployProxyContract = async (contractName)=>{
+    const _contractFactory = await ethers.getContractFactory(contractName)
+    const _contract = await upgrades.deployProxy(_contractFactory)
+    await _contract.deployed()
+    console.log(`${contractName} address: ${_contract.address}`)
+    return _contractFactory.attach(_contract.address)
+
   }
 
   before(async function () {
     [owner, addr1] = await ethers.getSigners()
-    const TokensNFT = await ethers.getContractFactory('NFToken')
-    tokens = await TokensNFT.deploy()
-    await tokens.deployed()
-
-    const TokensFT = await ethers.getContractFactory('FToken')
-    tokensF = await TokensFT.deploy()
-    await tokens.deployed()
+    // Deploy FT and NFT contracts
+    tokensNF = await deployProxyContract('NFToken')
+    tokensF = await deployProxyContract('FToken')
+    // tokens = await deployContract('Tokens')
+    // const Tokens = await ethers.getContractFactory('Tokens')
 
   })
 
   describe('Roles', function () {
-
     describe('DEFAULT_ADMIN_ROLE', function(){
-      it('can burn token with proper permissions', async function () {
-        // owner is the default ethers account but let's
-        // call .connect explicitly here anyway
-        await tokens.mintNFT(owner.address, toBase58(tokenUriA), [])
-        const nextTokenId = await tokens.nextTokenId()
-        await tokens.burnNFT(owner.address, nextTokenId - 1)
-      })
 
-      it('cannot burn token without proper permissions', async function () {
-        try {
-          const [_, nextTokenId] = await nftMinter(tokenUriA)
-          await tokens.connect(addr1).burnNFT(owner.address, nextTokenId - 1)
-        } catch (err) {
-          expect(err.message).to.contain('NFT cannot be burned')
-        }
-      })
+      // it('can update the URI with proper permissions', async function () {
+      //   // owner is the default ethers account but let's
+      //   // call .connect explicitly here anyway
+      //   await tokens.connect(owner).setURI(tokenUriA)
+      //
+      //   // TODO: Learn more about what all this means in the transaction result.
+      //   // const result = await tokens.connect...
+      //   // console.log(result)
+      // })
+      //
+      // it('cannot update the URI without proper permissions', async function () {
+      //   try {
+      //     await tokens.connect(addr1).setURI(tokenUriA)
+      //   } catch (err) {
+      //     expect(err.message).to.contain('revert URI cannot be updated')
+      //   }
+      // })
     })
 
-    describe('URI_SETTER_ROLE', function () {
-      it('can update the URI with proper permissions', async function () {
-        // owner is the default ethers account but let's
-        // call .connect explicitly here anyway
-        await tokens.connect(owner).setURI(tokenUriA)
-
-        // TODO: Learn more about what all this means in the transaction result.
-        // const result = await tokens.connect...
-        // console.log(result)
-      })
-
-      it('cannot update the URI without proper permissions', async function () {
-        try {
-          await tokens.connect(addr1).setURI(tokenUriA)
-        } catch (err) {
-          expect(err.message).to.contain('revert URI cannot be updated')
-        }
-      })
-    })
   })
 
-
   describe('NonFungibleTokens', function() {
-
     describe('Roles', function () {
-      describe('NFT_MINTER_ROLE', function(){
+      describe('NFT_MINTER_ROLE', function () {
         it('cannot mint NFT without proper permissions', async function () {
           try {
-            await tokens.connect(addr1).mintNFT(owner.address, toBase58(tokenUriA), [])
+            await tokensNF.connect(addr1).mint(owner.address, toBase58(tokenUriA), [])
           } catch (err) {
             expect(err.message).to.contain('NFT cannot be created')
           }
         })
       })
+
+      describe('DEFAULT_ADMIN_ROLE', function () {
+        it('can burn NFT with proper permissions', async function () {
+          // owner is the default ethers account but let's
+          // call .connect explicitly here anyway
+          await tokensNF.mint(owner.address, toBase58(tokenUriA), [])
+          const nextTokenId = await tokensNF.nextTokenId()
+          await tokensNF.burn(owner.address, nextTokenId - 1)
+        })
+
+        it('cannot burn NFT without proper permissions', async function () {
+          try {
+            const [_, nextTokenId] = await nftMinter(tokenUriA)
+            await tokensNF.connect(addr1).burn(owner.address, nextTokenId - 1)
+          } catch (err) {
+            expect(err.message).to.contain('NFT cannot be burned')
+          }
+        })
+      })
+    })
+
+    describe('Upgradeable', function(){
+      let v1NFT, v2NFT;
+      before(async function(){
+        const v1Factory = await ethers.getContractFactory('NFToken')
+        const v2Factory = await ethers.getContractFactory('NFTokenV2')
+        v1NFT = await upgrades.deployProxy(v1Factory)
+        await v1NFT.mint(owner.address, toBase58(tokenUriA), [])
+        v2NFT = await upgrades.upgradeProxy(v1NFT.address, v2Factory)
+      })
+
+      it('should retrieve a NFT previously minted', async function(){
+          const previousContractNextId = await v2NFT.nextTokenId()
+          expect(previousContractNextId).to.equal('1')
+      })
+
+      it('should allow call added method in upgrade `myUpgradeMethod`', async function(){
+        const previousContractNextId = await v2NFT.myUpgradeMethod()
+        expect(previousContractNextId.toString()).to.equal('Hello world')
+      })
     })
 
     describe('Burn', function () {
       it('should decrement balance after burn NFT ', async function(){
-        await tokens.mintNFT(addr1.address,toBase58( tokenUriA), [])
-        const nextTokenId = await tokens.nextTokenId()
+        await tokensNF.mint(addr1.address,toBase58( tokenUriA), [])
+        const nextTokenId = await tokensNF.nextTokenId()
         const currentTokenId = nextTokenId - 1;
-        await tokens.connect(owner).burnNFT(addr1.address, currentTokenId) // Burn token
-        const newBurnedBalance = await tokens.balanceOf(addr1.address, currentTokenId)
+        await tokensNF.connect(owner).burn(addr1.address, currentTokenId) // Burn token
+        const newBurnedBalance = await tokensNF.balanceOf(addr1.address, currentTokenId)
         expect(newBurnedBalance.toString()).to.equal('0')
       })
     })
@@ -111,8 +145,8 @@ describe('NFT', function () {
         const [tokenUriBResult, _] = await nftMinter(tokenUriB)
         expect(fromBase58(tokenUriBResult)).to.equal(tokenUriB)
 
-        const rawFetchA = await tokens.getNFTUri(tokenIdA - 1) // nextTokenId 2 - 1 = 1 to check before id
-        const rawFetchB = await tokens.getNFTUri(tokenIdA) // eg. nextTokenId 2
+        const rawFetchA = await tokensNF.getNFTUri(tokenIdA - 1) // nextTokenId 2 - 1 = 1 to check before id
+        const rawFetchB = await tokensNF.getNFTUri(tokenIdA) // eg. nextTokenId 2
         expect(fromBase58(rawFetchA)).to.equal(tokenUriA)
         expect(fromBase58(rawFetchB)).to.equal(tokenUriB)
 
@@ -121,12 +155,12 @@ describe('NFT', function () {
 
       it('should mint NFT batch', async function () {
         const uris = [tokenUriA, tokenUriB, tokenUriC, tokenUriD]
-        const initialTokenId = await tokens.nextTokenId()
-        await tokens.mintBatchNFT(owner.address, uris.map(toBase58), [])
-        const nextTokenId = await tokens.nextTokenId()
+        const initialTokenId = await tokensNF.nextTokenId()
+        await tokensNF.mintBatch(owner.address, uris.map(toBase58), [])
+        const nextTokenId = await tokensNF.nextTokenId()
 
-        const rawFetchA = await tokens.getNFTUri(nextTokenId - 4) // nextTokenId 4 - 4 = 0 first uri index
-        const rawFetchB = await tokens.getNFTUri(nextTokenId - 3) // eg. nextTokenId  4 -3 = 1 second uri index
+        const rawFetchA = await tokensNF.getNFTUri(nextTokenId - 4) // nextTokenId 4 - 4 = 0 first uri index
+        const rawFetchB = await tokensNF.getNFTUri(nextTokenId - 3) // eg. nextTokenId  4 -3 = 1 second uri index
         expect(fromBase58(rawFetchA)).to.equal(tokenUriA)
         expect(fromBase58(rawFetchB)).to.equal(tokenUriB)
         expect(nextTokenId).to.equal(initialTokenId.add(uris.length))
@@ -139,8 +173,8 @@ describe('NFT', function () {
       it('should be transferable', async function(){
         const [_, tokenIdA] = await nftMinter(tokenUriA)
         const currentToken = tokenIdA - 1;
-        await tokens.connect(owner).transferNFT(owner.address, addr1.address, currentToken, [])
-        const isOwner = await tokens.connect(addr1).isOwnerOf(currentToken)
+        await tokensNF.connect(owner).transfer(owner.address, addr1.address, currentToken, [])
+        const isOwner = await tokensNF.connect(addr1).isOwnerOf(currentToken)
         expect(isOwner.toString()).to.equal('true')
       })
 
@@ -148,7 +182,7 @@ describe('NFT', function () {
         try{
           const [_, tokenIdA] = await nftMinter(tokenUriA)
           const currentToken = tokenIdA - 1;
-          await tokens.connect(addr1).transferNFT(addr1.address, owner.address, currentToken, [])
+          await tokensNF.connect(addr1).transfer(addr1.address, owner.address, currentToken, [])
         } catch (err) {
           expect(err.message).to.contain('Only owner can transfer NFT')
         }
@@ -160,27 +194,50 @@ describe('NFT', function () {
         try{
           // Minter by default owner
           const [_, tokenIdA] = await nftMinter(tokenUriA)
-          await tokens.connect(addr1).getNFTUri(tokenIdA)
+          await tokensNF.connect(addr1).getNFTUri(tokenIdA)
         } catch (err){
           expect(err.message).to.contain('Only owner can view NFT url')
         }
       })
 
       it('should fail if NFT doesnt exist in collection', async function(){
-        const isValidNFT = await tokens.isValidNFT(1000000000);
+        const isValidNFT = await tokensNF.isValidNFT(1000000000);
         expect(isValidNFT.toString()).to.equal('false')
       })
 
       it('should not fail if NFT exist in collection', async function(){
         const [_, tokenIdA] = await nftMinter(tokenUriA)
-        const isValidNFT = await tokens.isValidNFT(tokenIdA - 1);
+        const isValidNFT = await tokensNF.isValidNFT(tokenIdA - 1);
         expect(isValidNFT.toString()).to.equal('true')
       })
     })
   })
 
 
+
   describe('FungibleTokens', function () {
+
+    describe('Upgradeable', function(){
+      let v1NFT, v2NFT;
+      before(async function(){
+        const v1Factory = await ethers.getContractFactory('FToken')
+        const v2Factory = await ethers.getContractFactory('FTokenV2')
+        v1NFT = await upgrades.deployProxy(v1Factory)
+        await v1NFT.mint(owner.address, 1, [])
+        v2NFT = await upgrades.upgradeProxy(v1NFT.address, v2Factory)
+      })
+
+      it('should retrieve a NFT previously minted', async function(){
+        const previousContractNextId = await v2NFT.nextTokenId()
+        expect(previousContractNextId).to.equal('1')
+      })
+
+      it('should allow call added method in upgrade `myUpgradeMethod`', async function(){
+        const previousContractNextId = await v2NFT.myUpgradeMethod()
+        expect(previousContractNextId.toString()).to.equal('Hello world')
+      })
+    })
+
     describe('Mint', function () {
       it('should increments the nextTokenId after each mint', async function () {
         const initialTokenId = await tokensF.nextTokenId()
