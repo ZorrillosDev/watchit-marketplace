@@ -23,9 +23,9 @@ describe('Tokens', function () {
   }
 
 
-  const upgradeContract = async (v1, v2, mint) => {
-    const v1Factory = await ethers.getContractFactory(v1)
-    const v2Factory = await ethers.getContractFactory(v2)
+  const upgradeContract = async (v1, v2, mint, v1Signer=owner, v2Signer=owner) => {
+    const v1Factory = await ethers.getContractFactory(v1, {signer: v1Signer})
+    const v2Factory = await ethers.getContractFactory(v2, {signer: v2Signer})
     const v1T = await upgrades.deployProxy(v1Factory)
     // Mint for v1 must persist in v2 state
     await v1T.mint(owner.address, mint, [])
@@ -135,6 +135,16 @@ describe('Tokens', function () {
         const previousContractNextId = await v2NFT.myUpgradedTokenId()
         expect(previousContractNextId).to.equal(currentNextId)
       })
+
+      it('should cannot upgrade if not owner', async function(){
+        try{
+          await upgradeContract(
+            'NFToken', 'NFTokenV2', toBase58(tokenUriA), owner, addr1
+          )
+        } catch (err){
+          expect(err.message).to.contain('revert Ownable: caller is not the owner')
+        }
+      })
     })
 
     describe('Burn', function () {
@@ -226,7 +236,6 @@ describe('Tokens', function () {
 
 
   describe('FungibleTokens', function () {
-
     describe('Upgradeable', function(){
       let v1NFT, v2NFT,  currentNextId;
       before(async function(){
@@ -245,6 +254,16 @@ describe('Tokens', function () {
       it('should allow call added method in upgrade `myUpgradedTokenId`', async function(){
         const previousContractNextId = await v2NFT.myUpgradedTokenId()
         expect(previousContractNextId).to.equal(currentNextId)
+      })
+
+      it('should cannot upgrade if not owner', async function(){
+        try{
+          await upgradeContract(
+            'FToken', 'FTokenV2', 1, owner, addr1
+          )
+        } catch (err){
+          expect(err.message).to.contain('revert Ownable: caller is not the owner')
+        }
       })
     })
 
