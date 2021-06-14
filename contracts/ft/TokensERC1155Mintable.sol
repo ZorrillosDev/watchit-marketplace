@@ -7,10 +7,6 @@ abstract contract MintableFT is FT  {
     uint256 public nextTokenId;
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    function __ER1155_init_unchained() internal initializer {
-        nextTokenId = 11;
-    }
-
     function mint(address account, uint256 amount, bytes memory data)
     public
     {

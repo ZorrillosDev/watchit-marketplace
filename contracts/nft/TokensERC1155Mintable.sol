@@ -7,10 +7,6 @@ abstract contract MintableNFT is NFT  {
     uint256 public nextTokenId;
     bytes32 public constant NFT_MINTER_ROLE = keccak256("NFT_MINTER_ROLE");
 
-    function __ER1155_init_unchained() internal initializer {
-        nextTokenId = 11;
-    }
-
     function mint(address account, bytes32  _uri, bytes memory data)
     public
     {

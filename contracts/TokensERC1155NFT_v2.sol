@@ -12,8 +12,8 @@ contract NFTokenV2 is TransferableNFT, MintableNFT, BurnableNFT {
         _setupRole(NFT_MINTER_ROLE, msg.sender);
     }
 
-  function myUpgradeMethod() public pure returns (string memory){
-      return "Hello world";
+  function myUpgradedTokenId() public view returns (uint256){
+      return nextTokenId;
   }
 
   function setURI(string memory newuri) public {

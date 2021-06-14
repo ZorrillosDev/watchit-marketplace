@@ -10,6 +10,8 @@ contract FToken is TransferableFT, MintableFT, BurnableFT {
       __ERC1155_init("");
       _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
       _setupRole(MINTER_ROLE, msg.sender);
+      //https://docs.openzeppelin.com/upgrades-plugins/1.x/writing-upgradeable#avoid-initial-values-in-field-declarations
+      nextTokenId = 11; // Initial nextToken state
   }
 
   function setURI(string memory newuri) public {

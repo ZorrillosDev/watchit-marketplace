@@ -10,7 +10,10 @@ contract NFToken is TransferableNFT, MintableNFT, BurnableNFT {
         __ERC1155_init("");
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _setupRole(NFT_MINTER_ROLE, msg.sender);
+        //https://docs.openzeppelin.com/upgrades-plugins/1.x/writing-upgradeable#avoid-initial-values-in-field-declarations
+        nextTokenId = 11; // Initial nextToken state
     }
+
 
   function setURI(string memory newuri) public {
     require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "URI cannot be updated.");
