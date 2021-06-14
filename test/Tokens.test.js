@@ -27,6 +27,7 @@ describe('Tokens', function () {
     const v1Factory = await ethers.getContractFactory(v1)
     const v2Factory = await ethers.getContractFactory(v2)
     const v1T = await upgrades.deployProxy(v1Factory)
+    // Mint for v1 must persist in v2 state
     await v1T.mint(owner.address, mint, [])
     const currentNextId = await v1T.nextTokenId()
     const v2T = await upgrades.upgradeProxy(v1T.address, v2Factory)
