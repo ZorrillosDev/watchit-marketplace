@@ -4,6 +4,8 @@ const { expect } = require('chai')
 const bs58 = require('bs58')
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe('Tokens', function () {
+  this.timeout(0)
+
   let tokensNF, tokensF
   let owner, addr1
   // Example token uri. CID is not valid one.
