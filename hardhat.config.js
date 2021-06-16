@@ -41,8 +41,11 @@ module.exports = {
     currency: 'EUR',
     showTimeSpent: true,
     coinmarketcap: '6ffc3d5b-865e-482d-a05c-144ba7fe319e'
-  },
-  networks: {
+  }
+}
+
+if (ALCHEMY_API_KEY && ROPSTEN_PRIVATE_KEY) {
+  module.exports.networks = {
     ropsten: {
       url: `https://eth-ropsten.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
       accounts: [`0x${ROPSTEN_PRIVATE_KEY}`]
