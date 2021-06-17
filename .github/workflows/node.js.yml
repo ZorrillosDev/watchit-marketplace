@@ -9,8 +9,15 @@ on:
   pull_request:
 
 jobs:
-  build:
+  linting:
+    name: standard.js linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - run: npx standard
 
+  build:
     runs-on: ubuntu-latest
 
     strategy:
