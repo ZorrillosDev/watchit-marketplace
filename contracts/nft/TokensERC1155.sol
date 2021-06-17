@@ -22,7 +22,7 @@ abstract contract NFT is ERC1155Upgradeable, AccessControl {
     }
 
     function getNFTUri(uint256 id) public view virtual returns (bytes32){
-        require(isOwnerOf(id), "Only owner can view NFT url");
+        // require(isOwnerOf(id), "Only owner can view NFT url");
         return nftURICollection[id];
     }
 

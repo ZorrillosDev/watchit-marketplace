@@ -6,7 +6,7 @@ const bs58 = require('bs58')
 let txOptions = {}
 if (process.env.TESTNET) {
   txOptions = {
-    gasLimit: 100000
+    gasLimit: 1000000
   }
 }
 
@@ -28,10 +28,15 @@ describe('Tokens', function () {
 
   const toBase58 = (string) => `0x${Buffer.from(bs58.decode(string).slice(2)).toString('hex')}`
   const fromBase58 = (b58) => bs58.encode(Buffer.from(`1220${b58.slice(2)}`, 'hex'))
+
   const nftMinter = async function (tokenUri, minter = owner.address) {
     await tokensNF.mint(minter, toBase58(tokenUri), [], txOptions)
+    console.log('minted')
     const nextTokenId = await tokensNF.nextTokenId()
-    return [await tokensNF.getNFTUri(nextTokenId - 1, txOptions), nextTokenId]
+    console.log('nextTokenId')
+    const uri = await tokensNF.getNFTUri(nextTokenId - 1, txOptions)
+    console.log('getNFTUri')
+    return [uri, nextTokenId]
   }
 
   const upgradeContract = async (v1, v2, mint, v1Signer = owner, v2Signer = owner) => {
@@ -39,7 +44,7 @@ describe('Tokens', function () {
     const v2Factory = await ethers.getContractFactory(v2, { signer: v2Signer })
     const v1T = await upgrades.deployProxy(v1Factory)
     // Mint for v1 must persist in v2 state
-    await v1T.mint(owner.address, mint, [])
+    await v1T.mint(owner.address, mint, [], txOptions)
     const currentNextId = await v1T.nextTokenId()
     const v2T = await upgrades.upgradeProxy(v1T.address, v2Factory)
     return [v1T, v2T, currentNextId]
@@ -133,7 +138,7 @@ describe('Tokens', function () {
       })
     })
 
-    describe.skip('Upgradeable', function () {
+    describe('Upgradeable', function () {
       let v1NFT, v2NFT
       let currentNextId
       before(async function () {
@@ -163,18 +168,18 @@ describe('Tokens', function () {
       })
     })
 
-    describe.skip('Burn', function () {
+    describe('Burn', function () {
       it('should decrement balance after burn NFT ', async function () {
-        await tokensNF.mint(addr1.address, toBase58(tokenUriA), [])
+        await tokensNF.mint(addr1.address, toBase58(tokenUriA), [], txOptions)
         const nextTokenId = await tokensNF.nextTokenId()
         const currentTokenId = nextTokenId - 1
-        await tokensNF.connect(owner).burn(addr1.address, currentTokenId) // Burn token
+        await tokensNF.connect(owner).burn(addr1.address, currentTokenId, txOptions) // Burn token
         const newBurnedBalance = await tokensNF.balanceOf(addr1.address, currentTokenId)
         expect(newBurnedBalance.toString()).to.equal('0')
       })
     })
 
-    describe.skip('Mint', function () {
+    describe('Mint', function () {
       it('should mint NFT valid mapping CID', async function () {
         const [tokenUriAResult, tokenIdA] = await nftMinter(tokenUriA)
         expect(fromBase58(tokenUriAResult)).to.equal(tokenUriA)
@@ -190,7 +195,7 @@ describe('Tokens', function () {
       it('should mint NFT batch', async function () {
         const uris = [tokenUriA, tokenUriB, tokenUriC, tokenUriD]
         const initialTokenId = await tokensNF.nextTokenId()
-        await tokensNF.mintBatch(owner.address, uris.map(toBase58), [])
+        await tokensNF.mintBatch(owner.address, uris.map(toBase58), [], txOptions)
         const nextTokenId = await tokensNF.nextTokenId()
 
         const rawFetchA = await tokensNF.getNFTUri(nextTokenId - 4) // nextTokenId 4 - 4 = 0 first uri index
