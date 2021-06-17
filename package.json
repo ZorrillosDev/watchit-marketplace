@@ -4,7 +4,9 @@
   "description": "Smart Contracts for the WatchIt Economy",
   "main": "index.js",
   "scripts": {
-    "lint": "standard; solhint contracts/**/*.sol",
+    "lint": "npm lint:js && npm lint:solidity",
+    "lint:js": "standard",
+    "lint:solidity": "solhint contracts/**/*.sol",
     "test": "nyc hardhat coverage"
   },
   "engines": {
