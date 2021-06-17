@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-node@v2
 
       - run: npm ci
-      - run: npx hardhat test --network ropsten
+      - run: npm run test:ropsten
         env:
           ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
           ROPSTEN_PRIVATE_KEY: ${{ secrets.ROPSTEN_PRIVATE_KEY }}
