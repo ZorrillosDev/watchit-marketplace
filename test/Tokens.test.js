@@ -4,7 +4,7 @@ const { expect } = require('chai')
 const bs58 = require('bs58')
 
 let txOptions = {}
-if(process.env.TESTNET) {
+if (process.env.TESTNET) {
   txOptions = {
     gasLimit: 100000
   }
@@ -12,7 +12,7 @@ if(process.env.TESTNET) {
 
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe('Tokens', function () {
-  if(process.env.TESTNET) {
+  if (process.env.TESTNET) {
     this.timeout(0)
   }
 
@@ -64,7 +64,7 @@ describe('Tokens', function () {
   before(async function () {
     [owner, addr1] = await ethers.getSigners()
 
-    if(process.env.TESTNET && process.env.ROPSTEN_ACCOUNT1_KEY) {
+    if (process.env.TESTNET && process.env.ROPSTEN_ACCOUNT1_KEY) {
       const provider = ethers.getDefaultProvider('ropsten', {
         alchemy: process.env.ALCHEMY_API_KEY
       })
