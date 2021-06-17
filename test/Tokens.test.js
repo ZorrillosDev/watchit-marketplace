@@ -1,10 +1,10 @@
-/* global ethers */
+/* global ethers, upgrades */
 
 const { expect } = require('chai')
 const bs58 = require('bs58')
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe('Tokens', function () {
-  let tokens, tokensNF, tokensF
+  let tokensNF, tokensF
   let owner, addr1
   // Example token uri. CID is not valid one.
   // TODO: ERC1155 Metadata
@@ -33,13 +33,13 @@ describe('Tokens', function () {
     return [v1T, v2T, currentNextId]
   }
 
-  const deployContract = async (contractName) => {
-    const _contractFactory = await ethers.getContractFactory(contractName)
-    const _contract = await _contractFactory.deploy()
-    await _contract.deployed()
-    console.log(`${contractName} address: ${_contract.address}`)
-    return _contract
-  }
+  // const deployContract = async (contractName) => {
+  //   const _contractFactory = await ethers.getContractFactory(contractName)
+  //   const _contract = await _contractFactory.deploy()
+  //   await _contract.deployed()
+  //   console.log(`${contractName} address: ${_contract.address}`)
+  //   return _contract
+  // }
 
   const deployProxyContract = async (contractName) => {
     const _contractFactory = await ethers.getContractFactory(contractName)
@@ -104,7 +104,7 @@ describe('Tokens', function () {
 
         it('cannot burn NFT without proper permissions', async function () {
           try {
-            const [_, nextTokenId] = await nftMinter(tokenUriA)
+            const [_, nextTokenId] = await nftMinter(tokenUriA) //eslint-disable-line
             await tokensNF.connect(addr1).burn(owner.address, nextTokenId - 1)
           } catch (err) {
             expect(err.message).to.contain('NFT cannot be burned')
@@ -117,7 +117,7 @@ describe('Tokens', function () {
       let v1NFT, v2NFT
       let currentNextId
       before(async function () {
-        [v1NFT, v2NFT, currentNextId] = await upgradeContract(
+        [v1NFT, v2NFT, currentNextId] = await upgradeContract( //eslint-disable-line
           'NFToken', 'NFTokenV2', toBase58(tokenUriA)
         )
       })
@@ -158,7 +158,7 @@ describe('Tokens', function () {
       it('should mint NFT valid mapping CID', async function () {
         const [tokenUriAResult, tokenIdA] = await nftMinter(tokenUriA)
         expect(fromBase58(tokenUriAResult)).to.equal(tokenUriA)
-        const [tokenUriBResult, _] = await nftMinter(tokenUriB)
+        const [tokenUriBResult, _] = await nftMinter(tokenUriB) // eslint-disable-line
         expect(fromBase58(tokenUriBResult)).to.equal(tokenUriB)
 
         const rawFetchA = await tokensNF.getNFTUri(tokenIdA - 1) // nextTokenId 2 - 1 = 1 to check before id
@@ -183,7 +183,7 @@ describe('Tokens', function () {
 
     describe('Transfer', function () {
       it('should be transferable', async function () {
-        const [_, tokenIdA] = await nftMinter(tokenUriA)
+        const [_, tokenIdA] = await nftMinter(tokenUriA) // eslint-disable-line
         const currentToken = tokenIdA - 1
         await tokensNF.connect(owner).transfer(owner.address, addr1.address, currentToken, [])
         const isOwner = await tokensNF.connect(addr1).isOwnerOf(currentToken)
@@ -192,7 +192,7 @@ describe('Tokens', function () {
 
       it('should fail for try to transfer not owned NFT', async function () {
         try {
-          const [_, tokenIdA] = await nftMinter(tokenUriA)
+          const [_, tokenIdA] = await nftMinter(tokenUriA) // eslint-disable-line
           const currentToken = tokenIdA - 1
           await tokensNF.connect(addr1).transfer(addr1.address, owner.address, currentToken, [])
         } catch (err) {
@@ -205,7 +205,7 @@ describe('Tokens', function () {
       it('should retrieve NFT uri only by owner', async function () {
         try {
           // Minter by default owner
-          const [_, tokenIdA] = await nftMinter(tokenUriA)
+          const [_, tokenIdA] = await nftMinter(tokenUriA) // eslint-disable-line
           await tokensNF.connect(addr1).getNFTUri(tokenIdA)
         } catch (err) {
           expect(err.message).to.contain('Only owner can view NFT url')
@@ -218,7 +218,7 @@ describe('Tokens', function () {
       })
 
       it('should not fail if NFT exist in collection', async function () {
-        const [_, tokenIdA] = await nftMinter(tokenUriA)
+        const [_, tokenIdA] = await nftMinter(tokenUriA) // eslint-disable-line
         const isValidNFT = await tokensNF.isValidNFT(tokenIdA - 1)
         expect(isValidNFT.toString()).to.equal('true')
       })
@@ -229,7 +229,7 @@ describe('Tokens', function () {
     describe('Upgradeable', function () {
       let v1NFT, v2NFT, currentNextId
       before(async function () {
-        [v1NFT, v2NFT, currentNextId] = await upgradeContract(
+        [v1NFT, v2NFT, currentNextId] = await upgradeContract( // eslint-disable-line
           'FToken', 'FTokenV2', 1
         )
       })
