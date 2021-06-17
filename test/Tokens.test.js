@@ -138,7 +138,7 @@ describe('Tokens', function () {
             'NFToken', 'NFTokenV2', toBase58(tokenUriA), owner, addr1
           )
         } catch (err) {
-          expect(err.message).to.contain('revert Ownable: caller is not the owner')
+          expect(err.message).to.contain('Ownable: caller is not the owner')
         }
       })
     })
@@ -252,7 +252,7 @@ describe('Tokens', function () {
             'FToken', 'FTokenV2', 1, owner, addr1
           )
         } catch (err) {
-          expect(err.message).to.contain('revert Ownable: caller is not the owner')
+          expect(err.message).to.contain('Ownable: caller is not the owner')
         }
       })
     })
