@@ -25,6 +25,14 @@ jobs:
       - run: npm install ethlint
       - run: npm run lint:solidity
 
+  solhint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - run: npm install solhint
+      - run: npm run hint:solidity
+
   build:
     runs-on: ubuntu-latest
 
