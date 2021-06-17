@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  linting:
+  standard:
     name: standard.js linting
     runs-on: ubuntu-latest
     steps:
@@ -15,6 +15,15 @@ jobs:
       - uses: actions/setup-node@v2
       - run: npm install standard
       - run: npm run lint:js
+
+  solium:
+    name: solium linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - run: npm install ethlint
+      - run: npm run lint:solidity
 
   build:
     runs-on: ubuntu-latest
