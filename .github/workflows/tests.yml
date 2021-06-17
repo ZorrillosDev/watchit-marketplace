@@ -30,6 +30,7 @@ jobs:
       - run: npm ci
       - run: npm run test:ropsten
         env:
+          TESTNET: true
           ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
           ROPSTEN_OWNER_KEY: ${{ secrets.ROPSTEN_OWNER_KEY }}
           ROPSTEN_ACCOUNT1_KEY: ${{ secrets.ROPSTEN_ACCOUNT1_KEY }}
