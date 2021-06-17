@@ -6,8 +6,7 @@
   "scripts": {
     "lint": "npm lint:js && npm lint:solidity",
     "lint:js": "standard",
-    "lint:solidity": "solium -d contracts",
-    "hint:solidity": "solhint contracts/**/*.sol",
+    "lint:solidity": "solhint 'contracts/**/*.sol'",
     "test": "nyc hardhat coverage"
   },
   "engines": {
@@ -26,7 +25,6 @@
     "eth-gas-reporter": "^0.2.22",
     "ethereum-waffle": "^3.3.0",
     "ethers": "^5.1.4",
-    "ethlint": "^1.2.5",
     "hardhat": "^2.3.0",
     "hardhat-contract-sizer": "^2.0.3",
     "hardhat-gas-reporter": "^1.0.4",
