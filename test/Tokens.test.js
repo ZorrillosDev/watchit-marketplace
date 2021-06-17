@@ -4,7 +4,7 @@ const { expect } = require('chai')
 const bs58 = require('bs58')
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe('Tokens', function () {
-  let tokens, tokensNF, tokensF;
+  let tokens, tokensNF, tokensF
   let owner, addr1
   // Example token uri. CID is not valid one.
   // TODO: ERC1155 Metadata
@@ -14,18 +14,17 @@ describe('Tokens', function () {
   const tokenUriC = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwRYU'
   const tokenUriD = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwRHJ'
 
-  const toBase58 = (string)=> `0x${Buffer.from(bs58.decode(string).slice(2)).toString('hex')}`;
-  const fromBase58 = (b58)=> bs58.encode(Buffer.from(`1220${b58.slice(2)}`, "hex"));
-  const nftMinter = async function(tokenUri, minter = owner.address){
+  const toBase58 = (string) => `0x${Buffer.from(bs58.decode(string).slice(2)).toString('hex')}`
+  const fromBase58 = (b58) => bs58.encode(Buffer.from(`1220${b58.slice(2)}`, 'hex'))
+  const nftMinter = async function (tokenUri, minter = owner.address) {
     await tokensNF.mint(minter, toBase58(tokenUri), [])
     const nextTokenId = await tokensNF.nextTokenId()
     return [await tokensNF.getNFTUri(nextTokenId - 1), nextTokenId]
   }
 
-
-  const upgradeContract = async (v1, v2, mint, v1Signer=owner, v2Signer=owner) => {
-    const v1Factory = await ethers.getContractFactory(v1, {signer: v1Signer})
-    const v2Factory = await ethers.getContractFactory(v2, {signer: v2Signer})
+  const upgradeContract = async (v1, v2, mint, v1Signer = owner, v2Signer = owner) => {
+    const v1Factory = await ethers.getContractFactory(v1, { signer: v1Signer })
+    const v2Factory = await ethers.getContractFactory(v2, { signer: v2Signer })
     const v1T = await upgrades.deployProxy(v1Factory)
     // Mint for v1 must persist in v2 state
     await v1T.mint(owner.address, mint, [])
@@ -42,13 +41,12 @@ describe('Tokens', function () {
     return _contract
   }
 
-  const deployProxyContract = async (contractName)=>{
+  const deployProxyContract = async (contractName) => {
     const _contractFactory = await ethers.getContractFactory(contractName)
     const _contract = await upgrades.deployProxy(_contractFactory)
     await _contract.deployed()
     console.log(`${contractName} address: ${_contract.address}`)
     return _contractFactory.attach(_contract.address)
-
   }
 
   before(async function () {
@@ -58,11 +56,10 @@ describe('Tokens', function () {
     tokensF = await deployProxyContract('FToken')
     // tokens = await deployContract('Tokens')
     // const Tokens = await ethers.getContractFactory('Tokens')
-
   })
 
   describe('Roles', function () {
-    describe('DEFAULT_ADMIN_ROLE', function(){
+    describe('DEFAULT_ADMIN_ROLE', function () {
 
       // it('can update the URI with proper permissions', async function () {
       //   // owner is the default ethers account but let's
@@ -82,10 +79,9 @@ describe('Tokens', function () {
       //   }
       // })
     })
-
   })
 
-  describe('NonFungibleTokens', function() {
+  describe('NonFungibleTokens', function () {
     describe('Roles', function () {
       describe('NFT_MINTER_ROLE', function () {
         it('cannot mint NFT without proper permissions', async function () {
@@ -117,41 +113,41 @@ describe('Tokens', function () {
       })
     })
 
-    describe('Upgradeable', function(){
-      let v1NFT, v2NFT;
-      let currentNextId;
-      before(async function() {
+    describe('Upgradeable', function () {
+      let v1NFT, v2NFT
+      let currentNextId
+      before(async function () {
         [v1NFT, v2NFT, currentNextId] = await upgradeContract(
           'NFToken', 'NFTokenV2', toBase58(tokenUriA)
         )
       })
 
-      it('should retrieve a NFT previously minted', async function(){
+      it('should retrieve a NFT previously minted', async function () {
         const previousContractNextId = await v2NFT.nextTokenId()
         expect(previousContractNextId).to.equal(currentNextId)
       })
 
-      it('should allow call added method in upgrade `myUpgradedTokenId`', async function(){
+      it('should allow call added method in upgrade `myUpgradedTokenId`', async function () {
         const previousContractNextId = await v2NFT.myUpgradedTokenId()
         expect(previousContractNextId).to.equal(currentNextId)
       })
 
-      it('should cannot upgrade if not owner', async function(){
-        try{
+      it('should cannot upgrade if not owner', async function () {
+        try {
           await upgradeContract(
             'NFToken', 'NFTokenV2', toBase58(tokenUriA), owner, addr1
           )
-        } catch (err){
+        } catch (err) {
           expect(err.message).to.contain('revert Ownable: caller is not the owner')
         }
       })
     })
 
     describe('Burn', function () {
-      it('should decrement balance after burn NFT ', async function(){
-        await tokensNF.mint(addr1.address,toBase58( tokenUriA), [])
+      it('should decrement balance after burn NFT ', async function () {
+        await tokensNF.mint(addr1.address, toBase58(tokenUriA), [])
         const nextTokenId = await tokensNF.nextTokenId()
-        const currentTokenId = nextTokenId - 1;
+        const currentTokenId = nextTokenId - 1
         await tokensNF.connect(owner).burn(addr1.address, currentTokenId) // Burn token
         const newBurnedBalance = await tokensNF.balanceOf(addr1.address, currentTokenId)
         expect(newBurnedBalance.toString()).to.equal('0')
@@ -169,9 +165,7 @@ describe('Tokens', function () {
         const rawFetchB = await tokensNF.getNFTUri(tokenIdA) // eg. nextTokenId 2
         expect(fromBase58(rawFetchA)).to.equal(tokenUriA)
         expect(fromBase58(rawFetchB)).to.equal(tokenUriB)
-
       })
-
 
       it('should mint NFT batch', async function () {
         const uris = [tokenUriA, tokenUriB, tokenUriC, tokenUriD]
@@ -184,24 +178,22 @@ describe('Tokens', function () {
         expect(fromBase58(rawFetchA)).to.equal(tokenUriA)
         expect(fromBase58(rawFetchB)).to.equal(tokenUriB)
         expect(nextTokenId).to.equal(initialTokenId.add(uris.length))
-
-
       })
     })
 
-    describe('Transfer', function(){
-      it('should be transferable', async function(){
+    describe('Transfer', function () {
+      it('should be transferable', async function () {
         const [_, tokenIdA] = await nftMinter(tokenUriA)
-        const currentToken = tokenIdA - 1;
+        const currentToken = tokenIdA - 1
         await tokensNF.connect(owner).transfer(owner.address, addr1.address, currentToken, [])
         const isOwner = await tokensNF.connect(addr1).isOwnerOf(currentToken)
         expect(isOwner.toString()).to.equal('true')
       })
 
-      it('should fail for try to transfer not owned NFT', async function(){
-        try{
+      it('should fail for try to transfer not owned NFT', async function () {
+        try {
           const [_, tokenIdA] = await nftMinter(tokenUriA)
-          const currentToken = tokenIdA - 1;
+          const currentToken = tokenIdA - 1
           await tokensNF.connect(addr1).transfer(addr1.address, owner.address, currentToken, [])
         } catch (err) {
           expect(err.message).to.contain('Only owner can transfer NFT')
@@ -209,59 +201,57 @@ describe('Tokens', function () {
       })
     })
 
-    describe('Query', function(){
-      it('should retrieve NFT uri only by owner', async function(){
-        try{
+    describe('Query', function () {
+      it('should retrieve NFT uri only by owner', async function () {
+        try {
           // Minter by default owner
           const [_, tokenIdA] = await nftMinter(tokenUriA)
           await tokensNF.connect(addr1).getNFTUri(tokenIdA)
-        } catch (err){
+        } catch (err) {
           expect(err.message).to.contain('Only owner can view NFT url')
         }
       })
 
-      it('should fail if NFT doesnt exist in collection', async function(){
-        const isValidNFT = await tokensNF.isValidNFT(1000000000);
+      it('should fail if NFT doesnt exist in collection', async function () {
+        const isValidNFT = await tokensNF.isValidNFT(1000000000)
         expect(isValidNFT.toString()).to.equal('false')
       })
 
-      it('should not fail if NFT exist in collection', async function(){
+      it('should not fail if NFT exist in collection', async function () {
         const [_, tokenIdA] = await nftMinter(tokenUriA)
-        const isValidNFT = await tokensNF.isValidNFT(tokenIdA - 1);
+        const isValidNFT = await tokensNF.isValidNFT(tokenIdA - 1)
         expect(isValidNFT.toString()).to.equal('true')
       })
     })
   })
 
-
-
   describe('FungibleTokens', function () {
-    describe('Upgradeable', function(){
-      let v1NFT, v2NFT,  currentNextId;
-      before(async function(){
+    describe('Upgradeable', function () {
+      let v1NFT, v2NFT, currentNextId
+      before(async function () {
         [v1NFT, v2NFT, currentNextId] = await upgradeContract(
           'FToken', 'FTokenV2', 1
         )
       })
 
-      it('should retrieve a NFT previously minted', async function(){
+      it('should retrieve a NFT previously minted', async function () {
         const previousContractNextId = await v2NFT.nextTokenId()
         const previousBalance = await v2NFT.balanceOf(owner.address, currentNextId - 1)
         expect(previousContractNextId).to.equal(currentNextId)
         expect(previousBalance).to.equal('1')
       })
 
-      it('should allow call added method in upgrade `myUpgradedTokenId`', async function(){
+      it('should allow call added method in upgrade `myUpgradedTokenId`', async function () {
         const previousContractNextId = await v2NFT.myUpgradedTokenId()
         expect(previousContractNextId).to.equal(currentNextId)
       })
 
-      it('should cannot upgrade if not owner', async function(){
-        try{
+      it('should cannot upgrade if not owner', async function () {
+        try {
           await upgradeContract(
             'FToken', 'FTokenV2', 1, owner, addr1
           )
-        } catch (err){
+        } catch (err) {
           expect(err.message).to.contain('revert Ownable: caller is not the owner')
         }
       })
