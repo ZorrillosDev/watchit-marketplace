@@ -9,7 +9,8 @@ require('hardhat-contract-sizer')
 require('@openzeppelin/hardhat-upgrades')
 
 const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY
-const ROPSTEN_PRIVATE_KEY = process.env.ROPSTEN_PRIVATE_KEY
+const ROPSTEN_OWNER_KEY = process.env.ROPSTEN_OWNER_KEY
+const TESTNET = process.env.TESTNET
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -44,11 +45,11 @@ module.exports = {
   }
 }
 
-if (ALCHEMY_API_KEY && ROPSTEN_PRIVATE_KEY) {
+if (TESTNET) {
   module.exports.networks = {
     ropsten: {
       url: `https://eth-ropsten.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
-      accounts: [`0x${ROPSTEN_PRIVATE_KEY}`]
+      accounts: [`0x${ROPSTEN_OWNER_KEY}`]
     }
   }
 }

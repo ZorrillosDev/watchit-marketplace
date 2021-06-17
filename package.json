@@ -8,7 +8,7 @@
     "lint:js": "standard",
     "lint:solidity": "solhint 'contracts/**/*.sol'",
     "test": "nyc hardhat coverage",
-    "test:ropsten": "npx hardhat test --network ropsten"
+    "test:ropsten": "TESTNET=true npx hardhat test --network ropsten"
   },
   "engines": {
     "node": ">=12.0.0"

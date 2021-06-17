@@ -2,9 +2,19 @@
 
 const { expect } = require('chai')
 const bs58 = require('bs58')
+
+let txOptions = {}
+if(process.env.TESTNET) {
+  txOptions = {
+    gasLimit: 100000
+  }
+}
+
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe('Tokens', function () {
-  this.timeout(0)
+  if(process.env.TESTNET) {
+    this.timeout(0)
+  }
 
   let tokensNF, tokensF
   let owner, addr1
@@ -19,9 +29,9 @@ describe('Tokens', function () {
   const toBase58 = (string) => `0x${Buffer.from(bs58.decode(string).slice(2)).toString('hex')}`
   const fromBase58 = (b58) => bs58.encode(Buffer.from(`1220${b58.slice(2)}`, 'hex'))
   const nftMinter = async function (tokenUri, minter = owner.address) {
-    await tokensNF.mint(minter, toBase58(tokenUri), [])
+    await tokensNF.mint(minter, toBase58(tokenUri), [], txOptions)
     const nextTokenId = await tokensNF.nextTokenId()
-    return [await tokensNF.getNFTUri(nextTokenId - 1), nextTokenId]
+    return [await tokensNF.getNFTUri(nextTokenId - 1, txOptions), nextTokenId]
   }
 
   const upgradeContract = async (v1, v2, mint, v1Signer = owner, v2Signer = owner) => {
@@ -53,6 +63,14 @@ describe('Tokens', function () {
 
   before(async function () {
     [owner, addr1] = await ethers.getSigners()
+
+    if(process.env.TESTNET && process.env.ROPSTEN_ACCOUNT1_KEY) {
+      const provider = ethers.getDefaultProvider('ropsten', {
+        alchemy: process.env.ALCHEMY_API_KEY
+      })
+      addr1 = new ethers.Wallet(process.env.ROPSTEN_ACCOUNT1_KEY, provider)
+    }
+
     // Deploy FT and NFT contracts
     tokensNF = await deployProxyContract('NFToken')
     tokensF = await deployProxyContract('FToken')
@@ -88,7 +106,7 @@ describe('Tokens', function () {
       describe('NFT_MINTER_ROLE', function () {
         it('cannot mint NFT without proper permissions', async function () {
           try {
-            await tokensNF.connect(addr1).mint(owner.address, toBase58(tokenUriA), [])
+            await tokensNF.connect(addr1).mint(owner.address, toBase58(tokenUriA), [], txOptions)
           } catch (err) {
             expect(err.message).to.contain('NFT cannot be created')
           }
@@ -99,15 +117,15 @@ describe('Tokens', function () {
         it('can burn NFT with proper permissions', async function () {
           // owner is the default ethers account but let's
           // call .connect explicitly here anyway
-          await tokensNF.mint(owner.address, toBase58(tokenUriA), [])
-          const nextTokenId = await tokensNF.nextTokenId()
-          await tokensNF.burn(owner.address, nextTokenId - 1)
+          await tokensNF.mint(owner.address, toBase58(tokenUriA), [], txOptions)
+          const nextTokenId = await tokensNF.nextTokenId(txOptions)
+          await tokensNF.burn(owner.address, nextTokenId - 1, txOptions)
         })
 
         it('cannot burn NFT without proper permissions', async function () {
           try {
             const [_, nextTokenId] = await nftMinter(tokenUriA) //eslint-disable-line
-            await tokensNF.connect(addr1).burn(owner.address, nextTokenId - 1)
+            await tokensNF.connect(addr1).burn(owner.address, nextTokenId - 1, txOptions)
           } catch (err) {
             expect(err.message).to.contain('NFT cannot be burned')
           }
@@ -115,7 +133,7 @@ describe('Tokens', function () {
       })
     })
 
-    describe('Upgradeable', function () {
+    describe.skip('Upgradeable', function () {
       let v1NFT, v2NFT
       let currentNextId
       before(async function () {
@@ -145,7 +163,7 @@ describe('Tokens', function () {
       })
     })
 
-    describe('Burn', function () {
+    describe.skip('Burn', function () {
       it('should decrement balance after burn NFT ', async function () {
         await tokensNF.mint(addr1.address, toBase58(tokenUriA), [])
         const nextTokenId = await tokensNF.nextTokenId()
@@ -156,7 +174,7 @@ describe('Tokens', function () {
       })
     })
 
-    describe('Mint', function () {
+    describe.skip('Mint', function () {
       it('should mint NFT valid mapping CID', async function () {
         const [tokenUriAResult, tokenIdA] = await nftMinter(tokenUriA)
         expect(fromBase58(tokenUriAResult)).to.equal(tokenUriA)
@@ -183,7 +201,7 @@ describe('Tokens', function () {
       })
     })
 
-    describe('Transfer', function () {
+    describe.skip('Transfer', function () {
       it('should be transferable', async function () {
         const [_, tokenIdA] = await nftMinter(tokenUriA) // eslint-disable-line
         const currentToken = tokenIdA - 1
@@ -203,7 +221,7 @@ describe('Tokens', function () {
       })
     })
 
-    describe('Query', function () {
+    describe.skip('Query', function () {
       it('should retrieve NFT uri only by owner', async function () {
         try {
           // Minter by default owner
@@ -227,7 +245,7 @@ describe('Tokens', function () {
     })
   })
 
-  describe('FungibleTokens', function () {
+  describe.skip('FungibleTokens', function () {
     describe('Upgradeable', function () {
       let v1NFT, v2NFT, currentNextId
       before(async function () {
@@ -259,7 +277,7 @@ describe('Tokens', function () {
       })
     })
 
-    describe('Mint', function () {
+    describe.skip('Mint', function () {
       it('should increments the nextTokenId after each mint', async function () {
         const initialTokenId = await tokensF.nextTokenId()
         await tokensF.mint(owner.address, 1, [])
