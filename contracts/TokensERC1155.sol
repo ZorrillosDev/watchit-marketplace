@@ -9,20 +9,17 @@ contract Tokens is AccessControl {
     FToken public ft;
     NFToken public nft;
 
-    event Initialize(address indexed _from);
+    event Initialize(string _contract, address indexed _from, address _ft, address _nft);
 
     constructor() {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        emit Initialize(msg.sender);
     }
 
     function initialize(FToken _ft, NFToken _nft) public {
         require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Can be upgrade by admin only.");
         ft = _ft;
         nft = _nft;
+
+        emit Initialize("Tokens", msg.sender, address(_ft), address(_nft));
     }
-
-
-
-
 }
