@@ -5,13 +5,15 @@ import "./TokensERC1155NFT.sol";
 import "./TokensERC1155FT.sol";
 
 
-
 contract Tokens is AccessControl {
     FToken public ft;
     NFToken public nft;
 
+    event Initialize(address indexed _from);
+
     constructor() {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        emit Initialize(msg.sender);
     }
 
     function initialize(FToken _ft, NFToken _nft) public {
