@@ -35,7 +35,11 @@
     "solidity-coverage": "^0.7.16",
     "standard": "^16.0.3"
   },
-
+  "husky": {
+    "hooks": {
+      "pre-commit": "hh compile && npm test"
+    }
+  },
   "standard": {
     "env": "mocha"
   },
