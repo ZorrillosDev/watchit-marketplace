@@ -6,7 +6,7 @@ const bs58 = require('bs58')
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe('Tokens', function () {
   if (process.env.TESTNET) {
-    this.timeout(0)
+    this.timeout(60000)
   }
 
   let tokensNF, tokensF

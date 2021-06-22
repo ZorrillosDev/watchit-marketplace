@@ -10,6 +10,7 @@ require('@openzeppelin/hardhat-upgrades')
 
 const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY
 const ROPSTEN_OWNER_KEY = process.env.ROPSTEN_OWNER_KEY
+const TESTNET = process.env.TESTNET
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -50,7 +51,13 @@ module.exports = {
       blockGasLimit: 8000000,
       throwOnTransactionFailures: true,
       throwOnCallFailures:true,
-    },
+    }
+  }
+}
+
+
+if (TESTNET) {
+  module.exports.networks = {...{
     ropsten: {
       url: `https://eth-ropsten.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
       from:`0x${ROPSTEN_OWNER_KEY}`,
@@ -59,5 +66,5 @@ module.exports = {
       gasPrice: 1000000000,
       timeout: 60000
     }
-  }
+  }, ...module.exports.networks}
 }
