@@ -32,7 +32,12 @@ task('accounts', 'Prints the list of accounts', async () => {
 module.exports = {
   solidity: {
     version: '0.8.0',
-
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 1
+      }
+    }
   },
   gasReporter: {
     currency: 'EUR',
