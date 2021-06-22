@@ -41,6 +41,7 @@ describe('Tokens', function () {
     const _contractFactory = await ethers.getContractFactory(contractName)
     const _contract = await upgrades.deployProxy(_contractFactory)
     await _contract.deployed()
+    console.log(`${contractName} address: ${_contract.address}`)
     return _contract
   }
 
@@ -86,7 +87,7 @@ describe('Tokens', function () {
 
   describe('NonFungibleTokens', function () {
 
-    describe('Upgradeable', function () {
+    describe.skip('Upgradeable', function () {
       let v2NFT, v1NFT, currentNextId;
       before(async function () {
         // Mint for v1 must persist in v2 state
@@ -232,7 +233,7 @@ describe('Tokens', function () {
   })
 
   describe('FungibleTokens', function () {
-    describe('Upgradeable', function () {
+    describe.skip('Upgradeable', function () {
 
         let v2NFT, v1NFT, currentNextId;
         before(async function () {
