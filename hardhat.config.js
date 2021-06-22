@@ -28,6 +28,7 @@ task('accounts', 'Prints the list of accounts', async () => {
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
+
 module.exports = {
   solidity: {
     version: '0.8.0',
@@ -49,7 +50,11 @@ if (TESTNET) {
   module.exports.networks = {
     ropsten: {
       url: `https://eth-ropsten.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
-      accounts: [`0x${ROPSTEN_OWNER_KEY}`]
+      from:`0x${ROPSTEN_OWNER_KEY}`,
+      accounts: [`0x${ROPSTEN_OWNER_KEY}`],
+      gas: 9000000000000,
+      gasPrice: 1,
+      timeout: 60000
     }
   }
 }
