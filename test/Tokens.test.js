@@ -3,14 +3,6 @@
 const { expect } = require('chai')
 const bs58 = require('bs58')
 
-let txOptions = {}
-if (process.env.TESTNET) {
-  txOptions = {
-    gasLimit: 1000000,
-    gasPrice: 1
-  }
-}
-
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe('Tokens', function () {
   if (process.env.TESTNET) {
@@ -31,9 +23,9 @@ describe('Tokens', function () {
   const fromBase58 = (b58) => bs58.encode(Buffer.from(`1220${b58.slice(2)}`, 'hex'))
 
   const nftMinter = async function (tokenUri, minter = owner.address) {
-    await tokensNF.mint(minter, toBase58(tokenUri), [], txOptions)
+    await tokensNF.mint(minter, toBase58(tokenUri), [])
     const nextTokenId = await tokensNF.nextTokenId()
-    const uri = await tokensNF.getNFTUri(nextTokenId - 1, txOptions)
+    const uri = await tokensNF.getNFTUri(nextTokenId - 1)
     return [uri, nextTokenId]
   }
 
@@ -49,7 +41,6 @@ describe('Tokens', function () {
     const _contractFactory = await ethers.getContractFactory(contractName)
     const _contract = await upgrades.deployProxy(_contractFactory)
     await _contract.deployed()
-    console.log(`${contractName} address: ${_contract.address}`)
     return _contract
   }
 
@@ -96,32 +87,32 @@ describe('Tokens', function () {
   describe('NonFungibleTokens', function () {
 
     describe('Upgradeable', function () {
-      let v2NFT
+      let v2NFT, v1NFT;
       before(async function () {
         // Mint for v1 must persist in v2 state
-        await tokensNF.mint(owner.address, toBase58(tokenUriA), [], txOptions)
+        v1NFT = await deployProxyContract('NFToken')
+        await v1NFT.mint(owner.address, toBase58(tokenUriA), [])
         const v2Factory = await ethers.getContractFactory('NFTokenV2')
-        v2NFT = await upgrades.upgradeProxy(tokensNF.address, v2Factory)
-        v2NFT.attach(tokensNF.address)
+        v2NFT = await upgrades.upgradeProxy(v1NFT.address, v2Factory)
+        v2NFT.attach(v1NFT.address)
       })
 
       it('should retrieve a NFT previously minted', async function () {
-        const currentNextId = await tokensNF.nextTokenId()
+        const currentNextId = await v1NFT.nextTokenId()
         const previousContractNextId = await v2NFT.nextTokenId()
         expect(previousContractNextId).to.equal(currentNextId)
       })
 
       it('should allow call added method in upgrade `myUpgradedTokenId`', async function () {
-        const currentNextId = await tokensNF.nextTokenId()
+        const currentNextId = await v1NFT.nextTokenId()
         const previousContractNextId = await v2NFT.myUpgradedTokenId()
         expect(previousContractNextId).to.equal(currentNextId)
       })
 
-      it.skip('should cannot upgrade if not owner', async function () {
+      it('should cannot upgrade if not owner', async function () {
         try {
-          const tokensNF = await deployProxyContract('NFToken')
           const v2Factory = await ethers.getContractFactory('NFTokenV2', { signer: addr1 })
-          await upgrades.upgradeProxy(tokensNF.address, v2Factory)
+          await upgrades.upgradeProxy(v1NFT.address, v2Factory)
         } catch (err) {
           expect(err.message).to.contain('Ownable: caller is not the owner')
         }
@@ -132,7 +123,7 @@ describe('Tokens', function () {
       describe('NFT_MINTER_ROLE', function () {
         it('cannot mint NFT without proper permissions', async function () {
           try {
-            await tokensNF.connect(addr1).mint(owner.address, toBase58(tokenUriA), [], txOptions)
+            await tokensNF.connect(addr1).mint(owner.address, toBase58(tokenUriA), [])
           } catch (err) {
             expect(err.message).to.contain('NFT cannot be created')
           }
@@ -143,15 +134,15 @@ describe('Tokens', function () {
         it('can burn NFT with proper permissions', async function () {
           // owner is the default ethers account but let's
           // call .connect explicitly here anyway
-          await tokensNF.mint(owner.address, toBase58(tokenUriA), [], txOptions)
-          const nextTokenId = await tokensNF.nextTokenId(txOptions)
-          await tokensNF.burn(owner.address, nextTokenId - 1, txOptions)
+          await tokensNF.mint(owner.address, toBase58(tokenUriA), [])
+          const nextTokenId = await tokensNF.nextTokenId()
+          await tokensNF.burn(owner.address, nextTokenId - 1)
         })
 
         it('cannot burn NFT without proper permissions', async function () {
           try {
             const [_, nextTokenId] = await nftMinter(tokenUriA) //eslint-disable-line
-            await tokensNF.connect(addr1).burn(owner.address, nextTokenId - 1, txOptions)
+            await tokensNF.connect(addr1).burn(owner.address, nextTokenId - 1)
           } catch (err) {
             expect(err.message).to.contain('NFT cannot be burned')
           }
@@ -161,10 +152,10 @@ describe('Tokens', function () {
 
     describe('Burn', function () {
       it('should decrement balance after burn NFT ', async function () {
-        await tokensNF.mint(addr1.address, toBase58(tokenUriA), [], txOptions)
+        await tokensNF.mint(addr1.address, toBase58(tokenUriA), [])
         const nextTokenId = await tokensNF.nextTokenId()
         const currentTokenId = nextTokenId - 1
-        await tokensNF.connect(owner).burn(addr1.address, currentTokenId, txOptions) // Burn token
+        await tokensNF.connect(owner).burn(addr1.address, currentTokenId) // Burn token
         const newBurnedBalance = await tokensNF.balanceOf(addr1.address, currentTokenId)
         expect(newBurnedBalance.toString()).to.equal('0')
       })
@@ -174,9 +165,9 @@ describe('Tokens', function () {
       it('should mint NFT valid mapping CID', async function () {
         const [tokenUriAResult, tokenIdA] = await nftMinter(tokenUriA)
         const [tokenUriBResult, _] = await nftMinter(tokenUriB) // eslint-disable-line
-        const rawFetchA = await tokensNF.getNFTUri(tokenIdA - 1, txOptions) // nextTokenId 2 - 1 = 1 to check before id
-        const rawFetchB = await tokensNF.getNFTUri(tokenIdA, txOptions) // eg. nextTokenId 2
-        console.log(tokenIdA)
+        const rawFetchA = await tokensNF.getNFTUri(tokenIdA - 1) // nextTokenId 2 - 1 = 1 to check before id
+        const rawFetchB = await tokensNF.getNFTUri(tokenIdA) // eg. nextTokenId 2
+
         expect(fromBase58(tokenUriAResult)).to.equal(tokenUriA)
         expect(fromBase58(tokenUriBResult)).to.equal(tokenUriB)
         expect(fromBase58(rawFetchA)).to.equal(tokenUriA)
@@ -186,11 +177,11 @@ describe('Tokens', function () {
       it('should mint NFT batch', async function () {
         const uris = [tokenUriA, tokenUriB, tokenUriC, tokenUriD]
         const initialTokenId = await tokensNF.nextTokenId()
-        await tokensNF.mintBatch(owner.address, uris.map(toBase58), [], txOptions)
+        await tokensNF.mintBatch(owner.address, uris.map(toBase58), [])
         const nextTokenId = await tokensNF.nextTokenId()
 
-        const rawFetchA = await tokensNF.getNFTUri(nextTokenId - 4, txOptions) // nextTokenId 4 - 4 = 0 first uri index
-        const rawFetchB = await tokensNF.getNFTUri(nextTokenId - 3, txOptions) // eg. nextTokenId  4 -3 = 1 second uri index
+        const rawFetchA = await tokensNF.getNFTUri(nextTokenId - 4) // nextTokenId 4 - 4 = 0 first uri index
+        const rawFetchB = await tokensNF.getNFTUri(nextTokenId - 3) // eg. nextTokenId  4 -3 = 1 second uri index
         expect(fromBase58(rawFetchA)).to.equal(tokenUriA)
         expect(fromBase58(rawFetchB)).to.equal(tokenUriB)
         expect(nextTokenId).to.equal(initialTokenId.add(uris.length))
@@ -201,8 +192,8 @@ describe('Tokens', function () {
       it('should be transferable', async function () {
         const [_, tokenIdA] = await nftMinter(tokenUriA) // eslint-disable-line
         const currentToken = tokenIdA - 1
-        await tokensNF.connect(owner).transfer(owner.address, addr1.address, currentToken, [], txOptions)
-        const isOwner = await tokensNF.connect(addr1).isOwnerOf(currentToken, txOptions)
+        await tokensNF.connect(owner).transfer(owner.address, addr1.address, currentToken, [])
+        const isOwner = await tokensNF.connect(addr1).isOwnerOf(currentToken)
         expect(isOwner.toString()).to.equal('true')
       })
 
@@ -210,7 +201,7 @@ describe('Tokens', function () {
         try {
           const [_, tokenIdA] = await nftMinter(tokenUriA) // eslint-disable-line
           const currentToken = tokenIdA - 1
-          await tokensNF.connect(addr1).transfer(addr1.address, owner.address, currentToken, [], txOptions)
+          await tokensNF.connect(addr1).transfer(addr1.address, owner.address, currentToken, [])
         } catch (err) {
           expect(err.message).to.contain('Only owner can transfer NFT')
         }
@@ -241,20 +232,21 @@ describe('Tokens', function () {
     })
   })
 
-  describe.skip('FungibleTokens', function () {
+  describe('FungibleTokens', function () {
     describe('Upgradeable', function () {
 
-        let v2NFT
+        let v2NFT, v1NFT;
         before(async function () {
           // Mint for v1 must persist in v2 state
-          await tokensF.mint(owner.address, 1, [], txOptions)
+          v1NFT = await deployProxyContract('FToken')
+          await v1NFT.mint(owner.address, 1, [])
           const v2Factory = await ethers.getContractFactory('FTokenV2')
-          v2NFT = await upgrades.upgradeProxy(tokensF.address, v2Factory)
-          v2NFT.attach(tokensF.address)
+          v2NFT = await upgrades.upgradeProxy(v1NFT.address, v2Factory)
+          v2NFT.attach(v1NFT.address)
         })
 
       it('should retrieve a NFT previously minted', async function () {
-        const currentNextId = await tokensF.nextTokenId()
+        const currentNextId = await v1NFT.nextTokenId()
         const previousContractNextId = await v2NFT.nextTokenId()
         const previousBalance = await v2NFT.balanceOf(owner.address, currentNextId - 1)
         expect(previousContractNextId).to.equal(currentNextId)
@@ -262,16 +254,16 @@ describe('Tokens', function () {
       })
 
       it('should allow call added method in upgrade `myUpgradedTokenId`', async function () {
-        const currentNextId = await tokensF.nextTokenId()
+        const currentNextId = await v1NFT.nextTokenId()
         const previousContractNextId = await v2NFT.myUpgradedTokenId()
         expect(previousContractNextId).to.equal(currentNextId)
       })
 
-      it.skip('should cannot upgrade if not owner', async function () {
+      it('should cannot upgrade if not owner', async function () {
         try {
-          const tokensF = await deployProxyContract('FToken')
+          const v1NFT = await deployProxyContract('FToken')
           const v2Factory = await ethers.getContractFactory('FTokenV2', { signer: addr1 })
-          await upgrades.upgradeProxy(tokensF.address, v2Factory)
+          await upgrades.upgradeProxy(v1NFT.address, v2Factory)
         } catch (err) {
           expect(err.message).to.contain('Ownable: caller is not the owner')
         }

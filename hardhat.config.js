@@ -32,12 +32,7 @@ task('accounts', 'Prints the list of accounts', async () => {
 module.exports = {
   solidity: {
     version: '0.8.0',
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 1
-      }
-    }
+
   },
   gasReporter: {
     currency: 'EUR',
@@ -52,7 +47,7 @@ if (TESTNET) {
       url: `https://eth-ropsten.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
       from:`0x${ROPSTEN_OWNER_KEY}`,
       accounts: [`0x${ROPSTEN_OWNER_KEY}`],
-      gas: 9000000000000,
+      gas: 8000000,
       gasPrice: 1,
       timeout: 60000
     }
