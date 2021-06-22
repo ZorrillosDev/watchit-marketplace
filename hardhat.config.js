@@ -64,7 +64,8 @@ if (TESTNET) {
       accounts: [`0x${ROPSTEN_OWNER_KEY}`],
       gas: 8000000,
       gasPrice: 1000000000,
-      timeout: 60000
+      timeout: 60 * 1000
     }
   }, ...module.exports.networks}
+
 }
