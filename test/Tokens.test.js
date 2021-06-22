@@ -87,24 +87,23 @@ describe('Tokens', function () {
   describe('NonFungibleTokens', function () {
 
     describe('Upgradeable', function () {
-      let v2NFT, v1NFT;
+      let v2NFT, v1NFT, currentNextId;
       before(async function () {
         // Mint for v1 must persist in v2 state
         v1NFT = await deployProxyContract('NFToken')
         await v1NFT.mint(owner.address, toBase58(tokenUriA), [])
+        currentNextId = await v1NFT.nextTokenId();
         const v2Factory = await ethers.getContractFactory('NFTokenV2')
         v2NFT = await upgrades.upgradeProxy(v1NFT.address, v2Factory)
         v2NFT.attach(v1NFT.address)
       })
 
       it('should retrieve a NFT previously minted', async function () {
-        const currentNextId = await v1NFT.nextTokenId()
         const previousContractNextId = await v2NFT.nextTokenId()
         expect(previousContractNextId).to.equal(currentNextId)
       })
 
       it('should allow call added method in upgrade `myUpgradedTokenId`', async function () {
-        const currentNextId = await v1NFT.nextTokenId()
         const previousContractNextId = await v2NFT.myUpgradedTokenId()
         expect(previousContractNextId).to.equal(currentNextId)
       })
@@ -235,18 +234,18 @@ describe('Tokens', function () {
   describe('FungibleTokens', function () {
     describe('Upgradeable', function () {
 
-        let v2NFT, v1NFT;
+        let v2NFT, v1NFT, currentNextId;
         before(async function () {
           // Mint for v1 must persist in v2 state
-          v1NFT = await deployProxyContract('FToken')
-          await v1NFT.mint(owner.address, 1, [])
-          const v2Factory = await ethers.getContractFactory('FTokenV2')
-          v2NFT = await upgrades.upgradeProxy(v1NFT.address, v2Factory)
-          v2NFT.attach(v1NFT.address)
+          v1NFT = await deployProxyContract('FToken');
+          await v1NFT.mint(owner.address, 1, []);
+          currentNextId = await v1NFT.nextTokenId(); // v1 currentNextId
+          const v2Factory = await ethers.getContractFactory('FTokenV2');
+          v2NFT = await upgrades.upgradeProxy(v1NFT.address, v2Factory);
+          v2NFT.attach(v1NFT.address);
         })
 
       it('should retrieve a NFT previously minted', async function () {
-        const currentNextId = await v1NFT.nextTokenId()
         const previousContractNextId = await v2NFT.nextTokenId()
         const previousBalance = await v2NFT.balanceOf(owner.address, currentNextId - 1)
         expect(previousContractNextId).to.equal(currentNextId)
@@ -254,7 +253,6 @@ describe('Tokens', function () {
       })
 
       it('should allow call added method in upgrade `myUpgradedTokenId`', async function () {
-        const currentNextId = await v1NFT.nextTokenId()
         const previousContractNextId = await v2NFT.myUpgradedTokenId()
         expect(previousContractNextId).to.equal(currentNextId)
       })
