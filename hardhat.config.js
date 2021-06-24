@@ -85,3 +85,18 @@ if (RINKEBY_ALCHEMY_API_KEY && OWNER_KEY && SECONDARY_KEY) {
     }
   }
 }
+
+if (GOERLI_ALCHEMY_API_KEY && OWNER_KEY && SECONDARY_KEY) {
+  module.exports.networks = {
+    ...{
+      goerli: {
+        url: `https://eth-goerli.alchemyapi.io/v2/${GOERLI_ALCHEMY_API_KEY}`,
+        from: `0x${OWNER_KEY}`,
+        accounts: [`0x${OWNER_KEY}`, `0x${SECONDARY_KEY}`],
+        gas: 8000000,
+        timeout: 60 * 1000
+      },
+      ...module.exports.networks
+    }
+  }
+}
