@@ -27,6 +27,7 @@ jobs:
     timeout-minutes: 20
       fail-fast: false
     strategy:
+      fail-fast: false
       matrix:
         network: [ropsten, rinkeby]
     steps:
