@@ -65,6 +65,13 @@ if (TESTNET) {
         accounts: [`0x${ROPSTEN_OWNER_KEY}`, `0x${ROPSTEN_SECONDARY_KEY}`],
         gas: 8000000,
         timeout: 60 * 1000
+      },
+      rinkeby: {
+        url: `https://eth-rinkeby.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
+        from: `0x${ROPSTEN_OWNER_KEY}`,
+        accounts: [`0x${ROPSTEN_OWNER_KEY}`, `0x${ROPSTEN_SECONDARY_KEY}`],
+        gas: 8000000,
+        timeout: 60 * 1000
       }
     },
     ...module.exports.networks

@@ -9,6 +9,7 @@
     "lint:js:fix": "standard --fix",
     "lint:solidity": "solhint 'contracts/**/*.sol'",
     "test": "nyc hardhat coverage",
+    "test:rinkeby": "TESTNET=true npx hardhat test --network rinkeby",
     "test:ropsten": "TESTNET=true npx hardhat test --network ropsten"
   },
   "engines": {
