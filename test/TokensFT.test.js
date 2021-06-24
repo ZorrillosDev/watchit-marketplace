@@ -51,7 +51,7 @@ describe('FTokens', function () {
           currentNextId = await tokensF.nextTokenId(); // v1 currentNextId
           const v2Factory = await ethers.getContractFactory('FTokenV2');
           v2NFT = await upgrades.upgradeProxy(tokensF.address, v2Factory);
-          v2NFT.attach(tokensF.address);
+          v2NFT.attach(tokensF.address)
         })
 
       it('should retrieve a NFT previously minted', async function () {
