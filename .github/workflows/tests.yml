@@ -34,3 +34,5 @@ jobs:
           ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
           ROPSTEN_OWNER_KEY: ${{ secrets.ROPSTEN_OWNER_KEY }}
           ROPSTEN_ACCOUNT1_KEY: ${{ secrets.ROPSTEN_ACCOUNT1_KEY }}
+          TESNET_CONTRACT_NFT: ${{ secrets.TESNET_CONTRACT_NFT }}
+          TESNET_CONTRACT_FT: ${{ secrets.TESNET_CONTRACT_FT }}
