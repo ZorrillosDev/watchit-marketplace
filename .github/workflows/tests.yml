@@ -34,7 +34,8 @@ jobs:
       - run: npm ci
       - run: npm run test:${{ matrix.network }}
         env:
-          ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
+          RINKEBY_ALCHEMY_API_KEY: ${{ secrets.RINKEBY_ALCHEMY_API_KEY }}
+          ROPSTEN_ALCHEMY_API_KEY: ${{ secrets.ROPSTEN_ALCHEMY_API_KEY }}
           OWNER_KEY: ${{ secrets.OWNER_KEY }}
           SECONDARY_KEY: ${{ secrets.SECONDARY_KEY }}
           RINKEBY_CONTRACT_NFT: ${{ secrets.ROPSTEN_CONTRACT_NFT }}
