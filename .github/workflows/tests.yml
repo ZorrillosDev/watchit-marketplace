@@ -26,6 +26,7 @@ jobs:
     needs: hardhat
     timeout-minutes: 10
     strategy:
+      fail-fast: false
       matrix:
         network: [ropsten, rinkeby]
     steps:
