@@ -19,8 +19,8 @@ describe('NFTokens', function () {
     this.timeout(0)
   }
 
-  let tokensNF;
-  let owner, addr1;
+  let tokensNF
+  let owner, addr1
   // Example token uri. CID is not valid one.
   // TODO: ERC1155 Metadata
   // see: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md#erc-1155-metadata-uri-json-schema
@@ -40,7 +40,7 @@ describe('NFTokens', function () {
 
   const deployProxyContract = async (contractName) => {
     const _contractFactory = await ethers.getContractFactory(contractName)
-    if(TESTNET && TESTNET_CONTRACT_NFT) {
+    if (TESTNET && TESTNET_CONTRACT_NFT) {
       // Run test over existing contract in testnet
       return _contractFactory.attach(TESTNET_CONTRACT_NFT)
     }
@@ -58,7 +58,7 @@ describe('NFTokens', function () {
 
   describe('NonFungibleTokens', function () {
     describe.skip('Upgradeable', function () {
-      let v2NFT, currentNextId;
+      let v2NFT, currentNextId
       before(async function () {
         // Mint for v1 must persist in v2 state
         currentNextId = await nftMinter(tokenUriA)
@@ -141,7 +141,7 @@ describe('NFTokens', function () {
         const tokenIdA = await nftMinter(tokenUriA)
         const tokenIdB = await nftMinter(tokenUriB) // eslint-disable-line
         const rawFetchA = await tokensNF.getNFTUri(tokenIdA - 1) // nextTokenId 2 - 1 = 1 to check before id
-        const rawFetchB = await tokensNF.getNFTUri(tokenIdB -1) // eg. nextTokenId 2
+        const rawFetchB = await tokensNF.getNFTUri(tokenIdB - 1) // eg. nextTokenId 2
 
         expect(fromBase58(rawFetchA)).to.equal(tokenUriA)
         expect(fromBase58(rawFetchB)).to.equal(tokenUriB)

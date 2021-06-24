@@ -45,27 +45,28 @@ module.exports = {
     showTimeSpent: true,
     coinmarketcap: '6ffc3d5b-865e-482d-a05c-144ba7fe319e'
   },
-  networks : {
+  networks: {
     hardhat: {
       gas: 2000000,
       gasPrice: 1000000000,
       blockGasLimit: 8000000,
       throwOnTransactionFailures: true,
-      throwOnCallFailures:true,
+      throwOnCallFailures: true
     }
   }
 }
 
-
 if (TESTNET) {
-  module.exports.networks = {...{
-    ropsten: {
-      url: `https://eth-ropsten.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
-      from:`0x${ROPSTEN_OWNER_KEY}`,
-      accounts: [`0x${ROPSTEN_OWNER_KEY}`, `0x${ROPSTEN_SECONDARY_KEY}`],
-      gas: 8000000,
-      timeout: 60 * 1000
-    }
-  }, ...module.exports.networks}
-
+  module.exports.networks = {
+    ...{
+      ropsten: {
+        url: `https://eth-ropsten.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
+        from: `0x${ROPSTEN_OWNER_KEY}`,
+        accounts: [`0x${ROPSTEN_OWNER_KEY}`, `0x${ROPSTEN_SECONDARY_KEY}`],
+        gas: 8000000,
+        timeout: 60 * 1000
+      }
+    },
+    ...module.exports.networks
+  }
 }

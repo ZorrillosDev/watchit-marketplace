@@ -23,7 +23,7 @@ describe('FTokens', function () {
 
   const deployProxyContract = async (contractName) => {
     const _contractFactory = await ethers.getContractFactory(contractName)
-    if(TESTNET && TESTNET_CONTRACT_FT) {
+    if (TESTNET && TESTNET_CONTRACT_FT) {
       // Run test over existing contract in testnet
       return _contractFactory.attach(TESTNET_CONTRACT_FT)
     }
@@ -39,20 +39,18 @@ describe('FTokens', function () {
     tokensF = await deployProxyContract('FToken')
   })
 
-
   describe('FungibleTokens', function () {
     describe.skip('Upgradeable', function () {
-
-        let v2NFT,  currentNextId;
-        before(async function () {
-          // Mint for v1 must persist in v2 state
-          const minter = await tokensF.mint(owner.address, 1, []);
-          await minter.wait() // wait until transaction mined
-          currentNextId = await tokensF.nextTokenId(); // v1 currentNextId
-          const v2Factory = await ethers.getContractFactory('FTokenV2');
-          v2NFT = await upgrades.upgradeProxy(tokensF.address, v2Factory);
-          v2NFT.attach(tokensF.address)
-        })
+      let v2NFT, currentNextId
+      before(async function () {
+        // Mint for v1 must persist in v2 state
+        const minter = await tokensF.mint(owner.address, 1, [])
+        await minter.wait() // wait until transaction mined
+        currentNextId = await tokensF.nextTokenId() // v1 currentNextId
+        const v2Factory = await ethers.getContractFactory('FTokenV2')
+        v2NFT = await upgrades.upgradeProxy(tokensF.address, v2Factory)
+        v2NFT.attach(tokensF.address)
+      })
 
       it('should retrieve a NFT previously minted', async function () {
         const previousContractNextId = await v2NFT.nextTokenId()
