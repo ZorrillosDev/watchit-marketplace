@@ -8,6 +8,7 @@ require('solidity-coverage')
 require('hardhat-contract-sizer')
 require('@openzeppelin/hardhat-upgrades')
 
+const GOERLI_ALCHEMY_API_KEY = process.env.GOERLI_ALCHEMY_API_KEY
 const RINKEBY_ALCHEMY_API_KEY = process.env.RINKEBY_ALCHEMY_API_KEY
 const ROPSTEN_ALCHEMY_API_KEY = process.env.ROPSTEN_ALCHEMY_API_KEY
 const OWNER_KEY = process.env.OWNER_KEY
