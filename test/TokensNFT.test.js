@@ -3,9 +3,14 @@
 const { expect } = require('chai')
 const bs58 = require('bs58')
 
-const TESTNET = (network.name === 'rinkeby') || (network.name === 'ropsten')
+const TESTNET =
+  (network.name === 'rinkeby') || (network.name === 'ropsten') || (network.name === 'goerli')
 
 const TESTNET_CONTRACT_NFT = (() => {
+  if (network.name === 'goerli') {
+    return process.env.GOERLI_CONTRACT_NFT
+  }
+
   if (network.name === 'rinkeby') {
     return process.env.RINKEBY_CONTRACT_NFT
   }
