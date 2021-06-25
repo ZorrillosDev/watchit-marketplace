@@ -8,10 +8,10 @@ require('solidity-coverage')
 require('hardhat-contract-sizer')
 require('@openzeppelin/hardhat-upgrades')
 
-const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY
-const ROPSTEN_OWNER_KEY = process.env.ROPSTEN_OWNER_KEY
-const ROPSTEN_SECONDARY_KEY = process.env.ROPSTEN_ACCOUNT1_KEY
-const TESTNET = process.env.TESTNET
+const RINKEBY_ALCHEMY_API_KEY = process.env.RINKEBY_ALCHEMY_API_KEY
+const ROPSTEN_ALCHEMY_API_KEY = process.env.ROPSTEN_ALCHEMY_API_KEY
+const OWNER_KEY = process.env.OWNER_KEY
+const SECONDARY_KEY = process.env.SECONDARY_KEY
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -56,17 +56,32 @@ module.exports = {
   }
 }
 
-if (TESTNET) {
+if (ROPSTEN_ALCHEMY_API_KEY && OWNER_KEY && SECONDARY_KEY) {
   module.exports.networks = {
     ...{
       ropsten: {
-        url: `https://eth-ropsten.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
-        from: `0x${ROPSTEN_OWNER_KEY}`,
-        accounts: [`0x${ROPSTEN_OWNER_KEY}`, `0x${ROPSTEN_SECONDARY_KEY}`],
+        url: `https://eth-ropsten.alchemyapi.io/v2/${ROPSTEN_ALCHEMY_API_KEY}`,
+        from: `0x${OWNER_KEY}`,
+        accounts: [`0x${OWNER_KEY}`, `0x${SECONDARY_KEY}`],
         gas: 8000000,
         timeout: 60 * 1000
-      }
-    },
-    ...module.exports.networks
+      },
+      ...module.exports.networks
+    }
+  }
+}
+
+if (RINKEBY_ALCHEMY_API_KEY && OWNER_KEY && SECONDARY_KEY) {
+  module.exports.networks = {
+    ...{
+      rinkeby: {
+        url: `https://eth-rinkeby.alchemyapi.io/v2/${RINKEBY_ALCHEMY_API_KEY}`,
+        from: `0x${OWNER_KEY}`,
+        accounts: [`0x${OWNER_KEY}`, `0x${SECONDARY_KEY}`],
+        gas: 8000000,
+        timeout: 60 * 1000
+      },
+      ...module.exports.networks
+    }
   }
 }
