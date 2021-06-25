@@ -3,11 +3,16 @@
 const { expect } = require('chai')
 
 const TESTNET =
-  (network.name === 'rinkeby') || (network.name === 'ropsten') || (network.name === 'goerli')
+  (network.name === 'rinkeby') || (network.name === 'ropsten')
+  || (network.name === 'goerli') || (network.name === 'kovan')
 
 const TESTNET_CONTRACT_FT = (() => {
   if (network.name === 'goerli') {
     return process.env.GOERLI_CONTRACT_FT
+  }
+
+  if (network.name === 'kovan') {
+    return process.env.KOVAN_CONTRACT_FT
   }
 
   if (network.name === 'rinkeby') {

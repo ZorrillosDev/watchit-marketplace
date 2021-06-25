@@ -11,6 +11,7 @@
     "test": "make test",
     "test:coverage": "nyc hardhat coverage",
     "test:goerli": "npx hardhat test --network goerli",
+    "test:kovan": "npx hardhat test --network kovan",
     "test:rinkeby": "npx hardhat test --network rinkeby",
     "test:ropsten": "npx hardhat test --network ropsten"
   },
