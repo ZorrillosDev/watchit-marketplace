@@ -2,9 +2,9 @@
 
 pragma solidity ^0.8.0;
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 
-abstract contract NFT is ERC1155Upgradeable, AccessControl {
+contract NFT is ERC1155Upgradeable, AccessControlUpgradeable {
     uint8 internal constant NFT_SUPPLY = 1;
     mapping(uint256=>bytes32) private nftURICollection;
     mapping(uint256=>address) private creators;
@@ -21,7 +21,7 @@ abstract contract NFT is ERC1155Upgradeable, AccessControl {
         return creators[id] != address(0);
     }
 
-    function getNFTUri(uint256 id) public view virtual returns (bytes32){
+    function getNFTUri(uint256 id) public view returns (bytes32){
         require(isOwnerOf(id), "Only owner can view NFT url");
         return nftURICollection[id];
     }
@@ -32,18 +32,11 @@ abstract contract NFT is ERC1155Upgradeable, AccessControl {
         creators[id] = account; // set creator for current NFT
     }
 
-    function _msgSender() internal view override(Context, ContextUpgradeable) returns (address) {
-        return super._msgSender();
-    }
-
-    function _msgData() internal view override(Context, ContextUpgradeable) returns (bytes calldata) {
-       return super._msgData();
-    }
 
     function supportsInterface(bytes4 interfaceId)
     public
     view
-    override(ERC1155Upgradeable, AccessControl)
+    override(ERC1155Upgradeable, AccessControlUpgradeable)
     returns (bool)
     {
         return super.supportsInterface(interfaceId);

@@ -2,10 +2,20 @@
 pragma solidity ^0.8.0;
 import "./TokensERC1155.sol";
 
-abstract contract MintableNFT is NFT  {
+contract MintableNFT is NFT  {
     // Reserve first 10 tokens watchit
     uint256 public nextTokenId;
     bytes32 public constant NFT_MINTER_ROLE = keccak256("NFT_MINTER_ROLE");
+
+    function __MintableNFT_init() internal initializer {
+        __MintableNFT_init_unchained();
+    }
+
+    function __MintableNFT_init_unchained() internal initializer {
+        // See: "Avoid Initial Values in Field Declaration.." at
+        // https://docs.openzeppelin.com/upgrades-plugins/1.x/writing-upgradeable
+        nextTokenId = 11;
+    }
 
     function mint(address account, bytes32  _uri, bytes memory data)
     public

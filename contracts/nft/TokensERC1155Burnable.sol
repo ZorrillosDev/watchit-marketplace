@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 import "./TokensERC1155.sol";
 
-abstract contract BurnableNFT is NFT  {
+contract BurnableNFT is NFT  {
 
     function burn(address account, uint256 id) public {
         bool isAdmin = hasRole(DEFAULT_ADMIN_ROLE, msg.sender);
