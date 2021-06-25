@@ -2,30 +2,10 @@
 
 const { expect } = require('chai')
 const bs58 = require('bs58')
+const { isTestnet, getNFTContractAddress } = require('./utils')
 
-const TESTNET =
-  (network.name === 'rinkeby') || (network.name === 'ropsten') ||
-  (network.name === 'goerli') || (network.name === 'kovan')
-
-const TESTNET_CONTRACT_NFT = (() => {
-  if (network.name === 'goerli') {
-    return process.env.GOERLI_CONTRACT_NFT
-  }
-
-  if (network.name === 'kovan') {
-    return process.env.KOVAN_CONTRACT_NFT
-  }
-
-  if (network.name === 'rinkeby') {
-    return process.env.RINKEBY_CONTRACT_NFT
-  }
-
-  if (network.name === 'ropsten') {
-    return process.env.ROPSTEN_CONTRACT_NFT
-  }
-
-  return undefined
-})()
+const TESTNET = isTestnet(network.name)
+const CONTRACT_ADDRESS = getNFTContractAddress(network.name)
 
 let txOptions = {}
 if (TESTNET) {
@@ -60,22 +40,11 @@ describe('NFTokens', function () {
     return await tokensNF.nextTokenId()
   }
 
-  const deployProxyContract = async (contractName) => {
-    const _contractFactory = await ethers.getContractFactory(contractName)
-    if (TESTNET && TESTNET_CONTRACT_NFT) {
-      // Run test over existing contract in testnet
-      return _contractFactory.attach(TESTNET_CONTRACT_NFT)
-    }
-    const _contract = await upgrades.deployProxy(_contractFactory)
-    await _contract.deployed()
-    console.log(`${contractName} address: ${_contract.address}`)
-    return _contract
-  }
-
   before(async function () {
     [owner, addr1] = await ethers.getSigners()
     // Deploy FT and NFT contracts
-    tokensNF = await deployProxyContract('NFToken')
+    const NFToken = await ethers.getContractFactory('NFToken')
+    tokensNF = NFToken.attach(CONTRACT_ADDRESS)
   })
 
   describe('NonFungibleTokens', function () {
