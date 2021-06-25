@@ -35,11 +35,14 @@ jobs:
       - run: npm ci
       - run: npm run test:${{ matrix.network }}
         env:
+          GOERLI_ALCHEMY_API_KEY: ${{ secrets.GOERLI_ALCHEMY_API_KEY }}
           RINKEBY_ALCHEMY_API_KEY: ${{ secrets.RINKEBY_ALCHEMY_API_KEY }}
           ROPSTEN_ALCHEMY_API_KEY: ${{ secrets.ROPSTEN_ALCHEMY_API_KEY }}
           OWNER_KEY: ${{ secrets.OWNER_KEY }}
           SECONDARY_KEY: ${{ secrets.SECONDARY_KEY }}
-          RINKEBY_CONTRACT_NFT: ${{ secrets.ROPSTEN_CONTRACT_NFT }}
+          GOERLI_CONTRACT_NFT: ${{ secrets.GOERLI_CONTRACT_NFT }}
+          GOERLI_CONTRACT_FT: ${{ secrets.GOERLI_CONTRACT_FT }}
+          RINKEBY_CONTRACT_NFT: ${{ secrets.RINKEBY_CONTRACT_NFT }}
           RINKEBY_CONTRACT_FT: ${{ secrets.RINKEBY_CONTRACT_FT }}
           ROPSTEN_CONTRACT_NFT: ${{ secrets.ROPSTEN_CONTRACT_NFT }}
           ROPSTEN_CONTRACT_FT: ${{ secrets.ROPSTEN_CONTRACT_FT }}
