@@ -10,8 +10,9 @@
     "lint:solidity": "solhint 'contracts/**/*.sol'",
     "test": "make test",
     "test:coverage": "nyc hardhat coverage",
-    "test:rinkeby": "TESTNET=true npx hardhat test --network rinkeby",
-    "test:ropsten": "TESTNET=true npx hardhat test --network ropsten"
+    "test:goerli": "npx hardhat test --network goerli",
+    "test:rinkeby": "npx hardhat test --network rinkeby",
+    "test:ropsten": "npx hardhat test --network ropsten"
   },
   "engines": {
     "node": ">=12.0.0"

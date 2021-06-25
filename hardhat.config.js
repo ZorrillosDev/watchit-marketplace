@@ -8,6 +8,7 @@ require('solidity-coverage')
 require('hardhat-contract-sizer')
 require('@openzeppelin/hardhat-upgrades')
 
+const GOERLI_ALCHEMY_API_KEY = process.env.GOERLI_ALCHEMY_API_KEY
 const RINKEBY_ALCHEMY_API_KEY = process.env.RINKEBY_ALCHEMY_API_KEY
 const ROPSTEN_ALCHEMY_API_KEY = process.env.ROPSTEN_ALCHEMY_API_KEY
 const OWNER_KEY = process.env.OWNER_KEY
@@ -76,6 +77,21 @@ if (RINKEBY_ALCHEMY_API_KEY && OWNER_KEY && SECONDARY_KEY) {
     ...{
       rinkeby: {
         url: `https://eth-rinkeby.alchemyapi.io/v2/${RINKEBY_ALCHEMY_API_KEY}`,
+        from: `0x${OWNER_KEY}`,
+        accounts: [`0x${OWNER_KEY}`, `0x${SECONDARY_KEY}`],
+        gas: 8000000,
+        timeout: 60 * 1000
+      },
+      ...module.exports.networks
+    }
+  }
+}
+
+if (GOERLI_ALCHEMY_API_KEY && OWNER_KEY && SECONDARY_KEY) {
+  module.exports.networks = {
+    ...{
+      goerli: {
+        url: `https://eth-goerli.alchemyapi.io/v2/${GOERLI_ALCHEMY_API_KEY}`,
         from: `0x${OWNER_KEY}`,
         accounts: [`0x${OWNER_KEY}`, `0x${SECONDARY_KEY}`],
         gas: 8000000,

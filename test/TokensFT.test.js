@@ -2,9 +2,14 @@
 
 const { expect } = require('chai')
 
-const TESTNET = (network.name === 'rinkeby') || (network.name === 'ropsten')
+const TESTNET =
+  (network.name === 'rinkeby') || (network.name === 'ropsten') || (network.name === 'goerli')
 
 const TESTNET_CONTRACT_FT = (() => {
+  if (network.name === 'goerli') {
+    return process.env.GOERLI_CONTRACT_FT
+  }
+
   if (network.name === 'rinkeby') {
     return process.env.RINKEBY_CONTRACT_FT
   }
