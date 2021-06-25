@@ -1,8 +1,20 @@
-/* global ethers, upgrades */
+/* global ethers, upgrades, network */
 
 const { expect } = require('chai')
-const TESTNET = process.env.TESTNET
-const TESTNET_CONTRACT_FT = process.env.TESNET_CONTRACT_FT
+
+const TESTNET = (network.name === 'rinkeby') || (network.name === 'ropsten')
+
+const TESTNET_CONTRACT_FT = (() => {
+  if (network.name === 'rinkeby') {
+    return process.env.RINKEBY_CONTRACT_FT
+  }
+
+  if (network.name === 'ropsten') {
+    return process.env.ROPSTEN_CONTRACT_FT
+  }
+
+  return undefined
+})()
 
 let txOptions = {}
 if (TESTNET) {
