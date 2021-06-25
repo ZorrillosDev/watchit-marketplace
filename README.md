@@ -1,5 +1,22 @@
 # contracts
 
+## Addresses
+
+### Ropsten
+
+* NFT: https://ropsten.etherscan.io/address/0x248f2D5ee046dEe4EffCA3841fBdB4A013088F6A
+* FT: https://ropsten.etherscan.io/address/0x9e6565Df90522B5b8d47D64d2DF6DaF7e336BC76
+
+### Rinkeby
+
+* NFT: https://rinkeby.etherscan.io/address/0xea016851d96464a34a827C2286150c1f058c268e
+* FT: https://rinkeby.etherscan.io/address/0xe689A99d55eD363728f45909f7D2f0d35429E2D1
+
+### Goerli
+
+* NFT: https://goerli.etherscan.io/address/0x7a43b213DDc8C8875E33f6A10736e2D491D4bBA2
+* FT: https://goerli.etherscan.io/address/0x248f2D5ee046dEe4EffCA3841fBdB4A013088F6A
+
 ## Install
 
 ```bash
