@@ -14,8 +14,8 @@
 
 ### Goerli
 
-* NFT: https://goerli.etherscan.io/address/0x7a43b213DDc8C8875E33f6A10736e2D491D4bBA2
-* FT: https://goerli.etherscan.io/address/0x248f2D5ee046dEe4EffCA3841fBdB4A013088F6A
+* NFT: https://goerli.etherscan.io/address/0x951C8b61b7162C4Ae9346588BEA2fA6EDfD0BE75
+* FT: https://goerli.etherscan.io/address/0x1BE822c85773566bB180259e9aa70a05bF504831
 
 ## Install
 
