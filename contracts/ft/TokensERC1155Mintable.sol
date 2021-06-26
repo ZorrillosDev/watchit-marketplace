@@ -7,6 +7,9 @@ contract MintableFT is FT  {
     uint256 public nextTokenId;
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
+    event Mint(address indexed _by, uint256 _tokenId, uint256 _amount, bytes data);
+    event MintBatch(address indexed _by, uint[] _ids, uint256[] _amount, bytes data);
+
     function __MintableNFT_init() internal initializer {
         __MintableNFT_init_unchained();
     }
@@ -22,6 +25,8 @@ contract MintableFT is FT  {
     {
         require(hasRole(MINTER_ROLE, msg.sender));
         _mint(account, nextTokenId, amount, data);
+        emit Mint(account, nextTokenId, amount, data);
+
         nextTokenId += 1;
     }
 
@@ -38,6 +43,8 @@ contract MintableFT is FT  {
         }
 
         _mintBatch(to, ids, amounts, data);
+        emit MintBatch(to, ids, amounts, data);
+
         nextTokenId += numToMint;
     }
 
