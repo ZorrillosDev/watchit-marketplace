@@ -42,7 +42,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "hh compile && npm test"
+      "pre-commit": "hh compile && npm run lint:js:fix && npm test"
     }
   },
   "standard": {
