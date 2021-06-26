@@ -6,7 +6,7 @@ endif
 
 .PHONY: test
 test:
-	npx hardhat node &
+	npx hardhat node > /dev/null &
 	# Deploy Fungible Token
 	export LOCALHOST_CONTRACT_FT=`npx hardhat run --network localhost scripts/deploy-ft.js | tail -1` \
 		&& export LOCALHOST_CONTRACT_NFT=`npx hardhat run --network localhost scripts/deploy-nft.js | tail -1` \
