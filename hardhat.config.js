@@ -107,7 +107,7 @@ if (KOVAN_ALCHEMY_API_KEY && OWNER_KEY && SECONDARY_KEY) {
   module.exports.networks = {
     ...{
       kovan: {
-        url: `https://eth-goerli.alchemyapi.io/v2/${KOVAN_ALCHEMY_API_KEY}`,
+        url: `https://eth-kovan.alchemyapi.io/v2/${KOVAN_ALCHEMY_API_KEY}`,
         from: `0x${OWNER_KEY}`,
         accounts: [`0x${OWNER_KEY}`, `0x${SECONDARY_KEY}`],
         gas: 8000000,
