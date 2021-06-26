@@ -1,5 +1,5 @@
 const { ethers, network, upgrades } = require('hardhat')
-const { getNFTContractAddress, getCurrentVersion, runUpgradeTest } = require('../test/utils')
+const { getNFTContractAddress, runUpgradeTest } = require('../test/utils')
 
 async function main () {
 

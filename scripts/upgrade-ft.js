@@ -1,5 +1,5 @@
 const { ethers, network, upgrades } = require('hardhat')
-const { getFTContractAddress, getCurrentVersion, runUpgradeTest } = require('../test/utils')
+const { getFTContractAddress, runUpgradeTest } = require('../test/utils')
 
 async function main () {
   const FToken = await ethers.getContractFactory('FToken')
