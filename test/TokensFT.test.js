@@ -1,4 +1,4 @@
-/* global ethers, upgrades, network */
+/* global ethers, network */
 
 const { expect } = require('chai')
 const { isTestnet, getFTContractAddress } = require('./utils')
@@ -21,10 +21,10 @@ describe('FTokens', function () {
   }
 
   let tokensF
-  let owner, addr1
+  let owner
 
   before(async function () {
-    [owner, addr1] = await ethers.getSigners()
+    [owner] = await ethers.getSigners()
     const FToken = await ethers.getContractFactory('FToken')
     tokensF = FToken.attach(CONTRACT_ADDRESS)
   })
