@@ -53,10 +53,15 @@ async function getCurrentVersion(contract){
 
 
 async function runUpgradeTest(v1, v2){
+  let txOptions = {
+      gasLimit: 8000000,
+      gasPrice: 1000000000
+    }
+
   const version = await getCurrentVersion(v1)
   console.log('>> Current version:', version);
-  const currentTokenId = await v1.nextTokenId()
-  const newTokenId = await v2.nextTokenId()
+  const currentTokenId = await v1.nextTokenId(txOptions)
+  const newTokenId = await v2.nextTokenId(txOptions)
 
   //it('should retrieve a NFT previously minted', async function () {
   if (currentTokenId.toString() !== newTokenId.toString()){
@@ -67,9 +72,9 @@ async function runUpgradeTest(v1, v2){
   }
 
   // it('should allow call added method `upgrade`', async function () {
-  const upgrade = await v2.upgrade()
+  const upgrade = await v2.upgrade(txOptions)
   await upgrade.wait() // wait for tx
-  const newVersion = await v2.version()
+  const newVersion = await v2.version(txOptions)
   if (+version.toString() === +newVersion.toString()){
     console.error('expected version increment ')
     process.exit(1)
