@@ -1,11 +1,17 @@
 const { ethers, network, upgrades } = require('hardhat')
-const { getFTContractAddress } = require('../test/utils')
+const { getFTContractAddress, getCurrentVersion, runUpgradeTest } = require('../test/utils')
 
 async function main () {
   const FToken = await ethers.getContractFactory('FToken')
-  const ftoken = await upgrades.upgradeProxy(getFTContractAddress(network.name), FToken)
+  const currentContract = getFTContractAddress(network.name)
+  const attachedContract = FToken.attach(currentContract)
 
-  process.stdout.write(ftoken.address)
+  // Upgraded contract
+  const upgradedFT = await upgrades.upgradeProxy(currentContract, FToken)
+  await runUpgradeTest(attachedContract, upgradedFT)
+
+  console.log(' > FToken upgraded')
+  process.stdout.write(upgradedFT.address)
 }
 
 main()

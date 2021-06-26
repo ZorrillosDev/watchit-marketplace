@@ -48,36 +48,6 @@ describe('NFTokens', function () {
   })
 
   describe('NonFungibleTokens', function () {
-    describe.skip('Upgradeable', function () {
-      let v2NFT, currentNextId
-      before(async function () {
-        // Mint for v1 must persist in v2 state
-        currentNextId = await nftMinter(tokenUriA)
-        const v2Factory = await ethers.getContractFactory('NFTokenV2')
-        v2NFT = await upgrades.upgradeProxy(tokensNF.address, v2Factory)
-        v2NFT.attach(tokensNF.address)
-      })
-
-      it('should retrieve a NFT previously minted', async function () {
-        const previousContractNextId = await v2NFT.nextTokenId()
-        expect(previousContractNextId).to.equal(currentNextId)
-      })
-
-      it('should allow call added method in upgrade `myUpgradedTokenId`', async function () {
-        const previousContractNextId = await v2NFT.myUpgradedTokenId()
-        expect(previousContractNextId).to.equal(currentNextId)
-      })
-
-      it('should cannot upgrade if not owner', async function () {
-        try {
-          const v2Factory = await ethers.getContractFactory('NFTokenV2', { signer: addr1 })
-          await upgrades.upgradeProxy(tokensNF.address, v2Factory)
-        } catch (err) {
-          expect(err.message).to.contain('Ownable: caller is not the owner')
-        }
-      })
-    })
-
     describe('Roles', function () {
       describe('NFT_MINTER_ROLE', function () {
         it('cannot mint NFT without proper permissions', async function () {

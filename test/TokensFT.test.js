@@ -30,40 +30,6 @@ describe('FTokens', function () {
   })
 
   describe('FungibleTokens', function () {
-    describe.skip('Upgradeable', function () {
-      let v2NFT, currentNextId
-      before(async function () {
-        // Mint for v1 must persist in v2 state
-        const minter = await tokensF.mint(owner.address, 1, [])
-        await minter.wait() // wait until transaction mined
-        currentNextId = await tokensF.nextTokenId() // v1 currentNextId
-        const v2Factory = await ethers.getContractFactory('FTokenV2')
-        v2NFT = await upgrades.upgradeProxy(tokensF.address, v2Factory)
-        v2NFT.attach(tokensF.address)
-      })
-
-      it('should retrieve a NFT previously minted', async function () {
-        const previousContractNextId = await v2NFT.nextTokenId()
-        const previousBalance = await v2NFT.balanceOf(owner.address, currentNextId - 1)
-        expect(previousContractNextId).to.equal(currentNextId)
-        expect(previousBalance).to.equal('1')
-      })
-
-      it('should allow call added method in upgrade `myUpgradedTokenId`', async function () {
-        const previousContractNextId = await v2NFT.myUpgradedTokenId()
-        expect(previousContractNextId).to.equal(currentNextId)
-      })
-
-      it('should cannot upgrade if not owner', async function () {
-        try {
-          const v2Factory = await ethers.getContractFactory('FTokenV2', { signer: addr1 })
-          await upgrades.upgradeProxy(tokensF.address, v2Factory)
-        } catch (err) {
-          expect(err.message).to.contain('Ownable: caller is not the owner')
-        }
-      })
-    })
-
     describe('Mint', function () {
       it('should increments the nextTokenId after each mint', async function () {
         const initialTokenId = await tokensF.nextTokenId()
