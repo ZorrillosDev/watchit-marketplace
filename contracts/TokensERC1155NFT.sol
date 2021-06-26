@@ -16,7 +16,7 @@ contract NFToken is TransferableNFT, MintableNFT, BurnableNFT {
     }
 
     function upgrade() public{
-        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "version cannot be updated.");
+        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Version cannot be updated.");
         version++;
     }
 
