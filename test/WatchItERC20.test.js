@@ -35,6 +35,11 @@ describe('WatchItERC20', function () {
 
   describe('Transfer', function () {
     const transferAmount = 10
+    let initialBlockNumber
+
+    before(async () => {
+      initialBlockNumber = await ethers.provider.getBlockNumber()
+    })
 
     it('allows owner to transfer tokens to account 1', async function () {
       const initialBalance = await WATCHIT.balanceOf(account1.address)
@@ -68,6 +73,21 @@ describe('WatchItERC20', function () {
 
       const endingBalance = await WATCHIT.balanceOf(account1.address)
       expect(endingBalance).to.equal(initialBalance - 10)
+    })
+
+    it('emits the Transfer event for the two previous transactions', async () => {
+      const endingBlockNumber = await ethers.provider.getBlockNumber()
+      expect(endingBlockNumber).to.be.above(initialBlockNumber)
+
+      const transferFilter = WATCHIT.filters.Transfer()
+      const events = await WATCHIT.queryFilter(transferFilter)
+
+      const recentEvents = events
+        .filter(e => (initialBlockNumber < e.blockNumber) && (e.blockNumber <= endingBlockNumber))
+
+      expect(recentEvents.length).to.be.at.least(2)
+      expect(recentEvents.filter(e => e.args.to === owner.address).length).to.equal(1)
+      expect(recentEvents.filter(e => e.args.to === account1.address).length).to.equal(1)
     })
   })
 
