@@ -5,7 +5,7 @@ const { getFTContractAddress } = require('./utils')
 const CONTRACT_ADDRESS = getFTContractAddress(network.name)
 
 // see: https://github.com/mawrkus/js-unit-testing-guide
-describe('WatchItToken', function () {
+describe('WatchItERC20', function () {
   this.timeout(0)
 
   let WATCHIT
@@ -17,7 +17,7 @@ describe('WatchItToken', function () {
     ;[owner, account1] = await ethers.getSigners()
 
     txOptions.gasPrice = await ethers.provider.getGasPrice()
-    const WatchIt = await ethers.getContractFactory('WatchItToken')
+    const WatchIt = await ethers.getContractFactory('WatchItERC20')
     WATCHIT = WatchIt.attach(CONTRACT_ADDRESS)
   })
 
