@@ -130,7 +130,12 @@ describe('WatchItERC20', function () {
   })
 
   describe('Approval & Allowance', function () {
-    const allowanceIncrease = 1000
+    const amount = 1000
+    let initialBlockNumber
+
+    before(async () => {
+      initialBlockNumber = await ethers.provider.getBlockNumber()
+    })
 
     // Always set allowance to zero,then increase it
     // https://docs.google.com/document/d/1YLPtQxZu1UAvO9cZ1O2RPXBbT0mooh4DYKjA_jp-RLM/edit
@@ -151,15 +156,15 @@ describe('WatchItERC20', function () {
       txOptions.gasLimit = await WATCHIT
         .connect(owner)
         .estimateGas
-        .increaseAllowance(account1.address, allowanceIncrease)
+        .increaseAllowance(account1.address, amount)
 
       const tx1 = await WATCHIT
         .connect(owner)
-        .increaseAllowance(account1.address, allowanceIncrease, txOptions)
+        .increaseAllowance(account1.address, amount, txOptions)
       await tx1.wait()
 
       const allowance = await WATCHIT.allowance(owner.address, account1.address)
-      expect(allowance).to.equal(initialAllowance.add(allowanceIncrease))
+      expect(allowance).to.equal(initialAllowance.add(amount))
     })
 
     it('allows account1 to transferFrom owner 50% of allowance', async () => {
@@ -194,6 +199,22 @@ describe('WatchItERC20', function () {
 
       const allowance = await WATCHIT.allowance(owner.address, account1.address)
       expect(allowance).to.equal(0)
+    })
+
+    it('emits the Approval event for the four previous transactions', async () => {
+      const endingBlockNumber = await ethers.provider.getBlockNumber()
+      expect(endingBlockNumber).to.be.above(initialBlockNumber)
+
+      const approvalFilter = WATCHIT.filters.Approval()
+      const events = await WATCHIT.queryFilter(approvalFilter)
+
+      const recentEvents = events
+        .filter(e => (initialBlockNumber < e.blockNumber) && (e.blockNumber <= endingBlockNumber))
+
+      expect(recentEvents.length).to.be.at.least(4)
+      expect(recentEvents.filter(e => e.args.value.eq(0)).length).to.be.at.least(2)
+      expect(recentEvents.filter(e => e.args.value.eq(amount)).length).to.be.at.least(1)
+      expect(recentEvents.filter(e => e.args.value.eq(amount / 2)).length).to.be.at.least(1)
     })
   })
 
