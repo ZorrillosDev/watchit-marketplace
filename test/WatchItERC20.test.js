@@ -71,6 +71,44 @@ describe('WatchItERC20', function () {
     })
   })
 
+  describe('Mint & Burn', function () {
+    const amount = 1000
+
+    it('allows owner to mint tokens', async () => {
+      const initialBalance = await WATCHIT.balanceOf(owner.address)
+
+      txOptions.gasLimit = await WATCHIT
+        .connect(owner)
+        .estimateGas
+        .mint(owner.address, amount)
+
+      const tx0 = await WATCHIT
+        .connect(owner)
+        .mint(owner.address, amount)
+      await tx0.wait()
+
+      const endingBalance = await WATCHIT.balanceOf(owner.address)
+      expect(endingBalance).to.equal(initialBalance.add(amount))
+    })
+
+    it('allows owner to burn tokens', async () => {
+      const initialBalance = await WATCHIT.balanceOf(owner.address)
+
+      txOptions.gasLimit = await WATCHIT
+        .connect(owner)
+        .estimateGas
+        .burn(owner.address, amount)
+
+      const tx0 = await WATCHIT
+        .connect(owner)
+        .burn(owner.address, amount)
+      await tx0.wait()
+
+      const endingBalance = await WATCHIT.balanceOf(owner.address)
+      expect(endingBalance).to.equal(initialBalance.sub(amount))
+    })
+  })
+
   describe('Approval & Allowance', function () {
     const allowanceIncrease = 1000
 
