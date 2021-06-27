@@ -81,22 +81,7 @@ describe('WatchitERC1155', function () {
     })
   })
 
-  describe('Burn', function () {
-    it('should decrement balance after burn NFT ', async function () {
-      const mint = await tokensNF.mint(addr1.address, toBase58(tokenUriA), [])
-      await mint.wait() // wait until transaction mined
-      const nextTokenId = await tokensNF.nextTokenId()
-      const currentTokenId = nextTokenId - 1
-
-      // Try burn previous minted NFT
-      const burnTx = await tokensNF.connect(owner).burn(addr1.address, currentTokenId)
-      await burnTx.wait() // wait until transaction mined
-      const newBurnedBalance = await tokensNF.balanceOf(addr1.address, currentTokenId)
-      expect(newBurnedBalance.toString()).to.equal('0')
-    })
-  })
-
-  describe('Mint', function () {
+  describe('Mint & Burn', function () {
     it('should mint NFT valid mapping CID', async function () {
       const tokenIdA = await nftMinter(tokenUriA)
         const tokenIdB = await nftMinter(tokenUriB) // eslint-disable-line
@@ -119,6 +104,19 @@ describe('WatchitERC1155', function () {
       expect(fromBase58(rawFetchA)).to.equal(tokenUriA)
       expect(fromBase58(rawFetchB)).to.equal(tokenUriB)
       expect(nextTokenId).to.equal(initialTokenId.add(uris.length))
+    })
+
+    it('should decrement balance after burn NFT ', async function () {
+      const mint = await tokensNF.mint(addr1.address, toBase58(tokenUriA), [])
+      await mint.wait() // wait until transaction mined
+      const nextTokenId = await tokensNF.nextTokenId()
+      const currentTokenId = nextTokenId - 1
+
+      // Try burn previous minted NFT
+      const burnTx = await tokensNF.connect(owner).burn(addr1.address, currentTokenId)
+      await burnTx.wait() // wait until transaction mined
+      const newBurnedBalance = await tokensNF.balanceOf(addr1.address, currentTokenId)
+      expect(newBurnedBalance.toString()).to.equal('0')
     })
   })
 
