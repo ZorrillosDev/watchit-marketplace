@@ -1,3 +1,7 @@
+export SHELL:=/bin/bash
+
+.ONESHELL:
+
 # Include env file
 ifneq (,$(wildcard ./.env))
     include .env
@@ -6,11 +10,14 @@ endif
 
 .PHONY: test
 test:
+	function tearDown {
+		kill `lsof -i:8545 -t`
+	}
+	trap tearDown EXIT
 	npx hardhat node > /dev/null &
-	export LOCALHOST_CONTRACT_FT=`npx hardhat run --network localhost scripts/deploy-ft.js | tail -1` \
-		&& export LOCALHOST_CONTRACT_NFT=`npx hardhat run --network localhost scripts/deploy-nft.js | tail -1` \
-		&& npx hardhat test --network localhost
-	kill `lsof -i:8545 -t`
+	export LOCALHOST_CONTRACT_FT=`npx hardhat run --network localhost scripts/deploy-ft.js | tail -1`
+	export LOCALHOST_CONTRACT_NFT=`npx hardhat run --network localhost scripts/deploy-nft.js | tail -1`
+	npx hardhat test --network localhost
 
 clean:
 	rm -rf cache
