@@ -49,9 +49,13 @@ module.exports = {
   },
   networks: {
     hardhat: {
-      gas: 2000000,
-      gasPrice: 1000000000,
-      blockGasLimit: 8000000,
+      mining: {
+        auto: false,
+        interval: [500, 2000]
+      },
+      // gas: 2000000,
+      // gasPrice: 1000000000,
+      // blockGasLimit: 8000000,
       throwOnTransactionFailures: true,
       throwOnCallFailures: true
     }
