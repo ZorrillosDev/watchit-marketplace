@@ -1,73 +1,155 @@
 /* global ethers, network */
 
 const { expect } = require('chai')
-const { isTestnet, getFTContractAddress } = require('./utils')
-
-const TESTNET = isTestnet(network.name)
+const { getFTContractAddress } = require('./utils')
 const CONTRACT_ADDRESS = getFTContractAddress(network.name)
 
-let txOptions = {}
-if (TESTNET) {
-  txOptions = {
-    gasLimit: 8000000,
-    gasPrice: 1000000000
-  }
-}
-
 // see: https://github.com/mawrkus/js-unit-testing-guide
-describe('FTokens', function () {
-  if (TESTNET) {
-    this.timeout(0)
-  }
+describe('WatchItToken', function () {
+  this.timeout(0)
 
-  let tokensF
-  let owner
+  let WATCHIT
+  let owner, account1
+
+  const txOptions = {}
 
   before(async function () {
-    [owner] = await ethers.getSigners()
-    const FToken = await ethers.getContractFactory('FToken')
-    tokensF = FToken.attach(CONTRACT_ADDRESS)
+    ;[owner, account1] = await ethers.getSigners()
+
+    txOptions.gasPrice = await ethers.provider.getGasPrice()
+    const WatchIt = await ethers.getContractFactory('WatchItToken')
+    WATCHIT = WatchIt.attach(CONTRACT_ADDRESS)
   })
 
-  describe('FungibleTokens', function () {
-    describe('Mint', function () {
-      it('should increments the nextTokenId after each mint', async function () {
-        const oldBlock = await ethers.provider.getBlockNumber()
+  describe('Details', function () {
+    it('is called "WatchIt"', async () => {
+      expect(await WATCHIT.name()).to.match(/WatchIt/)
+    })
 
-        const initialTokenId = await tokensF.nextTokenId()
-        const mintFT = await tokensF.mint(owner.address, 1, [], txOptions)
-        await mintFT.wait() // wait until transaction mined
+    it('has the symbol "WATCHIT"', async () => {
+      expect(await WATCHIT.symbol()).to.match(/WATCHIT/)
+    })
 
-        const newBlock = await ethers.provider.getBlockNumber()
+    it('has a decimal count of 18', async () => {
+      expect(await WATCHIT.decimals()).to.equal(18)
+    })
+  })
 
-        const filter = await tokensF.filters.Mint()
-        const events = await tokensF.queryFilter(filter)
-        const testEvents = events
-          .filter(block => oldBlock < block.blockNumber <= newBlock)
+  describe('Transfer', function () {
+    const transferAmount = 10
 
-        expect(testEvents.length).to.be.above(0)
-        expect(testEvents[0].event).to.equal('Mint')
-        expect(testEvents[0].eventSignature).to.equal('Mint(address,uint256,uint256,bytes)')
+    it('allows owner to transfer tokens to account 1', async function () {
+      const initialBalance = await WATCHIT.balanceOf(account1.address)
 
-        const nextTokenId = await tokensF.nextTokenId()
-        expect(nextTokenId).to.equal(initialTokenId.add(1))
-      })
+      txOptions.gasLimit = await WATCHIT
+        .connect(owner)
+        .estimateGas
+        .transfer(account1.address, transferAmount)
 
-      it('should increments nextTokenId properly after batch mint', async function () {
-        const initialTokenId = await tokensF.nextTokenId()
-        const amounts = [
-          1,
-          10,
-          100,
-          10000000,
-          '1000000000000000'
-        ]
+      const tx0 = await WATCHIT
+        .connect(owner)
+        .transfer(account1.address, transferAmount, txOptions)
+      await tx0.wait()
 
-        const mintBatch = await tokensF.mintBatch(owner.address, amounts, [], txOptions)
-        await mintBatch.wait() // wait until transaction mined
-        const nextTokenId = await tokensF.nextTokenId()
-        expect(nextTokenId).to.equal(initialTokenId.add(amounts.length))
-      })
+      const endingBalance = await WATCHIT.balanceOf(account1.address)
+      expect(endingBalance).to.equal(initialBalance + 10)
+    })
+
+    it('allows account1 to transfer tokens back', async () => {
+      const initialBalance = await WATCHIT.balanceOf(account1.address)
+
+      txOptions.gasLimit = await WATCHIT
+        .connect(account1)
+        .estimateGas
+        .transfer(owner.address, transferAmount)
+
+      const tx0 = await WATCHIT
+        .connect(account1)
+        .transfer(owner.address, transferAmount, txOptions)
+      await tx0.wait()
+
+      const endingBalance = await WATCHIT.balanceOf(account1.address)
+      expect(endingBalance).to.equal(initialBalance - 10)
+    })
+  })
+
+  describe('Approval & Allowance', function () {
+    const allowanceIncrease = 1000
+
+    // Always set allowance to zero,then increase it
+    // https://docs.google.com/document/d/1YLPtQxZu1UAvO9cZ1O2RPXBbT0mooh4DYKjA_jp-RLM/edit
+
+    it('allows addr1 to approve owner to spend 1000', async function () {
+      txOptions.gasLimit = await WATCHIT
+        .connect(owner)
+        .estimateGas
+        .approve(account1.address, 0)
+
+      const tx0 = await WATCHIT
+        .connect(owner)
+        .approve(account1.address, 0, txOptions)
+      await tx0.wait()
+
+      const initialAllowance = await WATCHIT.allowance(owner.address, account1.address)
+
+      txOptions.gasLimit = await WATCHIT
+        .connect(owner)
+        .estimateGas
+        .increaseAllowance(account1.address, allowanceIncrease)
+
+      const tx1 = await WATCHIT
+        .connect(owner)
+        .increaseAllowance(account1.address, allowanceIncrease, txOptions)
+      await tx1.wait()
+
+      const allowance = await WATCHIT.allowance(owner.address, account1.address)
+      expect(allowance).to.equal(initialAllowance.add(allowanceIncrease))
+    })
+
+    it('allows account1 to transferFrom owner 50% of allowance', async () => {
+      const initialAllowance = await WATCHIT.allowance(owner.address, account1.address)
+
+      txOptions.gasLimit = await WATCHIT
+        .connect(account1)
+        .estimateGas
+        .transferFrom(owner.address, account1.address, initialAllowance / 2)
+
+      const tx0 = await WATCHIT
+        .connect(account1)
+        .transferFrom(owner.address, account1.address, initialAllowance / 2)
+      await tx0.wait()
+
+      const allowance = await WATCHIT.allowance(owner.address, account1.address)
+      expect(allowance).to.equal(initialAllowance / 2)
+    })
+
+    it('decreases account1 allowance back to 0', async function () {
+      const initialAllowance = await WATCHIT.allowance(owner.address, account1.address)
+
+      txOptions.gasLimit = await WATCHIT
+        .connect(owner)
+        .estimateGas
+        .decreaseAllowance(account1.address, initialAllowance)
+
+      const tx2 = await WATCHIT
+        .connect(owner)
+        .decreaseAllowance(account1.address, initialAllowance, txOptions)
+      await tx2.wait()
+
+      const allowance = await WATCHIT.allowance(owner.address, account1.address)
+      expect(allowance).to.equal(0)
+    })
+  })
+
+  describe('Supply & Balance', function () {
+    it('initially mints a non-zero number of tokens', async function () {
+      const totalSupply = await WATCHIT.totalSupply()
+      expect(totalSupply).to.be.above(0)
+    })
+
+    it('keeps some of the balance with the creator', async function () {
+      const ownerBalance = await WATCHIT.balanceOf(owner.address)
+      expect(ownerBalance).to.be.above(0)
     })
   })
 })
