@@ -1,9 +1,15 @@
-const { ethers, upgrades } = require('hardhat')
+const { ethers,network, upgrades } = require('hardhat')
 
 async function main () {
   const WatchItERC11155 = await ethers.getContractFactory('WatchItERC1155')
   const WATCHIT = await upgrades.deployProxy(WatchItERC11155)
-  process.stdout.write(WATCHIT.address)
+  const localNetwork = network.name ==='localhost';
+
+  process.stdout.write(
+    localNetwork ?
+      WATCHIT.address :
+      `${network.name}:NFT:${WATCHIT.address}\n`
+  )
 }
 
 main()

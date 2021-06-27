@@ -16,7 +16,7 @@ if (TESTNET) {
 }
 
 // see: https://github.com/mawrkus/js-unit-testing-guide
-describe('WatchitERC11155', function () {
+describe('WatchitERC1155', function () {
   if (TESTNET) {
     this.timeout(0)
   }
