@@ -1,10 +1,9 @@
 const { ethers, upgrades } = require('hardhat')
 
 async function main () {
-  const NFToken = await ethers.getContractFactory('NFToken')
-  const nftoken = await upgrades.deployProxy(NFToken)
-
-  process.stdout.write(nftoken.address)
+  const WatchItERC11155 = await ethers.getContractFactory('WatchItERC1155')
+  const WATCHIT = await upgrades.deployProxy(WatchItERC11155)
+  process.stdout.write(WATCHIT.address)
 }
 
 main()

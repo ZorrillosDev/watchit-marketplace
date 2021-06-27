@@ -5,7 +5,7 @@ import "./nft/TokensERC1155Mintable.sol";
 import "./nft/TokensERC1155Transferable.sol";
 
 
-contract NFToken is TransferableNFT, MintableNFT, BurnableNFT {
+contract WatchItERC1155 is TransferableNFT, MintableNFT, BurnableNFT {
     uint32 public version;
 
     function initialize() public initializer {
