@@ -6,8 +6,6 @@ const CONTRACT_ADDRESS = getFTContractAddress(network.name)
 
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe('WatchItERC20', function () {
-  this.timeout(0)
-
   let WATCHIT
   let owner, account1
 

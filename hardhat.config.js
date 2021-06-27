@@ -59,6 +59,9 @@ module.exports = {
       throwOnTransactionFailures: true,
       throwOnCallFailures: true
     }
+  },
+  mocha: {
+    timeout: 0
   }
 }
 
