@@ -148,15 +148,15 @@ describe('WatchItERC20', function () {
       txOptions.gasLimit = await WATCHIT
         .connect(account1)
         .estimateGas
-        .transferFrom(owner.address, account1.address, initialAllowance / 2)
+        .transferFrom(owner.address, account1.address, initialAllowance.div(2))
 
       const tx0 = await WATCHIT
         .connect(account1)
-        .transferFrom(owner.address, account1.address, initialAllowance / 2)
+        .transferFrom(owner.address, account1.address, initialAllowance.div(2))
       await tx0.wait()
 
       const allowance = await WATCHIT.allowance(owner.address, account1.address)
-      expect(allowance).to.equal(initialAllowance / 2)
+      expect(allowance).to.equal(initialAllowance.div(2))
     })
 
     it('decreases account1 allowance back to 0', async function () {
