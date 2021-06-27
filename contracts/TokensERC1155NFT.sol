@@ -6,6 +6,7 @@ import "./nft/TokensERC1155Transferable.sol";
 
 
 contract NFToken is TransferableNFT, MintableNFT, BurnableNFT {
+    uint32 public version;
 
     function initialize() public initializer {
         __ERC1155_init("");
@@ -14,6 +15,10 @@ contract NFToken is TransferableNFT, MintableNFT, BurnableNFT {
         _setupRole(NFT_MINTER_ROLE, msg.sender);
     }
 
+    function upgrade() public{
+        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Version cannot be updated.");
+        version++;
+    }
 
     function setURI(string memory newuri) public {
         require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "URI cannot be updated.");
