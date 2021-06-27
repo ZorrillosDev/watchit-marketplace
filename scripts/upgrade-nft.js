@@ -23,9 +23,9 @@ async function main () {
   }
 
   // it('should allow call added method `upgrade`', async function () {
-  const upgrade = await v2.upgrade(txOptions)
+  const upgrade = await upgradedNFT.upgrade(txOptions)
   await upgrade.wait() // wait for tx
-  const newVersion = await v2.version(txOptions)
+  const newVersion = await upgradedNFT.version(txOptions)
   if (+version + 1 !== +newVersion) {
     console.error('expected version to increment')
     process.exit(1)
