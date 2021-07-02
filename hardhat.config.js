@@ -12,6 +12,7 @@ const GOERLI_ALCHEMY_API_KEY = process.env.GOERLI_ALCHEMY_API_KEY
 const KOVAN_ALCHEMY_API_KEY = process.env.KOVAN_ALCHEMY_API_KEY
 const RINKEBY_ALCHEMY_API_KEY = process.env.RINKEBY_ALCHEMY_API_KEY
 const ROPSTEN_ALCHEMY_API_KEY = process.env.ROPSTEN_ALCHEMY_API_KEY
+const HARDHAT_AUTOMINE = process.env.HARDHAT_AUTOMINE
 const OWNER_KEY = process.env.OWNER_KEY
 const SECONDARY_KEY = process.env.SECONDARY_KEY
 
@@ -25,8 +26,9 @@ task('accounts', 'Prints the list of accounts', async () => {
   }
 })
 
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
+if(HARDHAT_AUTOMINE === 'true' && CI !== true) {
+  console.warn('WARN: HARDHAT_AUTOMINE is on. This should only be in CI or selectively on local')
+}
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
@@ -50,8 +52,8 @@ module.exports = {
   networks: {
     hardhat: {
       mining: {
-        auto: false,
-        interval: [500, 2000]
+        auto: (HARDHAT_AUTOMINE === 'true') || false,
+        interval: (HARDHAT_AUTOMINE === 'true') ? null : [500, 2000]
       },
       // gas: 2000000,
       // gasPrice: 1000000000,

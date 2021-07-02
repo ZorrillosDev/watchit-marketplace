@@ -20,6 +20,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
       - run: make test
+        env:
+          HARDHAT_AUTOMINE: true
 
   testnet:
     runs-on: ubuntu-latest
