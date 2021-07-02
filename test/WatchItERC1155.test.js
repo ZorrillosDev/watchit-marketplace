@@ -2,24 +2,14 @@
 
 const { expect } = require('chai')
 const bs58 = require('bs58')
-const { isTestnet, getNFTContractAddress } = require('./utils')
+const { getNFTContractAddress } = require('./utils')
 
-const TESTNET = isTestnet(network.name)
 const CONTRACT_ADDRESS = getNFTContractAddress(network.name)
-
-let txOptions = {}
-if (TESTNET) {
-  txOptions = {
-    gasLimit: 8000000,
-    gasPrice: 1000000000
-  }
-}
+const txOptions = {}
 
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe('WatchitERC1155', function () {
-  if (TESTNET) {
-    this.timeout(0)
-  }
+  this.timeout(0)
 
   let tokensNF
   let owner, addr1
