@@ -3,13 +3,6 @@ const txOptions = {
   gasPrice: 1000000000
 }
 
-function isTestnet (networkName) {
-  return (networkName === 'rinkeby') ||
-    (networkName === 'ropsten') ||
-    (networkName === 'goerli') ||
-    (networkName === 'kovan')
-}
-
 function getFTContractAddress (networkName) {
   if (networkName === 'goerli') {
     return process.env.GOERLI_CONTRACT_FT
@@ -56,7 +49,6 @@ async function getCurrentVersion (contract) {
 }
 
 module.exports = {
-  isTestnet,
   getFTContractAddress,
   getNFTContractAddress,
   getCurrentVersion,
