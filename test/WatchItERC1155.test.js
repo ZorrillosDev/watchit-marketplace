@@ -1,4 +1,4 @@
-/* global ethers, upgrades, network */
+/* global ethers, network */
 
 const { expect } = require('chai')
 const { bs58toHex, getNFTContractAddress, hexToBs58 } = require('./utils')
@@ -75,7 +75,7 @@ describe('WatchitERC1155', function () {
 
   describe('Mint & Burn', function () {
     it('should mint NFT valid mapping CID', async function () {
-      const tokenIdA = await nftMinter(tokenUriA)
+      const tokenIdA = await nftMinter(tokenUriA) // eslint-disable-line
         const tokenIdB = await nftMinter(tokenUriB) // eslint-disable-line
 
       const filter = tokensNF.filters.TransferSingle()
@@ -91,7 +91,7 @@ describe('WatchitERC1155', function () {
 
     it('should mint NFT batch', async function () {
       const uris = [tokenUriA, tokenUriB, tokenUriC, tokenUriD]
-      const mintBatch = await tokensNF.mintBatch(owner.address, uris.map(bs58toHex), [1,5,10,100])
+      const mintBatch = await tokensNF.mintBatch(owner.address, uris.map(bs58toHex), [1, 5, 10, 100])
       await mintBatch.wait() // wait transaction get mined
 
       const filter = tokensNF.filters.TransferBatch()

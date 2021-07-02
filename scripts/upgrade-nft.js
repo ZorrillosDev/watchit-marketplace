@@ -1,5 +1,5 @@
 const { ethers, network, upgrades } = require('hardhat')
-const { getNFTContractAddress, runUpgradeTest, getCurrentVersion, txOptions } = require('../test/utils')
+const { getNFTContractAddress, runUpgradeTest, getCurrentVersion, txOptions } = require('../test/utils') // eslint-disable-line
 
 async function main () {
   const WatchitERC11155 = await ethers.getContractFactory('WatchitERC11155')
