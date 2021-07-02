@@ -8,13 +8,16 @@ require('solidity-coverage')
 require('hardhat-contract-sizer')
 require('@openzeppelin/hardhat-upgrades')
 
-const GOERLI_ALCHEMY_API_KEY = process.env.GOERLI_ALCHEMY_API_KEY
-const KOVAN_ALCHEMY_API_KEY = process.env.KOVAN_ALCHEMY_API_KEY
-const RINKEBY_ALCHEMY_API_KEY = process.env.RINKEBY_ALCHEMY_API_KEY
-const ROPSTEN_ALCHEMY_API_KEY = process.env.ROPSTEN_ALCHEMY_API_KEY
-const HARDHAT_AUTOMINE = process.env.HARDHAT_AUTOMINE
-const OWNER_KEY = process.env.OWNER_KEY
-const SECONDARY_KEY = process.env.SECONDARY_KEY
+const {
+  CI,
+  GOERLI_ALCHEMY_API_KEY,
+  KOVAN_ALCHEMY_API_KEY,
+  RINKEBY_ALCHEMY_API_KEY,
+  ROPSTEN_ALCHEMY_API_KEY,
+  HARDHAT_AUTOMINE,
+  OWNER_KEY,
+  SECONDARY_KEY
+} = process.env
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -33,7 +36,6 @@ if(HARDHAT_AUTOMINE === 'true' && CI !== true) {
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
-
 module.exports = {
   solidity: {
     version: '0.8.6',
@@ -55,9 +57,6 @@ module.exports = {
         auto: (HARDHAT_AUTOMINE === 'true') || false,
         interval: (HARDHAT_AUTOMINE === 'true') ? null : [500, 2000]
       },
-      // gas: 2000000,
-      // gasPrice: 1000000000,
-      // blockGasLimit: 8000000,
       throwOnTransactionFailures: true,
       throwOnCallFailures: true
     }
