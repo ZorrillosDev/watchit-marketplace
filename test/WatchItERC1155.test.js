@@ -54,7 +54,11 @@ describe('WatchitERC1155', function () {
         await mint.wait()
         await tokensNF.burn(owner.address, bs58toHex(tokenUriA))
 
-        // TODO: Check events
+        const filter = tokensNF.filters.TransferSingle()
+        const events = await tokensNF.queryFilter(filter)
+        const latestEvent = events.pop()
+        expect(ethers.BigNumber.from(latestEvent.args.from)).to.equal(0x0)
+        expect(hexToBs58(latestEvent.args.id.toHexString())).to.equal(tokenUriA)
       })
 
       it('cannot burn NFT without proper permissions', async function () {
@@ -72,32 +76,35 @@ describe('WatchitERC1155', function () {
     it('should mint NFT valid mapping CID', async function () {
       const tokenIdA = await nftMinter(tokenUriA)
         const tokenIdB = await nftMinter(tokenUriB) // eslint-disable-line
-      // const rawFetchA = await tokensNF.getNFTUri(tokenIdA - 1) // nextTokenId 2 - 1 = 1 to check before id
-      // const rawFetchB = await tokensNF.getNFTUri(tokenIdB - 1) // eg. nextTokenId 2
 
-      // expect(fromBase58(rawFetchA)).to.equal(tokenUriA)
-      // expect(fromBase58(rawFetchB)).to.equal(tokenUriB)
+      const filter = tokensNF.filters.TransferSingle()
+      const events = await tokensNF.queryFilter(filter)
+      const latestEvent = events.pop()
+      expect(ethers.BigNumber.from(latestEvent.args.from)).to.equal(0x0)
+      expect(hexToBs58(latestEvent.args.id.toHexString())).to.equal(tokenUriB)
+
+      const nextEvent = events.pop()
+      expect(ethers.BigNumber.from(nextEvent.args.from)).to.equal(0x0)
+      expect(hexToBs58(nextEvent.args.id.toHexString())).to.equal(tokenUriA)
     })
 
     it('should mint NFT batch', async function () {
       const uris = [tokenUriA, tokenUriB, tokenUriC, tokenUriD]
-      // const initialTokenId = await tokensNF.nextTokenId()
       const mintBatch = await tokensNF.mintBatch(owner.address, uris.map(bs58toHex), [1,5,10,100])
       await mintBatch.wait() // wait transaction get mined
-      // const nextTokenId = await tokensNF.nextTokenId()
 
-      // const rawFetchA = await tokensNF.getNFTUri(nextTokenId - 4) // nextTokenId 4 - 4 = 0 first uri index
-      // const rawFetchB = await tokensNF.getNFTUri(nextTokenId - 3) // eg. nextTokenId  4 -3 = 1 second uri index
-      // expect(fromBase58(rawFetchA)).to.equal(tokenUriA)
-      // expect(fromBase58(rawFetchB)).to.equal(tokenUriB)
-      // expect(nextTokenId).to.equal(initialTokenId.add(uris.length))
+      const filter = tokensNF.filters.TransferBatch()
+      const events = await tokensNF.queryFilter(filter)
+      const latestEvent = events.pop()
+      expect(ethers.BigNumber.from(latestEvent.args.from)).to.equal(0x0)
+      expect(latestEvent.args.ids.map(e => ethers.BigNumber.prototype.toHexString.apply(e)))
+        .to.deep.equal(uris.map(bs58toHex))
     })
   })
 
   describe('Transfer', function () {
     it('should be transferable', async function () {
         const tokenIdA = await nftMinter(tokenUriA) // eslint-disable-line
-      // const currentToken = tokenIdA - 1
       const transfer = await tokensNF.connect(owner).transfer(
         owner.address, addr1.address, bs58toHex(tokenIdA), [], txOptions
       )
@@ -105,6 +112,13 @@ describe('WatchitERC1155', function () {
 
       const isOwner = await tokensNF.connect(addr1).isOwnerOf(bs58toHex(tokenIdA))
       expect(isOwner.toString()).to.equal('true')
+
+      const filter = tokensNF.filters.TransferSingle()
+      const events = await tokensNF.queryFilter(filter)
+      const latestEvent = events.pop()
+      expect(latestEvent.args.from).to.equal(owner.address)
+      expect(latestEvent.args.from).to.equal(owner.address)
+      expect(hexToBs58(latestEvent.args.id.toHexString())).to.equal(tokenUriA)
     })
 
     it('should fail for try to transfer not owned NFT', async function () {
@@ -118,5 +132,16 @@ describe('WatchitERC1155', function () {
   })
 
   describe('Query', function () {
+    it('lists all TransferSingle events', async () => {
+      const filter = tokensNF.filters.TransferSingle()
+      const events = await tokensNF.queryFilter(filter)
+      expect(events.length).to.be.at.least(7)
+    })
+
+    it('lists all TransferBatch events', async () => {
+      const filter = tokensNF.filters.TransferBatch()
+      const events = await tokensNF.queryFilter(filter)
+      expect(events.length).to.be.at.least(1)
+    })
   })
 })
