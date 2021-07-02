@@ -52,12 +52,13 @@ describe('WatchitERC1155', function () {
           .connect(owner)
           .mint(owner.address, bs58toHex(tokenUriA), txOptions)
         await mint.wait()
-        await tokensNF.burn(owner.address, bs58toHex(tokenUriA))
+        const burn = await tokensNF.burn(owner.address, bs58toHex(tokenUriA))
+        await burn.wait()
 
         const filter = tokensNF.filters.TransferSingle()
         const events = await tokensNF.queryFilter(filter)
         const latestEvent = events.pop()
-        expect(ethers.BigNumber.from(latestEvent.args.from)).to.equal(0x0)
+        expect(ethers.BigNumber.from(latestEvent.args.to)).to.equal(0x0)
         expect(hexToBs58(latestEvent.args.id.toHexString())).to.equal(tokenUriA)
       })
 
