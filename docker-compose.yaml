@@ -12,6 +12,8 @@ services:
     working_dir: /hardhat
     ports:
       - '8545:8545'
+    environment:
+      HARDHAT_AUTOMINE: "${HARDHAT_AUTOMINE}"
     healthcheck:
       test: ["CMD", "npx", "hardhat", "check"]
       interval: 1m
