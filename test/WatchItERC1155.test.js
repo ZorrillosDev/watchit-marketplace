@@ -118,7 +118,7 @@ describe('WatchitERC1155', function () {
       const events = await tokensNF.queryFilter(filter)
       const latestEvent = events.pop()
       expect(latestEvent.args.from).to.equal(owner.address)
-      expect(latestEvent.args.from).to.equal(owner.address)
+      expect(latestEvent.args.to).to.equal(addr1.address)
       expect(hexToBs58(latestEvent.args.id.toHexString())).to.equal(tokenUriA)
     })
 
