@@ -4,10 +4,12 @@ import "./TokensERC1155.sol";
 
 contract BurnableNFT is NFT  {
 
-    function burn(address account, uint256 id) public {
+    function burn(address account, bytes32 cid) public {
         bool isAdmin = hasRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        uint256 id = uint256(cid);
         require((isAdmin || (isOwnerOf(id) && isCreatorOf(id))), 'NFT cannot be burned');
-        _defineNFT("", address(0), id);
+        // Not sure if this is required anymore here.
+        _defineNFT(address(0), id);
         _burn(account, id, NFT_SUPPLY);
     }
 
