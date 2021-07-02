@@ -7,13 +7,14 @@ contract TransferableNFT is NFT  {
     function transfer(
         address from,
         address to,
-        uint256 id,
+        bytes32 cid,
         bytes memory data
     )
     public
     virtual
     {
-        require((isOwnerOf(id) && isValidNFT(id)), 'Only owner can transfer NFT');
+        uint256 id = uint256(cid);
+        require(isOwnerOf(id), 'Only owner can transfer NFT');
         safeTransferFrom(from, to, id, NFT_SUPPLY, data);
     }
 

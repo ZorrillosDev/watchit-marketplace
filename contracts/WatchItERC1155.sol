@@ -9,8 +9,7 @@ contract WatchItERC1155 is TransferableNFT, MintableNFT, BurnableNFT {
     uint32 public version;
 
     function initialize() public initializer {
-        __ERC1155_init("");
-        __MintableNFT_init();
+        __ERC1155_init("ipfs://{id}");
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _setupRole(NFT_MINTER_ROLE, msg.sender);
     }
