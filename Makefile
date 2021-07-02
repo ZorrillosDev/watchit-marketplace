@@ -22,6 +22,14 @@ test:
 clean:
 	rm -rf cache
 	rm -rf artifacts
+	rm -rf node_modules
+	rm -rf package-lock.json
+
+deps:
+	# --legacy-peer-deps is required
+	#  for now, hopefully not forever.
+	npm install --legacy-peer-deps
+	npx hardhat compile
 
 
 deploy-rinkeby:
@@ -60,3 +68,5 @@ upgrade-ropsten:
 	npx hardhat run ./scripts/upgrade-nft.js --network ropsten
 
 upgrade-all: clean upgrade-rinkeby upgrade-goerli upgrade-kovan upgrade-ropsten
+
+rebuild: clean deps
