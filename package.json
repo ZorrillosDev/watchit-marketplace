@@ -35,6 +35,7 @@
     "hardhat-contract-sizer": "^2.0.3",
     "hardhat-gas-reporter": "^1.0.4",
     "husky": "^6.0.0",
+    "multihashing-async": "^2.1.2",
     "nyc": "^15.1.0",
     "solhint": "^3.3.6",
     "solidity-coverage": "^0.7.16",
