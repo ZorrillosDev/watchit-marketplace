@@ -9,8 +9,9 @@ contract MintableNFT is NFT  {
     public
     {
         require(hasRole(NFT_MINTER_ROLE, msg.sender), 'NFT cannot be created');
-        _defineNFT(account, uint256(cid));
-        _mint(account, uint256(cid), NFT_SUPPLY, "");
+        uint256 id = uint256(cid);
+        creators[id] = account;
+        _mint(account, id, NFT_SUPPLY, "");
     }
 
     function mintBatch(address to, bytes32[] memory cids, uint256[] memory amounts)
@@ -21,7 +22,7 @@ contract MintableNFT is NFT  {
 
         for (uint i = 0; i < cids.length; i++) {
             ids[i] = uint256(cids[i]);
-            _defineNFT(to, ids[i]);
+            creators[ids[i]] = to;
         }
 
         _mintBatch(to, ids, amounts, "");
