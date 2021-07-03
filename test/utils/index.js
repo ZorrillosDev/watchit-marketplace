@@ -1,5 +1,14 @@
+const crypto = require('crypto')
+
 const bs58 = require('bs58')
 const { expect } = require('chai')
+const CID = require('cids')
+const multihashing = require('multihashing-async')
+
+const randomCID = async () => {
+  const randomHash = await multihashing(crypto.randomBytes(Math.random() * 100000), 'sha2-256')
+  return (new CID(0, 'dag-pb', Buffer.from(randomHash)))
+}
 
 function getFTContractAddress (networkName) {
   if (networkName === 'goerli') {
@@ -54,7 +63,8 @@ module.exports = {
   hexToBs58,
   getFTContractAddress,
   getNFTContractAddress,
-  getCurrentVersion
+  getCurrentVersion,
+  randomCID
 }
 
 describe('Base 58 <--> Hex Conversion', function () {
@@ -65,5 +75,23 @@ describe('Base 58 <--> Hex Conversion', function () {
     const b58 = hexToBs58(hex)
 
     expect(b58).to.equal(str)
+  })
+})
+
+describe('Random CIDs', function () {
+  const volume = 500
+  const existingCIDs = new Set()
+
+  it(`generates ${volume} random valid CIDs`, async () => {
+    for(let i = 0; i < volume; i++) {
+      const cid = await randomCID()
+
+      if (existingCIDs.has(cid)) {
+        expect.fail('Duplicate CID detected??')
+      }
+
+      existingCIDs.add(cid)
+      expect(() => CID.validateCID(cid)).to.not.throw()
+    }
   })
 })
