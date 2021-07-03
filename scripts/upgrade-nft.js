@@ -2,16 +2,16 @@ const { ethers, network, upgrades } = require('hardhat')
 const { getNFTContractAddress, runUpgradeTest, getCurrentVersion, txOptions } = require('../test/utils') // eslint-disable-line
 
 async function main () {
-  const WatchitERC11155 = await ethers.getContractFactory('WatchitERC11155')
+  const WNFT = await ethers.getContractFactory('WNFT')
   const currentContract = getNFTContractAddress(network.name)
-  const attachedContract = WatchitERC11155.attach(currentContract)
+  const attachedContract = WNFT.attach(currentContract)
   // Current contract
   const id = await attachedContract.nextTokenId(txOptions)
   const version = await getCurrentVersion(attachedContract)
   console.log('>> Current version:', version)
 
   // Upgraded contract
-  const upgradedNFT = await upgrades.upgradeProxy(currentContract, WatchitERC11155)
+  const upgradedNFT = await upgrades.upgradeProxy(currentContract, WNFT)
   const newTokenId = await upgradedNFT.nextTokenId(txOptions)
 
   // it('should retrieve a NFT previously minted', async function () {
@@ -33,7 +33,7 @@ async function main () {
     console.log(' > version state passed')
   }
 
-  console.log(' > WatchitERC11155 upgraded')
+  console.log(' > WNFT upgraded')
   process.stdout.write(upgradedNFT.address)
 }
 
