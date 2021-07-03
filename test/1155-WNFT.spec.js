@@ -7,7 +7,7 @@ const CONTRACT_ADDRESS = getNFTContractAddress(network.name)
 const txOptions = {}
 
 // see: https://github.com/mawrkus/js-unit-testing-guide
-describe('WatchitERC1155', function () {
+describe('WatchIt NFTs (WNFT)', function () {
   this.timeout(0)
 
   let tokensNF
@@ -29,7 +29,7 @@ describe('WatchitERC1155', function () {
   before(async function () {
     [owner, addr1] = await ethers.getSigners()
     // Deploy FT and NFT contracts
-    const NFToken = await ethers.getContractFactory('WatchItERC1155')
+    const NFToken = await ethers.getContractFactory('WNFT')
     tokensNF = NFToken.attach(CONTRACT_ADDRESS)
   })
 
