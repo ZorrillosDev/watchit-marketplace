@@ -33,6 +33,13 @@ describe('WatchitERC1155', function () {
     tokensNF = NFToken.attach(CONTRACT_ADDRESS)
   })
 
+  describe('Details', function () {
+    it('returns true when 0xd9b67a26 is passed to supportsInterface', async () => {
+      const supports = await tokensNF.supportsInterface('0xd9b67a26')
+      expect(supports).to.equal(true)
+    })
+  })
+
   describe('Roles', function () {
     describe('NFT_MINTER_ROLE', function () {
       it('cannot mint NFT without proper permissions', async function () {
@@ -107,12 +114,12 @@ describe('WatchitERC1155', function () {
     it('should be transferable', async function () {
         const tokenIdA = await nftMinter(tokenUriA) // eslint-disable-line
       const transfer = await tokensNF.connect(owner).transfer(
-        owner.address, addr1.address, bs58toHex(tokenIdA), [], txOptions
+        owner.address, addr1.address, bs58toHex(tokenIdA), txOptions
       )
       await transfer.wait() // wait transaction get mined
 
-      const isOwner = await tokensNF.connect(addr1).isOwnerOf(bs58toHex(tokenIdA))
-      expect(isOwner.toString()).to.equal('true')
+      const balance = await tokensNF.balanceOf(addr1.address, bs58toHex(tokenIdA))
+      expect(balance).to.equal(1)
 
       const filter = tokensNF.filters.TransferSingle()
       const events = await tokensNF.queryFilter(filter)
@@ -125,7 +132,8 @@ describe('WatchitERC1155', function () {
     it('should fail for try to transfer not owned NFT', async function () {
       try {
           const tokenIdA = await nftMinter(tokenUriA) // eslint-disable-line
-        await tokensNF.connect(addr1).transfer(addr1.address, owner.address, bs58toHex(tokenIdA), [], txOptions)
+        await tokensNF.connect(addr1)
+          .transfer(addr1.address, owner.address, bs58toHex(tokenIdA), txOptions)
       } catch (err) {
         expect(err.message).to.contain('Only owner can transfer NFT')
       }

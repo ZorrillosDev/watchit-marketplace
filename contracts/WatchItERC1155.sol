@@ -27,14 +27,6 @@ contract WatchItERC1155 is ERC1155Upgradeable, AccessControlUpgradeable {
         _setURI(newuri);
     }
 
-    function isOwnerOf(uint256 id) public view returns(bool){
-        return balanceOf(msg.sender, id) > 0;
-    }
-
-    function isCreatorOf(uint256 id) public view returns(bool){
-        return creators[id] != address(0);
-    }
-
     function mint(address account, bytes32 cid)
     public
     {
@@ -58,24 +50,14 @@ contract WatchItERC1155 is ERC1155Upgradeable, AccessControlUpgradeable {
         _mintBatch(to, ids, amounts, "");
     }
 
-    function transfer(
-        address from,
-        address to,
-        bytes32 cid,
-        bytes memory data
-    )
-    public
-    virtual
-    {
-        uint256 id = uint256(cid);
-        require(isOwnerOf(id), 'Only owner can transfer NFT');
-        safeTransferFrom(from, to, id, NFT_SUPPLY, data);
+    function transfer(address from, address to, bytes32 cid) public {
+        safeTransferFrom(from, to, uint256(cid), NFT_SUPPLY, "");
     }
 
     function burn(address account, bytes32 cid) public {
         bool isAdmin = hasRole(DEFAULT_ADMIN_ROLE, msg.sender);
         uint256 id = uint256(cid);
-        require((isAdmin || (isOwnerOf(id) && isCreatorOf(id))), 'NFT cannot be burned');
+        require((isAdmin || creators[id] != address(0)), 'NFT cannot be burned');
         _burn(account, id, NFT_SUPPLY);
         creators[id] = address(0);
     }
@@ -83,7 +65,6 @@ contract WatchItERC1155 is ERC1155Upgradeable, AccessControlUpgradeable {
     function burnBatch(address account, uint256[] memory ids, uint256[] memory amounts) public {
         _burnBatch(account, ids, amounts); // TODO
     }
-
 
     function supportsInterface(bytes4 interfaceId)
     public
