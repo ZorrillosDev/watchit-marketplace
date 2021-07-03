@@ -47,6 +47,7 @@ describe('WatchitERC1155', function () {
           await tokensNF.connect(addr1).mint(
             owner.address, bs58toHex(tokenUriA), txOptions
           )
+          expect(false)
         } catch (err) {
           expect(err.message).to.contain('NFT cannot be created')
         }
@@ -71,8 +72,9 @@ describe('WatchitERC1155', function () {
 
       it('cannot burn NFT without proper permissions', async function () {
         try {
-            const nextTokenId = await nftMinter(tokenUriA) //eslint-disable-line
+          const nextTokenId = await nftMinter(tokenUriA)
           await tokensNF.connect(addr1).burn(owner.address, bs58toHex(nextTokenId), txOptions)
+          expect(false)
         } catch (err) {
           expect(err.message).to.contain('NFT cannot be burned')
         }
@@ -131,11 +133,12 @@ describe('WatchitERC1155', function () {
 
     it('should fail for try to transfer not owned NFT', async function () {
       try {
-          const tokenIdA = await nftMinter(tokenUriA) // eslint-disable-line
+        const tokenIdA = await nftMinter(tokenUriA)
         await tokensNF.connect(addr1)
-          .transfer(addr1.address, owner.address, bs58toHex(tokenIdA), txOptions)
+          .transfer(owner.address, addr1.address, bs58toHex(tokenIdA), txOptions)
+        expect(false)
       } catch (err) {
-        expect(err.message).to.contain('Only owner can transfer NFT')
+        expect(err.message).to.contain('ERC1155: caller is not owner nor approved')
       }
     })
   })
