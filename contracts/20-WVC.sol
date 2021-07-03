@@ -4,13 +4,13 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 
-contract WatchItERC20 is ERC20Upgradeable {
+contract WVC is ERC20Upgradeable {
   bool private initialized;
   uint32 public version;
   // TODO: _owner / ACL stuff
 
   function initialize(uint256 initialSupply) public initializer {
-    ERC20Upgradeable.__ERC20_init("WatchIt", "WATCHIT");
+    ERC20Upgradeable.__ERC20_init("WatchIt Video Coin", "WVC");
     _mint(msg.sender, initialSupply);
   }
 
