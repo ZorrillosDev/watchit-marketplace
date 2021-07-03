@@ -1,0 +1,18 @@
+services:
+  eth-devnet:
+    image: node:lts
+    command: bash -c "npx hardhat node"
+    volumes:
+      - ./hardhat.config.js:/hardhat/hardhat.config.js
+      - ./package.json:/hardhat/package.json
+      - ./node_modules:/hardhat/node_modules
+      - ./yarn.lock:/hardhat/yarn.lock
+    working_dir: /hardhat
+    ports:
+      - '8545:8545'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8545"]
+      interval: 1m
+      timeout: 5s
+      retries: 3
+      start_period: 10s
