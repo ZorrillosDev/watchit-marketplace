@@ -30,8 +30,11 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
     function mint(address account, bytes32 cid)
     public
     {
-        require(hasRole(NFT_MINTER_ROLE, msg.sender), 'NFT cannot be created');
         uint256 id = uint256(cid);
+
+        // All keys already "exist" in a Solidity mapping with a default value of 0
+        require(creators[id] == address(0), 'This token ID has already been minted');
+        require(hasRole(NFT_MINTER_ROLE, msg.sender), 'NFT cannot be created');
         creators[id] = account;
         _mint(account, id, NFT_SUPPLY, "");
     }
@@ -44,6 +47,7 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
 
         for (uint i = 0; i < cids.length; i++) {
             ids[i] = uint256(cids[i]);
+            require(creators[ids[i]] == address(0), 'This token ID has already been minted');
             creators[ids[i]] = to;
         }
 
