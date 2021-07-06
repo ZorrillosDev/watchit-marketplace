@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter, Route, Switch } from 'react-router-dom'
-import Login from '@pages/login-view'
-import Index from '@pages/index-view'
+import Index from '@pages/Index'
 import { createBrowserHistory } from 'history'
 
 const hist = createBrowserHistory({
@@ -18,10 +17,6 @@ const App = () => {
       <Switch>
         <Route
           exact path='/'
-          render={(n) => <Login {...n} />}
-        />
-        <Route
-          exact path='/app/index'
           render={(n) => <Index {...n} />}
         />
       </Switch>
