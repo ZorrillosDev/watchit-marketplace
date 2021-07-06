@@ -1,0 +1,23 @@
+---
+name: Built and Test UI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  buildAndTest:
+    name: build and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build:ui
+
+      - name: Test
+        run: npm run test:ui
+

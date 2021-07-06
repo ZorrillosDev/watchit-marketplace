@@ -15,7 +15,7 @@
     "lint:js:fix": "standard --fix",
     "lint:solidity": "solhint 'contracts/**/*.sol'",
     "test": "make test",
-    "test:ui": "cross-env NODE_ENV=development jest",
+    "test:ui": "jest --watchAll=false",
     "test:coverage": "nyc hardhat coverage",
     "test:goerli": "npx hardhat test --network goerli",
     "test:kovan": "npx hardhat test --network kovan",
