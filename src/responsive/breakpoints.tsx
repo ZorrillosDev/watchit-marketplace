@@ -1,7 +1,7 @@
 import { hideAt } from './responsive-component'
 import settings from '../settings'
 
-let devices = settings.styles.devices
+const devices = settings.styles.devices
 
 export const MobileSmallAndDown = hideAt({ min: devices.mobileS })
 export const MobileMediumAndDown = hideAt({ min: devices.mobileM })

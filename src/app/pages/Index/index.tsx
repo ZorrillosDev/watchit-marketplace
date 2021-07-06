@@ -7,6 +7,7 @@ import {
   DesktopAndUp, DesktopOnly, DesktopLargeAndUp
 } from '@src/responsive/breakpoints'
 
+/* eslint-disable  @typescript-eslint/explicit-function-return-type */
 export default function Login () {
   return (
     <div>
@@ -32,3 +33,4 @@ export default function Login () {
     </div>
   )
 }
+/* eslint-enable  @typescript-eslint/explicit-function-return-type */

@@ -7,12 +7,13 @@ import { createBrowserHistory } from 'history'
 
 const hist = createBrowserHistory({
   basename: '/', // The base URL of the app (see below)
-  forceRefresh: false, // Set true to force full page refreshes
+  forceRefresh: false // Set true to force full page refreshes
 })
 
+/* eslint-disable  @typescript-eslint/explicit-function-return-type */
 const App = () => {
   return (
-    // @ts-ignore
+    // @ts-expect-error
     <HashRouter history={hist}>
       <Switch>
         <Route
@@ -27,6 +28,7 @@ const App = () => {
     </HashRouter>
   )
 }
+/* eslint-enable  @typescript-eslint/explicit-function-return-type */
 
 const root = document.getElementById('root')
 ReactDOM.render(<App />, root)
