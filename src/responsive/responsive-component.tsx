@@ -2,23 +2,24 @@ import React from 'react'
 import styled from 'styled-components'
 
 interface rulesType {
-  constraint: string,
-  width: any,
-  rules:string
+  constraint: string
+  width: string
+  rules: string
 }
 
-const makeResponsiveComponent = (rulesets: rulesType, tagName = 'div') =>
-  // @ts-ignore
+/* eslint-disable  @typescript-eslint/explicit-function-return-type */
+const makeResponsiveComponent = (rulesets: rulesType[], tagName = 'div') =>
+  // @ts-expect-error
   styled(tagName)`
     ${buildStyles(rulesets)}
   `
 
-const buildStyles = (ruleset: any[] | rulesType) =>
-  // @ts-ignore
+const buildStyles = (ruleset: rulesType[]) =>
+
   ruleset.reduce(
-    (cssString: any, { constraint, width, rules }: any) =>
+    (cssString: string, { constraint, width, rules }: rulesType) =>
       `${cssString} @media (${constraint}-width: ${width}) { ${rules} }`,
-    '',
+    ''
   )
 
 export const hideAt = (breakpoints: { [s: string]: any } | ArrayLike<any>) => {
@@ -28,19 +29,20 @@ export const hideAt = (breakpoints: { [s: string]: any } | ArrayLike<any>) => {
       {
         constraint,
         width,
-        rules: `display: none;`,
-      },
+        rules: 'display: none;'
+      }
     ],
-    [],
+    []
   )
 
-  // @ts-ignore
   return makeResponsiveComponent(rulesets)
 }
 
-export const Breakpoint = ({ min, max, children } : any) => {
+export const Breakpoint = ({ min, max, children }: any) => {
   const Component = hideAt({ min, max })
   return <Component>{children}</Component>
 }
 
 export default makeResponsiveComponent
+
+/* eslint-enable  @typescript-eslint/explicit-function-return-type */
