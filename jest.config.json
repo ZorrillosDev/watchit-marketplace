@@ -1,0 +1,39 @@
+{
+  "roots": [
+    "<rootDir>/src"
+  ],
+  "setupFiles": [
+    "react-app-polyfill/jsdom"
+  ],
+  "setupFilesAfterEnv": [
+    "<rootDir>/.jest/setupEnzyme.js"
+  ],
+  "testMatch": [
+    "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+    "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+  ],
+  "testRunner": "<rootDir>/node_modules/jest-circus/runner.js",
+  "modulePaths": [
+    "<rootDir>/src"
+  ],
+  "watchPlugins": [
+    "jest-watch-typeahead/filename",
+    "jest-watch-typeahead/testname"
+  ],
+  "moduleNameMapper": {
+    "^@src(.*)$": "<rootDir>/src$1",
+    "^@images(.*)$": "<rootDir>/src/images$1",
+    "^@styles(.*)$": "<rootDir>/src/styles$1",
+    "^@components(.*)$": "<rootDir>/src/components$1",
+    "^@helpers(.*)$": "<rootDir>/src/helpers$1"
+  },
+  "resetMocks": true,
+  "preset": "ts-jest",
+  "testEnvironment": "node",
+  "transform": {
+    "^.+\\.jsx?$": "babel-jest"
+  },
+  "transformIgnorePatterns": [
+    "node_modules/(?!variables/.*)"
+  ]
+}
