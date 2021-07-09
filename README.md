@@ -61,7 +61,7 @@ $ hh test
 ```
 
 
-#### Test:UI
+#### Test
 
 Use this command to test all components of UI using [Jestjs](https://jestjs.io/).
 
@@ -69,7 +69,7 @@ Use this command to test all components of UI using [Jestjs](https://jestjs.io/)
 $ npm run test:ui
 ```
 
-#### lint:js:fix
+#### Linting
 
 Use this command to check all coding conventions issues using [standard-js](https://standardjs.com/) and [ts-standard](https://github.com/standard/ts-standard).
 
@@ -77,7 +77,7 @@ Use this command to check all coding conventions issues using [standard-js](http
 $ npm run lint:js:fix
 ```
 
-#### watch:ui
+#### Watch
 
 Use this command to maintain building the project using [webpack](https://webpack.js.org/).
 
@@ -85,7 +85,7 @@ Use this command to maintain building the project using [webpack](https://webpac
 $ npm run watch:ui
 ```
 
-#### build:ui
+#### Build
 
 Use this command to build the project using [webpack](https://webpack.js.org/).
 
@@ -93,7 +93,7 @@ Use this command to build the project using [webpack](https://webpack.js.org/).
 $ npm run build:ui
 ```
 
-#### start:ui
+#### Start
 
 Use this command to start the development server using [webpack](https://webpack.js.org/).
 
