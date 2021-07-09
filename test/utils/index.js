@@ -53,7 +53,7 @@ function getNFTContractAddress (networkName) {
 const bs58toHex = (b58) => `0x${Buffer.from(bs58.decode(b58).slice(2)).toString('hex')}`
 const hexToBs58 = (hex) => bs58.encode(Buffer.from(`1220${hex.slice(2)}`, 'hex'))
 
-async function runUpgradeTest (upgraded) {
+async function runUpgradeTest (version, upgraded) {
   const upgrade = await upgraded.upgrade()
   await upgrade.wait() // wait for tx
   const newVersion = await upgraded.version()
