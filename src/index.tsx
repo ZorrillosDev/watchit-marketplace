@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { HashRouter, Route, Switch } from 'react-router-dom'
+import { Router, Route, Switch } from 'react-router'
 import Index from '@pages/Index'
 import { createBrowserHistory } from 'history'
 
@@ -12,15 +12,13 @@ const hist = createBrowserHistory({
 /* eslint-disable  @typescript-eslint/explicit-function-return-type */
 const App = () => {
   return (
-    // @ts-expect-error
-    <HashRouter history={hist}>
+    <Router history={hist}>
       <Switch>
-        <Route
-          exact path='/'
-          render={(n) => <Index {...n} />}
-        />
+        <Route exact path='/'>
+          <Index />
+        </Route>
       </Switch>
-    </HashRouter>
+    </Router>
   )
 }
 /* eslint-enable  @typescript-eslint/explicit-function-return-type */
