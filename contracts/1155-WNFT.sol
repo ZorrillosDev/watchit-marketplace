@@ -61,6 +61,7 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
     function burn(address account, bytes32 cid) public {
         bool isAdmin = hasRole(DEFAULT_ADMIN_ROLE, msg.sender);
         uint256 id = uint256(cid);
+        require(msg.sender == account, 'NFT cannot be burned');
         require((isAdmin || creators[id] != address(0)), 'NFT cannot be burned');
         _burn(account, id, NFT_SUPPLY);
         creators[id] = address(0);
