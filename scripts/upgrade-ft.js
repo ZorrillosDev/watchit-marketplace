@@ -12,7 +12,7 @@ async function main () {
 
   // Upgraded contract
   const upgraded = await upgrades.upgradeProxy(currentContract, WVC)
-  await runUpgradeTest(upgraded)
+  await runUpgradeTest(version, upgraded)
 
   console.log(' > WVC upgraded')
   process.stdout.write(upgraded.address)
