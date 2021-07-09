@@ -1,5 +1,5 @@
 ---
-name: Built and Test UI
+name: Build and Test UI
 
 on:
   push:
