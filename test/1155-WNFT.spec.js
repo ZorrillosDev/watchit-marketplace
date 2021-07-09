@@ -1,5 +1,5 @@
 /* global ethers, network */
-
+require('./utils/global')
 const { expect } = require('chai')
 const {
   bs58toHex,
