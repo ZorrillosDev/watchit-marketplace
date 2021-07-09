@@ -53,10 +53,9 @@ describe('WatchIt NFTs (WNFT)', function () {
     describe('NFT_MINTER_ROLE', function () {
       it('cannot mint NFT without proper permissions', async function () {
         try {
-          await tokensNF.connect(acct1).mint(
-            owner.address, bs58toHex((await randomCID()).toString()), txOptions
-          )
-          expect(false)
+          const tokenCID = (await randomCID()).toString()
+          await nftMinter(tokenCID, acct1)
+          expect(false).to.equal(true)
         } catch (err) {
           expect(err.message).to.contain('NFT cannot be created')
         }
@@ -66,11 +65,7 @@ describe('WatchIt NFTs (WNFT)', function () {
     describe('DEFAULT_ADMIN_ROLE', function () {
       it('can burn NFT with proper permissions', async function () {
         const tokenCID = (await randomCID()).toString()
-
-        const mint = await tokensNF
-          .connect(owner)
-          .mint(owner.address, bs58toHex(tokenCID), txOptions)
-        await mint.wait()
+        await nftMinter(tokenCID)
         const burn = await tokensNF.burn(owner.address, bs58toHex(tokenCID))
         await burn.wait()
 
@@ -83,7 +78,8 @@ describe('WatchIt NFTs (WNFT)', function () {
 
       it('cannot burn NFT without proper permissions', async function () {
         try {
-          const tokenCID = await nftMinter((await randomCID()).toString())
+          const tokenCID = (await randomCID()).toString()
+          await nftMinter(tokenCID)
           await tokensNF.connect(acct1).burn(owner.address, bs58toHex(tokenCID), txOptions)
           expect(false)
         } catch (err) {
