@@ -79,7 +79,7 @@ describe('WatchIt NFTs (WNFT)', function () {
         expect(hexToBs58(latestEvent.args.id.toHexString())).to.equal(tokenCID)
       })
 
-      it('cannot burn NFT without proper permissions', async function () {
+      it('only admin can burn NFTs', async function () {
         try {
           const tokenCID = (await randomCID()).toString()
           await nftMinter(tokenCID)
