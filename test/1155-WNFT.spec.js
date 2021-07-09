@@ -16,7 +16,7 @@ describe('WatchIt NFTs (WNFT)', function () {
   this.timeout(0)
 
   let tokensNF
-  let owner, addr1
+  let owner, acct1
   // Example token uri. CID is not valid one.
   // TODO: ERC1155 Metadata
   // see: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md#erc-1155-metadata-uri-json-schema
@@ -34,7 +34,7 @@ describe('WatchIt NFTs (WNFT)', function () {
   }
 
   before(async function () {
-    [owner, addr1] = await ethers.getSigners()
+    [owner, acct1] = await ethers.getSigners()
     txOptions.gasPrice = await ethers.provider.getGasPrice()
 
     const NFToken = await ethers.getContractFactory('WNFT')
@@ -53,7 +53,7 @@ describe('WatchIt NFTs (WNFT)', function () {
     describe('NFT_MINTER_ROLE', function () {
       it('cannot mint NFT without proper permissions', async function () {
         try {
-          await tokensNF.connect(addr1).mint(
+          await tokensNF.connect(acct1).mint(
             owner.address, bs58toHex((await randomCID()).toString()), txOptions
           )
           expect(false)
@@ -84,7 +84,7 @@ describe('WatchIt NFTs (WNFT)', function () {
       it('cannot burn NFT without proper permissions', async function () {
         try {
           const tokenCID = await nftMinter((await randomCID()).toString())
-          await tokensNF.connect(addr1).burn(owner.address, bs58toHex(tokenCID), txOptions)
+          await tokensNF.connect(acct1).burn(owner.address, bs58toHex(tokenCID), txOptions)
           expect(false)
         } catch (err) {
           expect(err.message).to.contain('NFT cannot be burned')
@@ -143,26 +143,26 @@ describe('WatchIt NFTs (WNFT)', function () {
     it('should be transferable', async function () {
       const tokenIdA = await nftMinter((await randomCID()).toString())
       const transfer = await tokensNF.connect(owner).transfer(
-        owner.address, addr1.address, bs58toHex(tokenIdA), txOptions
+        owner.address, acct1.address, bs58toHex(tokenIdA), txOptions
       )
       await transfer.wait() // wait transaction get mined
 
-      const balance = await tokensNF.balanceOf(addr1.address, bs58toHex(tokenIdA))
+      const balance = await tokensNF.balanceOf(acct1.address, bs58toHex(tokenIdA))
       expect(balance).to.equal(1)
 
       const filter = tokensNF.filters.TransferSingle()
       const events = await tokensNF.queryFilter(filter)
       const latestEvent = events.pop()
       expect(latestEvent.args.from).to.equal(owner.address)
-      expect(latestEvent.args.to).to.equal(addr1.address)
+      expect(latestEvent.args.to).to.equal(acct1.address)
       expect(hexToBs58(latestEvent.args.id.toHexString())).to.equal(tokenIdA)
     })
 
     it('should fail for try to transfer not owned NFT', async function () {
       try {
         const tokenIdA = await nftMinter((await randomCID()).toString())
-        await tokensNF.connect(addr1)
-          .transfer(owner.address, addr1.address, bs58toHex(tokenIdA), txOptions)
+        await tokensNF.connect(acct1)
+          .transfer(owner.address, acct1.address, bs58toHex(tokenIdA), txOptions)
         expect(false)
       } catch (err) {
         expect(err.message).to.contain('ERC1155: caller is not owner nor approved')
