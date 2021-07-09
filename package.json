@@ -21,10 +21,10 @@
     "test:kovan": "npx hardhat test --network kovan",
     "test:rinkeby": "npx hardhat test --network rinkeby",
     "test:ropsten": "npx hardhat test --network ropsten",
-    "hook": "npm run lint:js:fix & npm run test:ui && hh compile && npm run test ",
     "watch:ui": "webpack  --watch ",
     "build:ui": "cross-env NODE_ENV=production webpack",
-    "start:ui": "cross-env WEBPACK_IS_DEV_SERVER=true NODE_ENV=development webpack serve --config webpack.config.babel.js"
+    "start:ui": "cross-env WEBPACK_IS_DEV_SERVER=true NODE_ENV=development webpack serve --config webpack.config.babel.js",
+    "hook": "npm run lint:js:fix & npm run test:ui && hh compile && npm run test "
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
