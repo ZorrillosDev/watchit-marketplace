@@ -25,8 +25,9 @@ describe('WatchIt NFTs (WNFT)', function () {
     const tokenHex = bs58toHex(CID)
 
     txOptions.gasLimit = await tokensNF.connect(minter).estimateGas
+      .mint(minter.address, tokenHex)
+    const tx = await tokensNF.connect(minter)
       .mint(minter.address, tokenHex, txOptions)
-    const tx = await tokensNF.connect(minter).mint(minter.address, tokenHex)
     await tx.wait()
 
     return CID
