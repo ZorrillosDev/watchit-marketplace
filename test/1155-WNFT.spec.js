@@ -66,7 +66,10 @@ describe('WatchIt NFTs (WNFT)', function () {
       it('can burn NFT with proper permissions', async function () {
         const tokenCID = (await randomCID()).toString()
         await nftMinter(tokenCID)
-        const burn = await tokensNF.burn(owner.address, bs58toHex(tokenCID))
+        txOptions.gasLimit = await tokensNF.estimateGas
+          .burn(owner.address, bs58toHex(tokenCID))
+        const burn = await tokensNF
+          .burn(owner.address, bs58toHex(tokenCID), txOptions)
         await burn.wait()
 
         const filter = tokensNF.filters.TransferSingle()
@@ -80,8 +83,12 @@ describe('WatchIt NFTs (WNFT)', function () {
         try {
           const tokenCID = (await randomCID()).toString()
           await nftMinter(tokenCID)
-          await tokensNF.connect(acct1).burn(owner.address, bs58toHex(tokenCID), txOptions)
-          expect(false)
+          await tokensNF.connect(acct1).estimateGas
+            .burn(owner.address, bs58toHex(tokenCID))
+          const tx = await tokensNF.connect(acct1)
+            .burn(owner.address, bs58toHex(tokenCID), txOptions)
+          await tx.wait()
+          expect(false).to.equal(true)
         } catch (err) {
           expect(err.message).to.contain('NFT cannot be burned')
         }
@@ -112,7 +119,10 @@ describe('WatchIt NFTs (WNFT)', function () {
         (await randomCID()).toString(),
         (await randomCID()).toString()
       ]
-      const mintBatch = await tokensNF.mintBatch(owner.address, uris.map(bs58toHex), [1, 5, 10, 100])
+      txOptions.gasLimit = await tokensNF.estimateGas
+        .mintBatch(owner.address, uris.map(bs58toHex), [1, 5, 10, 100])
+      const mintBatch = await tokensNF
+        .mintBatch(owner.address, uris.map(bs58toHex), [1, 5, 10, 100], txOptions)
       await mintBatch.wait()
 
       const filter = tokensNF.filters.TransferBatch()
@@ -129,7 +139,7 @@ describe('WatchIt NFTs (WNFT)', function () {
       try {
         await nftMinter(tokenCID)
         await nftMinter(tokenCID)
-      } catch(err) {
+      } catch (err) {
         expect(err.message).to.match(/This token ID has already been minted/)
       }
     })
@@ -138,10 +148,11 @@ describe('WatchIt NFTs (WNFT)', function () {
   describe('Transfer', function () {
     it('should be transferable', async function () {
       const tokenIdA = await nftMinter((await randomCID()).toString())
-      const transfer = await tokensNF.connect(owner).transfer(
-        owner.address, acct1.address, bs58toHex(tokenIdA), txOptions
-      )
-      await transfer.wait() // wait transaction get mined
+      txOptions.gasLimit = await tokensNF.connect(owner).estimateGas
+        .transfer(owner.address, acct1.address, bs58toHex(tokenIdA))
+      const transfer = await tokensNF.connect(owner)
+        .transfer(owner.address, acct1.address, bs58toHex(tokenIdA), txOptions)
+      await transfer.wait()
 
       const balance = await tokensNF.balanceOf(acct1.address, bs58toHex(tokenIdA))
       expect(balance).to.equal(1)
@@ -157,9 +168,11 @@ describe('WatchIt NFTs (WNFT)', function () {
     it('should fail for try to transfer not owned NFT', async function () {
       try {
         const tokenIdA = await nftMinter((await randomCID()).toString())
+        txOptions.gasLimit = await tokensNF.connect(acct1).estimateGas
+          .transfer(owner.address, acct1.address, bs58toHex(tokenIdA))
         await tokensNF.connect(acct1)
           .transfer(owner.address, acct1.address, bs58toHex(tokenIdA), txOptions)
-        expect(false)
+        expect(false).to.equal(true)
       } catch (err) {
         expect(err.message).to.contain('ERC1155: caller is not owner nor approved')
       }
