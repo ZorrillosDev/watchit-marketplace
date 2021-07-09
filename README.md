@@ -30,7 +30,7 @@
 >* FT: https://kovan.etherscan.io/address/0x61286E2665AF720E9341a3839B29940190FFf142
 ></details>
 
-##Technical Concepts
+## Technical Concepts
 ><details>
 >  <summary>Video Content</summary>
 >The video must be in the platform's admissible format, either .mp4, .mov or .wmv. Each video must be in a resolution no less than 720p and may have a maximum resolution of 3840 × 2160 (4K).
@@ -51,7 +51,7 @@ $ npm install
 
 ## Usage
 
-####Hardhat
+#### Hardhat
 
 This repository uses [Hardhat](https://hardhat.org/guides/shorthand.html).
 
