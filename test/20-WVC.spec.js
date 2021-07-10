@@ -55,7 +55,7 @@ describe('WVC', function () {
       await tx0.wait()
 
       const endingBalance = await wvc.balanceOf(account1.address)
-      expect(endingBalance).to.equal(initialBalance + 10)
+      expect(endingBalance).to.equal(initialBalance.add(10))
     })
 
     it('allows account1 to transfer tokens back', async () => {
