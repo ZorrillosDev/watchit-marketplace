@@ -1,7 +1,3 @@
-export SHELL:=/bin/bash
-
-.ONESHELL:
-
 # Include env file
 ifneq (,$(wildcard ./.env))
     include .env
@@ -9,24 +5,25 @@ ifneq (,$(wildcard ./.env))
 endif
 
 .PHONY: test
-test:
-	docker-compose up -d
-	export LOCALHOST_CONTRACT_FT=`npx hardhat run --network localhost scripts/deploy-ft.js | tail -1`
-	export LOCALHOST_CONTRACT_NFT=`npx hardhat run --network localhost scripts/deploy-nft.js | tail -1`
+test: deps
 	npx hardhat test --network localhost
-	docker-compose down
 
 clean:
 	rm -rf cache
 	rm -rf artifacts
 	rm -rf node_modules
 	rm -rf package-lock.json
+	rm -rf yarn.lock
+	docker-compose down
 
 deps:
 	# --legacy-peer-deps is required
 	#  for now, hopefully not forever.
 	npm install --legacy-peer-deps
 	npx hardhat compile
+	docker-compose up -d
+	npx hardhat run --network localhost scripts/deploy-ft.js
+	npx hardhat run --network localhost scripts/deploy-nft.js
 
 
 deploy-rinkeby:
