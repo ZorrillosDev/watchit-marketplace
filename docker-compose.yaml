@@ -13,7 +13,7 @@ services:
     ports:
       - '8545:8545'
     healthcheck:
-      test: ["CMD", "npx hardhat check"]
+      test: ["CMD", "npx", "hardhat", "check"]
       interval: 1m
       timeout: 5s
       retries: 3
@@ -38,7 +38,7 @@ services:
       - ./webpack:/ui/webpack
     working_dir: /ui
     healthcheck:
-      test: ["CMD", "wget", "localhost:3000", "-O /dev/null"]
+      test: ["CMD", "wget", "localhost:3000", "-O", "/dev/null"]
       interval: 1m
       timeout: 5s
       retries: 3
