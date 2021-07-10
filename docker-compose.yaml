@@ -8,7 +8,7 @@ services:
       - ./hardhat.config.js:/hardhat/hardhat.config.js
       - ./package.json:/hardhat/package.json
       - ./package-lock.json:/hardhat/package-lock.json
-      - ./node_modules:/hardhat/node_modules
+      - "./node_modules:/hardhat/node_modules:ro"
     working_dir: /hardhat
     ports:
       - '8545:8545'
@@ -28,7 +28,7 @@ services:
     volumes:
       - ./.babelrc.js:/ui/.babelrc.js
       - ./dist:/ui/dist
-      - ./node_modules:/ui/node_modules
+      - "./node_modules:/ui/node_modules:ro"
       - ./package.json:/ui/package.json
       - ./package-lock.json:/ui/package-lock.json
       - ./public:/ui/public
