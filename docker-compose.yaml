@@ -17,6 +17,32 @@ services:
       retries: 3
       start_period: 10s
 
+  ui:
+    container_name: ui
+    command: sh -c "npm run start:ui"
+    image: node:lts-alpine
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./.babelrc.js:/ui/.babelrc.js
+      - ./dist:/ui/dist
+      - ./node_modules:/ui/node_modules
+      - ./package.json:/ui/package.json
+      - ./package-lock.json:/ui/package-lock.json
+      - ./public:/ui/public
+      - ./src:/ui/src
+      - ./tsconfig.json:/ui/tsconfig.json
+      - ./webpack.config.babel.js:/ui/webpack.config.babel.js
+      - ./webpack:/ui/webpack
+    working_dir: /ui
+    healthcheck:
+      test: ["CMD", "wget", "localhost:3000", "-O /dev/null"]
+      interval: 1m
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+
   ipfs:
     container_name: ipfs
     image: ipfs/go-ipfs:v0.9.0
