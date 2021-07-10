@@ -28,6 +28,7 @@ jobs:
 
   testnet:
     runs-on: ubuntu-latest
+    if: false
     needs: hardhat
     timeout-minutes: 20
     strategy:
