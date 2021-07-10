@@ -1,12 +1,12 @@
 services:
   eth-devnet:
-    image: node:lts
-    command: bash -c "npx hardhat node"
+    image: node:lts-alpine
+    command: sh -c "npx hardhat node"
     volumes:
       - ./hardhat.config.js:/hardhat/hardhat.config.js
       - ./package.json:/hardhat/package.json
+      - ./package-lock.json:/hardhat/package-lock.json
       - ./node_modules:/hardhat/node_modules
-      - ./yarn.lock:/hardhat/yarn.lock
     working_dir: /hardhat
     ports:
       - '8545:8545'
