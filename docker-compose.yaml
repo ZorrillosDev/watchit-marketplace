@@ -11,7 +11,24 @@ services:
     ports:
       - '8545:8545'
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8545"]
+      test: ["CMD", "npx hardhat check"]
+      interval: 1m
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  ipfs:
+    container_name: ipfs
+    image: ipfs/go-ipfs:v0.9.0
+    ports:
+      - "5001:5001"
+      - "8080:8080"
+      # - "4001:4001" # ipfs swarm - expose if needed/wanted
+    volumes:
+      - ./.ipfs:/data/ipfs
+    healthcheck:
+      test: ["CMD", "wget", "-S", "-O", "/dev/null",
+             "http://localhost:8080/ipfs/QmQPeNsJPyVWPFDVHb77w8G42Fvo15z4bG2X8D2GhfbSXc"]
       interval: 1m
       timeout: 5s
       retries: 3
