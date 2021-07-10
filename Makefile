@@ -22,6 +22,7 @@ deps:
 	npm install --legacy-peer-deps
 	npx hardhat compile
 	docker-compose up -d
+	sleep 5
 	npx hardhat run --network localhost scripts/deploy-ft.js
 	npx hardhat run --network localhost scripts/deploy-nft.js
 
