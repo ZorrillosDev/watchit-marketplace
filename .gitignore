@@ -10,3 +10,4 @@ artifacts
 .openzeppelin/unknown-*
 
 .env
+.ipfs
