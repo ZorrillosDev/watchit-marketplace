@@ -13,16 +13,16 @@ clean:
 	rm -rf artifacts
 	rm -rf node_modules
 	rm -rf package-lock.json
-	rm -rf yarn.lock
 	docker-compose down
 
-deps:
+node_modules:
 	# --legacy-peer-deps is required
 	#  for now, hopefully not forever.
 	npm install --legacy-peer-deps
-	npx hardhat compile
+
+deps: node_modules
 	docker-compose up -d
-	sleep 5
+	npx hardhat compile
 	npx hardhat run --network localhost scripts/deploy-ft.js
 	npx hardhat run --network localhost scripts/deploy-nft.js
 
