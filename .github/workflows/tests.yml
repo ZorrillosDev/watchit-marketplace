@@ -18,8 +18,13 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm ci
       - run: make test
+        env:
+          LOCALHOST_CONTRACT_NFT: ${{ secrets.LOCALHOST_CONTRACT_NFT }}
+          LOCALHOST_CONTRACT_FT: ${{ secrets.LOCALHOST_CONTRACT_FT }}
+      - name: docker-compose logs on failure
+        if: ${{ failure() }}
+        run: docker-compose logs
 
   testnet:
     runs-on: ubuntu-latest
