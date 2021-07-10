@@ -1,5 +1,7 @@
+---
 services:
   eth-devnet:
+    container_name: eth-devnet
     image: node:lts-alpine
     command: sh -c "npx hardhat node"
     volumes:
