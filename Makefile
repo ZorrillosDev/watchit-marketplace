@@ -43,7 +43,7 @@ deploy-ropsten:
 	npx hardhat run ./scripts/deploy-ft.js --network ropsten
 	npx hardhat run ./scripts/deploy-nft.js --network ropsten
 
-deploy-all: clean deploy-rinkeby deploy-goerli deploy-kovan deploy-ropsten
+deploy-all: rebuild deploy-rinkeby deploy-goerli deploy-kovan deploy-ropsten
 
 
 upgrade-rinkeby:
@@ -62,6 +62,6 @@ upgrade-ropsten:
 	npx hardhat run ./scripts/upgrade-ft.js --network ropsten
 	npx hardhat run ./scripts/upgrade-nft.js --network ropsten
 
-upgrade-all: clean upgrade-rinkeby upgrade-goerli upgrade-kovan upgrade-ropsten
+upgrade-all: rebuild upgrade-rinkeby upgrade-goerli upgrade-kovan upgrade-ropsten
 
 rebuild: clean deps
