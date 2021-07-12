@@ -60,14 +60,13 @@ describe('WatchIt NFTs (WNFT)', function () {
         const tokenCID = (await randomCID()).toString()
         await nftMinter(tokenCID)
         const burn = await tokensNF.burn(owner.address, bs58toHex(tokenCID), txOptions)
-        expect(burn.wait()).to.emit(tokensNF, 'Transfer').withArgs(hexToBs58(tokenCID), 0x0)
+        await burn.wait()
 
-        // const filter = tokensNF.filters.TransferSingle()
-        // const events = await tokensNF.queryFilter(filter)
-        // const latestEvent = events.pop()
-        // expect(ethers.BigNumber.from(latestEvent.args.to)).to.equal(0x0)
-        // expect(hexToBs58(latestEvent.args.id.toHexString())).to.equal(tokenCID)
-
+        const filter = tokensNF.filters.TransferSingle()
+        const events = await tokensNF.queryFilter(filter)
+        const latestEvent = events.pop()
+        expect(ethers.BigNumber.from(latestEvent.args.to)).to.equal(0x0)
+        expect(hexToBs58(latestEvent.args.id.toHexString())).to.equal(tokenCID)
       })
 
       it('only admin can burn NFTs', async function () {
