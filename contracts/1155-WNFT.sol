@@ -39,16 +39,18 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
         _mint(account, id, NFT_SUPPLY, "");
     }
 
-    function mintBatch(address to, bytes32[] memory cids, uint256[] memory amounts)
+    function mintBatch(address to, bytes32[] memory cids)
     public
     {
         require(hasRole(NFT_MINTER_ROLE, msg.sender), 'NFT cannot be created');
         uint[] memory ids = new uint[](cids.length);
+        uint[] memory amounts = new uint[](cids.length);
 
         for (uint i = 0; i < cids.length; i++) {
             ids[i] = uint256(cids[i]);
             require(creators[ids[i]] == address(0), 'This token ID has already been minted');
             creators[ids[i]] = to;
+            amounts[i] = NFT_SUPPLY;
         }
 
         _mintBatch(to, ids, amounts, "");
