@@ -9,7 +9,7 @@ const {
 } = require('./utils')
 
 const CONTRACT_ADDRESS = getNFTContractAddress(network.name)
-const txOptions = {gasLimit: 800000}
+const txOptions = { gasLimit: 800000 }
 
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe('WatchIt NFTs (WNFT)', function () {
@@ -23,6 +23,8 @@ describe('WatchIt NFTs (WNFT)', function () {
 
   const nftMinter = async function (CID, minter = owner) {
     const tokenHex = bs58toHex(CID)
+    // txOptions.gasLimit = await tokensNF.connect(minter).estimateGas
+    //   .mint(minter.address, tokenHex)
     const tx = await tokensNF.connect(minter)
       .mint(minter.address, tokenHex, txOptions)
     await tx.wait()
@@ -37,7 +39,7 @@ describe('WatchIt NFTs (WNFT)', function () {
     tokensNF = NFToken.attach(CONTRACT_ADDRESS)
   })
 
-  describe.skip('Details', function () {
+  describe('Details', function () {
     it('returns true when 0xd9b67a26 is passed to supportsInterface', async () => {
       const supports = await tokensNF.supportsInterface('0xd9b67a26')
       expect(supports).to.equal(true)
@@ -45,44 +47,39 @@ describe('WatchIt NFTs (WNFT)', function () {
   })
 
   describe('Roles', function () {
-    describe.skip('NFT_MINTER_ROLE', function () {
+    describe('NFT_MINTER_ROLE', function () {
       it('cannot mint NFT without proper permissions', async function () {
-        try {
-          const tokenCID = (await randomCID()).toString()
-          await nftMinter(tokenCID, acct1)
-          expect(false).to.equal(true)
-        } catch (err) {
-          expect(err.message).to.contain('NFT cannot be created')
-        }
+        const tokenCID = bs58toHex((await randomCID()).toString())
+        const mint = await tokensNF.connect(acct1).mint(acct1.address, tokenCID, txOptions)
+        await expect(mint.wait()).to.be.reverted
       })
     })
 
     describe('DEFAULT_ADMIN_ROLE', function () {
-      it.skip('can burn NFT with proper permissions', async function () {
+      it('can burn NFT with proper permissions', async function () {
         const tokenCID = (await randomCID()).toString()
         await nftMinter(tokenCID)
-        const burn = await tokensNF
-          .burn(owner.address, bs58toHex(tokenCID), txOptions)
-        await burn.wait()
+        const burn = await tokensNF.burn(owner.address, bs58toHex(tokenCID), txOptions)
+        expect(burn.wait()).to.emit(tokensNF, 'Transfer').withArgs(hexToBs58(tokenCID), 0x0)
 
-        const filter = tokensNF.filters.TransferSingle()
-        const events = await tokensNF.queryFilter(filter)
-        const latestEvent = events.pop()
-        expect(ethers.BigNumber.from(latestEvent.args.to)).to.equal(0x0)
-        expect(hexToBs58(latestEvent.args.id.toHexString())).to.equal(tokenCID)
+        // const filter = tokensNF.filters.TransferSingle()
+        // const events = await tokensNF.queryFilter(filter)
+        // const latestEvent = events.pop()
+        // expect(ethers.BigNumber.from(latestEvent.args.to)).to.equal(0x0)
+        // expect(hexToBs58(latestEvent.args.id.toHexString())).to.equal(tokenCID)
+
       })
 
       it('only admin can burn NFTs', async function () {
         const tokenCID = (await randomCID()).toString()
         await nftMinter(tokenCID)
-        expect(tokensNF.connect(acct1)
-          .burn(owner.address, bs58toHex(tokenCID), txOptions)
-        ).to.be.revertedWith('NFT cannot be burned')
+        const burn = await tokensNF.connect(acct1).burn(owner.address, bs58toHex(tokenCID), txOptions)
+        await expect(burn.wait()).to.be.reverted
       })
     })
   })
 
-  describe.skip('Mint & Burn', function () {
+  describe('Mint & Burn', function () {
     it('should mint NFT valid mapping CID', async function () {
       const tokenIdA = await nftMinter((await randomCID()).toString())
       const tokenIdB = await nftMinter((await randomCID()).toString())
@@ -105,10 +102,8 @@ describe('WatchIt NFTs (WNFT)', function () {
         (await randomCID()).toString(),
         (await randomCID()).toString()
       ]
-      txOptions.gasLimit = await tokensNF.estimateGas
-        .mintBatch(owner.address, uris.map(bs58toHex), [1, 5, 10, 100])
       const mintBatch = await tokensNF
-        .mintBatch(owner.address, uris.map(bs58toHex), [1, 5, 10, 100], txOptions)
+        .mintBatch(owner.address, uris.map(bs58toHex), txOptions)
       await mintBatch.wait()
 
       const filter = tokensNF.filters.TransferBatch()
@@ -120,22 +115,16 @@ describe('WatchIt NFTs (WNFT)', function () {
     })
 
     it('should not "re-mint" an already existing CID', async () => {
-      const tokenCID = (await randomCID()).toString()
-
-      try {
-        await nftMinter(tokenCID)
-        await nftMinter(tokenCID)
-      } catch (err) {
-        expect(err.message).to.match(/This token ID has already been minted/)
-      }
+      const tokenCID = bs58toHex((await randomCID()).toString())
+      await nftMinter(tokenCID)
+      const reMint = await tokensNF.mint(owner.address, tokenCID, txOptions)
+      expect(reMint.wait()).to.be.revertedWith('This token ID has already been minted')
     })
   })
 
-  describe.skip('Transfer', function () {
+  describe('Transfer', function () {
     it('should be transferable', async function () {
       const tokenIdA = await nftMinter((await randomCID()).toString())
-      txOptions.gasLimit = await tokensNF.connect(owner).estimateGas
-        .transfer(owner.address, acct1.address, bs58toHex(tokenIdA))
       const transfer = await tokensNF.connect(owner)
         .transfer(owner.address, acct1.address, bs58toHex(tokenIdA), txOptions)
       await transfer.wait()
@@ -152,20 +141,13 @@ describe('WatchIt NFTs (WNFT)', function () {
     })
 
     it('should fail for try to transfer not owned NFT', async function () {
-      try {
-        const tokenIdA = await nftMinter((await randomCID()).toString())
-        txOptions.gasLimit = await tokensNF.connect(acct1).estimateGas
-          .transfer(owner.address, acct1.address, bs58toHex(tokenIdA))
-        await tokensNF.connect(acct1)
-          .transfer(owner.address, acct1.address, bs58toHex(tokenIdA), txOptions)
-        expect(false).to.equal(true)
-      } catch (err) {
-        expect(err.message).to.contain('ERC1155: caller is not owner nor approved')
-      }
+      const tokenIdA = await nftMinter((await randomCID()).toString())
+      const transfer = await tokensNF.connect(acct1).transfer(owner.address, acct1.address, bs58toHex(tokenIdA), txOptions)
+      expect(transfer.wait()).to.be.reverted
     })
   })
 
-  describe.skip('Query', function () {
+  describe('Query', function () {
     it('lists all TransferSingle events', async () => {
       const filter = tokensNF.filters.TransferSingle()
       const events = await tokensNF.queryFilter(filter)
