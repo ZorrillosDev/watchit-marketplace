@@ -36,9 +36,7 @@ describe('WatchIt NFTs (WNFT)', function () {
   before(async function () {
     [owner, acct1] = await ethers.getSigners()
     txOptions.gasPrice = await ethers.provider.getGasPrice()
-
     const NFToken = await ethers.getContractFactory('WNFT')
-
     tokensNF = NFToken.attach(CONTRACT_ADDRESS)
   })
 
