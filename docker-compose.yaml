@@ -49,8 +49,8 @@ services:
     container_name: ipfs
     image: ipfs/go-ipfs:v0.9.0
     ports:
-      - "5001:5001"
-      - "8080:8080"
+      - "5008:5001"
+      - "8085:8080"
       # - "4001:4001" # ipfs swarm - expose if needed/wanted
     volumes:
       - ./.ipfs:/data/ipfs
