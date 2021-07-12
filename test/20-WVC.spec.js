@@ -5,7 +5,7 @@ const { getFTContractAddress } = require('./utils')
 const CONTRACT_ADDRESS = getFTContractAddress(network.name)
 
 // see: https://github.com/mawrkus/js-unit-testing-guide
-describe('WVC', function () {
+describe.skip('WVC', function () {
   let wvc
   let owner, account1
 
