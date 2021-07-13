@@ -117,7 +117,7 @@ describe('WatchIt NFTs (WNFT)', function () {
       const tokenCID = bs58toHex((await randomCID()).toString())
       await nftMinter(tokenCID)
       const reMint = await tokensNF.mint(owner.address, tokenCID, txOptions)
-      expect(reMint.wait()).to.be.revertedWith('This token ID has already been minted')
+      expect(reMint.wait()).to.be.reverted
     })
   })
 
