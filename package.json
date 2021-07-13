@@ -58,7 +58,7 @@
     "ethereum-waffle": "^3.3.0",
     "ethers": "^5.3.1",
     "fork-ts-checker-webpack-plugin": "^6.2.12",
-    "hardhat": "^2.4.0",
+    "hardhat": "^2.4.3",
     "hardhat-contract-sizer": "^2.0.3",
     "hardhat-gas-reporter": "^1.0.4",
     "html-loader": "^2.1.2",
