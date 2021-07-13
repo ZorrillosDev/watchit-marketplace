@@ -114,9 +114,9 @@ describe('WatchIt NFTs (WNFT)', function () {
     })
 
     it('should not "re-mint" an already existing CID', async () => {
-      const tokenCID = bs58toHex((await randomCID()).toString())
+      const tokenCID = (await randomCID()).toString()
       await nftMinter(tokenCID)
-      const reMint = await tokensNF.mint(owner.address, tokenCID, txOptions)
+      const reMint = await tokensNF.mint(owner.address, bs58toHex(tokenCID), txOptions)
       expect(reMint.wait()).to.be.reverted
     })
   })
