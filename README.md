@@ -1,5 +1,5 @@
 # Watchit Marketplace
-
+[![Tests](https://github.com/ZorrillosDev/watchit-marketplace/actions/workflows/tests.yml/badge.svg)](https://github.com/ZorrillosDev/watchit-marketplace/actions/workflows/tests.yml)
 >In the traditional movie and television industry, studios create video content, in the form of series and films, which are then picked up by distributors, who provide the infrastructure to deliver the content to viewers. Oftentimes, producers will fund projects that are pitched to them by the other parties.
 > 
 >Within watchit marketplace, each creator has tools to create, monetize and promote their content, the creator is able to upload their film to the marketplace where it can be evaluated by content distributors who can acquire this content for distribution without intermediaries. Through the use of smart contracts and the blockchain, transactions between the parties occur directly. The marketplace is a means for both parties to meet and offers a healthy business environment.
