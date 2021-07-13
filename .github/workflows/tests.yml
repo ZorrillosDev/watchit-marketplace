@@ -28,13 +28,12 @@ jobs:
 
   testnet:
     runs-on: ubuntu-latest
-    if: false
     needs: hardhat
     timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
-        network: [rinkeby, kovan]
+        network: [rinkeby]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
