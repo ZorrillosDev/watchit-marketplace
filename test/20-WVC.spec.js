@@ -33,6 +33,20 @@ describe('WVC', function () {
     })
   })
 
+  describe('Roles', function () {
+
+    describe('DEFAULT_ADMIN_ROLE', function () {
+      it('can bump version', async function () {
+        const currentVersion = await wvc.version()
+        const upgrade = await wvc.upgrade()
+        await upgrade.wait()
+        const newVersion = await wvc.version()
+
+        expect(newVersion).to.equal(currentVersion + 1)
+      })
+    })
+  })
+
   describe('Transfer', function () {
     const transferAmount = 10
     let initialBlockNumber
