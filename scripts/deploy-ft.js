@@ -5,8 +5,10 @@ async function main () {
   const WVC = await ethers.getContractFactory('WVC')
   const wvc = await upgrades.deployProxy(WVC, [200000], { initializer: 'initialize' })
   const currentNetwork = network.name.toUpperCase()
-  if (!process.env.CI) // Write in env if not CI workflow env
+  if (!process.env.CI) {
+    // Write in env if not CI workflow env
     writeInEnv({ [`${currentNetwork}_CONTRACT_FT`]: wvc.address })
+  }
 
   console.log(`${network.name}:WVC:${wvc.address}`)
 }
