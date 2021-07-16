@@ -27,19 +27,17 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
         _setURI(newuri);
     }
 
-    function mint(address account, bytes32 cid)
+    function mint(address account, uint256 cid)
     public
     {
-        uint256 id = uint256(cid);
-
         // All keys already "exist" in a Solidity mapping with a default value of 0
-        require(creators[id] == address(0), 'This token ID has already been minted');
+        require(creators[cid] == address(0), 'This token ID has already been minted');
         require(hasRole(NFT_MINTER_ROLE, msg.sender), 'NFT cannot be created');
-        creators[id] = account;
-        _mint(account, id, NFT_SUPPLY, "");
+        creators[cid] = account;
+        _mint(account, cid, NFT_SUPPLY, "");
     }
 
-    function mintBatch(address to, bytes32[] memory cids)
+    function mintBatch(address to, uint256[] memory cids)
     public
     {
         require(hasRole(NFT_MINTER_ROLE, msg.sender), 'NFT cannot be created');
@@ -47,7 +45,7 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
         uint[] memory amounts = new uint[](cids.length);
 
         for (uint i = 0; i < cids.length; i++) {
-            ids[i] = uint256(cids[i]);
+            ids[i] = cids[i];
             require(creators[ids[i]] == address(0), 'This token ID has already been minted');
             creators[ids[i]] = to;
             amounts[i] = NFT_SUPPLY;
@@ -56,21 +54,18 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
         _mintBatch(to, ids, amounts, "");
     }
 
-    function transfer(address from, address to, bytes32 cid) public {
-        safeTransferFrom(from, to, uint256(cid), NFT_SUPPLY, "");
+    function transfer(address from, address to, uint256 cid) public {
+        safeTransferFrom(from, to, cid, NFT_SUPPLY, "");
     }
 
-    function burn(address account, bytes32 cid) public {
+    function burn(address account, uint256 cid) public {
         require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), 'NFT cannot be burned');
-
-        uint256 id = uint256(cid);
-        _burn(account, id, NFT_SUPPLY);
-        creators[id] = address(0);
+        _burn(account, cid, NFT_SUPPLY);
+        creators[cid] = address(0);
     }
 
     function burnBatch(address account, uint256[] memory ids, uint256[] memory amounts) public {
         require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), 'NFT cannot be burned');
-
         _burnBatch(account, ids, amounts); // TODO
     }
 
