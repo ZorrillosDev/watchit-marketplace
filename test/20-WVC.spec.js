@@ -1,5 +1,5 @@
 /* global ethers, network */
-
+require('./utils/global')
 const { expect } = require('chai')
 const { getFTContractAddress } = require('./utils')
 const CONTRACT_ADDRESS = getFTContractAddress(network.name)

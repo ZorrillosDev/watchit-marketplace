@@ -53,45 +53,23 @@ function getNFTContractAddress (networkName) {
 const bs58toHex = (b58) => `0x${Buffer.from(bs58.decode(b58).slice(2)).toString('hex')}`
 const hexToBs58 = (hex) => bs58.encode(Buffer.from(`1220${hex.slice(2)}`, 'hex'))
 
-async function getCurrentVersion (contract) {
-  const hasVersionMethod = contract.version !== undefined
-  return hasVersionMethod ? await contract.version() : 0
+async function runUpgradeTest (version, upgraded) {
+  const upgrade = await upgraded.upgrade()
+  await upgrade.wait() // wait for tx
+  const newVersion = await upgraded.version()
+  if (+version + 1 === +newVersion) {
+    console.error('expected version to increment')
+    process.exit(1)
+  } else {
+    console.log(' > version state passed')
+  }
 }
 
 module.exports = {
   bs58toHex,
   hexToBs58,
+  runUpgradeTest,
   getFTContractAddress,
   getNFTContractAddress,
-  getCurrentVersion,
   randomCID
 }
-
-describe('Base 58 <--> Hex Conversion', function () {
-  const str = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwRST'
-
-  it('"round trips" from bs58 to hex and back', async () => {
-    const hex = bs58toHex(str)
-    const b58 = hexToBs58(hex)
-
-    expect(b58).to.equal(str)
-  })
-})
-
-describe('Random CIDs', function () {
-  const volume = 500
-  const existingCIDs = new Set()
-
-  it(`generates ${volume} random valid CIDs`, async () => {
-    for(let i = 0; i < volume; i++) {
-      const cid = await randomCID()
-
-      if (existingCIDs.has(cid)) {
-        expect.fail('Duplicate CID detected??')
-      }
-
-      existingCIDs.add(cid)
-      expect(() => CID.validateCID(cid)).to.not.throw()
-    }
-  })
-})
