@@ -15,10 +15,8 @@ function writeInEnv (newData) {
   const mergedData = Object.assign({}, parsedEnv, newData)
   const stringData = stringify(mergedData)
   fs.writeFileSync(sourcePath, stringData)
-
 }
 
 module.exports = {
   writeInEnv
 }
-

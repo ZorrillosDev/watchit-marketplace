@@ -7,9 +7,7 @@ async function main () {
   const currentNetwork = network.name.toUpperCase()
   writeInEnv({ [`${currentNetwork}_CONTRACT_FT`]: wvc.address })
 
-  process.stdout.write(
-    `${network.name}:WVC:${wvc.address}\n`
-  )
+  console.log(`${network.name}:WVC:${wvc.address}\n`)
 }
 
 main()
