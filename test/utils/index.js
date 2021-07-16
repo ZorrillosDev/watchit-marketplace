@@ -1,7 +1,5 @@
 const crypto = require('crypto')
-
 const bs58 = require('bs58')
-const { expect } = require('chai')
 const CID = require('cids')
 const multihashing = require('multihashing-async')
 
@@ -57,7 +55,8 @@ async function runUpgradeTest (version, upgraded) {
   const upgrade = await upgraded.upgrade()
   await upgrade.wait() // wait for tx
   const newVersion = await upgraded.version()
-  if (+version + 1 === +newVersion) {
+
+  if (+version === +newVersion) {
     console.error('expected version to increment')
     process.exit(1)
   } else {
