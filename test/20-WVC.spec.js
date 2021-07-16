@@ -34,7 +34,6 @@ describe('WVC', function () {
   })
 
   describe('Roles', function () {
-
     describe('DEFAULT_ADMIN_ROLE', function () {
       it('can bump version', async function () {
         const currentVersion = await wvc.version()

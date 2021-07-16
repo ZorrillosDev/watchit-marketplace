@@ -54,7 +54,6 @@ describe('WatchIt NFTs (WNFT)', function () {
     })
 
     describe('DEFAULT_ADMIN_ROLE', function () {
-
       it('can bump version', async function () {
         const currentVersion = await wnft.version()
         const upgrade = await wnft.upgrade()
@@ -76,7 +75,6 @@ describe('WatchIt NFTs (WNFT)', function () {
         expect(ethers.BigNumber.from(latestEvent.args.to)).to.equal(0x0)
         expect(hexToBs58(latestEvent.args.id.toHexString())).to.equal(tokenCID)
       })
-
 
       it('only admin can burn NFTs', async function () {
         const tokenCID = (await randomCID()).toString()
@@ -127,7 +125,7 @@ describe('WatchIt NFTs (WNFT)', function () {
       const tokenCID = (await randomCID()).toString()
       await nftMinter(tokenCID)
       const reMint = await wnft.mint(owner.address, bs58toHex(tokenCID), txOptions)
-      expect(reMint.wait()).to.be.reverted
+      expect(reMint.wait()).to.be.reverted // eslint-disable-line
     })
   })
 
@@ -152,7 +150,7 @@ describe('WatchIt NFTs (WNFT)', function () {
     it('should fail for try to transfer not owned NFT', async function () {
       const tokenIdA = await nftMinter((await randomCID()).toString())
       const transfer = await wnft.connect(acct1).transfer(owner.address, acct1.address, bs58toHex(tokenIdA), txOptions)
-      expect(transfer.wait()).to.be.reverted
+      expect(transfer.wait()).to.be.reverted // eslint-disable-line
     })
   })
 
