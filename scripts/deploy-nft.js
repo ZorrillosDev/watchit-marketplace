@@ -7,7 +7,7 @@ async function main () {
   const currentNetwork = network.name.toUpperCase()
   if (!process.env.CI) {
     // Write in env if not CI workflow env
-    writeInEnv({ [`${currentNetwork}_CONTRACT_FT`]: wnft.address })
+    writeInEnv({ [`${currentNetwork}_CONTRACT_NFT`]: wnft.address })
   }
 
   console.log(`${network.name}:NFT:${wnft.address}`)
