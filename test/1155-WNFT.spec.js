@@ -118,8 +118,9 @@ describe('WatchIt NFTs (WNFT)', function () {
       const events = await wnft.queryFilter(filter)
       const latestEvent = events.pop()
       expect(ethers.BigNumber.from(latestEvent.args.from)).to.equal(0x0)
-      expect(latestEvent.args.ids.map(e => ethers.BigNumber.prototype.toHexString.apply(e)))
-        .to.deep.equal(uris.map(bs58toHex))
+      for (const i in latestEvent.args.ids) {
+        expect(latestEvent.args.ids[i].eq(ethers.BigNumber.from(bs58toHex(uris[i]))))
+      }
     })
 
     it('should not "re-mint" an already existing CID', async () => {
