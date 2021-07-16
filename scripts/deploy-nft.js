@@ -5,7 +5,8 @@ async function main () {
   const WNFT = await ethers.getContractFactory('WNFT')
   const wnft = await upgrades.deployProxy(WNFT)
   const currentNetwork = network.name.toUpperCase()
-  writeInEnv({ [`${currentNetwork}_CONTRACT_NFT`]: wnft.address })
+  if (!process.env.CI) // Write in env if not CI workflow env
+    writeInEnv({ [`${currentNetwork}_CONTRACT_NFT`]: wnft.address })
 
   console.log(`${network.name}:NFT:${wnft.address}`)
 }
