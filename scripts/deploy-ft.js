@@ -1,14 +1,14 @@
 const { ethers, network, upgrades } = require('hardhat')
+const { writeInEnv } = require('./utils')
 
 async function main () {
   const WVC = await ethers.getContractFactory('WVC')
   const wvc = await upgrades.deployProxy(WVC, [200000], { initializer: 'initialize' })
-  const localNetwork = network.name === 'localhost'
+  const currentNetwork = network.name.toUpperCase()
+  writeInEnv({ [`${currentNetwork}_CONTRACT_FT`]: wvc.address })
 
   process.stdout.write(
-    localNetwork
-      ? wvc.address
-      : `${network.name}:WVC:${wvc.address}\n`
+    `${network.name}:WVC:${wvc.address}\n`
   )
 }
 

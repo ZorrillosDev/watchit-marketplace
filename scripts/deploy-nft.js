@@ -1,14 +1,14 @@
 const { ethers, network, upgrades } = require('hardhat')
+const { writeInEnv } = require('./utils')
 
 async function main () {
   const WNFT = await ethers.getContractFactory('WNFT')
   const wnft = await upgrades.deployProxy(WNFT)
-  const localNetwork = network.name === 'localhost'
+  const currentNetwork = network.name.toUpperCase()
+  writeInEnv({ [`${currentNetwork}_CONTRACT_NFT`]: wnft.address })
 
   process.stdout.write(
-    localNetwork
-      ? wnft.address
-      : `${network.name}:NFT:${wnft.address}\n`
+    `${network.name}:NFT:${wnft.address}\n`
   )
 }
 
