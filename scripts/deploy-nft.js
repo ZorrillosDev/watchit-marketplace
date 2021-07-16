@@ -7,9 +7,7 @@ async function main () {
   const currentNetwork = network.name.toUpperCase()
   writeInEnv({ [`${currentNetwork}_CONTRACT_NFT`]: wnft.address })
 
-  process.stdout.write(
-    `${network.name}:NFT:${wnft.address}\n`
-  )
+  console.log(`${network.name}:NFT:${wnft.address}\n`)
 }
 
 main()
