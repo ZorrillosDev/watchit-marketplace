@@ -3,9 +3,9 @@ import { rootDir } from '../utils/env'
 
 export const aliasItems = {
   '@src': join(rootDir, '/src'),
-  '@images': join(rootDir, '/src/images'),
+  '@assets': join(rootDir, '/src/assets'),
   '@styles': join(rootDir, '/src/styles'),
   '@components': join(rootDir, '/src/components'),
-  '@pages': join(rootDir, '/src/app/pages'),
+  '@pages': join(rootDir, '/src/pages'),
   '@helpers': join(rootDir, '/src/helpers')
 }
