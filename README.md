@@ -4,7 +4,7 @@
 > 
 >Within watchit marketplace, each creator has tools to create, monetize and promote their content, the creator is able to upload their film to the marketplace where it can be evaluated by content distributors who can acquire this content for distribution without intermediaries. Through the use of smart contracts and the blockchain, transactions between the parties occur directly. The marketplace is a means for both parties to meet and offers a healthy business environment.
 
-[![screenshot](src/app/media/img/screenshot_1.png?raw=true)]()
+[![screenshot](src/app/assets/img/screenshot_1.png?raw=true)]()
 ## Addresses
 ><details>
 >  <summary>Addresses</summary>
