@@ -18,7 +18,7 @@
     "paths": {
       "@src/*": ["src/*"],
       "@app/*": ["src/app/*"],
-      "@media/*": ["src/app/media/*"],
+      "@media/*": ["src/app/assets/*"],
       "@components/*": ["src/app/components/*"]
     },
     "allowSyntheticDefaultImports": true,
