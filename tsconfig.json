@@ -12,13 +12,14 @@
     "noImplicitThis": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
+    "resolveJsonModule": true,
     "baseUrl": "./",
     "rootDir": "./",
     "typeRoots": ["./node_modules/@types", "./src/@types"],
     "paths": {
+      "@public/*": ["public/*"],
       "@src/*": ["src/*"],
-      "@app/*": ["src/app/*"],
-      "@media/*": ["src/app/assets/*"],
+      "@assets/*": ["src/app/assets/*"],
       "@components/*": ["src/app/components/*"]
     },
     "allowSyntheticDefaultImports": true,
