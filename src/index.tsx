@@ -1,4 +1,4 @@
-import 'v8-compile-cache'
+// import 'v8-compile-cache'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import * as sw from '@public/sw'
