@@ -1,21 +1,17 @@
 /* eslint-disable  @typescript-eslint/explicit-function-return-type */
-import { Router, Route, Switch } from 'react-router-dom'
-import Index from './pages/Index'
+import {Router} from 'react-router-dom'
 import React from 'react'
-import { createMemoryHistory } from 'history'
+import {createMemoryHistory} from 'history'
+import {Routing} from "@src/navigation/Routing";
 
 const history = createMemoryHistory()
 
 const App = () => {
-  return (
-    <Router history={history}>
-      <Switch>
-        <Route exact path='/'>
-          <Index />
-        </Route>
-      </Switch>
-    </Router>
-  )
+    return (
+        <Router history={history}>
+            <Routing/>
+        </Router>
+    )
 }
 
 export default App
