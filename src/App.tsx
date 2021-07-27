@@ -2,7 +2,6 @@
 import React from 'react'
 import {BrowserRouter} from 'react-router-dom'
 import {Routing} from "@src/navigation/Routing";
-import 'fontsource-roboto';
 
 const App = () => {
     return (
