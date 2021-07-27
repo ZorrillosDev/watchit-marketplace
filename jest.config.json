@@ -23,6 +23,7 @@
   "moduleNameMapper": {
     "^@src(.*)$": "<rootDir>/src$1",
     "^@public(.*)$": "<rootDir>/public/$1",
+    "^@pages(.*)$": "<rootDir>/src/pages/$1",
     "^@components(.*)$": "<rootDir>/src/components$1"
   },
   "resetMocks": true,
