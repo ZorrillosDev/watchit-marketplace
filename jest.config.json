@@ -22,6 +22,7 @@
   ],
   "moduleNameMapper": {
     "^@src(.*)$": "<rootDir>/src$1",
+    "^@redux(.*)$": "<rootDir>/src/redux$1",
     "^@public(.*)$": "<rootDir>/public/$1",
     "^@components(.*)$": "<rootDir>/src/components$1"
   },
