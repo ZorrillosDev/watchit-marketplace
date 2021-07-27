@@ -26,7 +26,7 @@ task('accounts', 'Prints the list of accounts', async () => {
   }
 })
 
-if (HARDHAT_AUTOMINE === 'true' && process.env.CI !== true) {
+if (HARDHAT_AUTOMINE === 'true' && !process.env.CI) {
   console.warn('WARN: HARDHAT_AUTOMINE is on. This should only be in CI or selectively on local')
 }
 
