@@ -23,10 +23,7 @@
   "moduleNameMapper": {
     "^@src(.*)$": "<rootDir>/src$1",
     "^@public(.*)$": "<rootDir>/public/$1",
-    "^@images(.*)$": "<rootDir>/src/images$1",
-    "^@styles(.*)$": "<rootDir>/src/styles$1",
-    "^@components(.*)$": "<rootDir>/src/components$1",
-    "^@helpers(.*)$": "<rootDir>/src/helpers$1"
+    "^@components(.*)$": "<rootDir>/src/components$1"
   },
   "resetMocks": true,
   "preset": "ts-jest",
