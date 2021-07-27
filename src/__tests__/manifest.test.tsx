@@ -1,6 +1,5 @@
 import fs from 'fs'
 import path from 'path'
-// @ts-expect-error
 import * as manifest from '@public/manifest.json'
 
 describe('Manifest', function () {
