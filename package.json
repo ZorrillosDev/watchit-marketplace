@@ -92,6 +92,8 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "@material-ui/core": "^4.12.2",
+    "@material-ui/icons": "^4.11.2",
     "@openzeppelin/contracts": "^4.1.0",
     "@openzeppelin/test-helpers": "^0.5.11",
     "@types/react-dom": "^16.9.8",
@@ -101,6 +103,7 @@
     "@types/redux-saga": "^0.10.5",
     "@types/styled-components": "^5.1.11",
     "dotenv": "^10.0.0",
+    "fontsource-roboto": "^4.0.0",
     "husky": "^7.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
