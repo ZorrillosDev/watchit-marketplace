@@ -52,8 +52,8 @@ module.exports = {
   networks: {
     hardhat: {
       mining: {
-        auto: (HARDHAT_AUTOMINE === 'true'),
-        interval: (HARDHAT_AUTOMINE === 'true') ? null : [500, 2000]
+        auto: false,
+        interval: (HARDHAT_AUTOMINE === 'true') ? 100 : [500, 2000]
       },
       throwOnTransactionFailures: true,
       throwOnCallFailures: true
