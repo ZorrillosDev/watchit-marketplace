@@ -22,14 +22,14 @@
   ],
   "moduleNameMapper": {
     "^@src(.*)$": "<rootDir>/src$1",
-    "^@redux(.*)$": "<rootDir>/src/redux$1",
+    "^@core(.*)$": "<rootDir>/src/redux$1",
     "^@public(.*)$": "<rootDir>/public/$1",
     "^@pages(.*)$": "<rootDir>/src/pages/$1",
     "^@components(.*)$": "<rootDir>/src/components$1"
   },
   "resetMocks": true,
   "preset": "ts-jest",
-  "testEnvironment": "node",
+  "testEnvironment": "jsdom",
   "transform": {
     "^.+\\.jsx?$": "babel-jest"
   },

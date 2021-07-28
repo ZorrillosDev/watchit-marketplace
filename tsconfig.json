@@ -29,7 +29,7 @@
       "@src/*": [
         "src/*"
       ],
-      "@redux/*": [
+      "@core/*": [
         "src/redux/*"
       ],
       "@assets/*": [
