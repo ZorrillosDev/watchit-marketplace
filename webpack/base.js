@@ -38,6 +38,10 @@ export default {
     plugins.copyPlugin
   ]),
   resolve: {
+    modules: [
+      "node_modules",
+      path.resolve(__dirname)
+    ],
     alias: aliasItems,
     extensions: ['.tsx', '.ts', '.js', '.jsx']
   },
