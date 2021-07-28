@@ -1,5 +1,7 @@
 /* eslint-disable  @typescript-eslint/explicit-function-return-type */
 import React from 'react'
+// https://reactrouter.com/web/api/withRouter
+import { withRouter } from 'react-router'
 import { Provider } from 'react-redux'
 import { Routing } from '@src/navigation/Routing'
 import { ThemeProvider } from '@material-ui/core/styles'
@@ -13,13 +15,14 @@ const initialState = window?.__INITIAL_STATE__ ?? {}
 const history = createHashHistory()
 const store = createStore(history, initialState)
 const theme = { /* Theme initial state */}
+const ConnectedApp = withRouter(Routing)
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <Routing />
+          <ConnectedApp />
         </ConnectedRouter>
       </Provider>
     </ThemeProvider>
