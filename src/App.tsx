@@ -9,7 +9,7 @@ import { createHashHistory } from 'history'
 import createStore from '@redux/store'
 
 // @ts-expect-error
-const initialState = window.__INITIAL_STATE__
+const initialState = window.__INITIAL_STATE__ || {}
 const history = createHashHistory()
 const store = createStore(history, initialState)
 const theme = { /* Theme initial state */}

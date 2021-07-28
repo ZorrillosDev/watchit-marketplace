@@ -5,7 +5,7 @@ type CounterState = {
 }
 
 const initialState = {counter: 0} as CounterState
-export default createSlice({
+const counter = createSlice({
     name: 'counter',
     initialState,
     reducers: {
@@ -17,3 +17,6 @@ export default createSlice({
         }
     }
 })
+
+export const {increment, decrement} = counter.actions
+export default counter.reducer
