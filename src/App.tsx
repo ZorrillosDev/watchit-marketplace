@@ -3,7 +3,7 @@ import React from 'react'
 // https://reactrouter.com/web/api/withRouter
 import { withRouter } from 'react-router'
 import { Provider } from 'react-redux'
-import { Routing } from '@src/navigation/Routing'
+import { Routing } from '@src/navigation'
 import { ThemeProvider } from '@material-ui/core/styles'
 // https://github.com/supasate/connected-react-router/blob/master/FAQ.md
 import { ConnectedRouter } from 'connected-react-router/immutable'
@@ -12,10 +12,10 @@ import createStore from '@core/store'
 
 // @ts-expect-error
 const initialState = window?.__INITIAL_STATE__ ?? {}
+const ConnectedApp = withRouter(Routing)
 const history = createHashHistory()
 const store = createStore(history, initialState)
 const theme = { /* Theme initial state */}
-const ConnectedApp = withRouter(Routing)
 
 const App = () => {
   return (

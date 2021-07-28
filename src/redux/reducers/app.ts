@@ -1,23 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit'
 
-interface CounterState {
-  counter: number
+export interface CounterState {
+    counter: number
 }
 
-const initialState: CounterState = { counter: 0 }
+const initialState: CounterState = {counter: 0}
 const counter = createSlice({
-  name: 'counter',
-  initialState,
-  reducers: {
-    increment (state) {
-      state.counter++
-    },
-    decrement (state) {
-      state.counter--
+    name: 'counter',
+    initialState,
+    reducers: {
+        increment(state) {
+            state.counter += 1
+        },
+        decrement(state) {
+            state.counter -= 1
+        }
     }
-  }
 })
 
-const { actions, reducer } = counter
-export const { increment, decrement } = actions
+const {actions, reducer} = counter
+export const {increment, decrement} = actions
 export default reducer
