@@ -1,31 +1,19 @@
-import actions from '@redux/actions/app'
+import {createSlice} from '@reduxjs/toolkit'
 
-interface Action {
-  payload: number
-  type: string
+type CounterState = {
+    counter: number
 }
 
-interface CounterState {
-  counter: number
-}
-
-const initialState: CounterState = {
-  counter: 0
-}
-
-export const appReducer = (state: CounterState = initialState, action: Action): CounterState => {
-  switch (action.type) {
-    case actions.INCREMENT:
-      return {
-        ...state,
-        counter: state.counter + action.payload
-      }
-    case actions.DECREMENT:
-      return {
-        ...state,
-        counter: state.counter - 1
-      }
-    default:
-      return state
-  }
-}
+const initialState = {counter: 0} as CounterState
+export default createSlice({
+    name: 'counter',
+    initialState,
+    reducers: {
+        increment(state) {
+            state.counter++;
+        },
+        decrement(state) {
+            state.counter--;
+        }
+    }
+})
