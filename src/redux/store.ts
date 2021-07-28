@@ -18,12 +18,14 @@ export default (history: History, initialState = {}): Store => {
     const devTools =
         // eslint-disable-next-line no-undef
         process.env.NODE_ENV !== 'production'
-            ? window.__REDUX_DEVTOOLS_EXTENSION__
+            // @ts-expect-error
+            ? window?.__REDUX_DEVTOOLS_EXTENSION__
             : (a: any) => a
 
     // @ts-ignore
     return createStore(
         rootReducer(history),
+        // @ts-expect-error
         fromJS(initialState),
         compose(applyMiddleware(...middlewares), devTools)
     )

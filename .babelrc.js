@@ -6,6 +6,7 @@ module.exports = (api) => {
 
     return {
         presets: [
+            '@babel/preset-react',
             [
                 '@babel/preset-env',
                 {
@@ -17,7 +18,7 @@ module.exports = (api) => {
                     corejs: 3,
                 }
             ],
-            '@babel/preset-react'
+
         ]
     };
 };
