@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 import { connect } from 'react-redux'
-import * as actions from '@core/actions/app'
+import * as actions from '@state/actions/app'
 
 function Index ({ counter, increment, decrement }: any): ReactElement {
   return (

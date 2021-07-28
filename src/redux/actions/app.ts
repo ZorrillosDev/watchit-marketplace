@@ -1,1 +1,1 @@
-export { increment, decrement } from '@core/reducers/app'
+export { increment, decrement } from '@state/reducers/app'

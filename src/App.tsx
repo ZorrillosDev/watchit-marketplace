@@ -8,7 +8,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 // https://github.com/supasate/connected-react-router/blob/master/FAQ.md
 import { ConnectedRouter } from 'connected-react-router/immutable'
 import { createHashHistory } from 'history'
-import createStore from '@core/store'
+import createStore from '@state/store'
 
 // @ts-expect-error
 const initialState = window?.__INITIAL_STATE__ ?? {}
