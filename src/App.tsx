@@ -3,15 +3,22 @@ import React from 'react'
 import {Provider} from 'react-redux'
 import {BrowserRouter} from 'react-router-dom'
 import {Routing} from '@src/navigation/Routing'
+import {ThemeProvider} from '@material-ui/core/styles'
 import store from '@redux/store'
+
+const theme = {
+    // Theme initial state
+};
 
 const App = () => {
     return (
-        <Provider store={store}>
-            <BrowserRouter>
-                <Routing/>
-            </BrowserRouter>
-        </Provider>
+        <ThemeProvider theme={theme}>
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Routing/>
+                </BrowserRouter>
+            </Provider>
+        </ThemeProvider>
     )
 }
 

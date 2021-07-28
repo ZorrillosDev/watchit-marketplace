@@ -13,7 +13,7 @@ const initialState: CounterState = {
   counter: 0
 }
 
-export const appReducer = (state: CounterState = initialState, action: Action): object => {
+export const appReducer = (state: CounterState = initialState, action: Action): CounterState => {
   switch (action.type) {
     case actions.INCREMENT:
       return {
