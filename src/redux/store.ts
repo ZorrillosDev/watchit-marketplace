@@ -1,23 +1,30 @@
-import { createStore, applyMiddleware, compose } from 'redux'
+import {createStore, applyMiddleware, compose, Store} from 'redux'
+import {routerMiddleware} from 'connected-react-router/immutable'
 import thunk from 'redux-thunk'
 import rootReducer from './reducers'
+import {History} from 'history'
+import {fromJS} from 'immutable'
 
-// Array of all middlewares to be applied.
-const middlewares = [thunk]
+// @ts-ignore
+export default (history: History, initialState = {}): Store => {
+    // Array of all middlewares to be applied.
+    const middlewares = [
+        thunk,
+        routerMiddleware(history)
+    ]
 
-// devtools for debugging in dev environment.
-const devTools =
-    // eslint-disable-next-line no-undef
-    // @ts-expect-error
-    process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION__
-    // @ts-expect-error
-      ? window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        // @ts-expect-error
-        window.__REDUX_DEVTOOLS_EXTENSION__()
-      : (a: any) => a
+    // devtools for debugging in dev environment.
+    // @ts-ignore
+    const devTools =
+        // eslint-disable-next-line no-undef
+        process.env.NODE_ENV !== 'production'
+            ? window.__REDUX_DEVTOOLS_EXTENSION__
+            : (a: any) => a
 
-const store = createStore(
-  rootReducer, compose(applyMiddleware(...middlewares), devTools)
-)
-
-export default store
+    // @ts-ignore
+    return createStore(
+        rootReducer(history),
+        fromJS(initialState),
+        compose(applyMiddleware(...middlewares), devTools)
+    )
+}
