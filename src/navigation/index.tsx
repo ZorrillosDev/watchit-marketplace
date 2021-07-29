@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react'
 import Index from '@pages/Index'
 import { Route, Switch } from 'react-router'
-import { ROOT } from '@src/navigation/CONSTANTS'
 
+export const ROOT = '/'
 export const Routing = (): ReactElement => {
   return (
     <Switch>
