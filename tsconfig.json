@@ -29,9 +29,6 @@
       "@src/*": [
         "src/*"
       ],
-      "@providers/*": [
-        "src/providers/*"
-      ],
       "@state/*": [
         "src/redux/*"
       ],
