@@ -25,6 +25,7 @@
     "^@state(.*)$": "<rootDir>/src/redux$1",
     "^@public(.*)$": "<rootDir>/public/$1",
     "^@pages(.*)$": "<rootDir>/src/pages/$1",
+    "^@providers(.*)$": "<rootDir>/src/providers$1",
     "^@components(.*)$": "<rootDir>/src/components$1"
   },
   "resetMocks": true,
