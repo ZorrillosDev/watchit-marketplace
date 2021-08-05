@@ -43,3 +43,8 @@ export const fontsRule = {
   test: /\.(woff(2)?|eot|ttf|otf|)$/,
   type: 'asset/inline'
 }
+
+export const cssRule = {
+  test: /\.css$/,
+  use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
+}
