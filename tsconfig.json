@@ -29,14 +29,20 @@
       "@src/*": [
         "src/*"
       ],
+      "@pages/*": [
+        "src/pages/*"
+      ],
+      "@layouts/*": [
+        "src/pages/__layouts__/*"
+      ],
       "@state/*": [
         "src/redux/*"
       ],
       "@assets/*": [
-        "src/app/assets/*"
+        "src/assets/*"
       ],
       "@components/*": [
-        "src/app/components/*"
+        "src/components/*"
       ]
     },
     "allowSyntheticDefaultImports": true,
