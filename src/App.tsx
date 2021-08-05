@@ -5,7 +5,7 @@ import {withRouter} from 'react-router'
 import {Provider} from 'react-redux'
 import {Routing} from '@src/navigation'
 
-// import {ThemeProvider} from '@material-ui/core/styles'
+import {ThemeProvider} from '@material-ui/core/styles'
 // https://github.com/supasate/connected-react-router/blob/master/FAQ.md
 import {ConnectedRouter} from 'connected-react-router/immutable'
 import {createHashHistory} from 'history'
@@ -19,20 +19,19 @@ const initialState = window?.__INITIAL_STATE__ ?? {}
 const ConnectedApp = withRouter(Routing)
 const history = createHashHistory()
 const store = createStore(history, initialState)
-// const theme = { /* Theme initial state */}
-
+const theme = { /* Theme initial state */}
 
 const App = () => {
     return (
-        // <ThemeProvider theme={theme}>
-        <Web3ReactProvider {...web3Settings}>
-            <Provider store={store}>
-                <ConnectedRouter history={history}>
-                    <ConnectedApp/>
-                </ConnectedRouter>
-            </Provider>
-        </Web3ReactProvider>
-        // </ThemeProvider>
+        <ThemeProvider theme={theme}>
+            <Web3ReactProvider {...web3Settings}>
+                <Provider store={store}>
+                    <ConnectedRouter history={history}>
+                        <ConnectedApp/>
+                    </ConnectedRouter>
+                </Provider>
+            </Web3ReactProvider>
+        </ThemeProvider>
     )
 }
 

@@ -1,4 +1,4 @@
-import {Grid} from "@material-ui/core";
+import { Grid } from '@material-ui/core'
 import styled from 'styled-components'
 
 const TopHeaderContainer = styled(Grid)`
@@ -8,7 +8,6 @@ const TopHeaderContainer = styled(Grid)`
 `
 
 TopHeaderContainer.defaultProps = {
-    container: true
+  container: true
 }
-export default TopHeaderContainer;
-
+export default TopHeaderContainer

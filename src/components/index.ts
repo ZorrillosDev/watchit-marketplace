@@ -1,1 +1,1 @@
-export {default as TopHeader} from '@components/TopHeader';
+export { default as TopHeader } from '@components/TopHeader'

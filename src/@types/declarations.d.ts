@@ -10,7 +10,7 @@ declare module '@pages/Index' {
   export default MyComponent
 }
 
-declare module "*.png"
+declare module '*.png'
 declare module '*.svg' {
   import React = require('react')
   const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>
