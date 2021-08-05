@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const TopHeaderContainer = styled(Grid)`
   height: 3.5rem;
-  background-color: #ffffff !important;
+  background-color: #ffffff;
   box-shadow: #333333 1px 1px 1px;
 `
 
