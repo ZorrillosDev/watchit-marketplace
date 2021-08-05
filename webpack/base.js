@@ -26,6 +26,7 @@ export default {
       rules.htmlRule,
       rules.imagesRule,
       rules.fontsRule,
+      rules.cssRule,
       ...rules.svgRules
     ])
   },
@@ -34,7 +35,6 @@ export default {
     plugins.providePlugin,
     plugins.definePlugin,
     plugins.forkTsCheckerWebpackPlugin,
-    plugins.esLintPlugin,
     plugins.copyPlugin
   ]),
   resolve: {
