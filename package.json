@@ -148,6 +148,7 @@
       "webpack.config.babel.js",
       "package.json",
       ".gitignore",
+      "/src/i18n",
       "/webpack/**/*.js",
       "/test/**/*.js"
     ]
