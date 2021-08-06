@@ -25,7 +25,7 @@ i18n.init({
   interpolation: {
     escapeValue: false
   }
-}).then(r => console.log(r))
+})
 
 // Humanize displaying
 export const lang = [
