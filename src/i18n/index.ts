@@ -1,3 +1,5 @@
+// @ts-expect-error
+
 import i18Next from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
@@ -18,13 +20,14 @@ const resources = {
 const i18n = i18Next
   .use(LanguageDetector)
   .use(initReactI18next)
-  .init({
-    resources,
-    fallbackLng: defaultLang,
-    interpolation: {
-      escapeValue: false
-    }
-  })
+
+i18n.init({
+  resources,
+  fallbackLng: defaultLang,
+  interpolation: {
+    escapeValue: false
+  }
+}).done()
 
 // Humanize displaying
 export const lang = [
