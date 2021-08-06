@@ -1,8 +1,7 @@
-import { hideAt } from './responsive-component'
-import settings from '../settings'
+import { hideAt } from '@styles/responsive'
+import settings from '@src/settings'
 
 const devices = settings.styles.devices
-
 export const MobileSmallAndDown = hideAt({ min: devices.mobileS })
 export const MobileMediumAndDown = hideAt({ min: devices.mobileM })
 export const MobileLargeAndDown = hideAt({ min: devices.mobileL })
