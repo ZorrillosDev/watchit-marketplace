@@ -7,6 +7,6 @@ const Logo = styled.img`
 `
 
 Logo.defaultProps = {
-    src: LogoPng
+  src: LogoPng
 }
 export default Logo

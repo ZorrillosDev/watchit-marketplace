@@ -1,7 +1,7 @@
 import React from 'react'
-import { shallow} from 'enzyme'
+import { shallow } from 'enzyme'
 import TopHeader from '@components/TopHeader'
-import {WalletButton, Logo} from "@src/components";
+import { WalletButton, Logo } from '@src/components'
 
 /* eslint-disable no-undef */
 describe('TopHeader component', () => {
@@ -17,11 +17,11 @@ describe('TopHeader component', () => {
 
   it('should display logo', () => {
     const topHeaderComponent = shallow(<TopHeader />)
-    expect(topHeaderComponent.containsMatchingElement(<Logo/>)).toBeTruthy()
+    expect(topHeaderComponent.containsMatchingElement(<Logo />)).toBeTruthy()
   })
 
   it('should display wallet button', () => {
     const topHeaderComponent = shallow(<TopHeader />)
-    expect(topHeaderComponent.containsMatchingElement(<WalletButton/>)).toBeTruthy()
+    expect(topHeaderComponent.containsMatchingElement(<WalletButton />)).toBeTruthy()
   })
 })

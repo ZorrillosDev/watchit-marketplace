@@ -1,8 +1,8 @@
-import React, {FunctionComponent, ReactElement} from "react";
-import MainSliderView from "@components/MainSlider/MainSliderView";
+import React, { FunctionComponent, ReactElement } from 'react'
+import MainSliderView from '@components/MainSlider/MainSliderView'
 
 const MainSliderContainer: FunctionComponent = (): ReactElement => (
-    <MainSliderView/>
+  <MainSliderView />
 )
 
-export default MainSliderContainer;
+export default MainSliderContainer

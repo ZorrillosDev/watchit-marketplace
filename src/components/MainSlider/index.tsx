@@ -1,1 +1,1 @@
-export {default} from '@components/MainSlider/MainSliderContainer'
+export { default } from '@components/MainSlider/MainSliderContainer'
