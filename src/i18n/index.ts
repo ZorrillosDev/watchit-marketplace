@@ -1,5 +1,3 @@
-// @ts-expect-error
-
 import i18Next from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
@@ -27,7 +25,7 @@ i18n.init({
   interpolation: {
     escapeValue: false
   }
-}).done()
+}).then(r => console.log(r))
 
 // Humanize displaying
 export const lang = [
