@@ -14,6 +14,17 @@ export const globalOverrides = {
     },
 };
 
+export const typography = {
+    typography: {
+        fontFamily: [
+            'Tamil Sangam MN',
+            'Oswald',
+            'Arial',
+            'sans-serif',
+        ].join(',')
+    }
+}
+
 export const defaultTheme = {
     palette: {
         primary: {

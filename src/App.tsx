@@ -18,7 +18,7 @@ import * as web3Settings from '@src/web3'
 import {createTheme, responsiveFontSizes} from '@material-ui/core/styles';
 // https://material-ui.com/es/components/css-baseline/
 import CssBaseline from '@material-ui/core/CssBaseline';
-import {globalOverrides, defaultTheme} from "@styles/theme";
+import {globalOverrides, defaultTheme, typography} from "@styles/theme";
 
 // @ts-expect-error
 const initialState = window?.__INITIAL_STATE__ ?? {}
@@ -26,7 +26,7 @@ const ConnectedApp = withRouter(Routing)
 const history = createHashHistory()
 const store = createStore(history, initialState)
 const theme = responsiveFontSizes(createTheme(
-    Object.assign({}, globalOverrides, defaultTheme)
+    Object.assign({}, globalOverrides, defaultTheme, typography)
 ));
 
 const App = () => {
