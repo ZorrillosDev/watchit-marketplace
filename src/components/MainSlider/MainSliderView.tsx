@@ -1,4 +1,4 @@
-import {Box} from "@material-ui/core";
+import { Box } from '@material-ui/core'
 import styled from 'styled-components'
 
 const MainSliderView = styled(Box)`
@@ -6,5 +6,4 @@ const MainSliderView = styled(Box)`
   height: 100vh;
   background-color: #000 !important;
 `
-export default MainSliderView;
-
+export default MainSliderView
