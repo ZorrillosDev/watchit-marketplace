@@ -15,8 +15,7 @@ const resources = {
   es: { translation: es }
 }
 
-// @ts-expect-error
-void i18Next
+const i18n = i18Next
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
@@ -33,4 +32,4 @@ export const lang = [
   { value: 'es', name: 'Spanish' }
 ]
 
-export default i18Next
+export default i18n
