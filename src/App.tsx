@@ -14,16 +14,25 @@ import createStore from '@state/store'
 import {Web3ReactProvider} from '@web3-react/core'
 import * as web3Settings from '@src/web3'
 
+// https://material-ui.com/es/customization/theming/
+import {createTheme, responsiveFontSizes} from '@material-ui/core/styles';
+// https://material-ui.com/es/components/css-baseline/
+import CssBaseline from '@material-ui/core/CssBaseline';
+import {globalOverrides, defaultTheme} from "@styles/theme";
+
 // @ts-expect-error
 const initialState = window?.__INITIAL_STATE__ ?? {}
 const ConnectedApp = withRouter(Routing)
 const history = createHashHistory()
 const store = createStore(history, initialState)
-const theme = { /* Theme initial state */}
+const theme = responsiveFontSizes(createTheme(
+    Object.assign({}, globalOverrides, defaultTheme)
+));
 
 const App = () => {
     return (
         <ThemeProvider theme={theme}>
+            <CssBaseline/>
             <Web3ReactProvider {...web3Settings}>
                 <Provider store={store}>
                     <ConnectedRouter history={history}>

@@ -41,6 +41,9 @@
       "@assets/*": [
         "src/assets/*"
       ],
+      "@styles/*": [
+        "src/styles/*"
+      ],
       "@components/*": [
         "src/components/*"
       ]
