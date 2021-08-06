@@ -17,12 +17,16 @@ export const globalOverrides = {
 export const defaultTheme = {
     palette: {
         primary: {
-            main: "#115293",
+            main: "#164C5D",
             contrastText: "#fff"
         },
         secondary: {
-            main: "#2196f3",
+            main: "#2795B7",
             contrastText: "#fff"
         },
+        default: {
+            main: "#fff",
+            contrastText: "#9999"
+        }
     }
 }
