@@ -6,12 +6,12 @@ import 'jest-styled-components'
 /* eslint-disable no-undef */
 describe('RoundButton component', () => {
     it('should render', () => {
-        const alertComponent = shallow(<RoundButton />)
-        expect(alertComponent).toMatchSnapshot()
+        const roundButtonComponent = shallow(<RoundButton />)
+        expect(roundButtonComponent).toMatchSnapshot()
     })
 
     it('should render with white border-radius', () => {
-        const alertComponent = shallow(<RoundButton />)
-        expect(alertComponent).toHaveStyleRule('border-radius', '50px')
+        const roundButtonComponent = shallow(<RoundButton />)
+        expect(roundButtonComponent).toHaveStyleRule('border-radius', '50px')
     })
 })

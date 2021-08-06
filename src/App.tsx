@@ -1,5 +1,5 @@
 /* eslint-disable  @typescript-eslint/explicit-function-return-type */
-import React from 'react'
+import React, {FunctionComponent, ReactElement} from 'react'
 // https://reactrouter.com/web/api/withRouter
 import {withRouter} from 'react-router'
 import {Provider} from 'react-redux'
@@ -29,7 +29,7 @@ const theme = responsiveFontSizes(createTheme(
     Object.assign({}, globalOverrides, defaultTheme, typography)
 ));
 
-const App = () => {
+const App: FunctionComponent = (): ReactElement => {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline/>
