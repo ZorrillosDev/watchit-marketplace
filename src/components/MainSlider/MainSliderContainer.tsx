@@ -1,10 +1,8 @@
-import {Box} from "@material-ui/core";
-import styled from 'styled-components'
+import React, {FunctionComponent, ReactElement} from "react";
+import MainSliderView from "@components/MainSlider/MainSliderView";
 
-const MainSliderContainer = styled(Box)`
-  width: 100vw;
-  height: 100vh;
-  background-color: #000 !important;
-`
+const MainSliderContainer: FunctionComponent = (): ReactElement => (
+    <MainSliderView/>
+)
+
 export default MainSliderContainer;
-
