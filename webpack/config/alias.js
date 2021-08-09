@@ -6,6 +6,7 @@ export const aliasItems = {
   '@i18n': join(rootDir, '/src/i18n'),
   '@public': join(rootDir, '/public'),
   '@state': join(rootDir, '/src/redux'),
+  '@hooks': join(rootDir, '/src/hooks'),
   '@pages': join(rootDir, '/src/pages'),
   '@assets': join(rootDir, '/src/assets'),
   '@styles': join(rootDir, '/src/styles'),

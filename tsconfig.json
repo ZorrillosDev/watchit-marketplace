@@ -41,6 +41,9 @@
       "@state/*": [
         "src/redux/*"
       ],
+      "@hooks/*": [
+        "src/hooks/*"
+      ],
       "@assets/*": [
         "src/assets/*"
       ],
