@@ -1,11 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 interface WalletButtonState {
-  connecting: boolean,
-  connected: boolean,
+  connecting: boolean
+  connected: boolean
   error: boolean
 }
-
 
 const initialState: WalletButtonState = {
   connected: false, connecting: false, error: false
@@ -18,7 +17,7 @@ const counter = createSlice({
     connect (state) {
       state.connecting = true
     },
-    connected(state){
+    connected (state) {
       state.connecting = false
       state.connected = true
     },
