@@ -6,7 +6,6 @@ import {InjectedConnector} from '@web3-react/injected-connector'
 export const getLibrary = (provider?: any): Web3Provider =>
     new ethers.providers.Web3Provider(provider)
 
-export const injectedConnector = new InjectedConnector({
+export const Injected = new InjectedConnector({
     supportedChainIds: [Chains.PRIVATE, Chains.RINKEBY]
 })
-

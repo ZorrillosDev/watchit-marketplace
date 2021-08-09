@@ -1,51 +1,57 @@
 import {useState, useEffect} from 'react'
-import {injectedConnector as injected} from "@src/web3";
+import {Injected} from "@src/web3";
 import {useWeb3React} from "@web3-react/core";
-import {connect, connected, error} from '@state/reducers/WalletReducer'
-import {useDispatch} from "react-redux";
 
-export const webMetamaskEager = () => {
-    const dispatch = useDispatch();
-    const {activate} = useWeb3React()
+export const useMetamaskEager = () => {
+    const {activate, active} = useWeb3React()
+    const [tried, setTried] = useState(false)
 
     useEffect(() => {
-        dispatch(connect()); // Start connecting
-        injected.isAuthorized().then((isAuthorized: boolean) => {
+        Injected.isAuthorized().then((isAuthorized: boolean) => {
             if (isAuthorized) {
-                activate(injected, undefined, true).catch(() => {
-                    dispatch(error())
+                activate(Injected, undefined, true).catch(() => {
+                    setTried(true)
                 })
+            } else {
+                setTried(true)
             }
         })
     }, [])
 
+    useEffect(() => {
+        if (!tried && active) {
+            setTried(true)
+        }
+    }, [tried, active])
+
+    return tried
+
 }
 
 
-export const webMetamaskConnect = async () => {
-    const dispatch = useDispatch();
+export const useMetamaskListener = (suppress: boolean = true) => {
     const {active, error, activate} = useWeb3React()
 
     useEffect((): any => {
         const {ethereum} = window as any
-        if (ethereum && ethereum.on && !active && !error) {
+        if (ethereum && ethereum.on && !active && !error && !suppress) {
             const handleConnect = async () => {
-                await activate(injected)
-                dispatch(connected());
+                console.log("Handling 'connect' event")
+                activate(Injected)
             }
             const handleChainChanged = (chainId: string | number) => {
                 console.log("Handling 'chainChanged' event with payload", chainId)
-                activate(injected)
+                activate(Injected)
             }
             const handleAccountsChanged = (accounts: string[]) => {
                 console.log("Handling 'accountsChanged' event with payload", accounts)
                 if (accounts.length > 0) {
-                    activate(injected)
+                    activate(Injected)
                 }
             }
             const handleNetworkChanged = (networkId: string | number) => {
                 console.log("Handling 'networkChanged' event with payload", networkId)
-                activate(injected)
+                activate(Injected)
             }
 
             ethereum.on('connect', handleConnect)
