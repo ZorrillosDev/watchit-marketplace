@@ -1,11 +1,12 @@
+import { History } from 'history'
 import { connectRouter } from 'connected-react-router'
 import { Reducer, combineReducers } from 'redux'
-import { History } from 'history'
-import app from './app'
+import WalletReducer from '@state/reducers/WalletReducer'
 
 const createRootReducer = (history: History): Reducer => {
   return combineReducers({
-    app, router: connectRouter(history)
+    wallet: WalletReducer,
+    router: connectRouter(history)
   })
 }
 export default createRootReducer
