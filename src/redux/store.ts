@@ -2,10 +2,10 @@ import { Store } from 'redux'
 import { configureStore } from '@reduxjs/toolkit'
 import { routerMiddleware } from 'connected-react-router/immutable'
 import thunkMiddleware from 'redux-thunk'
-import rootReducer from './reducers'
-import { History } from 'history'
+import rootReducer from '@state/reducer'
+import { createHashHistory, History } from 'history'
 
-export default (history: History, initialState = {}): Store => {
+export const createStore = (history: History, initialState = {}): Store => {
   // Array of all middlewares to be applied.
   const middlewares = [
     thunkMiddleware,
@@ -17,6 +17,12 @@ export default (history: History, initialState = {}): Store => {
     devTools: process.env.NODE_ENV !== 'production',
     preloadedState: initialState,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(...middlewares)
+      getDefaultMiddleware({ serializableCheck: false }).concat(...middlewares)
   })
 }
+
+export const history = createHashHistory()
+export const store = createStore(history)
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch

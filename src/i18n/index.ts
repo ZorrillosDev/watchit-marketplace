@@ -1,36 +1,42 @@
-import i18Next from 'i18next'
-import { initReactI18next } from 'react-i18next'
-import LanguageDetector from 'i18next-browser-languagedetector'
+import i18Next from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
 
 // Languages
-import en from './langs/en.json'
-import es from './langs/es.json'
+import en from './langs/en.json';
+import es from './langs/es.json';
 
 // default lang
-export const defaultLang = 'en'
+export const defaultLang = 'en';
 
 // Translation
 const resources = {
   en: { translation: en },
-  es: { translation: es }
-}
+  es: { translation: es },
+};
 
 const i18n = i18Next
-  .use(LanguageDetector)
-  .use(initReactI18next)
+    .use(LanguageDetector)
+    .use(initReactI18next);
 
 i18n.init({
   resources,
   fallbackLng: defaultLang,
   interpolation: {
-    escapeValue: false
-  }
-})
+    escapeValue: false,
+  },
+});
 
 // Humanize displaying
 export const lang = [
   { value: 'en', name: 'English' },
-  { value: 'es', name: 'Spanish' }
-]
+  { value: 'es', name: 'Spanish' },
+];
 
-export default i18n
+//TODO add tests
+export const langKeys = Object.keys(en).reduce((o: any, e: string) => {
+  o[e] = e;
+  return o;
+}, {});
+
+export default i18n;

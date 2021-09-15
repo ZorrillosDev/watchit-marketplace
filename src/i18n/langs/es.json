@@ -1,3 +1,8 @@
 {
-  "GLOBAL_WALLET": "Cartera"
+  "GLOBAL_WALLET": "Conectar cartera",
+  "GLOBAL_EXPLORE": "Explorar",
+  "GLOBAL_FESTIVAL": "Festival",
+  "GLOBAL_WORK": "Como funciona",
+  "GLOBAL_SELL": "Vende tus creaciones",
+  "GLOBAL_SEARCH": "Buscar en watchit"
 }

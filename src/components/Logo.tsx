@@ -2,8 +2,8 @@ import styled from 'styled-components'
 import LogoPng from '@assets/icons/icon.png'
 
 const Logo = styled.img`
-  border-radius: 50px;
-  max-width: 40px;
+  max-width: 50px;
+  transform: translateY(-1px);
 `
 
 Logo.defaultProps = {
