@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TableIcon /> should render table icon 1`] = `ShallowWrapper {}`;
