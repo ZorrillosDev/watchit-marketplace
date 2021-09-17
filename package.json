@@ -83,7 +83,6 @@
     "jest-circus": "26.6.0",
     "jest-resolve": "26.6.0",
     "jest-styled-components": "^7.0.5",
-    "jest-transform-graphql": "^2.1.0",
     "jest-transform-stub": "^2.0.0",
     "jest-watch-typeahead": "0.6.1",
     "jscpd": "^3.3.26",
