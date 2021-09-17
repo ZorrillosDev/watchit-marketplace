@@ -8,7 +8,7 @@ on:
 
 jobs:
   standard:
-    name: standard.js linting
+    name: standard.js linting 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
