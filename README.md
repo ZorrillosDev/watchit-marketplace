@@ -42,6 +42,12 @@
 >Content should be uploaded and processed but not minted until purchased, thus saving transaction fees.
 ></details>
 
+
+### Gitpod
+
+To run a fast and fully initialized set-up dev environment
+just go to our `ready-to-code` [gitpod](https://gitpod.io/#https://github.com/ZorrillosDev/watchit-marketplace
+
 ## Install
 
 ```bash
