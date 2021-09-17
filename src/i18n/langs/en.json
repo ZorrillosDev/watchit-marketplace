@@ -1,3 +1,8 @@
 {
-  "GLOBAL_WALLET": "Wallet"
+  "GLOBAL_WALLET": "Connect wallet",
+  "GLOBAL_EXPLORE": "Explore",
+  "GLOBAL_FESTIVAL": "Festival",
+  "GLOBAL_WORK": "How it works",
+  "GLOBAL_SELL": "Sell your creations",
+  "GLOBAL_SEARCH": "Search on watchit"
 }

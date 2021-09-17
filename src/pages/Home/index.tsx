@@ -1,19 +1,8 @@
-import React, { ReactElement } from 'react'
-import { connect, RootStateOrAny } from 'react-redux'
-import * as actions from '@state/actions/app'
-import { TopHeader, MainSlider } from '@src/components'
-import { DefaultLayout } from '@layouts/default'
+import React from 'react'
+import MainSlider from '@src/components/MainSlider'
 
-function Index (): ReactElement {
-  return (
-    <DefaultLayout>
-      <TopHeader />
-      <MainSlider />
-    </DefaultLayout>
-  )
+const Home = (): JSX.Element => {
+  return <MainSlider />
 }
 
-export default connect(
-  (state: RootStateOrAny) => state.app,
-  actions
-)(Index)
+export default Home

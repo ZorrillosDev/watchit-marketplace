@@ -1,0 +1,5 @@
+export * from '@components/Table/TableSeed'
+export { Table as default, TableRow, TablePagination } from '@material-ui/core'
+export { default as TableIcon } from '@components/Table/TableIcon'
+export { default as TableStatus } from '@components/Table/TableStatus'
+export { default as TableRowEmpty } from '@components/Table/TableRowEmpty'
