@@ -46,7 +46,7 @@
 ### Gitpod
 
 To run a fast and fully initialized set-up dev environment
-just go to our `ready-to-code` [gitpod](https://gitpod.io/#https://github.com/ZorrillosDev/watchit-marketplace
+just go to our `ready-to-code` [gitpod](https://gitpod.io/#https://github.com/ZorrillosDev/watchit-marketplace)
 
 ## Install
 
