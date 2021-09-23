@@ -16,6 +16,8 @@ const DefaultLayoutWrapper = styled(Container)`
   padding-top: 4rem;
   padding-left: 1rem;
   padding-right: 1rem;
+  height: 100%;
+  width: 100%;
 
   @media (min-width: 600px) {
     padding-left: 1.5rem;
