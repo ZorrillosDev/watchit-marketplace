@@ -1,11 +1,10 @@
 import React, { FC } from 'react'
-import HomeSlider from "@pages/Home/components/HomeSlider";
+import HomeSlider, { HomeSliderProps } from '@pages/Home/components/HomeSlider'
 
-export const HomeView: FC = (): JSX.Element => {
-
+export const HomeView: FC<HomeSliderProps> = (props): JSX.Element => {
   return (
     <>
-      <HomeSlider />
+      <HomeSlider {...props} />
     </>
   )
 }

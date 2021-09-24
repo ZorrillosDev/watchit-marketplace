@@ -13,7 +13,7 @@ export const DefaultLayout: FC<PropsWithChildren<any>> = ({ children }): ReactEl
 }
 
 const DefaultLayoutWrapper = styled(Container)`
-  padding-top: 4rem;
+  padding-top: 3.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
   height: 100%;
