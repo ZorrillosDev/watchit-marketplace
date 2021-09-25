@@ -8,7 +8,12 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
     uint8 internal constant NFT_SUPPLY = 1;
     bytes32 public constant NFT_MINTER_ROLE = keccak256("NFT_MINTER_ROLE");
 
-    mapping(uint256=>address) internal creators;
+    struct CIDData {
+        address author;
+        uint256 price;
+    }
+
+    mapping(uint256 => address ) internal creators;
     uint32 public version;
 
     function initialize() public initializer {
@@ -17,7 +22,7 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
         _setupRole(NFT_MINTER_ROLE, msg.sender);
     }
 
-    function upgrade() public{
+    function upgrade() public {
         require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Version cannot be updated.");
         version++;
     }
@@ -25,6 +30,33 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
     function setURI(string memory newuri) public {
         require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "URI cannot be updated.");
         _setURI(newuri);
+    }
+
+    function getOffChainDataByCID(uint256 cid) internal view returns (CIDData){
+        // Here the chainlink requests
+        // eg.
+        CIDData ciData = CIDData(address(0x0), uint256(0.5));
+        return cidData;
+    }
+
+    function purchase(uint256 cid) public payable {
+        CIDData cidData = getDataByCID(cid);
+
+        require(msg.value > 0, "Not enough ETH");
+        require(msg.value >= cidData.price, "Not enough ETH");
+        require(balanceOf(cidData.author, cid) > 0, "Invalid seller");
+
+        address payable seller = payable(cidData.author);
+        address payable buyer = payable(msg.sender);
+        seller.transfer(msg.value);
+
+        if (creators[cid] == address(0x0)) {
+            emit Transfer(address(0x0), seller, cid);
+            mint(msg.sender, cid);
+        } else {
+            _safeTransferFrom(seller, buyer, cid, NFT_SUPPLY, "");
+        }
+
     }
 
     function mint(address account, uint256 cid)
@@ -66,7 +98,8 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
 
     function burnBatch(address account, uint256[] memory ids, uint256[] memory amounts) public {
         require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), 'NFT cannot be burned');
-        _burnBatch(account, ids, amounts); // TODO
+        _burnBatch(account, ids, amounts);
+        // TODO
     }
 
     function supportsInterface(bytes4 interfaceId)
