@@ -15,6 +15,7 @@ const ROPSTEN_ALCHEMY_API_KEY = process.env.ROPSTEN_ALCHEMY_API_KEY
 const HARDHAT_AUTOMINE = process.env.HARDHAT_AUTOMINE
 const OWNER_KEY = process.env.OWNER_KEY
 const SECONDARY_KEY = process.env.SECONDARY_KEY
+const MAINNET_DEV_ALCHEMY_API_KEY = process.env.MAINNET_DEV_ALCHEMY_API_KEY
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -56,7 +57,7 @@ module.exports = {
         interval: (HARDHAT_AUTOMINE === 'true') ? 100 : [500, 2000]
       },
       forking: {
-        url: `https://eth-ropsten.alchemyapi.io/v2/${MAINNET_DEV_ALCHEMY_API_KEY}`,
+        url: `https://eth-mainnet.alchemyapi.io/v2/${MAINNET_DEV_ALCHEMY_API_KEY}`,
       },
       throwOnTransactionFailures: true,
       throwOnCallFailures: true
