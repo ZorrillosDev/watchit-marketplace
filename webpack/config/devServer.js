@@ -1,5 +1,5 @@
 import isWindows from 'is-windows'
-import { devServerProxyConfig } from './devServierProxy'
+import { devServerProxyConfig } from './devServierProxy.js'
 
 const defaultPort = 8082
 const devServerHost = isWindows() ? '127.0.0.1' : '0.0.0.0'

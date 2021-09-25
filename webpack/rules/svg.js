@@ -1,4 +1,4 @@
-import { babelLoader } from './useLoaderRuleItems'
+import { babelLoader } from './useLoaderRuleItems.js'
 
 /**
  * Using @svgr/webpack for handling svg files in react components

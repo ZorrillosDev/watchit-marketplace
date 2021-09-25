@@ -1,6 +1,6 @@
 import { join } from 'path'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
-import { isDev, rootDir } from '../utils/env'
+import { isDev, rootDir } from '../utils/env.js'
 
 const config = {
   async: isDev,

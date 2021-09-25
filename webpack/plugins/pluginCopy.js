@@ -1,6 +1,6 @@
 import { join } from 'path'
 import CopyPlugin from 'copy-webpack-plugin'
-import { rootDir } from '../utils/env'
+import { rootDir } from '../utils/env.js'
 
 const config = {
   patterns: [{

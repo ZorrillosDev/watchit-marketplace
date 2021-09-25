@@ -1,5 +1,5 @@
 import TerserJSPlugin from 'terser-webpack-plugin'
-import * as plugins from './plugins'
+import * as plugins from './plugins/index.js'
 
 export default {
   optimization: {

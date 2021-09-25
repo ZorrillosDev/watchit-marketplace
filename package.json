@@ -4,12 +4,9 @@
   "description": "Smart Contracts for the WatchIt Economy",
   "author": "",
   "license": "ISC",
-  "engines": {
-    "node": ">=12.0.0"
-  },
   "type": "module",
   "keywords": [],
-  "main": "webpack.config.babel.js",
+  "exports": "./webpack.config.babel.cjs",
   "scripts": {
     "lint": "npm run lint:js && npm run lint:solidity",
     "lint:js": "standard && ts-standard",
@@ -25,7 +22,7 @@
     "check:js": "dpdm  \"./src/**\" --exit-code circular:1 --tree=false --warning=false && jscpd \"src\" -r html --output ./jscpd/",
     "watch:ui": "webpack  --watch ",
     "build:ui": "cross-env NODE_ENV=production webpack",
-    "start:ui": "cross-env WEBPACK_IS_DEV_SERVER=true NODE_ENV=development webpack serve --config webpack.config.babel.js",
+    "start:ui": "cross-env WEBPACK_IS_DEV_SERVER=true NODE_ENV=development webpack serve",
     "hook": "npm run lint:js:fix & npm run check:ui & npm run test:ui & hh compile & npm run test"
   },
   "devDependencies": {

@@ -5,11 +5,13 @@
  * }
  */
 
-require('dotenv').config()
-import { DefinePlugin } from 'webpack'
-import { isDev, isDevServer, isProd, mode } from '../utils/env'
+import Webpack from 'webpack'
+import { isDev, isDevServer, isProd, mode } from '../utils/env.js'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const W_APP = /^MARKETPLACE_/i
+const { DefinePlugin } = Webpack
 
 const filteredKeys = Object.keys(process.env)
   .filter(key => W_APP.test(key))

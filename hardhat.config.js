@@ -1,6 +1,7 @@
 /* global task, ethers */
 
-require('dotenv').config()
+import dotenv from 'dotenv'
+dotenv.config()
 
 require('@nomiclabs/hardhat-waffle')
 require('hardhat-gas-reporter')

@@ -1,5 +1,5 @@
 import { join } from 'path'
-import { rootDir } from '../utils/env'
+import { rootDir } from '../utils/env.js'
 
 /**
  * @see https://webpack.js.org/loaders/sass-loader/#problems-with-url
@@ -14,6 +14,6 @@ export const resolveUrlLoader = {
 export const babelLoader = {
   loader: 'babel-loader',
   options: {
-    configFile: join(rootDir, '/.babelrc.js')
+    configFile: join(rootDir, '/.babelrc.cjs')
   }
 }

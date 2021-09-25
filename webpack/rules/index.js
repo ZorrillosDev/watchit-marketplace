@@ -1,2 +1,2 @@
-export * from './common'
-export * from './svg'
+export * from './common.js'
+export * from './svg.js'

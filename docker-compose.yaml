@@ -28,7 +28,7 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - ./.babelrc.js:/ui/.babelrc.js
+      - ./.babelrc.cjs:/ui/.babelrc.cjs
       - ./dist:/ui/dist
       - "./node_modules:/ui/node_modules:ro"
       - ./package.json:/ui/package.json

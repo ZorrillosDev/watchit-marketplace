@@ -1,5 +1,5 @@
 import { join } from 'path'
-import { rootDir } from './utils/env'
+import { rootDir } from './utils/env.js'
 
 export default {
   main: [

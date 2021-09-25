@@ -1,19 +1,22 @@
-import path from 'path'
-import { aliasItems, devServerUrl, externalItems } from './config'
-import entry from './entry'
-import optimization from './optimization'
-import * as plugins from './plugins'
-import * as rules from './rules'
-import { isDevServer, isProd } from './utils/env'
-import { arrayFilterEmpty } from './utils/helpers'
+import { aliasItems, devServerUrl, externalItems } from './config/index.js'
+import entry from './entry.js'
+import optimization from './optimization.js'
+import * as plugins from './plugins/index.js'
+import * as rules from './rules/index.js'
+import { isDevServer, isProd } from './utils/env.js'
+import { arrayFilterEmpty } from './utils/helpers.js'
+
+
+const {pathname: context} = new URL('', import.meta.url)
+const {pathname: dist} = new URL('../dist', import.meta.url)
+const {pathname: root} = new URL('../', import.meta.url)
 
 export default {
-  context: __dirname,
   target: isDevServer ? 'web' : ['web', 'es5'],
   mode: isProd ? 'production' : 'development',
   entry,
   output: {
-    path: path.join(__dirname, '../dist'),
+    path: dist,
     publicPath: isDevServer ? devServerUrl : './',
     filename: isDevServer
       ? '[name].[fullhash].js'
@@ -40,7 +43,7 @@ export default {
   resolve: {
     modules: [
       "node_modules",
-      path.resolve(__dirname)
+      root
     ],
     alias: aliasItems,
     extensions: ['.tsx', '.ts', '.js', '.jsx']

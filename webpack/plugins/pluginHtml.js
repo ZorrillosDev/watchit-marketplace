@@ -1,6 +1,6 @@
 import { join } from 'path'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-import { rootDir } from '../utils/env'
+import { rootDir } from '../utils/env.js'
 
 const config = {
   filename: 'index.html',

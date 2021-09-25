@@ -1,3 +1,3 @@
-export * from './alias'
-export * from './externals'
-export * from './devServer'
+export * from './alias.js'
+export * from './externals.js'
+export * from './devServer.js'
