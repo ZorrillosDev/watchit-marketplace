@@ -1,7 +1,7 @@
-const path = require('path');
+import path from 'path'
 
 //https://jestjs.io/docs/webpack
-module.exports = {
+export default {
   process(src, filename, config, options) {
     return 'module.exports = ' + JSON.stringify(path.basename(filename)) + ';';
   },
