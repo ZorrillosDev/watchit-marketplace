@@ -51,9 +51,11 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
         seller.transfer(msg.value);
 
         if (creators[cid] == address(0x0)) {
+            // Not existing cid, need to be minted -> lazy mint
             emit Transfer(address(0x0), seller, cid);
             mint(msg.sender, cid);
         } else {
+            // existing already -> transfer
             _safeTransferFrom(seller, buyer, cid, NFT_SUPPLY, "");
         }
 
