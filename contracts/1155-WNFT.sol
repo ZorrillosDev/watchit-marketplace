@@ -3,11 +3,12 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 
 contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
     uint8 internal constant NFT_SUPPLY = 1;
     bytes32 public constant NFT_MINTER_ROLE = keccak256("NFT_MINTER_ROLE");
-
+    bytes32 constant JOB_ID = bytes32("493610cff14346f786f88ed791ab7704");
 
     mapping(uint256 => address ) internal creators;
     uint32 public version;
@@ -28,20 +29,14 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
         _setURI(newuri);
     }
 
-    function getOffChainDataByCID(uint256 cid) internal view returns (address, uint256){
-        // Here the chainlink requests
-        // eg.
-        return (address(0x0), uint256(1));
-    }
-
-    function purchase(uint256 cid) public payable {
-        (address author, uint256 price) = getOffChainDataByCID(cid);
+    function _callbackPurchase(bytes32 _requestId, uint256 owner, uint256 price) public {
+        validateChainlinkCallback(_requestId);
 
         require(msg.value > 0, "Not enough ETH");
         require(msg.value >= price, "Not enough ETH");
-        require(balanceOf(author, cid) > 0, "Invalid seller");
+        require(balanceOf(owner, cid) > 0, "Invalid seller");
 
-        address payable seller = payable(author);
+        address payable seller = payable(owner);
         address payable buyer = payable(msg.sender);
         seller.transfer(msg.value);
 
@@ -54,6 +49,14 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
             safeTransferFrom(seller, buyer, cid, NFT_SUPPLY, "");
         }
 
+    }
+
+    function purchase(uint256 cid) public payable {
+        // Here the chain link requests and exec _callbackPurchase on result ready
+        Chainlink.Request memory request = buildChainlinkRequest(JOB_ID, this, this._callbackPurchase.selector);
+        request.add("get", "here_api_http");
+        // More code here needed
+        sendChainlinkRequest(request, PAYMENT); // PAYMENT = 1 * LINK
     }
 
     function mint(address account, uint256 cid)
