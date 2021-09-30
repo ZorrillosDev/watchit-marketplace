@@ -8,10 +8,6 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
     uint8 internal constant NFT_SUPPLY = 1;
     bytes32 public constant NFT_MINTER_ROLE = keccak256("NFT_MINTER_ROLE");
 
-    struct CIDData {
-        address author;
-        uint256 price;
-    }
 
     mapping(uint256 => address ) internal creators;
     uint32 public version;
@@ -32,31 +28,30 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
         _setURI(newuri);
     }
 
-    function getOffChainDataByCID(uint256 cid) internal view returns (CIDData){
+    function getOffChainDataByCID(uint256 cid) internal view returns (address, uint256){
         // Here the chainlink requests
         // eg.
-        CIDData ciData = CIDData(address(0x0), uint256(0.5));
-        return cidData;
+        return (address(0x0), uint256(1));
     }
 
     function purchase(uint256 cid) public payable {
-        CIDData cidData = getDataByCID(cid);
+        (address author, uint256 price) = getOffChainDataByCID(cid);
 
         require(msg.value > 0, "Not enough ETH");
-        require(msg.value >= cidData.price, "Not enough ETH");
-        require(balanceOf(cidData.author, cid) > 0, "Invalid seller");
+        require(msg.value >= price, "Not enough ETH");
+        require(balanceOf(author, cid) > 0, "Invalid seller");
 
-        address payable seller = payable(cidData.author);
+        address payable seller = payable(author);
         address payable buyer = payable(msg.sender);
         seller.transfer(msg.value);
 
         if (creators[cid] == address(0x0)) {
             // Not existing cid, need to be minted -> lazy mint
-            emit Transfer(address(0x0), seller, cid);
+            emit TransferSingle(msg.sender, address(0x0), seller, cid, NFT_SUPPLY);
             mint(msg.sender, cid);
         } else {
             // existing already -> transfer
-            _safeTransferFrom(seller, buyer, cid, NFT_SUPPLY, "");
+            safeTransferFrom(seller, buyer, cid, NFT_SUPPLY, "");
         }
 
     }
