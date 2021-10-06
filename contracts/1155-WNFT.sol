@@ -60,9 +60,9 @@ contract WNFT is ERC1155Upgradeable, ChainlinkClient, AccessControlUpgradeable, 
     }
 
 
-    function requestPurchase(uint256 cid, address asset) override external {
+    function requestPurchase(uint256 cid, IPurchaseGateway oracle) override external {
         // Step 1 => request purchase to delegate call to purchase gateway
-        (bool success,) = asset.call(
+        (bool success,) = address(oracle).call(
             abi.encodeWithSignature(
                 "requestNFTPrice(uint256 cid, address caller)",
                 cid, address(this)
@@ -102,7 +102,7 @@ contract WNFT is ERC1155Upgradeable, ChainlinkClient, AccessControlUpgradeable, 
     }
 
     function transfer(address from, address to, uint256 cid) public {
-        safeTransferFrom(from, to, cid, NFT_SUPPLY, "");
+        safeTransferFrom(from, to, cid, NFT_SUPPLY, " ");
     }
 
     function burn(address account, uint256 cid) public {
