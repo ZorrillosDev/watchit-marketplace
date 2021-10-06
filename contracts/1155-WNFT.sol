@@ -4,14 +4,18 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
+import "./chainlink/IPurchaseGateway.sol";
+import "./chainlink/IPurchaseGatewayCaller.sol";
 
-contract WNFT is ERC1155Upgradeable, ChainlinkClient, AccessControlUpgradeable {
+contract WNFT is ERC1155Upgradeable, ChainlinkClient, AccessControlUpgradeable, IPurchaseGatewayCaller {
+    //    error InvalidOracleRequest();
     using Chainlink for Chainlink.Request;
 
     uint8 internal constant NFT_SUPPLY = 1;
     bytes32 public constant NFT_MINTER_ROLE = keccak256("NFT_MINTER_ROLE");
     bytes32 constant JOB_ID = bytes32("493610cff14346f786f88ed791ab7704");
     uint256 constant PAYMENT = 1 * LINK_DIVISIBILITY;
+
 
     mapping(uint256 => address) internal creators;
     uint32 public version;
@@ -22,22 +26,24 @@ contract WNFT is ERC1155Upgradeable, ChainlinkClient, AccessControlUpgradeable {
         _setupRole(NFT_MINTER_ROLE, msg.sender);
     }
 
-    function upgrade() public {
+    function upgrade() external {
         require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Version cannot be updated.");
         version++;
     }
 
-    function setURI(string memory newuri) public {
+    function setURI(string memory newuri) external {
         require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "URI cannot be updated.");
         _setURI(newuri);
     }
 
-    function purchase(address oracle, address owner, uint256 cid, uint256 price) public payable {
-
+    function purchase(IPurchaseGateway oracle, address owner, uint256 cid) external override payable {
+        // Delegate call from callback contract oracle
+        uint256 price = oracle.getCurrentPriceForCID(cid);
         require(msg.value > 0, "Not enough ETH");
         require(msg.value >= price, "Not enough ETH");
         require(balanceOf(owner, cid) > 0, "Invalid seller");
 
+        emit PurchaseResponseReceived(cid, owner, price);
         address payable seller = payable(owner);
         address payable buyer = payable(msg.sender);
         seller.transfer(msg.value);
@@ -48,18 +54,23 @@ contract WNFT is ERC1155Upgradeable, ChainlinkClient, AccessControlUpgradeable {
             mint(msg.sender, cid);
         } else {
             // existing already -> transfer
-            safeTransferFrom(seller, buyer, cid, NFT_SUPPLY, "");
+            transfer(seller, buyer, cid);
         }
     }
 
 
-    function requestPurchase(uint256 cid, address asset) public payable {
+    function requestPurchase(uint256 cid, address asset) override external {
+        // Step 1 => request purchase to delegate call to purchase gateway
         (bool success,) = asset.call(
             abi.encodeWithSignature(
-                "requestNFTPrice(uint256 cid, address sender)",
+                "requestNFTPrice(uint256 cid, address caller)",
                 cid, address(this)
             )
         );
+
+        if (success) {
+            emit PurchaseRequestSent(cid);
+        }
 
         // add event here
     }
