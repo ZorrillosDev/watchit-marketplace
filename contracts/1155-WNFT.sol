@@ -37,6 +37,7 @@ contract WNFT is ERC1155Upgradeable, ChainlinkClient, AccessControlUpgradeable, 
     }
 
     function purchase(IPurchaseGateway oracle, address owner, uint256 cid) external override payable {
+        // Step 4 => gateway oracle call this method to finish purchase
         // Delegate call from callback contract oracle
         uint256 price = oracle.getCurrentPriceForCID(cid);
         require(msg.value > 0, "Not enough ETH");
@@ -71,8 +72,6 @@ contract WNFT is ERC1155Upgradeable, ChainlinkClient, AccessControlUpgradeable, 
         if (success) {
             emit PurchaseRequestSent(cid);
         }
-
-        // add event here
     }
 
     function mint(address account, uint256 cid)
