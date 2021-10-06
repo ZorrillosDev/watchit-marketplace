@@ -2,10 +2,11 @@
 pragma solidity ^0.8.0;
 
 import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
+import "@openzeppelin/contracts/interfaces/IERC165.sol";
 import "./IPurchaseGateway.sol";
 import "./IPurchaseGatewayCaller.sol";
 
-contract PurchaseGateway is ChainlinkClient, IPurchaseGateway {
+contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
     using Chainlink for Chainlink.Request;
 
     mapping(uint256 => IPurchaseGatewayCaller) requests;
@@ -50,6 +51,10 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway {
         request.add("get", "https://run.mocky.io/v3/18a14efe-e718-4454-b09b-dcc1ccf6dd9c");
         requests[cid] = caller;
         sendChainlinkRequest(request, PAYMENT);
+    }
+
+    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+        return interfaceId == type(IPurchaseGateway).interfaceId;
     }
 
 }

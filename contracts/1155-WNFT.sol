@@ -64,7 +64,7 @@ contract WNFT is ERC1155Upgradeable, ChainlinkClient, AccessControlUpgradeable, 
         // Step 1 => request purchase to delegate call to purchase gateway
         (bool success,) = address(oracle).call(
             abi.encodeWithSignature(
-                "requestNFTPrice(uint256 cid, address caller)",
+                "requestNFTPrice(uint256 cid, IPurchaseGatewayCaller caller)",
                 cid, address(this)
             )
         );
@@ -123,7 +123,7 @@ contract WNFT is ERC1155Upgradeable, ChainlinkClient, AccessControlUpgradeable, 
     override(ERC1155Upgradeable, AccessControlUpgradeable)
     returns (bool)
     {
-        return super.supportsInterface(interfaceId);
+        return interfaceId == type(IPurchaseGatewayCaller).interfaceId || super.supportsInterface(interfaceId);
     }
 
 }
