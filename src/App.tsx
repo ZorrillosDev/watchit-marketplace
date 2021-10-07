@@ -25,7 +25,7 @@ const App: FC = (): JSX.Element => {
   const [mode, setMode] = React.useState<PaletteMode>(defaultMode)
   const colorMode = React.useMemo(() => ({
     toggleColorMode: () => {
-      setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
+      setMode((prevMode: PaletteMode) => (prevMode === 'light' ? 'dark' : 'light'))
     }
   }), [])
 
