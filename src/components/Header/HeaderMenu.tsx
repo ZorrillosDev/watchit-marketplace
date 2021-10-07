@@ -1,15 +1,22 @@
+// react imports
 import React, { FC } from 'react'
-import { WalletButton } from '@src/components/Button'
-import styled, { css } from 'styled-components'
-import { EXPLORE, FESTIVAL, SELL, WORK } from '@navigation/CONSTANTS'
-import { Menu as MenuIcon, ChevronRight as ChevronRightIcon } from '@components/Icons'
-import {
-  withTheme, WithTheme, Hidden,
-  Backdrop as BackdropMui, Drawer,
-  Divider, IconButton
-} from '@material-ui/core'
 import { Link } from 'react-router-dom'
+
+// project imports
+import { EXPLORE, FESTIVAL, SELL, WORK } from '@navigation/CONSTANTS'
 import i18n from '@src/i18n'
+import {
+  Menu as MenuIcon, AccountBalanceWallet,
+  ChevronRight as ChevronRightIcon
+} from '@components/Icons'
+
+// mui imports
+import {
+  Hidden, styled, Backdrop, Drawer, Box,
+  Divider, IconButton, Button, Grid, BoxProps
+} from '@mui/material'
+
+// ===========================|| HEADER MENU ||=========================== //
 
 export interface HeaderMenuProps {
   isMenuOpen: boolean
@@ -19,7 +26,7 @@ export interface HeaderMenuProps {
 const HeaderMenu: FC<HeaderMenuProps> = (props): JSX.Element => {
   return (
     <>
-      <Hidden smDown>
+      <Hidden mdDown>
         <HeaderMenuContent />
       </Hidden>
       <Hidden mdUp>
@@ -29,20 +36,32 @@ const HeaderMenu: FC<HeaderMenuProps> = (props): JSX.Element => {
         >
           <MenuIcon />
         </IconButton>
-        <Backdrop open={props.isMenuOpen} onClick={props.handleToggleMenu} />
+        <Backdrop
+          sx={{ zIndex: 0 }}
+          open={props.isMenuOpen}
+          onClick={props.handleToggleMenu}
+        />
         <Drawer
           variant='persistent'
           anchor='right'
           open={props.isMenuOpen}
         >
-          <MenuMobileHeader>
+          <Grid
+            container
+            alignItems='center'
+            sx={{
+              py: 0,
+              px: 2,
+              minHeight: { xs: '56px', sm: '64px' }
+            }}
+          >
             <IconButton
               color='primary'
               onClick={() => props.handleToggleMenu()}
             >
               <ChevronRightIcon />
             </IconButton>
-          </MenuMobileHeader>
+          </Grid>
           <Divider />
           <HeaderMenuContent />
         </Drawer>
@@ -53,103 +72,93 @@ const HeaderMenu: FC<HeaderMenuProps> = (props): JSX.Element => {
 
 const HeaderMenuContent: FC = (): JSX.Element => {
   return (
-    <Nav>
+    <Grid
+      container
+      flexGrow={1}
+      sx={{
+        alignItems: { xs: 'flex-start', md: 'center' },
+        justifyContent: { xs: 'flex-start', md: 'flex-end' },
+        flexDirection: { xs: 'column', md: 'row' },
+        m: 0,
+        p: { xs: '1rem 1.5rem', md: 0 },
+        '& a': {
+          textDecoration: 'none'
+        }
+      }}
+    >
       <Link to={EXPLORE}>
-        <Item>{i18n.t('GLOBAL_EXPLORE')}</Item>
+        <Item
+          sx={{ p: 2, px: { xs: 2, xl: 3 } }}
+        >
+          {i18n.t('GLOBAL_EXPLORE')}
+        </Item>
       </Link>
       <Link to={FESTIVAL}>
-        <Item>{i18n.t('GLOBAL_FESTIVAL')}</Item>
+        <Item
+          sx={{ p: 2, px: { xs: 2, xl: 3 } }}
+        >
+          {i18n.t('GLOBAL_FESTIVAL')}
+        </Item>
       </Link>
       <Link to={SELL}>
-        <Item>{i18n.t('GLOBAL_SELL')}</Item>
+        <Item
+          sx={{ p: 2, px: { xs: 2, xl: 3 } }}
+        >
+          {i18n.t('GLOBAL_SELL')}
+        </Item>
       </Link>
       <Link to={WORK}>
-        <Item>{i18n.t('GLOBAL_WORK')}</Item>
+        <Item
+          sx={{ p: 2, px: { xs: 2, xl: 3 } }}
+        >
+          {i18n.t('GLOBAL_WORK')}
+        </Item>
       </Link>
-      <WalletButton />
-    </Nav>
+      <Button
+        sx={{
+          mt: { xs: 1, md: 0 },
+          ml: { xs: 0, md: 1 },
+          borderRadius: 3
+        }}
+        variant='contained'
+        color='primary'
+        startIcon={<AccountBalanceWallet fontSize='inherit' />}
+      >
+        {i18n.t('GLOBAL_WALLET')}
+      </Button>
+    </Grid>
   )
 }
 
-const MenuMobileHeader = styled.div`
-  display: flex;
-  align-items: center;
-  padding:  0 1rem;
-  min-height: 56px;
-
-  @media (min-width: 600px) {
-    min-height: 64px;
-  }
-`
-
-const Backdrop = styled(BackdropMui)`
-  z-index: 0;
-`
-
-const Nav = styled.ul`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex-grow: 1;
-  margin: 0;
-  padding: 0;
-  
-  a {
-    text-decoration: none;
-  }
-
-  @media (max-width: 959px) {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 1rem 1.5rem;
-    
-    button {
-      margin-top: auto;
-    }
-  }
-`
-
-const ItemActive = css`
-  &:after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 1px;
-    background: ${({ theme }) => theme.palette.primary.main};
-    bottom: 4px;
-    left: 0;
-    z-index: 1;
-  }
-`
-
-export const Item = withTheme(
-  styled.li<{ active: boolean } & WithTheme>`
-    color: ${({ theme }) => theme.palette.primary.main};
-    position: relative;
-    list-style: none;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 3px 1.5rem 0 0;
-    font-weight: bold;
-
-    ${props => props.active && ItemActive}
-    
-    &:hover {
-      color: ${({ theme }) => theme.palette.primary.dark};
-    }
-
-    @media (max-width: 1440px) {
-      padding: 3px 1rem 0 0;
-    }
-    
-    @media (max-width: 959px) {
-      padding: 1rem;
-    }
-  `
-)
+export const Item = styled(Box)<{ active?: boolean } & BoxProps>(({ active, theme }) => ({
+  color: theme.palette.primary.main,
+  position: 'relative',
+  listStyle: 'none',
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontWeight: 'bold',
+  '&:hover': {
+    color: theme.palette.primary.dark
+  },
+  ...(
+    (active ?? false)
+      ? {
+        '&:after': {
+          content: '',
+          position: 'absolute',
+          width: '100%',
+          height: '1px',
+          background: theme.palette.primary.main,
+          bottom: '4px',
+          left: 0,
+          zIndex: 1
+        }
+      }
+      : {}
+  )
+}))
 
 export default HeaderMenu

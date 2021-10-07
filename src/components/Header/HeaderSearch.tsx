@@ -1,81 +1,71 @@
+// react imports
 import React, { FC } from 'react'
-import { IconButton as IconButtonMui, InputBase, WithTheme, withTheme } from '@material-ui/core'
+
+// project imports
 import { Search as SearchIcon } from '@components/Icons'
-import styled from 'styled-components'
 import i18n from '@src/i18n'
 
-export interface SearchProps {
+// mui imports
+import { Grid, IconButton, InputBase } from '@mui/material'
+
+// ===========================|| HEADER SEARCH ||=========================== //
+
+export interface HeaderSearchProps {
   onSearch: (txt: string) => void
 }
 
-const Search: FC<SearchProps> = ({ onSearch }): JSX.Element => {
+const HeaderSearch: FC<HeaderSearchProps> = ({ onSearch }): JSX.Element => {
   return (
-    <SearchWrapper>
-      <IconButton type='submit' aria-label='search'>
+    <Grid
+      container
+      alignItems='center'
+      justifyContent='flex-start'
+      wrap='nowrap'
+      flexShrink={0}
+      sx={{
+        borderRadius: 3,
+        border: (theme) => `1px solid ${theme.palette.divider}`,
+        width: { xs: 'auto', md: 0.25, lg: 0.3 },
+        height: '2.5rem',
+        ml: { xs: 2, lg: 4 },
+        mr: { xs: 1, md: 0 },
+        flexGrow: { xs: 1, md: 0 },
+        maxWidth: { xs: 'calc(100% - 7rem)', md: 'auto' }
+      }}
+    >
+      <IconButton
+        sx={{
+          p: 0,
+          width: '2.5rem',
+          height: '2.5rem',
+          '& svg': {
+            fill: (theme) => theme.palette.grey[400]
+          }
+        }}
+        type='submit'
+        aria-label='search'
+      >
         <SearchIcon />
       </IconButton>
-      <SearchInput
+      <InputBase
+        sx={{
+          mt: '2px',
+          p: 0,
+          height: 1,
+          width: 1,
+          color: 'text.secondary',
+          '& input': {
+            height: 1,
+            width: 1,
+            p: 0,
+            fontWeight: 'bold'
+          }
+        }}
         placeholder={i18n.t('GLOBAL_SEARCH')}
         onKeyUp={(e: any) => onSearch(e.target.value)}
       />
-    </SearchWrapper>
+    </Grid>
   )
 }
 
-export const SearchWrapper = withTheme(
-  styled.div<WithTheme>`
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    border-radius: 10rem;
-    flex-shrink: 0;
-    margin-left: 2rem;
-    width: 30%;
-    border: 1px solid ${({ theme }) => theme.palette.grey[400]};
-    height: 2.5rem;
-
-    @media (max-width: 1440px) {
-      width: 25%;
-      margin-left: 1rem;
-    }
-    
-    @media (max-width: 959px) {
-      width: auto;
-      flex-grow: 1;
-      margin: 0 0.4rem 0 1rem;
-      max-width: calc(100% - 7rem);
-    }
-  `
-)
-
-export const SearchInput = withTheme(
-  styled(InputBase)`
-    margin-top: 2px;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    
-    input {
-      height: 100%;
-      width: 100%;
-      padding: 0;
-      line-height: 1;
-      font-weight: bold;
-      color: ${({ theme }) => theme.palette.grey[600]};
-    }
-  `
-)
-
-const IconButton = withTheme(
-  styled(IconButtonMui)`
-    padding: 0;
-    width: 2.5rem;
-    height: 2.5rem;
-    
-    svg {
-      fill: ${({ theme }) => theme.palette.grey[400]};
-    }
-  `
-)
-
-export default Search
+export default HeaderSearch
