@@ -1,9 +1,10 @@
+// react imports
 import React from 'react'
 
-/* eslint-disable  @typescript-eslint/explicit-function-return-type */
-const Work = () => {
+// ===========================|| WORK ||=========================== //
+
+const Work = (): JSX.Element => {
   return <span>How it work</span>
 }
 
 export default Work
-/* eslint-enable  @typescript-eslint/explicit-function-return-type */

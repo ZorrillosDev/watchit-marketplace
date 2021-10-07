@@ -1,66 +1,59 @@
+// react imports
 import React, { FC } from 'react'
-import Logo from '@src/components/Logo'
-import { Toolbar, AppBar } from '@material-ui/core'
-import Slide from '@material-ui/core/Slide'
-import useScrollTrigger from '@material-ui/core/useScrollTrigger'
-import styled from 'styled-components'
-import Search, { SearchProps } from '@components/Header/HeaderSearch'
+
+// project imports
+import HeaderSearch, { HeaderSearchProps } from '@components/Header/HeaderSearch'
 import Menu from '@components/Header/HeaderMenu'
+import LogoPng from '@assets/icons/icon.png'
+
+// mui imports
+import { useTheme } from '@mui/material/styles'
+import {
+  Toolbar, AppBar, Box, Slide,
+  useMediaQuery, useScrollTrigger
+} from '@mui/material'
+
+// ===========================|| HEADER VIEW ||=========================== //
 
 export interface HeaderProps {
   isMenuOpen: boolean
   handleToggleMenu: () => void
 }
 
-const HeaderView: FC<HeaderProps & SearchProps> = (props): JSX.Element => {
+const HeaderView: FC<HeaderProps & HeaderSearchProps> = (props): JSX.Element => {
   const trigger = useScrollTrigger()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
     <Slide appear={false} direction='down' in={!trigger}>
-      <TopHeaderWrapper color='transparent' open={props.isMenuOpen}>
-        <TopHeaderContent>
-          <Logo />
-          <Search onSearch={props.onSearch} />
+      <AppBar
+        color='transparent'
+        sx={{
+          transform: !isMobile || (props.isMenuOpen && isMobile) ? 'none !important' : 'auto',
+          visibility: !isMobile || (props.isMenuOpen && isMobile) ? 'visible' : 'unset'
+        }}
+      >
+        <Toolbar
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            px: { xs: 2, sm: 3, lg: 6, xl: 14 }
+          }}
+        >
+          <Box
+            component='img'
+            sx={{ maxWidth: '50px', transform: 'translateY(-1px)' }}
+            alt='Logo Image'
+            src={LogoPng}
+          />
+          <HeaderSearch onSearch={props.onSearch} />
           <Menu {...props} />
-        </TopHeaderContent>
-      </TopHeaderWrapper>
+        </Toolbar>
+      </AppBar>
     </Slide>
   )
 }
-
-export const TopHeaderWrapper = styled(AppBar)<{open: boolean}>`
-  transform: ${({ open }) => open ? 'none !important' : 'auto'};
-  visibility: ${({ open }) => open ? 'visible !important' : 'auto'};
-`
-
-const TopHeaderContent = styled(Toolbar)`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  background-color: white;
-  padding-left: 1rem;
-  padding-right: 1rem;
-
-  @media (min-width: 600px) {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-
-  @media (min-width: 1200px) {
-    padding-left: 3rem;
-    padding-right: 3rem;
-  }
-
-  @media (min-width: 1400px) {
-    padding-left: 5rem;
-    padding-right: 5rem;
-  }
-
-  @media (min-width: 1900px) {
-    padding-left: 10rem;
-    padding-right: 10rem;
-  }
-`
 
 export default HeaderView

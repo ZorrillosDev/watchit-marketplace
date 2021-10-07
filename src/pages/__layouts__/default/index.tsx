@@ -1,41 +1,27 @@
-import { Container } from '@material-ui/core'
+// react imports
 import React, { FC, PropsWithChildren, ReactElement } from 'react'
-import styled from 'styled-components'
+
+// project imports
 import Header from '@src/components/Header'
+
+// mui imports
+import { Container } from '@mui/material'
+
+// ===========================|| DEFAULT LAYOUT ||=========================== //
 
 export const DefaultLayout: FC<PropsWithChildren<any>> = ({ children }): ReactElement => {
   return (
-    <DefaultLayoutWrapper maxWidth={false}>
+    <Container
+      maxWidth={false}
+      sx={{
+        width: 1,
+        height: 1,
+        pt: 8,
+        px: { xs: 2, sm: 3, lg: 6, xl: 14 }
+      }}
+    >
       <Header />
       {children}
-    </DefaultLayoutWrapper>
+    </Container>
   )
 }
-
-const DefaultLayoutWrapper = styled(Container)`
-  padding-top: 3.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  height: 100%;
-  width: 100%;
-
-  @media (min-width: 600px) {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-
-  @media (min-width: 1200px) {
-    padding-left: 3rem;
-    padding-right: 3rem;
-  }
-
-  @media (min-width: 1400px) {
-    padding-left: 5rem;
-    padding-right: 5rem;
-  }
-  
-  @media (min-width: 1900px) {
-    padding-left: 10rem;
-    padding-right: 10rem;
-  }
-`
