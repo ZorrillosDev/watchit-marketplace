@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+// NatSpec format convention - https://docs.soliditylang.org/en/v0.5.10/natspec-format.html
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
@@ -8,7 +9,7 @@ import "./chainlink/IPurchaseGateway.sol";
 import "./chainlink/IPurchaseGatewayCaller.sol";
 
 contract WNFT is ERC1155Upgradeable, ChainlinkClient, AccessControlUpgradeable, IPurchaseGatewayCaller {
-    //    error InvalidOracleRequest();
+    ///    error InvalidOracleRequest();
     using Chainlink for Chainlink.Request;
 
     uint8 internal constant NFT_SUPPLY = 1;
@@ -36,9 +37,14 @@ contract WNFT is ERC1155Upgradeable, ChainlinkClient, AccessControlUpgradeable, 
         _setURI(newuri);
     }
 
+    /** @notice Handle delegated call from oracle with metadata needed for purchase
+      * @param oracle origin delegate call.
+      * @param owner address for current NFT owner.
+      * @param cid IPFS content unique identifier.
+      */
     function purchase(IPurchaseGateway oracle, address owner, uint256 cid) external override payable {
-        // Step 4 => gateway oracle call this method to finish purchase
-        // Delegate call from callback contract oracle
+        /// Step 4 => gateway oracle delegate call to this method to finish purchase
+        /// Delegate call from callback contract oracle
         uint256 price = oracle.getCurrentPriceForCID(cid);
         require(msg.value > 0, "Not enough ETH");
         require(msg.value >= price, "Not enough ETH");
@@ -59,13 +65,17 @@ contract WNFT is ERC1155Upgradeable, ChainlinkClient, AccessControlUpgradeable, 
         }
     }
 
-
-    function requestPurchase(uint256 cid, IPurchaseGateway oracle) override external {
-        // Step 1 => request purchase to delegate call to purchase gateway
-        (bool success,) = address(oracle).call(
+    /** @notice Delegate call to oracle to request NFT metadata
+      * @param cid IPFS content unique identifier.
+      * @param oracle target delegate call.
+      */
+    function requestPurchase(uint256 cid, IPurchaseGateway oracle) override external payable {
+        /// Step 1 => request purchase to delegate call to purchase gateway
+        /// delegate call context https://solidity-by-example.org/delegatecall/
+        (bool success,) = address(oracle).delegatecall(
             abi.encodeWithSignature(
                 "requestNFTPrice(uint256 cid, IPurchaseGatewayCaller caller)",
-                cid, address(this)
+                cid, this
             )
         );
 
@@ -77,7 +87,7 @@ contract WNFT is ERC1155Upgradeable, ChainlinkClient, AccessControlUpgradeable, 
     function mint(address account, uint256 cid)
     public
     {
-        // All keys already "exist" in a Solidity mapping with a default value of 0
+        /// All keys already "exist" in a Solidity mapping with a default value of 0
         require(creators[cid] == address(0), 'This token ID has already been minted');
         require(hasRole(NFT_MINTER_ROLE, msg.sender), 'NFT cannot be created');
         creators[cid] = account;

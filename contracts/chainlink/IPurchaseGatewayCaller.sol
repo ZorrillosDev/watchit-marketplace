@@ -8,6 +8,6 @@ interface IPurchaseGatewayCaller {
     event PurchaseResponseReceived(uint256 cid, address owner, uint256 price);
 
     function purchase(IPurchaseGateway oracle, address owner, uint256 cid) external payable;
-    function requestPurchase(uint256 cid, IPurchaseGateway oracle) external;
+    function requestPurchase(uint256 cid, IPurchaseGateway oracle) external payable;
 
 }

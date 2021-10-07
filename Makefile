@@ -23,11 +23,13 @@ node_modules:
 deps: node_modules
 	docker-compose up -d
 	npx hardhat compile
+	npx hardhat run --network localhost ./scripts/deploy-gtw.js
 	npx hardhat run --network localhost scripts/deploy-ft.js
 	npx hardhat run --network localhost scripts/deploy-nft.js
 
 
 deploy-rinkeby:
+	npx hardhat run ./scripts/deploy-gtw.js --network rinkeby
 	npx hardhat run ./scripts/deploy-ft.js --network rinkeby
 	npx hardhat run ./scripts/deploy-nft.js --network rinkeby
 
