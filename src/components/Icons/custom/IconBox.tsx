@@ -1,7 +1,11 @@
+// react imports
 import React, { FC } from 'react'
-import SvgIcon, { SvgIconProps } from '@material-ui/core/SvgIcon'
 
-/* eslint-disable  @typescript-eslint/explicit-function-return-type */
+// mui imports
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
+
+// ===========================|| CUSTOM ICON BOX ||=========================== //
+
 export const IconBox: FC<SvgIconProps> = (props): JSX.Element => {
   return (
     <SvgIcon {...props} viewBox='0 0 520 520'>
@@ -12,4 +16,3 @@ export const IconBox: FC<SvgIconProps> = (props): JSX.Element => {
     </SvgIcon>
   )
 }
-/* eslint-enable  @typescript-eslint/explicit-function-return-type */

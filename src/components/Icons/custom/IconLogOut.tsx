@@ -1,7 +1,11 @@
+// react imports
 import React, { FC, ReactElement } from 'react'
-import SvgIcon, { SvgIconProps } from '@material-ui/core/SvgIcon'
 
-/* eslint-disable  @typescript-eslint/explicit-function-return-type */
+// mui imports
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
+
+// ===========================|| CUSTOM ICON LOG OUT ||=========================== //
+
 export const IconLogOut: FC<SvgIconProps> = (props): ReactElement => {
   return (
     <SvgIcon {...props} viewBox='0 0 350 350'>
@@ -29,4 +33,3 @@ export const IconLogOut: FC<SvgIconProps> = (props): ReactElement => {
     </SvgIcon>
   )
 }
-/* eslint-enable  @typescript-eslint/explicit-function-return-type */

@@ -1,8 +1,14 @@
+// react imports
 import React from 'react'
-import MainSlider from '@src/components/MainSlider'
+
+// ===========================|| HOME ||=========================== //
 
 const Home = (): JSX.Element => {
-  return <MainSlider />
+  return (
+    <span>
+      Home
+    </span>
+  )
 }
 
 export default Home
