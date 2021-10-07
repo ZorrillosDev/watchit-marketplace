@@ -1,5 +1,10 @@
+// react imports
 import React, { FC } from 'react'
+
+// project imports
 import HeaderView from '@components/Header/HeaderView'
+
+// ===========================|| HEADER CONTAINER ||=========================== //
 
 export const HeaderContainer: FC = (): JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
