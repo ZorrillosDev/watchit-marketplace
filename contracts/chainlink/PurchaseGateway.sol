@@ -15,6 +15,13 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
     uint256 constant PAYMENT = 1 * LINK_DIVISIBILITY;
 
 
+    /** @notice Receive the response in form of multiple-variable
+      * @param oracle origin delegate call.
+      * @param owner address for current NFT owner.
+      * @param cid IPFS content unique identifier.
+      * @param price the price returned by API
+      * @emit PurchaseRequestDone event when delegate callback is done
+      */
     function fulFillNFTPrice(bytes32 _requestId, address owner, uint256 cid, uint256 price)
     external override
     recordChainlinkFulfillment(_requestId)
@@ -38,11 +45,21 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
         }
     }
 
+    /** @notice Return current NFT price by cid
+      *
+      * @param cid IPFS content unique identifier.
+      * @return current NFT price
+      */
     function getCurrentPriceForCID(uint256 cid) view external override returns (uint256){
         return prices[cid];
     }
 
-
+    /** @notice Create a Chainlink request to retrieve API response.
+      * Add the request into mapping to keep tracking of caller.
+      *
+      * @param cid IPFS content unique identifier.
+      * @param caller origin contract
+      */
     function requestNFTPrice(uint256 cid, IPurchaseGatewayCaller caller) override external {
         // Step 2 => gateway oracle request off-chain data
         // Wait until chainlink request has been processed
