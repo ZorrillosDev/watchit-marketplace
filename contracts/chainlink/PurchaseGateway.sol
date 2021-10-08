@@ -20,7 +20,7 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
       * @param owner address for current NFT owner.
       * @param cid IPFS content unique identifier.
       * @param price the price returned by API
-      * @emit PurchaseRequestDone event when delegate callback is done
+      * @dev emit PurchaseRequestDone event when delegate callback is done
       */
     function fulFillNFTPrice(bytes32 _requestId, address owner, uint256 cid, uint256 price)
     external override
