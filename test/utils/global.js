@@ -2,7 +2,7 @@ const { expect } = require('chai')
 const CID = require('cids')
 const {bs58toHex, hexToBs58, randomCID} = require('./index')
 
-describe('Base 58 <--> Hex Conversion', function () {
+describe.skip('Base 58 <--> Hex Conversion', function () {
   const str = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwRST'
 
   it('"round trips" from bs58 to hex and back', async () => {
@@ -13,7 +13,7 @@ describe('Base 58 <--> Hex Conversion', function () {
   })
 })
 
-describe('Random CIDs', function () {
+describe.skip('Random CIDs', function () {
   const volume = 500
   const existingCIDs = new Set()
 

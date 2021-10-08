@@ -5,7 +5,8 @@ import "./IPurchaseGatewayCaller.sol";
 
 interface IPurchaseGateway {
 
-    event PurchaseRequestDone(address owner, uint256 cid, uint256 price);
+    event PurchaseRequestDone(bytes32 requestId, uint256 price);
+    event PurchaseRequestReceived(bytes32 requestId);
 
     function fulFillNFTPrice(bytes32 _requestId, uint256 price) external;
 

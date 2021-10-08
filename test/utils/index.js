@@ -51,9 +51,9 @@ function getNFTContractAddress (networkName) {
 function getPurchaseGatewayAddress (networkName) {
 
   if (networkName === 'rinkeby') {
-    return process.env.RINKEBY_CONTRACT_GTW
+    return process.env.RINKEBY_CONTRACT_PURCHASE_GATEWAY
   }
-
+  return process.env.LOCALHOST_CONTRACT_PURCHASE_GATEWAY
 
 }
 

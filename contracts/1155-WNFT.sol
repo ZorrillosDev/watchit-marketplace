@@ -7,7 +7,7 @@ import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
 import "./chainlink/IPurchaseGateway.sol";
 import "./chainlink/IPurchaseGatewayCaller.sol";
 
-contract WNFT is ERC1155Upgradeable,  AccessControlUpgradeable, IPurchaseGatewayCaller {
+contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable, IPurchaseGatewayCaller {
     ///    error InvalidOracleRequest();
 
     uint8 internal constant NFT_SUPPLY = 1;
@@ -52,10 +52,11 @@ contract WNFT is ERC1155Upgradeable,  AccessControlUpgradeable, IPurchaseGateway
         seller.transfer(msg.value);
         emit PurchaseResponseReceived(cid, owner, price);
 
+        /// Here is security breach
         if (holders[cid] == address(0x0)) {
             // Not existing cid, need to be minted -> lazy mint
             emit TransferSingle(msg.sender, address(0x0), owner, cid, NFT_SUPPLY);
-            mint(msg.sender, cid);
+            _mint(msg.sender, cid, NFT_SUPPLY, "");
         } else {
             // existing already -> transfer
             transfer(seller, buyer, cid);
@@ -68,12 +69,14 @@ contract WNFT is ERC1155Upgradeable,  AccessControlUpgradeable, IPurchaseGateway
       * @param oracle target delegate call.
       * @dev emit PurchaseRequestSent on delegate call to gateway get success
       */
-    function requestPurchase(address owner, uint256 cid, IPurchaseGateway oracle) override external payable {
+    function requestPurchase(address owner, uint256 cid, IPurchaseGateway oracle)
+    override
+    external
+    {
         /// Step 1 => request purchase to delegate call to purchase gateway
         /// delegate call context https://solidity-by-example.org/delegatecall/
         oracle.requestNFTPrice(owner, cid, this);
         emit PurchaseRequestSent(cid);
-
     }
 
     function mint(address account, uint256 cid)

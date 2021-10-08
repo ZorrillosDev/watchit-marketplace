@@ -6,6 +6,7 @@ require('@nomiclabs/hardhat-waffle')
 require("@nomiclabs/hardhat-web3")
 require('hardhat-gas-reporter')
 require('solidity-coverage')
+require('hardhat-abi-exporter');
 require('hardhat-contract-sizer')
 require('@openzeppelin/hardhat-upgrades')
 
@@ -15,8 +16,8 @@ const RINKEBY_ALCHEMY_API_KEY = process.env.RINKEBY_ALCHEMY_API_KEY
 const ROPSTEN_ALCHEMY_API_KEY = process.env.ROPSTEN_ALCHEMY_API_KEY
 const HARDHAT_AUTOMINE = process.env.HARDHAT_AUTOMINE
 const OWNER_KEY = process.env.OWNER_KEY
-const SECONDARY_KEY = process.env.SECONDARY_KEY
 const MAINNET_DEV_ALCHEMY_API_KEY = process.env.MAINNET_DEV_ALCHEMY_API_KEY
+const SECONDARY_KEY = process.env.SECONDARY_KEY
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -37,6 +38,13 @@ if (HARDHAT_AUTOMINE === 'true' && !process.env.CI) {
  */
 
 module.exports = {
+  abiExporter: {
+    path: "./abi",
+    clear: false,
+    flat: true,
+    // only: [],
+    // except: []
+  },
   solidity: {
     version: '0.8.6',
     settings: {

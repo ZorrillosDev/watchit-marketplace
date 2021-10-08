@@ -49,8 +49,7 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
 
         if (success) {
             emit PurchaseRequestDone(
-                requests[_requestId].holder,
-                requests[_requestId].cid,
+                _requestId,
                 price
             );
         }
@@ -71,14 +70,19 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
       * @param cid IPFS content unique identifier.
       * @param caller origin contract
       */
-    function requestNFTPrice(address owner, uint256 cid, IPurchaseGatewayCaller caller) override external {
+    function requestNFTPrice(address owner, uint256 cid, IPurchaseGatewayCaller caller)
+    override
+    external
+    {
         /// Step 2 => gateway oracle request off-chain data
         /// Here the chain link requests and exec as callback fulFillNFTPrice on result ready
         Chainlink.Request memory request = buildChainlinkRequest(_jobId, address(this), this.fulFillNFTPrice.selector);
         request.add("get", "https://run.mocky.io/v3/f09675f9-22c1-423e-bc56-275175fd2190");
         request.add("path", "price");
         // Keepp the request needed data while request finish
-        requests[sendChainlinkRequest(request, PAYMENT)] = Request(address(caller), owner, cid);
+        bytes32 requestId = sendChainlinkRequest(request, PAYMENT);
+        requests[requestId] = Request(address(caller), owner, cid);
+        emit PurchaseRequestReceived(requestId);
     }
 
 

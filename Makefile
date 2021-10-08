@@ -29,7 +29,7 @@ deps: node_modules
 
 
 deploy-rinkeby:
-	npx hardhat run ./scripts/deploy-gtw.js --network rinkeby
+	npx hardhat run ./scripts/chainlink/deploy-purchase-gateway.js --network rinkeby
 	npx hardhat run ./scripts/deploy-ft.js --network rinkeby
 	npx hardhat run ./scripts/deploy-nft.js --network rinkeby
 

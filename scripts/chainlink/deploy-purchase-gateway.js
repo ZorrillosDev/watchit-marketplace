@@ -9,7 +9,7 @@ async function main () {
   const currentNetwork = network.name.toUpperCase()
   if (!process.env.CI) {
     // Write in env if not CI workflow env
-    writeInEnv({ [`${currentNetwork}_CONTRACT_GTW`]: purchaseGatewayContract.address })
+    writeInEnv({ [`${currentNetwork}_CONTRACT_PURCHASE_GATEWAY`]: purchaseGatewayContract.address })
   }
 
   console.log(`${network.name}:PC:${purchaseGatewayContract.address}`)

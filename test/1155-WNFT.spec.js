@@ -4,13 +4,15 @@ const { expect } = require('chai')
 const {
   bs58toHex,
   getNFTContractAddress,
+  getPurchaseGatewayAddress,
   hexToBs58,
   randomCID
 } = require('./utils')
 
+const IPurchaseGatewayAbi = require('../abi/IPurchaseGateway.json')
 const CONTRACT_ADDRESS = getNFTContractAddress(network.name)
-const CONTRACT_GATEWAY_PURCHASE = getPurchaseGatewayAddress(network.name);
-const txOptions = { gasLimit: 800000 }
+const CONTRACT_GATEWAY_PURCHASE = getPurchaseGatewayAddress(network.name)
+const txOptions = { gasLimit: 8000000 }
 
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe('WatchIt NFTs (WNFT)', function () {
@@ -35,19 +37,22 @@ describe('WatchIt NFTs (WNFT)', function () {
     [owner, acct1] = await ethers.getSigners()
     txOptions.gasPrice = await ethers.provider.getGasPrice()
     const NFToken = await ethers.getContractFactory('WNFT')
-    const PurchaseGateway = await ethers.getContractFactory('PurchaseGateway')
     wnft = NFToken.attach(CONTRACT_ADDRESS)
-    purchase = PurchaseGateway.attach()
+
+    purchase = new ethers.Contract(
+      CONTRACT_GATEWAY_PURCHASE, IPurchaseGatewayAbi, owner
+    )
+
   })
 
-  describe('Details', function () {
+  describe.skip('Details', function () {
     it('returns true when 0xd9b67a26 is passed to supportsInterface', async () => {
       const supports = await wnft.supportsInterface('0xd9b67a26')
       expect(supports).to.equal(true)
     })
   })
 
-  describe('Roles', function () {
+  describe.skip('Roles', function () {
     describe('NFT_MINTER_ROLE', function () {
       it('cannot mint NFT without proper permissions', async function () {
         const tokenCID = bs58toHex((await randomCID()).toString())
@@ -88,7 +93,7 @@ describe('WatchIt NFTs (WNFT)', function () {
     })
   })
 
-  describe('Mint & Burn', function () {
+  describe.skip('Mint & Burn', function () {
     it('should mint NFT valid mapping CID', async function () {
       const tokenIdA = await nftMinter((await randomCID()).toString())
       const tokenIdB = await nftMinter((await randomCID()).toString())
@@ -132,7 +137,7 @@ describe('WatchIt NFTs (WNFT)', function () {
     })
   })
 
-  describe('Transfer', function () {
+  describe.skip('Transfer', function () {
     it('should be transferable', async function () {
       const tokenIdA = await nftMinter((await randomCID()).toString())
       const transfer = await wnft.connect(owner)
@@ -157,7 +162,7 @@ describe('WatchIt NFTs (WNFT)', function () {
     })
   })
 
-  describe('Query', function () {
+  describe.skip('Query', function () {
     it('lists all TransferSingle events', async () => {
       const filter = wnft.filters.TransferSingle()
       const events = await wnft.queryFilter(filter)
@@ -172,6 +177,21 @@ describe('WatchIt NFTs (WNFT)', function () {
   })
 
   describe('Purchase', function () {
+    it('should purchase with defined price in gateway', async () => {
+      const token = bs58toHex((await randomCID()).toString())
+      const tokenTx = await wnft.mint(acct1.address, token, txOptions)
+      await tokenTx.wait()
 
+      // Request purchase from acct1 address for token
+      const transaction = await wnft.requestPurchase(acct1.address, token, purchase.address, txOptions)
+      await transaction.wait()
+
+      // Check that NFT has been minted for acct1 as owner
+      const currentOwnerBalance = await wnft.balanceOf(acct1.address, token, txOptions);
+      expect(currentOwnerBalance).to.equal(1);
+      // let tx = await purchase.fulFillNFTPrice(transaction, 1)
+      // tx.await();
+
+    })
   })
 })

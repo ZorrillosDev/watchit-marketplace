@@ -5,6 +5,7 @@ services:
     image: node:lts-alpine
     command: sh -c "npx hardhat node"
     volumes:
+      - ./.env:/hardhat/.env
       - ./hardhat.config.js:/hardhat/hardhat.config.js
       - ./package.json:/hardhat/package.json
       - ./package-lock.json:/hardhat/package-lock.json
