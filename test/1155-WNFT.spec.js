@@ -15,7 +15,7 @@ const txOptions = { gasLimit: 800000 }
 describe('WatchIt NFTs (WNFT)', function () {
   this.timeout(0)
 
-  let wnft
+  let wnft, purchase
   let owner, acct1
   // Example token uri. CID is not valid one.
   // TODO: ERC1155 Metadata
@@ -34,7 +34,9 @@ describe('WatchIt NFTs (WNFT)', function () {
     [owner, acct1] = await ethers.getSigners()
     txOptions.gasPrice = await ethers.provider.getGasPrice()
     const NFToken = await ethers.getContractFactory('WNFT')
+    const PurchaseGateway = await ethers.getContractFactory('PurchaseGateway')
     wnft = NFToken.attach(CONTRACT_ADDRESS)
+    purchase = PurchaseGateway.attach('0x22AA18532E427A09e2d235AFc0275779783894B9')
   })
 
   describe('Details', function () {
@@ -166,5 +168,9 @@ describe('WatchIt NFTs (WNFT)', function () {
       const events = await wnft.queryFilter(filter)
       expect(events.length).to.be.at.least(1)
     })
+  })
+
+  describe('Purchase', function () {
+
   })
 })

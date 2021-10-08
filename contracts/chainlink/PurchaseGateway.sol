@@ -8,8 +8,8 @@ import "./IPurchaseGatewayCaller.sol";
 
 contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
     using Chainlink for Chainlink.Request;
-
-    bytes32 constant JOB_ID = bytes32("493610cff14346f786f88ed791ab7704");
+    // https://market.link/jobs/056e5e2d-c596-4509-8396-7a94d342299b/spec
+    bytes32 internal _jobId;
     uint256 constant PAYMENT = 1 * LINK_DIVISIBILITY;
 
     struct Request {
@@ -20,6 +20,10 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
 
     mapping(bytes32 => Request) internal requests;
     mapping(uint256 => uint256) internal prices;
+
+    constructor(bytes32 jobId) public {
+        _jobId = jobId;
+    }
 
     /** @notice Receive the response in form of multiple-variable
       * @param _requestId chain link request identifier.
@@ -70,25 +74,13 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
     function requestNFTPrice(address owner, uint256 cid, IPurchaseGatewayCaller caller) override external {
         /// Step 2 => gateway oracle request off-chain data
         /// Here the chain link requests and exec as callback fulFillNFTPrice on result ready
-        Chainlink.Request memory request = buildChainlinkRequest(JOB_ID, address(this), this.fulFillNFTPrice.selector);
+        Chainlink.Request memory request = buildChainlinkRequest(_jobId, address(this), this.fulFillNFTPrice.selector);
         request.add("get", "https://run.mocky.io/v3/f09675f9-22c1-423e-bc56-275175fd2190");
+        request.add("path", "price");
         // Keepp the request needed data while request finish
         requests[sendChainlinkRequest(request, PAYMENT)] = Request(address(caller), owner, cid);
     }
 
-    function concat(string memory a, string memory b, string memory c) private pure returns (string memory) {
-        return string(abi.encodePacked(a, b, c));
-    }
-
-    function stringToBytes32(string memory source) internal pure returns (bytes32 result) {
-        bytes memory tempEmptyString = bytes(source);
-        if (tempEmptyString.length == 0) {
-            return 0x0;
-        }
-        assembly {
-            result := mload(add(source, 32))
-        }
-    }
 
     function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
         return interfaceId == type(IPurchaseGateway).interfaceId;
