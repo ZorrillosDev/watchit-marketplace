@@ -3,7 +3,7 @@ const { writeInEnv } = require('./utils')
 
 async function main () {
 
-  const jobId = ethers.utils.formatBytes32String(process.env.RINKEBY_CHAINLINK_JOBID)
+  const jobId = web3.utils.toHex(process.env.RINKEBY_CHAINLINK_JOBID)
   const PurchaseGateway = await ethers.getContractFactory('PurchaseGateway')
   const purchaseGatewayContract = await PurchaseGateway.deploy(jobId);
   const currentNetwork = network.name.toUpperCase()

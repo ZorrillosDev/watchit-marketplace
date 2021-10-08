@@ -4,18 +4,14 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 import "./chainlink/IPurchaseGateway.sol";
 import "./chainlink/IPurchaseGatewayCaller.sol";
 
-contract WNFT is ERC1155Upgradeable, ChainlinkClient, AccessControlUpgradeable, IPurchaseGatewayCaller {
+contract WNFT is ERC1155Upgradeable,  AccessControlUpgradeable, IPurchaseGatewayCaller {
     ///    error InvalidOracleRequest();
-    using Chainlink for Chainlink.Request;
 
     uint8 internal constant NFT_SUPPLY = 1;
     bytes32 public constant NFT_MINTER_ROLE = keccak256("NFT_MINTER_ROLE");
-    bytes32 constant JOB_ID = bytes32("493610cff14346f786f88ed791ab7704");
-    uint256 constant PAYMENT = 1 * LINK_DIVISIBILITY;
 
     /// The current NFT holder
     mapping(uint256 => address) internal holders;
