@@ -9,39 +9,46 @@ import "./IPurchaseGatewayCaller.sol";
 contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
     using Chainlink for Chainlink.Request;
 
-    mapping(uint256 => address) requests;
-    mapping(uint256 => uint256) internal prices;
     bytes32 constant JOB_ID = bytes32("493610cff14346f786f88ed791ab7704");
     uint256 constant PAYMENT = 1 * LINK_DIVISIBILITY;
 
+    struct Request {
+        address caller; /// The contract caller
+        address holder; /// The request declared owner,
+        uint256 cid;
+    }
+
+    mapping(bytes32 => Request) internal requests;
+    mapping(uint256 => uint256) internal prices;
 
     /** @notice Receive the response in form of multiple-variable
-      * @param oracle origin delegate call.
-      * @param owner address for current NFT owner.
-      * @param cid IPFS content unique identifier.
+      * @param _requestId chain link request identifier.
       * @param price the price returned by API
       * @dev emit PurchaseRequestDone event when delegate callback is done
       */
-    function fulFillNFTPrice(bytes32 _requestId, address owner, uint256 cid, uint256 price)
+    function fulFillNFTPrice(bytes32 _requestId, uint256 price)
     external override
     recordChainlinkFulfillment(_requestId)
     {
-        // Step 3 => gateway oracle exec callback with received data
-        // delegate call to `purchase` method back here to `IPurchaseGatewayCaller` contract
-        // delegate call context https://solidity-by-example.org/delegatecall/
-        require(requests[cid] != address(0x0), "Invalid oracle request");
-        (bool success,) = requests[cid].delegatecall(
+        /// Step 3 => gateway oracle exec callback with received data
+        /// delegate call to `purchase` method back here to `IPurchaseGatewayCaller` contract
+        /// delegate call context https://solidity-by-example.org/delegatecall/
+        (bool success,) = requests[_requestId].caller.delegatecall(
             abi.encodeWithSignature(
                 "purchase(IPurchaseGateway oracle, address owner, uint256 cid)",
-                this, owner, cid
+                this, requests[_requestId].holder, requests[_requestId].cid
             )
         );
 
-        prices[cid] = price;
-        requests[cid] = address(0x0);
+        prices[requests[_requestId].cid] = price;
+        delete requests[_requestId];
 
         if (success) {
-            emit PurchaseRequestDone(owner, cid, price);
+            emit PurchaseRequestDone(
+                requests[_requestId].holder,
+                requests[_requestId].cid,
+                price
+            );
         }
     }
 
@@ -60,15 +67,27 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
       * @param cid IPFS content unique identifier.
       * @param caller origin contract
       */
-    function requestNFTPrice(uint256 cid, IPurchaseGatewayCaller caller) override external {
-        // Step 2 => gateway oracle request off-chain data
-        // Wait until chainlink request has been processed
-        require(requests[cid] == address(0x0), "Pending request in process");
-        // Here the chain link requests and exec as callback fulFillNFTPrice on result ready
+    function requestNFTPrice(address owner, uint256 cid, IPurchaseGatewayCaller caller) override external {
+        /// Step 2 => gateway oracle request off-chain data
+        /// Here the chain link requests and exec as callback fulFillNFTPrice on result ready
         Chainlink.Request memory request = buildChainlinkRequest(JOB_ID, address(this), this.fulFillNFTPrice.selector);
-        request.add("get", "https://run.mocky.io/v3/18a14efe-e718-4454-b09b-dcc1ccf6dd9c");
-        requests[cid] = address(caller);
-        sendChainlinkRequest(request, PAYMENT);
+        request.add("get", "https://run.mocky.io/v3/f09675f9-22c1-423e-bc56-275175fd2190");
+        // Hold the request holders while request finish
+        requests[sendChainlinkRequest(request, PAYMENT)] = Request(address(caller), owner, cid);
+    }
+
+    function concat(string memory a, string memory b, string memory c) private pure returns (string memory) {
+        return string(abi.encodePacked(a, b, c));
+    }
+
+    function stringToBytes32(string memory source) internal pure returns (bytes32 result) {
+        bytes memory tempEmptyString = bytes(source);
+        if (tempEmptyString.length == 0) {
+            return 0x0;
+        }
+        assembly {
+            result := mload(add(source, 32))
+        }
     }
 
     function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
