@@ -72,7 +72,7 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
         /// Here the chain link requests and exec as callback fulFillNFTPrice on result ready
         Chainlink.Request memory request = buildChainlinkRequest(JOB_ID, address(this), this.fulFillNFTPrice.selector);
         request.add("get", "https://run.mocky.io/v3/f09675f9-22c1-423e-bc56-275175fd2190");
-        // Hold the request holders while request finish
+        // Keepp the request needed data while request finish
         requests[sendChainlinkRequest(request, PAYMENT)] = Request(address(caller), owner, cid);
     }
 
