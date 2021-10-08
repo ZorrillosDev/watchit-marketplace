@@ -1,5 +1,5 @@
 const { ethers, network } = require('hardhat')
-const { writeInEnv } = require('./utils')
+const { writeInEnv } = require('../utils')
 
 async function main () {
 

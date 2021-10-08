@@ -9,6 +9,7 @@ const {
 } = require('./utils')
 
 const CONTRACT_ADDRESS = getNFTContractAddress(network.name)
+const CONTRACT_GATEWAY_PURCHASE = getPurchaseGatewayAddress(network.name);
 const txOptions = { gasLimit: 800000 }
 
 // see: https://github.com/mawrkus/js-unit-testing-guide
@@ -36,7 +37,7 @@ describe('WatchIt NFTs (WNFT)', function () {
     const NFToken = await ethers.getContractFactory('WNFT')
     const PurchaseGateway = await ethers.getContractFactory('PurchaseGateway')
     wnft = NFToken.attach(CONTRACT_ADDRESS)
-    purchase = PurchaseGateway.attach('0x22AA18532E427A09e2d235AFc0275779783894B9')
+    purchase = PurchaseGateway.attach()
   })
 
   describe('Details', function () {

@@ -48,6 +48,15 @@ function getNFTContractAddress (networkName) {
   return process.env.LOCALHOST_CONTRACT_NFT
 }
 
+function getPurchaseGatewayAddress (networkName) {
+
+  if (networkName === 'rinkeby') {
+    return process.env.RINKEBY_CONTRACT_GTW
+  }
+
+
+}
+
 const bs58toHex = (b58) => `0x${Buffer.from(bs58.decode(b58).slice(2)).toString('hex')}`
 const hexToBs58 = (hex) => bs58.encode(Buffer.from(`1220${hex.slice(2)}`, 'hex'))
 
@@ -70,5 +79,6 @@ module.exports = {
   runUpgradeTest,
   getFTContractAddress,
   getNFTContractAddress,
+  getPurchaseGatewayAddress,
   randomCID
 }
