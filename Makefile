@@ -23,10 +23,10 @@ node_modules:
 deps: node_modules
 	docker-compose up -d
 	npx hardhat compile
+	npx hardhat run --network localhost scripts/chainlink/deploy-mocks.js
 	npx hardhat run --network localhost scripts/chainlink/deploy-purchase-gateway.js
 	npx hardhat run --network localhost scripts/deploy-ft.js
 	npx hardhat run --network localhost scripts/deploy-nft.js
-
 
 deploy-rinkeby:
 	npx hardhat run ./scripts/chainlink/deploy-purchase-gateway.js --network rinkeby
@@ -38,6 +38,7 @@ deploy-goerli:
 	npx hardhat run ./scripts/deploy-nft.js --network goerli
 
 deploy-kovan:
+	npx hardhat run ./scripts/chainlink/deploy-purchase-gateway.js --network kovan
 	npx hardhat run ./scripts/deploy-ft.js --network kovan
 	npx hardhat run ./scripts/deploy-nft.js --network kovan
 

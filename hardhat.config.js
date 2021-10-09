@@ -3,10 +3,10 @@
 require('dotenv').config()
 
 require('@nomiclabs/hardhat-waffle')
-require("@nomiclabs/hardhat-web3")
+require('@nomiclabs/hardhat-web3')
 require('hardhat-gas-reporter')
 require('solidity-coverage')
-require('hardhat-abi-exporter');
+require('hardhat-abi-exporter')
 require('hardhat-contract-sizer')
 require('@openzeppelin/hardhat-upgrades')
 
@@ -39,20 +39,18 @@ if (HARDHAT_AUTOMINE === 'true' && !process.env.CI) {
 
 module.exports = {
   abiExporter: {
-    path: "./abi",
+    path: './abi',
     clear: false,
     flat: true,
     // only: [],
     // except: []
   },
   solidity: {
-    version: '0.8.6',
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 200
-      }
-    }
+    compilers: [
+      { version: '0.6.0' },
+      { version: '0.6.6' },
+      { version: '0.8.6' }
+    ]
   },
   gasReporter: {
     currency: 'EUR',

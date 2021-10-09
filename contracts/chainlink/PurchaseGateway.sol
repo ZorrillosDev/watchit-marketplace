@@ -10,19 +10,21 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
     using Chainlink for Chainlink.Request;
     // https://market.link/jobs/056e5e2d-c596-4509-8396-7a94d342299b/spec
     bytes32 internal _jobId;
-    uint256 constant PAYMENT = 1 * LINK_DIVISIBILITY;
+    uint256 internal _fees;
 
-    struct Request {
-        address caller; /// The contract caller
-        address holder; /// The request declared owner,
+    struct RequestCommitment {
+        IPurchaseGatewayCaller caller; /// The contract caller
         uint256 cid;
     }
 
-    mapping(bytes32 => Request) internal requests;
+    mapping(bytes32 => RequestCommitment) internal requests;
     mapping(uint256 => uint256) internal prices;
 
-    constructor(bytes32 jobId) public {
+    constructor(bytes32 jobId, address oracle, address link, uint256 fees) public {
+        setChainlinkToken(link);
+        setChainlinkOracle(oracle);
         _jobId = jobId;
+        _fees = fees;
     }
 
     /** @notice Receive the response in form of multiple-variable
@@ -37,22 +39,10 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
         /// Step 3 => gateway oracle exec callback with received data
         /// delegate call to `purchase` method back here to `IPurchaseGatewayCaller` contract
         /// delegate call context https://solidity-by-example.org/delegatecall/
-        (bool success,) = requests[_requestId].caller.delegatecall(
-            abi.encodeWithSignature(
-                "purchase(IPurchaseGateway oracle, address owner, uint256 cid)",
-                this, requests[_requestId].holder, requests[_requestId].cid
-            )
-        );
-
+        requests[_requestId].caller.purchase(this, requests[_requestId].cid);
         prices[requests[_requestId].cid] = price;
         delete requests[_requestId];
-
-        if (success) {
-            emit PurchaseRequestDone(
-                _requestId,
-                price
-            );
-        }
+        /// Assign default value back
     }
 
     /** @notice Return current NFT price by cid
@@ -70,7 +60,7 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
       * @param cid IPFS content unique identifier.
       * @param caller origin contract
       */
-    function requestNFTPrice(address owner, uint256 cid, IPurchaseGatewayCaller caller)
+    function requestNFTPrice(uint256 cid, IPurchaseGatewayCaller caller)
     override
     external
     {
@@ -79,9 +69,9 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
         Chainlink.Request memory request = buildChainlinkRequest(_jobId, address(this), this.fulFillNFTPrice.selector);
         request.add("get", "https://run.mocky.io/v3/f09675f9-22c1-423e-bc56-275175fd2190");
         request.add("path", "price");
-        // Keepp the request needed data while request finish
-        bytes32 requestId = sendChainlinkRequest(request, PAYMENT);
-        requests[requestId] = Request(address(caller), owner, cid);
+        // Keep the request needed data while request finish
+        bytes32 requestId = sendChainlinkRequest(request, _fees);
+        requests[requestId] = RequestCommitment(caller, cid);
         emit PurchaseRequestReceived(requestId);
     }
 

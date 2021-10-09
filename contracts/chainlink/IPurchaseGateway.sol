@@ -12,6 +12,6 @@ interface IPurchaseGateway {
 
     function getCurrentPriceForCID(uint256 cid) view external returns (uint256);
 
-    function requestNFTPrice(address owner, uint256 cid, IPurchaseGatewayCaller caller) external;
+    function requestNFTPrice(uint256 cid, IPurchaseGatewayCaller caller) external;
 
 }

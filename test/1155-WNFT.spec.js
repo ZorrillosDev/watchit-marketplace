@@ -178,19 +178,41 @@ describe('WatchIt NFTs (WNFT)', function () {
 
   describe('Purchase', function () {
     it('should purchase with defined price in gateway', async () => {
+      // Integration tests
       const token = bs58toHex((await randomCID()).toString())
-      const tokenTx = await wnft.mint(acct1.address, token, txOptions)
+      const tokenTx = await wnft.connect(owner).mint(acct1.address, token, txOptions)
       await tokenTx.wait()
 
+      // console.log(owner.address) 0xEe99CeFF640d37Edd9cac8c7cfF4Ed4cD609f435 Kovan
+      // console.log(owner.address) 0xEe99CeFF640d37Edd9cac8c7cfF4Ed4cD609f435 Rinkeby
+
       // Request purchase from acct1 address for token
-      const transaction = await wnft.requestPurchase(acct1.address, token, purchase.address, txOptions)
+      const currentOwnerBalance = await wnft.balanceOf(acct1.address, token, txOptions);
+      const currentHolder = await wnft.getCurrentHolder(token);
+      expect(currentOwnerBalance).to.equal(1);
+      expect(currentHolder).to.equal(acct1.address);
+
+      // Request purchase CID token NFT with caller address to delegate back call
+      const transaction = await purchase.requestNFTPrice(token, wnft.address, txOptions);
       await transaction.wait()
 
-      // Check that NFT has been minted for acct1 as owner
-      const currentOwnerBalance = await wnft.balanceOf(acct1.address, token, txOptions);
-      expect(currentOwnerBalance).to.equal(1);
-      // let tx = await purchase.fulFillNFTPrice(transaction, 1)
-      // tx.await();
+      //wait 30 secs for oracle to callback
+      await new Promise(resolve => setTimeout(resolve, 30000))
+      const currentPrice = await purchase.getCurrentPriceForCID(token);
+      const newHolder = await wnft.getCurrentHolder(token);
+      expect(currentPrice).to.equal(1);
+      expect(newHolder).to.equal(owner.address);
+
+
+
+      // const purchaseTx = purchase.filters.PurchaseRequestReceived()
+      // const events = await purchase.queryFilter(purchaseTx)
+      // console.log(events)
+      //
+      // // Check that NFT has been minted for acct1 as owner
+
+      // // let tx = await purchase.fulFillNFTPrice(transaction, 1)
+      // // tx.await();
 
     })
   })
