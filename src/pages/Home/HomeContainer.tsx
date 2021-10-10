@@ -1,9 +1,14 @@
+// react imports
 import React, { FC, useEffect, useState } from 'react'
+
+// project imports
 import { HomeView } from '@pages/Home/HomeView'
 import { HomeSlide } from '@pages/Home/components/HomeSlider'
 
-/* eslint-disable  @typescript-eslint/explicit-function-return-type */
+// ===========================|| HOME CONTAINER ||=========================== //
 
+// static slider data
+// TODO delete this static data when it comes from backend
 const STATIC_SLIDES = [
   {
     image: 'https://image.tmdb.org/t/p/w1280/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg',
@@ -54,7 +59,7 @@ const STATIC_SLIDES = [
 export const HomeContainer: FC = (): JSX.Element => {
   const [slides, setSlides] = useState([] as HomeSlide[])
 
-  useEffect(() => {
+  useEffect((): void => {
     // TODO get main carousel data from backend
     setSlides(STATIC_SLIDES)
   }, [])

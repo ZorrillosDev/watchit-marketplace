@@ -1,7 +1,11 @@
+// react imports
 import React, { FC, ReactElement } from 'react'
-import SvgIcon, { SvgIconProps } from '@material-ui/core/SvgIcon'
 
-/* eslint-disable  @typescript-eslint/explicit-function-return-type */
+// mui imports
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
+
+// ===========================|| CUSTOM ICON ETH ||=========================== //
+
 export const IconEth: FC<SvgIconProps> = (props): ReactElement => {
   return (
     <SvgIcon {...props} viewBox='0 0 9.921 16.911'>
@@ -13,4 +17,3 @@ export const IconEth: FC<SvgIconProps> = (props): ReactElement => {
     </SvgIcon>
   )
 }
-/* eslint-enable  @typescript-eslint/explicit-function-return-type */

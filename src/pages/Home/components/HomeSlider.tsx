@@ -1,14 +1,19 @@
+// react imports
 import React, { FC } from 'react'
+
+// swiper imports
 import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
-import styled from 'styled-components'
+import 'swiper/swiper-bundle.min.css'
+import 'swiper/swiper.min.css'
 import SwiperCore, {
   Navigation, Pagination
 } from 'swiper'
-import { Box, Typography, Avatar, useTheme } from '@material-ui/core'
+
+// project imports
+import { Box, Typography, Avatar, useTheme } from '@mui/material'
 import { IconEth, Favorite } from '@components/Icons'
+
+// ===========================|| HOME SLIDER ||=========================== //
 
 SwiperCore.use([Navigation, Pagination])
 
@@ -32,7 +37,52 @@ const HomeSlider: FC<HomeSliderProps> = ({ slides }): JSX.Element => {
   const theme = useTheme()
 
   return (
-    <HomeSliderWrapper>
+    <Box
+      sx={{
+        height: 1,
+        maxHeight: 'calc(100vh - 3.5rem)',
+        width: { xs: 'calc(100% + 2rem)', sm: 'calc(100% + 3rem)', lg: 'calc(100% + 6rem)', xl: 'calc(100% + 14rem)' },
+        display: 'block',
+        position: 'relative',
+        ml: { xs: -2, sm: -3, lg: -6, xl: -14 },
+        transition: 'all 0.5s ease-in-out',
+        '& .swiper-container': {
+          height: 1
+        },
+        '& .swiper': {
+          height: 1
+        },
+        '& .swiper-button-next, & .swiper-button-prev': {
+          width: '4rem',
+          '&:after': {
+            color: '#fff',
+            fontSize: '3rem',
+            fontWeight: 'bold'
+          }
+        },
+        '& .swiper-pagination': {
+          bottom: '1rem',
+          '& .swiper-pagination-bullet': {
+            width: '0.7rem',
+            height: '0.7rem',
+            backgroundColor: 'white !important',
+            transition: 'all 0.5s ease-in-out'
+          },
+          '& .swiper-pagination-bullet-active': {
+            width: '2rem !important',
+            borderRadius: 1
+          }
+        },
+        '& .MuiAvatar-root': {
+          width: '30px',
+          height: '30px'
+        },
+        '& svg': {
+          width: '1rem',
+          height: '1rem'
+        }
+      }}
+    >
       <Swiper
         spaceBetween={0}
         slidesPerView={1}
@@ -127,97 +177,23 @@ const HomeSlider: FC<HomeSliderProps> = ({ slides }): JSX.Element => {
                     </Box>
                   </Box>
                 </Box>
-                <HomeSliderImage image={slide.image} />
+                <Box
+                  sx={{
+                    width: 1,
+                    height: 1,
+                    backgroundImage: `url(${slide.image})`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center',
+                    backgroundSize: 'cover'
+                  }}
+                />
               </Box>
             </SwiperSlide>
           ))
         }
       </Swiper>
-    </HomeSliderWrapper>
+    </Box>
   )
 }
-
-const HomeSliderWrapper = styled.div`
-  height: 100%;
-  max-height: calc(100vh - 3.5rem);
-  display: block;
-  position: relative;
-  width: calc(100% + 2rem);
-  margin: 0 0 0 -1rem;
-
-  .swiper {
-    height: 100%;
-  }
-  
-  .swiper-button-next, .swiper-button-prev {
-    width: 4rem;
-
-    &:after {
-      color: #fff;
-      font-size: 3rem;
-      font-weight: bold;
-    }
-  }
-
-  .swiper-pagination {
-    bottom: 1rem;
-
-    .swiper-pagination-bullet {
-      width: 0.7rem;
-      height: 0.7rem;
-      background-color: white !important;
-      transition: all 0.5s ease-in-out;
-    }
-    
-    .swiper-pagination-bullet-active {
-      width: 2rem !important;
-      border-radius: 0.5rem;
-    }
-  }
-
-  .MuiAvatar-root {
-    width: 30px;
-    height: 30px;
-  }
-  
-  svg {
-    width: 1rem;
-    height: 1rem;
-  }
-  
-  p {
-    margin-top: 4px;
-  }
-
-  @media (min-width: 600px) {
-    width: calc(100% + 3rem);
-    margin: 0 0 0 -1.5rem;
-  }
-
-  @media (min-width: 1200px) {
-    width: calc(100% + 6rem);
-    margin: 0 0 0 -3rem;
-  }
-
-  @media (min-width: 1400px) {
-    width: calc(100% + 10rem);
-    margin: 0 0 0 -5rem;
-  }
-
-  @media (min-width: 1900px) {
-    width: calc(100% + 20rem);
-    margin: 0 0 0 -10rem;
-    transition: all 0.5s ease-in-out;
-  }
-`
-
-const HomeSliderImage = styled.div<{image: string}>`
-   width: 100%;
-   height: 100%;
-   background-image: url(${({ image }) => image});
-   background-repeat: no-repeat;
-   background-position: center;
-   background-size: cover;
-`
 
 export default HomeSlider
