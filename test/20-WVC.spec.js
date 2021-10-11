@@ -1,8 +1,10 @@
 /* global ethers, network */
 require('./utils/global')
 const { expect } = require('chai')
-const { getFTContractAddress } = require('./utils')
-const CONTRACT_ADDRESS = getFTContractAddress(network.name)
+const { getContractAddress } = require('./utils')
+
+const contracts = getContractAddress(network.name)
+const CONTRACT_ADDRESS = contracts.WVC;
 
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe.skip('WVC', function () {

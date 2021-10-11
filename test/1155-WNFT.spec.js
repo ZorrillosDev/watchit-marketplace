@@ -3,15 +3,14 @@ require('./utils/global')
 const { expect } = require('chai')
 const {
   bs58toHex,
-  getNFTContractAddress,
-  getPurchaseGatewayAddress,
+  getContractAddress,
   hexToBs58,
   randomCID
 } = require('./utils')
 
-const IPurchaseGatewayAbi = require('../abi/IPurchaseGateway.json')
-const CONTRACT_ADDRESS = getNFTContractAddress(network.name)
-const CONTRACT_GATEWAY_PURCHASE = getPurchaseGatewayAddress(network.name)
+const contracts = getContractAddress(network.name)
+const CONTRACT_ADDRESS = contracts.NFT;
+const CONTRACT_GATEWAY_PURCHASE = contracts.PO;
 const txOptions = { gasLimit: 8000000 }
 
 // see: https://github.com/mawrkus/js-unit-testing-guide
@@ -39,9 +38,8 @@ describe('WatchIt NFTs (WNFT)', function () {
     const NFToken = await ethers.getContractFactory('WNFT')
     wnft = NFToken.attach(CONTRACT_ADDRESS)
 
-    purchase = new ethers.Contract(
-      CONTRACT_GATEWAY_PURCHASE, IPurchaseGatewayAbi, owner
-    )
+    const purchaseFactory = await ethers.getContractFactory('PurchaseGateway')
+    purchase = purchaseFactory.attach(CONTRACT_GATEWAY_PURCHASE);
 
   })
 

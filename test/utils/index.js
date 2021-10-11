@@ -8,54 +8,46 @@ const randomCID = async () => {
   return (new CID(0, 'dag-pb', Buffer.from(randomHash)))
 }
 
-function getFTContractAddress (networkName) {
-  if (networkName === 'goerli') {
-    return process.env.GOERLI_CONTRACT_FT
-  }
+function getContractAddress (networkName) {
 
-  if (networkName === 'kovan') {
-    return process.env.KOVAN_CONTRACT_FT
-  }
+  /**
+   * @param {string} networkName network to retrieve contract
+   * @type {{kovan: {WVC, NFT, PO}, rinkeby: {WVC, NFT, PO}, goerli: {WVC, NFT, PO: string}, ropsten: {WVC, NFT, PO: string}}}
+   * @return {object} {WVC, NFT, PO} PO = Purchase Gateway
+   */
 
-  if (networkName === 'rinkeby') {
-    return process.env.RINKEBY_CONTRACT_FT
+  const contractAddressCollection = {
+    'goerli': {
+      PO: process.env.GOERLI_CONTRACT_PURCHASE_GATEWAY,
+      NFT: process.env.GOERLI_CONTRACT_NFT,
+      WVC: process.env.GOERLI_CONTRACT_FT
+    },
+    'kovan': {
+      PO: process.env.KOVAN_CONTRACT_PURCHASE_GATEWAY,
+      NFT: process.env.KOVAN_CONTRACT_NFT,
+      WVC: process.env.KOVAN_CONTRACT_FT
+    },
+    'rinkeby': {
+      PO: process.env.RINKEBY_CONTRACT_PURCHASE_GATEWAY,
+      NFT: process.env.RINKEBY_CONTRACT_NFT,
+      WVC: process.env.RINKEBY_CONTRACT_FT
+    },
+    'ropsten': {
+      PO: process.env.ROPSTEN_CONTRACT_PURCHASE_GATEWAY,
+      NFT: process.env.ROPSTEN_CONTRACT_NFT,
+      WVC: process.env.ROPSTEN_CONTRACT_FT
+    }
   }
+  if (networkName in contractAddressCollection)
+    return contractAddressCollection[networkName]
 
-  if (networkName === 'ropsten') {
-    return process.env.ROPSTEN_CONTRACT_FT
+  return {
+    PO: process.env.LOCALHOST_CONTRACT_PURCHASE_GATEWAY,
+    NFT: process.env.LOCALHOST_CONTRACT_NFT,
+    WVC: process.env.LOCALHOST_CONTRACT_FT
   }
-
-  return process.env.LOCALHOST_CONTRACT_FT
 }
 
-function getNFTContractAddress (networkName) {
-  if (networkName === 'goerli') {
-    return process.env.GOERLI_CONTRACT_NFT
-  }
-
-  if (networkName === 'kovan') {
-    return process.env.KOVAN_CONTRACT_NFT
-  }
-
-  if (networkName === 'rinkeby') {
-    return process.env.RINKEBY_CONTRACT_NFT
-  }
-
-  if (networkName === 'ropsten') {
-    return process.env.ROPSTEN_CONTRACT_NFT
-  }
-
-  return process.env.LOCALHOST_CONTRACT_NFT
-}
-
-function getPurchaseGatewayAddress (networkName) {
-
-  if (networkName === 'rinkeby') {
-    return process.env.RINKEBY_CONTRACT_PURCHASE_GATEWAY
-  }
-  return process.env.LOCALHOST_CONTRACT_PURCHASE_GATEWAY
-
-}
 
 const bs58toHex = (b58) => `0x${Buffer.from(bs58.decode(b58).slice(2)).toString('hex')}`
 const hexToBs58 = (hex) => bs58.encode(Buffer.from(`1220${hex.slice(2)}`, 'hex'))
@@ -77,8 +69,6 @@ module.exports = {
   bs58toHex,
   hexToBs58,
   runUpgradeTest,
-  getFTContractAddress,
-  getNFTContractAddress,
-  getPurchaseGatewayAddress,
+  getContractAddress,
   randomCID
 }
