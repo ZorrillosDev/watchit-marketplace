@@ -179,23 +179,23 @@ describe('WatchIt NFTs (WNFT)', function () {
       // Integration tests
       const token = bs58toHex((await randomCID()).toString())
       const tokenTx = await wnft.connect(owner).mint(acct1.address, token, txOptions)
+
       await tokenTx.wait()
 
       // console.log(owner.address) 0xEe99CeFF640d37Edd9cac8c7cfF4Ed4cD609f435 Kovan
       // console.log(owner.address) 0xEe99CeFF640d37Edd9cac8c7cfF4Ed4cD609f435 Rinkeby
-
       // Request purchase from acct1 address for token
       const currentOwnerBalance = await wnft.balanceOf(acct1.address, token, txOptions);
       const currentHolder = await wnft.getCurrentHolder(token);
       expect(currentOwnerBalance).to.equal(1);
-      expect(currentHolder).to.equal(acct1.address);
 
+      expect(currentHolder).to.equal(acct1.address);
       // Request purchase CID token NFT with caller address to delegate back call
       const transaction = await purchase.requestNFTPrice(token, wnft.address, txOptions);
       await transaction.wait()
 
       //wait 30 secs for oracle to callback
-      await new Promise(resolve => setTimeout(resolve, 50000))
+      await new Promise(resolve => setTimeout(resolve, 30000))
       const currentPrice = await purchase.getCurrentPriceForCID(token);
       console.log(currentPrice)
       // const newHolder = await wnft.getCurrentHolder(token);

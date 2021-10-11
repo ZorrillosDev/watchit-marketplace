@@ -67,12 +67,13 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
         /// Step 2 => gateway oracle request off-chain data
         /// Here the chain link requests and exec as callback fulFillNFTPrice on result ready
         Chainlink.Request memory request = buildChainlinkRequest(_jobId, address(this), this.fulFillNFTPrice.selector);
-        request.add("get", "https://run.mocky.io/v3/f09675f9-22c1-423e-bc56-275175fd2190");
-        request.add("path", "price");
+        request.add("get", "https://run.mocky.io/v3/88965c16-d784-4e43-9f37-822535673889");
+        request.add("path", "RAW.PRICE");
         // Keep the request needed data while request finish
+        request.addInt("times", 10**18); // Multiply the result by 1000000000000000000 to remove decimals
         bytes32 requestId = sendChainlinkRequest(request, _fees);
         requests[requestId] = RequestCommitment(caller, cid);
-        emit PurchaseRequestReceived(requestId);
+//        emit PurchaseRequestReceived(requestId);
     }
 
 
