@@ -12,59 +12,34 @@ clean:
 	rm -rf cache
 	rm -rf artifacts
 	rm -rf node_modules
+	rm -rf deployments
+	rm -rf abi
+	rm -rf ipfs
 	rm -rf package-lock.json
 	docker-compose down
 
 node_modules:
 	# --legacy-peer-deps is required
 	#  for now, hopefully not forever.
-	npm install --legacy-peer-deps
+	npm install --legacy-peer-dep
+
+
+node:
+	npx hardhat node --no-deploy
 
 deps: node_modules
-	docker-compose up -d
-	npx hardhat compile
-	npx hardhat run --network localhost scripts/chainlink/deploy-mocks.js
-	npx hardhat run --network localhost scripts/chainlink/deploy-purchase-gateway.js
-	npx hardhat run --network localhost scripts/deploy-ft.js
-	npx hardhat run --network localhost scripts/deploy-nft.js
+	docker-compose up -d eth-devnet
+	npx hardhat deploy --reset
 
 deploy-rinkeby:
-	npx hardhat run ./scripts/chainlink/deploy-purchase-gateway.js --network rinkeby
-	npx hardhat run ./scripts/deploy-ft.js --network rinkeby
-	npx hardhat run ./scripts/deploy-nft.js --network rinkeby
-
-deploy-goerli:
-	npx hardhat run ./scripts/deploy-ft.js --network goerli
-	npx hardhat run ./scripts/deploy-nft.js --network goerli
+	npx hardhat deploy --network rinkeby
 
 deploy-kovan:
-	npx hardhat run ./scripts/chainlink/deploy-purchase-gateway.js --network kovan
-	npx hardhat run ./scripts/deploy-ft.js --network kovan
-	npx hardhat run ./scripts/deploy-nft.js --network kovan
+	npx hardhat deploy --network kovan
 
 deploy-ropsten:
-	npx hardhat run ./scripts/deploy-ft.js --network ropsten
-	npx hardhat run ./scripts/deploy-nft.js --network ropsten
+	npx hardhat deploy --network ropsten
 
 deploy-all: rebuild deploy-rinkeby deploy-goerli deploy-kovan deploy-ropsten
-
-
-upgrade-rinkeby:
-	npx hardhat run ./scripts/upgrade-ft.js --network rinkeby
-	npx hardhat run ./scripts/upgrade-nft.js --network rinkeby
-
-upgrade-goerli:
-	npx hardhat run ./scripts/upgrade-ft.js --network goerli
-	npx hardhat run ./scripts/upgrade-nft.js --network goerli
-
-upgrade-kovan:
-	npx hardhat run ./scripts/upgrade-ft.js --network kovan
-	npx hardhat run ./scripts/upgrade-nft.js --network kovan
-
-upgrade-ropsten:
-	npx hardhat run ./scripts/upgrade-ft.js --network ropsten
-	npx hardhat run ./scripts/upgrade-nft.js --network ropsten
-
-upgrade-all: rebuild upgrade-rinkeby upgrade-goerli upgrade-kovan upgrade-ropsten
 
 rebuild: clean deps

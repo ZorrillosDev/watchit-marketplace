@@ -1,29 +1,28 @@
 /* global ethers, network */
+const chai = require('chai')
 require('./utils/global')
 const { expect } = require('chai')
+const { BigNumber } = require('ethers')
+
 const {
   bs58toHex,
-  getContractAddress,
   hexToBs58,
   randomCID
-} = require('./utils')
+} = require('../utils')
 
-const contracts = getContractAddress(network.name)
-const CONTRACT_ADDRESS = contracts.NFT;
-const CONTRACT_GATEWAY_PURCHASE = contracts.PO;
-const txOptions = { gasLimit: 8000000 }
+const txOptions = { gasLimit: 800000 }
 
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe('WatchIt NFTs (WNFT)', function () {
   this.timeout(0)
 
   let wnft, purchase
-  let owner, acct1
+  let deployer, client
   // Example token uri. CID is not valid one.
   // TODO: ERC1155 Metadata
   // see: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md#erc-1155-metadata-uri-json-schema
 
-  const nftMinter = async function (CID, minter = owner) {
+  const nftMinter = async function (CID, minter = deployer) {
     const tokenHex = bs58toHex(CID)
     const tx = await wnft.connect(minter)
       .mint(minter.address, tokenHex, txOptions)
@@ -33,13 +32,18 @@ describe('WatchIt NFTs (WNFT)', function () {
   }
 
   before(async function () {
-    [owner, acct1] = await ethers.getSigners()
-    txOptions.gasPrice = await ethers.provider.getGasPrice()
-    const NFToken = await ethers.getContractFactory('WNFT')
-    wnft = NFToken.attach(CONTRACT_ADDRESS)
+    const accounts = await getNamedAccounts()
+    deployer = await ethers.getSigner(accounts.deployer)
+    client = await ethers.getSigner(accounts.client)
 
-    const purchaseFactory = await ethers.getContractFactory('PurchaseGateway')
-    purchase = purchaseFactory.attach(CONTRACT_GATEWAY_PURCHASE);
+    // console.log(owner.address) //0xEe99CeFF640d37Edd9cac8c7cfF4Ed4cD609f435
+    // await deployments.fixture(['mocks', 'api'])
+    const PurchaseGateway = await deployments.get('PurchaseGateway')
+    purchase = await ethers.getContractAt('PurchaseGateway', PurchaseGateway.address)
+
+    txOptions.gasPrice = await ethers.provider.getGasPrice()
+    const NFToken = await deployments.get('WNFT')
+    wnft = await ethers.getContractAt('WNFT', NFToken.address)
 
   })
 
@@ -54,7 +58,7 @@ describe('WatchIt NFTs (WNFT)', function () {
     describe('NFT_MINTER_ROLE', function () {
       it('cannot mint NFT without proper permissions', async function () {
         const tokenCID = bs58toHex((await randomCID()).toString())
-        const mint = await wnft.connect(acct1).mint(acct1.address, tokenCID, txOptions)
+        const mint = await wnft.connect(client).mint(client.address, tokenCID, txOptions)
         await expect(mint.wait()).to.be.reverted
       })
     })
@@ -72,7 +76,7 @@ describe('WatchIt NFTs (WNFT)', function () {
       it('can burn NFT with proper permissions', async function () {
         const tokenCID = (await randomCID()).toString()
         await nftMinter(tokenCID)
-        const burn = await wnft.burn(owner.address, bs58toHex(tokenCID), txOptions)
+        const burn = await wnft.burn(deployer.address, bs58toHex(tokenCID), txOptions)
         await burn.wait()
 
         const filter = wnft.filters.TransferSingle()
@@ -85,7 +89,7 @@ describe('WatchIt NFTs (WNFT)', function () {
       it('only admin can burn NFTs', async function () {
         const tokenCID = (await randomCID()).toString()
         await nftMinter(tokenCID)
-        const burn = await wnft.connect(acct1).burn(owner.address, bs58toHex(tokenCID), txOptions)
+        const burn = await wnft.connect(client).burn(deployer.address, bs58toHex(tokenCID), txOptions)
         await expect(burn.wait()).to.be.reverted
       })
     })
@@ -115,7 +119,7 @@ describe('WatchIt NFTs (WNFT)', function () {
         (await randomCID()).toString()
       ]
       const mintBatch = await wnft
-        .mintBatch(owner.address, uris.map(bs58toHex), txOptions)
+        .mintBatch(deployer.address, uris.map(bs58toHex), txOptions)
       await mintBatch.wait()
 
       const filter = wnft.filters.TransferBatch()
@@ -130,7 +134,7 @@ describe('WatchIt NFTs (WNFT)', function () {
     it('should not "re-mint" an already existing CID', async () => {
       const tokenCID = (await randomCID()).toString()
       await nftMinter(tokenCID)
-      const reMint = await wnft.mint(owner.address, bs58toHex(tokenCID), txOptions)
+      const reMint = await wnft.mint(deployer.address, bs58toHex(tokenCID), txOptions)
       expect(reMint.wait()).to.be.reverted // eslint-disable-line
     })
   })
@@ -138,24 +142,24 @@ describe('WatchIt NFTs (WNFT)', function () {
   describe.skip('Transfer', function () {
     it('should be transferable', async function () {
       const tokenIdA = await nftMinter((await randomCID()).toString())
-      const transfer = await wnft.connect(owner)
-        .transfer(owner.address, acct1.address, bs58toHex(tokenIdA), txOptions)
+      const transfer = await wnft.connect(deployer)
+        .transfer(deployer.address, client.address, bs58toHex(tokenIdA), txOptions)
       await transfer.wait()
 
-      const balance = await wnft.balanceOf(acct1.address, bs58toHex(tokenIdA))
+      const balance = await wnft.balanceOf(client.address, bs58toHex(tokenIdA))
       expect(balance).to.equal(1)
 
       const filter = wnft.filters.TransferSingle()
       const events = await wnft.queryFilter(filter)
       const latestEvent = events.pop()
-      expect(latestEvent.args.from).to.equal(owner.address)
-      expect(latestEvent.args.to).to.equal(acct1.address)
+      expect(latestEvent.args.from).to.equal(deployer.address)
+      expect(latestEvent.args.to).to.equal(client.address)
       expect(hexToBs58(latestEvent.args.id.toHexString())).to.equal(tokenIdA)
     })
 
     it('should fail for try to transfer not owned NFT', async function () {
       const tokenIdA = await nftMinter((await randomCID()).toString())
-      const transfer = await wnft.connect(acct1).transfer(owner.address, acct1.address, bs58toHex(tokenIdA), txOptions)
+      const transfer = await wnft.connect(client).transfer(deployer.address, client.address, bs58toHex(tokenIdA), txOptions)
       expect(transfer.wait()).to.be.reverted // eslint-disable-line
     })
   })
@@ -175,44 +179,49 @@ describe('WatchIt NFTs (WNFT)', function () {
   })
 
   describe('Purchase', function () {
+    // Skip local environment
+    // if (!['kovan', 'rinkeby'].includes(network.name)) { return }
+
+    it.skip('should make an API request successfully', async () => {
+      const token = bs58toHex((await randomCID()).toString())
+      // Request purchase CID token NFT with caller address to delegate back call
+      const transaction = await purchase.requestNFTPrice(token, wnft.address)
+      const tx = await transaction.wait()
+      const requestId = tx.events[0].topics[1]
+      expect(requestId).to.not.be.null
+    })
+
     it('should purchase with defined price in gateway', async () => {
       // Integration tests
       const token = bs58toHex((await randomCID()).toString())
-      const tokenTx = await wnft.connect(owner).mint(acct1.address, token, txOptions)
-
+      const tokenTx = await wnft.mint(client.address, token, txOptions)
       await tokenTx.wait()
 
-      // console.log(owner.address) 0xEe99CeFF640d37Edd9cac8c7cfF4Ed4cD609f435 Kovan
-      // console.log(owner.address) 0xEe99CeFF640d37Edd9cac8c7cfF4Ed4cD609f435 Rinkeby
       // Request purchase from acct1 address for token
-      const currentOwnerBalance = await wnft.balanceOf(acct1.address, token, txOptions);
-      const currentHolder = await wnft.getCurrentHolder(token);
-      expect(currentOwnerBalance).to.equal(1);
+      const currentOwnerETHBalance = await ethers.provider.getBalance(client.address);
+      const currentOwnerBalance = await wnft.balanceOf(client.address, token, txOptions)
+      const currentHolder = await wnft.holderOf(token)
+      expect(currentOwnerBalance).to.equal(1)
+      expect(currentHolder).to.equal(client.address)
 
-      expect(currentHolder).to.equal(acct1.address);
       // Request purchase CID token NFT with caller address to delegate back call
-      const transaction = await purchase.requestNFTPrice(token, wnft.address, txOptions);
+      const transaction = await purchase.connect(deployer).requestNFTPrice(token, wnft.address)
       await transaction.wait()
 
-      //wait 30 secs for oracle to callback
-      await new Promise(resolve => setTimeout(resolve, 30000))
-      const currentPrice = await purchase.getCurrentPriceForCID(token);
-      console.log(currentPrice)
-      // const newHolder = await wnft.getCurrentHolder(token);
-      // // expect(currentPrice).to.equal(1);
-      // expect(newHolder).to.equal(owner.address);
+      // //wait 10 secs for oracle to callback
+      await new Promise(resolve => setTimeout(resolve, 20000))
+      const currentPrice = await purchase.getCurrentPriceForCID(token)
+      expect(currentPrice).to.equal(1000000000000)
 
+      // const payedOldOwnerBalance = await ethers.provider.getBalance(client.address);
+      // expect(currentOwnerETHBalance + currentPrice).to.equal(payedOldOwnerBalance)
 
-
-      // const purchaseTx = purchase.filters.PurchaseRequestReceived()
-      // const events = await purchase.queryFilter(purchaseTx)
-      // console.log(events)
+      // Handle purchase
+      const pt = await wnft.purchase(purchase.address, token, {value: 0})
+      await pt.wait()
       //
-      // // Check that NFT has been minted for acct1 as owner
-
-      // // let tx = await purchase.fulFillNFTPrice(transaction, 1)
-      // // tx.await();
-
+      // const newHolder = await wnft.holderOf(token)
+      // expect(newHolder).to.equal(deployer.address)
     })
   })
 })

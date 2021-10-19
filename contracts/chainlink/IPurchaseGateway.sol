@@ -8,10 +8,10 @@ interface IPurchaseGateway {
     event PurchaseRequestDone(bytes32 requestId, uint256 price);
     event PurchaseRequestReceived(bytes32 requestId);
 
-    function fulFillNFTPrice(bytes32 _requestId, uint256 price) external;
+    function fulFillPrice(bytes32 _requestId, uint256 price) external;
 
     function getCurrentPriceForCID(uint256 cid) view external returns (uint256);
 
-    function requestNFTPrice(uint256 cid, IPurchaseGatewayCaller caller) external;
+    function requestNFTPrice(uint256 cid, IPurchaseGatewayCaller caller) external payable returns (bytes32);
 
 }

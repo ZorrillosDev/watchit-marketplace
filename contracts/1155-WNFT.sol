@@ -8,7 +8,7 @@ import "./chainlink/IPurchaseGateway.sol";
 import "./chainlink/IPurchaseGatewayCaller.sol";
 
 contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable, IPurchaseGatewayCaller {
-    ///    error InvalidOracleRequest();
+    error InvalidPurchaseOperation();
 
     uint8 internal constant NFT_SUPPLY = 1;
     bytes32 public constant NFT_MINTER_ROLE = keccak256("NFT_MINTER_ROLE");
@@ -38,27 +38,30 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable, IPurchaseGatewayC
       * @param cid IPFS content unique identifier.
       * @dev emit PurchaseResponseReceived on purchase ready to get done
       */
-    function purchase(IPurchaseGateway oracle, uint256 cid) external override payable {
+    function purchase(IPurchaseGateway oracle, uint256 cid) public payable override {
         /// Step 4 => gateway oracle delegate call to this method to finish purchase
         /// Delegate call from callback contract oracle
-        uint256 price = oracle.getCurrentPriceForCID(cid);
-        require(msg.value > 0, "Not enough ETH");
-        require(msg.value >= price, "Not enough ETH");
+        (bool success, bytes memory data) = address(oracle).call(
+            abi.encodeWithSignature("getCurrentPriceForCID(uint256)", cid)
+        );
+
+        uint256 price = abi.decode(data, (uint256));
+        require(success, "Invalid oracle request");
         require(balanceOf(holders[cid], cid) > 0, "Invalid seller");
+        require(msg.sender.balance >= price, "Not enough balance to purchase");
 
         address payable seller = payable(holders[cid]);
-        address payable buyer = payable(msg.sender);
-        seller.transfer(msg.value);
+        seller.transfer(price);
 
-        // existing already -> transfer
-        transfer(seller, buyer, cid);
+        // Transfer to seller
+        _safeTransferFrom(holders[cid], msg.sender, cid, NFT_SUPPLY, "0x0");
+        holders[cid] = msg.sender;
 
     }
 
-    function getCurrentHolder(uint256 cid) view external returns (address){
+    function holderOf(uint256 cid) view external returns (address){
         return holders[cid];
     }
-
 
     function mint(address account, uint256 cid)
     public
@@ -88,7 +91,7 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable, IPurchaseGatewayC
     }
 
     function transfer(address from, address to, uint256 cid) public {
-        safeTransferFrom(from, to, cid, NFT_SUPPLY, " ");
+        safeTransferFrom(from, to, cid, NFT_SUPPLY, "0x0");
         holders[cid] = to;
     }
 

@@ -8,7 +8,7 @@ import "./IPurchaseGatewayCaller.sol";
 
 contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
     using Chainlink for Chainlink.Request;
-    // https://market.link/jobs/056e5e2d-c596-4509-8396-7a94d342299b/spec
+
     bytes32 internal _jobId;
     uint256 internal _fees;
 
@@ -20,29 +20,47 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
     mapping(bytes32 => RequestCommitment) internal requests;
     mapping(uint256 => uint256) internal prices;
 
-    constructor(bytes32 jobId, address oracle, address link, uint256 fees) public {
-        setChainlinkToken(link);
+    constructor(address oracle, string memory jobId, uint256 fees, address link) public {
+        if (link == address(0x0)) {
+            // If main-net use public link contract
+            setPublicChainlinkToken();
+        } else {
+            // Use testnet provided link
+            setChainlinkToken(link);
+        }
+
         setChainlinkOracle(oracle);
-        _jobId = jobId;
+        _jobId = stringToBytes32(jobId);
         _fees = fees;
+    }
+
+    function stringToBytes32(string memory source) public pure returns (bytes32 result) {
+        bytes memory tempEmptyStringTest = bytes(source);
+        if (tempEmptyStringTest.length == 0) {
+            return 0x0;
+        }
+
+        assembly {
+            result := mload(add(source, 32))
+        }
     }
 
     /** @notice Receive the response in form of multiple-variable
       * @param _requestId chain link request identifier.
-      * @param price the price returned by API
+      * @param _price the price returned by API
       * @dev emit PurchaseRequestDone event when delegate callback is done
       */
-    function fulFillNFTPrice(bytes32 _requestId, uint256 price)
-    external override
+    function fulFillPrice(bytes32 _requestId, uint256 _price)
+    public
+    override
     recordChainlinkFulfillment(_requestId)
     {
         /// Step 3 => gateway oracle exec callback with received data
         /// delegate call to `purchase` method back here to `IPurchaseGatewayCaller` contract
         /// delegate call context https://solidity-by-example.org/delegatecall/
-        requests[_requestId].caller.purchase(this, requests[_requestId].cid);
-        prices[requests[_requestId].cid] = price;
+        prices[requests[_requestId].cid] = _price;
         delete requests[_requestId];
-        /// Assign default value back
+
     }
 
     /** @notice Return current NFT price by cid
@@ -50,7 +68,7 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
       * @param cid IPFS content unique identifier.
       * @return current NFT price
       */
-    function getCurrentPriceForCID(uint256 cid) view external override returns (uint256){
+    function getCurrentPriceForCID(uint256 cid) view public override returns (uint256){
         return prices[cid];
     }
 
@@ -61,19 +79,21 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
       * @param caller origin contract
       */
     function requestNFTPrice(uint256 cid, IPurchaseGatewayCaller caller)
+    public
+    payable
     override
-    external
+    returns (bytes32)
     {
         /// Step 2 => gateway oracle request off-chain data
         /// Here the chain link requests and exec as callback fulFillNFTPrice on result ready
-        Chainlink.Request memory request = buildChainlinkRequest(_jobId, address(this), this.fulFillNFTPrice.selector);
-        request.add("get", "https://run.mocky.io/v3/88965c16-d784-4e43-9f37-822535673889");
+        Chainlink.Request memory request = buildChainlinkRequest(_jobId, address(this), this.fulFillPrice.selector);
+        request.add("get", "https://run.mocky.io/v3/ae286aa0-c81d-4010-952f-909428a35fab");
         request.add("path", "RAW.PRICE");
         // Keep the request needed data while request finish
-        request.addInt("times", 10**18); // Multiply the result by 1000000000000000000 to remove decimals
         bytes32 requestId = sendChainlinkRequest(request, _fees);
         requests[requestId] = RequestCommitment(caller, cid);
-//        emit PurchaseRequestReceived(requestId);
+        emit PurchaseRequestReceived(requestId);
+        return requestId;
     }
 
 
