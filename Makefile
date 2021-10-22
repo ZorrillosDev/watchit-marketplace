@@ -12,6 +12,8 @@ clean:
 	rm -rf cache
 	rm -rf artifacts
 	rm -rf node_modules
+	rm -rf yarn.lock
+	docker-compose down
 
 node_modules:
 	# --legacy-peer-deps is required
@@ -20,7 +22,9 @@ node_modules:
 
 
 deps: node_modules
-	npx hardhat node --no-deploy
+	npx hardhat compile
+	docker-compose up -d
+	sleep 5
 
 deploy-rinkeby:
 	npx hardhat deploy --network rinkeby
