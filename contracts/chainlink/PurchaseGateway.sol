@@ -61,6 +61,7 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
         /// Step 3 => gateway oracle exec callback with received data
         /// delegate call to `purchase` method back here to `IPurchaseGatewayCaller` contract
         /// delegate call context https://solidity-by-example.org/delegatecall/
+        prices[requests[_requestId].cid] = _price; // set current price before delegate call
         (bool success,) = requests[_requestId].caller.call{value : requests[_requestId].bid}(
             abi.encodeWithSignature(
                 "safeTransferTo(address,address,uint256)",
@@ -74,9 +75,8 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
             revert FailedChainLinkDelegation();
         }
 
-        prices[requests[_requestId].cid] = _price;
-        delete requests[_requestId];
 
+        delete requests[_requestId];
         emit PurchaseRequestDone(
             _requestId,
             _price
