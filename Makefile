@@ -5,7 +5,7 @@ ifneq (,$(wildcard ./.env))
 endif
 
 .PHONY: test
-test: deps
+test: node_modules
 	npx hardhat test --network localhost
 
 clean:
@@ -23,8 +23,6 @@ node_modules:
 	npm install --legacy-peer-dep
 
 
-deps: node_modules
-	npx hardhat node
 
 deploy-rinkeby:
 	npx hardhat deploy --network rinkeby
