@@ -10,7 +10,7 @@ module.exports = async ({
   let linkTokenAddress
   let oracle
 
-  //set log level to ignore non errors
+  // set log level to ignore non errors
   ethers.utils.Logger.setLogLevel(ethers.utils.Logger.levels.ERROR)
 
   const networkFromChainId = getNetworkNameByChainId(chainId)
@@ -18,17 +18,17 @@ module.exports = async ({
   if (!networkConfig || !networkConfig.oracle) return
 
   if (chainId === 31337) {
-    let linkToken = await get('LinkToken')
-    let MockOracle = await get('MockOracle')
+    const linkToken = await get('LinkToken')
+    const MockOracle = await get('MockOracle')
     linkTokenAddress = linkToken.address
     oracle = MockOracle.address
   } else {
-    linkTokenAddress = networkConfig['linkToken']
-    oracle = networkConfig['oracle']
+    linkTokenAddress = networkConfig.linkToken
+    oracle = networkConfig.oracle
   }
 
-  const jobId = networkConfig['jobId']
-  const fee = networkConfig['fee']
+  const jobId = networkConfig.jobId
+  const fee = networkConfig.fee
 
   const purchaseGateway = await deploy('PurchaseGateway', {
     from: deployer,

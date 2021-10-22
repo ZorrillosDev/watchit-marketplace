@@ -19,17 +19,15 @@ function getNetworkNameByChainId (chainId) {
   const chainIdCollection = {
     42: 'kovan',
     4: 'rinkeby',
-    5: 'goerli',
+    5: 'goerli'
     // TODO add ropsten here
   }
 
-  if (chainId in chainIdCollection)
-    return chainIdCollection[chainId]
+  if (chainId in chainIdCollection) { return chainIdCollection[chainId] }
   return 'localhost'
 }
 
 function getNetworkSettings (networkName) {
-
   /**
    * @param {string} networkName network to retrieve contract
    * @type {{kovan: {WVC, NFT, PO}, rinkeby: {WVC, NFT, PO}, goerli: {WVC, NFT, PO: string}, ropsten: {WVC, NFT, PO: string}}}
@@ -37,32 +35,31 @@ function getNetworkSettings (networkName) {
    */
 
   const contractAddressCollection = {
-    'kovan': {
+    kovan: {
       PURCHASE_GATEWAY: process.env.KOVAN_CONTRACT_PURCHASE_GATEWAY,
       NFT: process.env.KOVAN_CONTRACT_NFT,
       WVC: process.env.KOVAN_CONTRACT_FT,
       jobId: 'd5270d1c311941d0b08bead21fea7747',
       fee: '100000000000000000',
       oracle: '0xc57b33452b4f7bb189bb5afae9cc4aba1f7a4fd8',
-      linkToken: '0xa36085F69e2889c224210F603D836748e7dC0088',
+      linkToken: '0xa36085F69e2889c224210F603D836748e7dC0088'
     },
-    'rinkeby': {
+    rinkeby: {
       PURCHASE_GATEWAY: process.env.RINKEBY_CONTRACT_PURCHASE_GATEWAY,
       NFT: process.env.RINKEBY_CONTRACT_NFT,
       WVC: process.env.RINKEBY_CONTRACT_FT,
       fee: '100000000000000000',
       oracle: '0xc57b33452b4f7bb189bb5afae9cc4aba1f7a4fd8',
       jobId: '6d1bfe27e7034b1d87b5270556b17277',
-      linkToken: '0x01BE23585060835E02B77ef475b0Cc51aA1e0709',
+      linkToken: '0x01BE23585060835E02B77ef475b0Cc51aA1e0709'
     },
-    'ropsten': {
+    ropsten: {
       PURCHASE_GATEWAY: process.env.ROPSTEN_CONTRACT_PURCHASE_GATEWAY,
       NFT: process.env.ROPSTEN_CONTRACT_NFT,
       WVC: process.env.ROPSTEN_CONTRACT_FT
     }
   }
-  if (networkName in contractAddressCollection)
-    return contractAddressCollection[networkName]
+  if (networkName in contractAddressCollection) { return contractAddressCollection[networkName] }
 
   return {
     PURCHASE_GATEWAY: process.env.LOCALHOST_CONTRACT_PURCHASE_GATEWAY,
@@ -92,29 +89,28 @@ async function runUpgradeTest (version, upgraded) {
 }
 
 const autoFundCheck = async (contractAddr, networkName, linkTokenAddress, additionalMessage) => {
-  console.log("Checking to see if contract can be auto-funded with LINK:")
-  const amount = "1000000000000000000"
-  //check to see if user has enough LINK
+  console.log('Checking to see if contract can be auto-funded with LINK:')
+  const amount = '1000000000000000000'
+  // check to see if user has enough LINK
   const accounts = await ethers.getSigners()
   const signer = accounts[0]
-  const LinkToken = await ethers.getContractFactory("LinkToken")
+  const LinkToken = await ethers.getContractFactory('LinkToken')
   const linkTokenContract = new ethers.Contract(linkTokenAddress, LinkToken.interface, signer)
   const balanceHex = await linkTokenContract.balanceOf(signer.address)
   const balance = await web3.utils.toBN(balanceHex._hex).toString()
   const contractBalanceHex = await linkTokenContract.balanceOf(contractAddr)
   const contractBalance = await web3.utils.toBN(contractBalanceHex._hex).toString()
   if (balance > amount && amount > 0 && contractBalance < amount) {
-    //user has enough LINK to auto-fund
-    //and the contract isn't already funded
+    // user has enough LINK to auto-fund
+    // and the contract isn't already funded
     return true
-  } else { //user doesn't have enough LINK, print a warning
-    console.log("Account doesn't have enough LINK to fund contracts, or you're deploying to a network where auto funding isnt' done by default")
-    console.log("Please obtain LINK via the faucet at https://" + networkName + ".chain.link/, then run the following command to fund contract with LINK:")
-    console.log("npx hardhat fund-link --contract " + contractAddr + " --network " + networkName + additionalMessage)
+  } else { // user doesn't have enough LINK, print a warning
+    console.log('Account doesn\'t have enough LINK to fund contracts, or you\'re deploying to a network where auto funding isnt\' done by default')
+    console.log('Please obtain LINK via the faucet at https://' + networkName + '.chain.link/, then run the following command to fund contract with LINK:')
+    console.log('npx hardhat fund-link --contract ' + contractAddr + ' --network ' + networkName + additionalMessage)
     return false
   }
 }
-
 
 function writeInEnv (newData) {
   /**

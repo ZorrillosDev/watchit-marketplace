@@ -2,13 +2,13 @@ const { writeInEnv, getNetworkNameByChainId } = require('../utils')
 
 module.exports = async ({
   getNamedAccounts,
-  deployments,
+  deployments
 }) => {
   const { deploy, log, get } = deployments
   const { deployer } = await getNamedAccounts()
   const chainId = await getChainId()
 
-  //set log level to ignore non errors
+  // set log level to ignore non errors
   ethers.utils.Logger.setLogLevel(ethers.utils.Logger.levels.ERROR)
   const networkFromChainId = getNetworkNameByChainId(chainId)
   const wnft = await deploy('WNFT', {
@@ -21,13 +21,13 @@ module.exports = async ({
       execute: {
         init: {
           methodName: 'initialize',
-          args: [],
+          args: []
         },
         onUpgrade: {
           methodName: 'upgrade',
-          args: [],
+          args: []
         }
-      },
+      }
     }
   })
 

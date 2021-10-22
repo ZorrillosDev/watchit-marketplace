@@ -3,23 +3,22 @@
 require('dotenv').config()
 
 require('@nomiclabs/hardhat-waffle')
-require("@nomiclabs/hardhat-etherscan")
-require("@nomiclabs/hardhat-ethers");
+require('@nomiclabs/hardhat-etherscan')
+require('@nomiclabs/hardhat-ethers')
 require('hardhat-gas-reporter')
 require('solidity-coverage')
 require('hardhat-abi-exporter')
 require('hardhat-contract-sizer')
 require('@openzeppelin/hardhat-upgrades')
-require("@nomiclabs/hardhat-web3");
-require("@appliedblockchain/chainlink-plugins-api-consumer")
-require("@appliedblockchain/chainlink-plugins-price-consumer")
-require("@appliedblockchain/chainlink-plugins-fund-link")
-require("hardhat-deploy")
-require("./tasks/accounts")
-require("./tasks/balance")
-require("./tasks/block-number")
+require('@nomiclabs/hardhat-web3')
+require('@appliedblockchain/chainlink-plugins-api-consumer')
+require('@appliedblockchain/chainlink-plugins-price-consumer')
+require('@appliedblockchain/chainlink-plugins-fund-link')
+require('hardhat-deploy')
+require('./tasks/accounts')
+require('./tasks/balance')
+require('./tasks/block-number')
 
-const GOERLI_ALCHEMY_API_KEY = process.env.GOERLI_ALCHEMY_API_KEY
 const KOVAN_ALCHEMY_API_KEY = process.env.KOVAN_ALCHEMY_API_KEY
 const RINKEBY_ALCHEMY_API_KEY = process.env.RINKEBY_ALCHEMY_API_KEY
 const ROPSTEN_ALCHEMY_API_KEY = process.env.ROPSTEN_ALCHEMY_API_KEY
@@ -40,7 +39,7 @@ module.exports = {
   abiExporter: {
     path: './abi',
     clear: false,
-    flat: true,
+    flat: true
     // only: [],
     // except: []
   },
@@ -73,11 +72,11 @@ module.exports = {
   networks: {
     hardhat: {
       mining: {
-        auto: true,
+        auto: true
         // interval: (HARDHAT_AUTOMINE === 'true') ? 100 : [500, 2000]
       },
       forking: {
-        url: `https://eth-mainnet.alchemyapi.io/v2/${MAINNET_DEV_ALCHEMY_API_KEY}`,
+        url: `https://eth-mainnet.alchemyapi.io/v2/${MAINNET_DEV_ALCHEMY_API_KEY}`
       },
       throwOnTransactionFailures: true,
       throwOnCallFailures: true
@@ -102,15 +101,6 @@ module.exports = {
         timeout: 60 * 1000
       }
     },
-    ...GOERLI_ALCHEMY_API_KEY && {
-      goerli: {
-        url: `https://eth-goerli.alchemyapi.io/v2/${GOERLI_ALCHEMY_API_KEY}`,
-        from: `0x${OWNER_KEY}`,
-        accounts: [`0x${OWNER_KEY}`, `0x${SECONDARY_KEY}`],
-        saveDeployments: true,
-        timeout: 60 * 1000
-      }
-    },
     ...KOVAN_ALCHEMY_API_KEY && {
       kovan: {
         url: `https://eth-kovan.alchemyapi.io/v2/${KOVAN_ALCHEMY_API_KEY}`,
@@ -125,4 +115,3 @@ module.exports = {
     timeout: 100000
   }
 }
-

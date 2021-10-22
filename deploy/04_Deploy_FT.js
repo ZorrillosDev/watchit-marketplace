@@ -8,7 +8,7 @@ module.exports = async ({
   const { deployer } = await getNamedAccounts()
   const chainId = await getChainId()
 
-  //set log level to ignore non errors
+  // set log level to ignore non errors
   ethers.utils.Logger.setLogLevel(ethers.utils.Logger.levels.ERROR)
   const networkFromChainId = getNetworkNameByChainId(chainId)
   const ft = await deploy('WVC', {
@@ -21,13 +21,13 @@ module.exports = async ({
       execute: {
         init: {
           methodName: 'initialize',
-          args: [2000],
+          args: [2000]
         },
         onUpgrade: {
           methodName: 'upgrade',
-          args: [],
+          args: []
         }
-      },
+      }
     }
   })
 
