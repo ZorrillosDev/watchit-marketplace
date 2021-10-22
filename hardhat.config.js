@@ -75,9 +75,9 @@ module.exports = {
         auto: true
         // interval: (HARDHAT_AUTOMINE === 'true') ? 100 : [500, 2000]
       },
-      forking: {
-        url: `https://eth-mainnet.alchemyapi.io/v2/${MAINNET_DEV_ALCHEMY_API_KEY}`
-      },
+      // forking: {
+      //   url: `https://eth-mainnet.alchemyapi.io/v2/${MAINNET_DEV_ALCHEMY_API_KEY}`
+      // },
       throwOnTransactionFailures: true,
       throwOnCallFailures: true
     },
