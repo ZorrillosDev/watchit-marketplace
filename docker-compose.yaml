@@ -5,7 +5,6 @@ services:
     image: node:lts-alpine
     command: sh -c "npx hardhat node --no-deploy"
     volumes:
-      - ./deployments:/hardhat/deployments
       - ./hardhat.config.js:/hardhat/hardhat.config.js
       - ./package.json:/hardhat/package.json
       - ./package-lock.json:/hardhat/package-lock.json
@@ -13,7 +12,8 @@ services:
     working_dir: /hardhat
     ports:
       - '8545:8545'
-    env_file: .env
+    environment:
+      HARDHAT_AUTOMINE: "${HARDHAT_AUTOMINE}"
     healthcheck:
       test: [ "CMD", "npx", "hardhat", "check" ]
       interval: 1m
