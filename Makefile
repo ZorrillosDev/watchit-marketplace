@@ -21,7 +21,6 @@ node_modules:
 
 deps: node_modules
 	npx hardhat node --no-deploy
-	npx hardhat deploy --reset
 
 deploy-rinkeby:
 	npx hardhat deploy --network rinkeby
