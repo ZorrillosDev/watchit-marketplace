@@ -14,6 +14,8 @@ export const DefaultLayout: FC<PropsWithChildren<any>> = ({ children }): ReactEl
     <Container
       maxWidth={false}
       sx={{
+        width: 1,
+        height: 1,
         pt: 8,
         px: { xs: 2, sm: 3, lg: 6, xl: 14 }
       }}
