@@ -12,17 +12,11 @@ clean:
 	rm -rf cache
 	rm -rf artifacts
 	rm -rf node_modules
-	rm -rf deployments
-	rm -rf abi
-	rm -rf ipfs
-	rm -rf package-lock.json
 
 node_modules:
 	# --legacy-peer-deps is required
 	#  for now, hopefully not forever.
 	npm install --legacy-peer-dep
-
-
 
 deploy-rinkeby:
 	npx hardhat deploy --network rinkeby
