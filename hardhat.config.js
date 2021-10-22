@@ -23,9 +23,9 @@ const KOVAN_ALCHEMY_API_KEY = process.env.KOVAN_ALCHEMY_API_KEY
 const RINKEBY_ALCHEMY_API_KEY = process.env.RINKEBY_ALCHEMY_API_KEY
 const ROPSTEN_ALCHEMY_API_KEY = process.env.ROPSTEN_ALCHEMY_API_KEY
 const HARDHAT_AUTOMINE = process.env.HARDHAT_AUTOMINE
-const OWNER_KEY = process.env.OWNER_KEY
 const MAINNET_DEV_ALCHEMY_API_KEY = process.env.MAINNET_DEV_ALCHEMY_API_KEY
 const SECONDARY_KEY = process.env.SECONDARY_KEY
+const OWNER_KEY = process.env.OWNER_KEY
 
 if (HARDHAT_AUTOMINE === 'true' && !process.env.CI) {
   console.warn('WARN: HARDHAT_AUTOMINE is on. This should only be in CI or selectively on local')

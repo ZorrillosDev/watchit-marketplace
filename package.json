@@ -181,12 +181,16 @@
   "standard": {
     "ignore": [
       "webpack.config.babel.js",
+      "hardhat.config.js",
       "package.json",
       ".gitignore",
       "/coverage/**",
       "/jscpd/**",
       "/webpack/**/*.js",
-      "/test/**/*.js"
+      "/test/**/*.js",
+      "/deploy/*.js",
+      "/tasks/*.js",
+      "/utils/*.js"
     ],
     "env": [
       "mocha"
@@ -202,7 +206,10 @@
       "/coverage/**",
       "/jscpd/**",
       "/webpack/**/*.js",
-      "/test/**/*.js"
+      "/test/**/*.js",
+      "/deploy/*.js",
+      "/tasks/*.js",
+      "/utils/*.js"
     ]
   },
   "husky": {

@@ -16,7 +16,6 @@ clean:
 	rm -rf abi
 	rm -rf ipfs
 	rm -rf package-lock.json
-	docker-compose down
 
 node_modules:
 	# --legacy-peer-deps is required
@@ -24,11 +23,8 @@ node_modules:
 	npm install --legacy-peer-dep
 
 
-node:
-	npx hardhat node --no-deploy
-
 deps: node_modules
-	docker-compose up -d eth-devnet
+	npx hardhat node
 	npx hardhat deploy --reset
 
 deploy-rinkeby:
