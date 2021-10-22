@@ -5,7 +5,7 @@ ifneq (,$(wildcard ./.env))
 endif
 
 .PHONY: test
-test: node_modules
+test: deps
 	npx hardhat test --network localhost
 
 clean:
@@ -17,6 +17,11 @@ node_modules:
 	# --legacy-peer-deps is required
 	#  for now, hopefully not forever.
 	npm install --legacy-peer-dep
+
+
+deps: node_modules
+	npx hardhat node --no-deploy
+	npx hardhat deploy --reset
 
 deploy-rinkeby:
 	npx hardhat deploy --network rinkeby
