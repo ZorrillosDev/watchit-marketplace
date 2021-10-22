@@ -35,28 +35,28 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable, IPurchaseGatewayC
 
     /** @notice Handle delegated call from oracle with metadata needed for purchase
       * @param oracle origin delegate call.
+      * @param _buyer current request to buy.
       * @param cid IPFS content unique identifier.
       * @dev emit PurchaseResponseReceived on purchase ready to get done
       */
-    function purchase(IPurchaseGateway oracle, uint256 cid) public payable override {
+    function safeTransferTo(IPurchaseGateway oracle, address _buyer, uint256 cid) public payable override {
         /// Step 4 => gateway oracle delegate call to this method to finish purchase
         /// Delegate call from callback contract oracle
         (bool success, bytes memory data) = address(oracle).call(
             abi.encodeWithSignature("getCurrentPriceForCID(uint256)", cid)
         );
 
-        uint256 price = abi.decode(data, (uint256));
         require(success, "Invalid oracle request");
-        require(balanceOf(holders[cid], cid) > 0, "Invalid seller");
-        require(msg.sender.balance >= price, "Not enough balance to purchase");
-
         address payable seller = payable(holders[cid]);
-        seller.transfer(price);
+        uint256 price = abi.decode(data, (uint256));
+        require(balanceOf(holders[cid], cid) > 0, "Invalid seller");
+        require(msg.value >= price, "Not enough ETH");
 
-        // Transfer to seller
-        _safeTransferFrom(holders[cid], msg.sender, cid, NFT_SUPPLY, "0x0");
-        holders[cid] = msg.sender;
+        (bool successPay,) = seller.call{value : price}("");
+        require(successPay, "Failed to send Ether");
 
+        _safeTransferFrom(holders[cid], _buyer, cid, NFT_SUPPLY, "0x0");
+        holders[cid] = _buyer;
     }
 
     function holderOf(uint256 cid) view external returns (address){

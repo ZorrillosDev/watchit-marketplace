@@ -8,13 +8,16 @@ import "./IPurchaseGatewayCaller.sol";
 
 contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
     using Chainlink for Chainlink.Request;
+    error FailedChainLinkDelegation();
 
     bytes32 internal _jobId;
     uint256 internal _fees;
 
     struct RequestCommitment {
-        IPurchaseGatewayCaller caller; /// The contract caller
-        uint256 cid;
+        address caller; /// The contract caller
+        uint256 cid; // NFT cid
+        address buyer; // Current buyer
+        uint bid; // How much ETH sent?
     }
 
     mapping(bytes32 => RequestCommitment) internal requests;
@@ -58,8 +61,27 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
         /// Step 3 => gateway oracle exec callback with received data
         /// delegate call to `purchase` method back here to `IPurchaseGatewayCaller` contract
         /// delegate call context https://solidity-by-example.org/delegatecall/
+        (bool success,) = requests[_requestId].caller.call{value : requests[_requestId].bid}(
+            abi.encodeWithSignature(
+                "safeTransferTo(address,address,uint256)",
+                address(this),
+                requests[_requestId].buyer,
+                requests[_requestId].cid
+            )
+        );
+
+        if (!success) {
+            revert FailedChainLinkDelegation();
+        }
+
         prices[requests[_requestId].cid] = _price;
         delete requests[_requestId];
+
+        emit PurchaseRequestDone(
+            _requestId,
+            _price
+        );
+
 
     }
 
@@ -78,7 +100,7 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
       * @param cid IPFS content unique identifier.
       * @param caller origin contract
       */
-    function requestNFTPrice(uint256 cid, IPurchaseGatewayCaller caller)
+    function requestPurchase(uint256 cid, IPurchaseGatewayCaller caller)
     public
     payable
     override
@@ -91,7 +113,7 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
         request.add("path", "RAW.PRICE");
         // Keep the request needed data while request finish
         bytes32 requestId = sendChainlinkRequest(request, _fees);
-        requests[requestId] = RequestCommitment(caller, cid);
+        requests[requestId] = RequestCommitment(address(caller), cid, msg.sender, msg.value);
         emit PurchaseRequestReceived(requestId);
         return requestId;
     }

@@ -5,6 +5,6 @@ import "./IPurchaseGateway.sol";
 
 interface IPurchaseGatewayCaller {
 
-    function purchase(IPurchaseGateway oracle, uint256 cid) external payable;
+    function safeTransferTo(IPurchaseGateway oracle, address buyer, uint256 cid) external payable;
 
 }

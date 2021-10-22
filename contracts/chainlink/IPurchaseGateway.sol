@@ -12,6 +12,6 @@ interface IPurchaseGateway {
 
     function getCurrentPriceForCID(uint256 cid) view external returns (uint256);
 
-    function requestNFTPrice(uint256 cid, IPurchaseGatewayCaller caller) external payable returns (bytes32);
+    function requestPurchase(uint256 cid, IPurchaseGatewayCaller caller) external payable returns (bytes32);
 
 }

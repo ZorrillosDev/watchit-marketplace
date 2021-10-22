@@ -180,48 +180,88 @@ describe('WatchIt NFTs (WNFT)', function () {
 
   describe('Purchase', function () {
     // Skip local environment
-    // if (!['kovan', 'rinkeby'].includes(network.name)) { return }
+     if (!['kovan', 'rinkeby'].includes(network.name)) { return }
 
-    it.skip('should make an API request successfully', async () => {
+    it('should make an API request successfully', async () => {
       const token = bs58toHex((await randomCID()).toString())
+      const value = BigNumber.from('1000000000000')
       // Request purchase CID token NFT with caller address to delegate back call
-      const transaction = await purchase.requestNFTPrice(token, wnft.address)
+      const transaction = await purchase.requestPurchase(token, wnft.address, {value})
       const tx = await transaction.wait()
       const requestId = tx.events[0].topics[1]
       expect(requestId).to.not.be.null
     })
 
-    it('should purchase with defined price in gateway', async () => {
+    it('should purchase with API price from gateway', async () => {
       // Integration tests
+      const value = BigNumber.from('1000000000000')
       const token = bs58toHex((await randomCID()).toString())
       const tokenTx = await wnft.mint(client.address, token, txOptions)
       await tokenTx.wait()
 
-      // Request purchase from acct1 address for token
-      const currentOwnerETHBalance = await ethers.provider.getBalance(client.address);
       const currentOwnerBalance = await wnft.balanceOf(client.address, token, txOptions)
       const currentHolder = await wnft.holderOf(token)
       expect(currentOwnerBalance).to.equal(1)
       expect(currentHolder).to.equal(client.address)
 
       // Request purchase CID token NFT with caller address to delegate back call
-      const transaction = await purchase.connect(deployer).requestNFTPrice(token, wnft.address)
+      const transaction = await purchase.connect(deployer).requestPurchase(token, wnft.address, { value })
       await transaction.wait()
 
-      // //wait 10 secs for oracle to callback
-      await new Promise(resolve => setTimeout(resolve, 20000))
+      // wait 10 secs for oracle to callback
+      await new Promise(resolve => setTimeout(resolve, 60000))
+      // const pt = await wnft.connect(deployer).safeTransferTo(purchase.address, deployer.address, token, {value})
+      // await pt.wait()
+
+      const newHolder = await wnft.holderOf(token)
+      expect(newHolder).to.equal(deployer.address)
+    })
+
+    it('should retrieve corresponding price for CID from API', async () => {
+      // Integration tests
+      const value = BigNumber.from('1000000000000')
+      const token = bs58toHex((await randomCID()).toString())
+      const tokenTx = await wnft.mint(client.address, token, txOptions)
+      await tokenTx.wait()
+
+      // Request purchase CID token NFT with caller address to delegate back call
+      const contractBalanceBefore = await ethers.provider.getBalance(purchase.address);
+      await (await purchase.connect(deployer).requestPurchase(token, wnft.address, {value})).wait()
+      const contractBalance = await ethers.provider.getBalance(purchase.address);
+      expect(contractBalance.sub(contractBalanceBefore)).to.equal(value)
+
+      // wait 10 secs for oracle to callback
+      await new Promise(resolve => setTimeout(resolve, 30000))
       const currentPrice = await purchase.getCurrentPriceForCID(token)
-      expect(currentPrice).to.equal(1000000000000)
+      expect(currentPrice).to.equal(value)
+    })
 
-      // const payedOldOwnerBalance = await ethers.provider.getBalance(client.address);
-      // expect(currentOwnerETHBalance + currentPrice).to.equal(payedOldOwnerBalance)
 
-      // Handle purchase
-      const pt = await wnft.purchase(purchase.address, token, {value: 0})
-      await pt.wait()
-      //
-      // const newHolder = await wnft.holderOf(token)
-      // expect(newHolder).to.equal(deployer.address)
+
+    it('should subtract=>add balance from buyer to seller', async () => {
+      // Integration tests
+      const value = BigNumber.from('1000000000000')
+      const token = bs58toHex((await randomCID()).toString())
+      const tokenTx = await wnft.mint(client.address, token, txOptions)
+      await tokenTx.wait()
+
+      // Request purchase from acct1 address for token
+      const initialSellerETHBalance = await ethers.provider.getBalance(client.address);
+      const initialBuyerETHBalance =  await ethers.provider.getBalance(deployer.address);
+      // Request purchase CID token NFT with caller address to delegate back call
+      const transaction = await purchase.connect(deployer).requestPurchase(token, wnft.address, {value})
+      await transaction.wait()
+
+      // wait 10 secs for oracle to callback
+      await new Promise(resolve => setTimeout(resolve, 30000))
+      // const pt = await wnft.connect(deployer).purchase(purchase.address, token, {value})
+      // await pt.wait()
+
+      // Check new balance after purchase
+      const newSellerBalance = await ethers.provider.getBalance(client.address);
+      expect(newSellerBalance.gte(initialSellerETHBalance.add(value))).to.equal(true)
+      const newBuyerBalance = await ethers.provider.getBalance(deployer.address);
+      expect(newBuyerBalance.lte(initialBuyerETHBalance.sub(value))).to.equal(true)
     })
   })
 })
