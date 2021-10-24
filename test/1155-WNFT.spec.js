@@ -231,6 +231,7 @@ describe('WatchIt NFTs (WNFT)', function () {
       expect(currentPrice).to.equal(value)
     })
 
+
     it('should subtract => add balance from buyer to seller', async () => {
       // Integration tests
       const value = BigNumber.from('1000000000000')

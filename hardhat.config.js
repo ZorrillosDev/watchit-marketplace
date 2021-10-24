@@ -72,8 +72,8 @@ module.exports = {
   networks: {
     hardhat: {
       mining: {
-        auto: true
-        // interval: (HARDHAT_AUTOMINE === 'true') ? 100 : [500, 2000]
+        auto: false,
+        interval: (HARDHAT_AUTOMINE === 'true') ? 100 : [500, 2000]
       },
       // forking: {
       //   url: `https://eth-mainnet.alchemyapi.io/v2/${MAINNET_DEV_ALCHEMY_API_KEY}`
@@ -81,8 +81,7 @@ module.exports = {
       throwOnTransactionFailures: true,
       throwOnCallFailures: true
     },
-    localhost: {
-    },
+    localhost: {},
     ...ROPSTEN_ALCHEMY_API_KEY && {
       ropsten: {
         url: `https://eth-ropsten.alchemyapi.io/v2/${ROPSTEN_ALCHEMY_API_KEY}`,

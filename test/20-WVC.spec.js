@@ -7,7 +7,7 @@ const contracts = getNetworkSettings(network.name)
 const CONTRACT_ADDRESS = contracts.WVC;
 
 // see: https://github.com/mawrkus/js-unit-testing-guide
-describe.skip('WVC', function () {
+describe('WVC', function () {
   let wvc
   let owner, account1
 

@@ -18,7 +18,7 @@ clean:
 node_modules:
 	# --legacy-peer-deps is required
 	#  for now, hopefully not forever.
-	npm install --legacy-peer-dep
+	npm install --legacy-peer-deps
 
 
 deps: node_modules
