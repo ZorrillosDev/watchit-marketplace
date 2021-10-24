@@ -40,7 +40,7 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable, IPurchaseGatewayC
       * @dev emit PurchaseResponseReceived on purchase ready to get done
       */
     function safeTransferTo(IPurchaseGateway oracle, address _buyer, uint256 cid) public payable override {
-        /// Step 4 => gateway oracle delegate call to this method to finish purchase
+        /// Step 3 => gateway oracle delegate call to this method to finish purchase
         /// Delegate call from callback contract oracle
         (bool success, bytes memory data) = address(oracle).call(
             abi.encodeWithSignature("getCurrentPriceForCID(uint256)", cid)
@@ -49,6 +49,7 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable, IPurchaseGatewayC
         require(success, "Invalid oracle request");
         address payable seller = payable(holders[cid]);
         uint256 price = abi.decode(data, (uint256));
+        require(price > 0, "Invalid CID price");
         require(balanceOf(holders[cid], cid) > 0, "Invalid seller");
         require(msg.value >= price, "Not enough ETH");
 

@@ -58,7 +58,7 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
     override
     recordChainlinkFulfillment(_requestId)
     {
-        /// Step 3 => gateway oracle exec callback with received data
+        /// Step 2 => gateway oracle exec callback with received data
         /// delegate call to `purchase` method back here to `IPurchaseGatewayCaller` contract
         /// delegate call context https://solidity-by-example.org/delegatecall/
         prices[requests[_requestId].cid] = _price; // set current price before delegate call
@@ -106,7 +106,7 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
     override
     returns (bytes32)
     {
-        /// Step 2 => gateway oracle request off-chain data
+        /// Step 1 => gateway oracle request off-chain data
         /// Here the chain link requests and exec as callback fulFillNFTPrice on result ready
         Chainlink.Request memory request = buildChainlinkRequest(_jobId, address(this), this.fulFillPrice.selector);
         request.add("get", "https://run.mocky.io/v3/ae286aa0-c81d-4010-952f-909428a35fab");
