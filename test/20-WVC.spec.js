@@ -143,7 +143,7 @@ describe('WVC', function () {
   })
 
   describe('Approval & Allowance', function () {
-    const amount = 1000
+    const amount = 10
     let initialBlockNumber
 
     before(async () => {
@@ -153,7 +153,7 @@ describe('WVC', function () {
     // Always set allowance to zero,then increase it
     // https://docs.google.com/document/d/1YLPtQxZu1UAvO9cZ1O2RPXBbT0mooh4DYKjA_jp-RLM/edit
 
-    it('allows addr1 to approve owner to spend 1000', async function () {
+    it('allows client to approve owner to spend 1000', async function () {
       txOptions.gasLimit = await wvc
         .connect(owner)
         .estimateGas
