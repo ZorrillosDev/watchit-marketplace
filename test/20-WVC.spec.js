@@ -183,11 +183,6 @@ describe('WVC', function () {
     it('allows client to transferFrom owner 50% of allowance', async () => {
       const initialAllowance = await wvc.allowance(owner.address, client.address)
 
-      txOptions.gasLimit = await wvc
-        .connect(client)
-        .estimateGas
-        .transferFrom(owner.address, client.address, initialAllowance.div(2))
-
       const tx0 = await wvc
         .connect(client)
         .transferFrom(owner.address, client.address, initialAllowance.div(2))
