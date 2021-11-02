@@ -4,7 +4,7 @@ module.exports = async ({
   getNamedAccounts,
   deployments
 }) => {
-  const { deploy, log, get } = deployments
+  const { deploy, log } = deployments
   const { deployer } = await getNamedAccounts()
   const chainId = await getChainId()
   let linkTokenAddress
@@ -18,15 +18,11 @@ module.exports = async ({
   if (!networkConfig || !networkConfig.oracle) return
 
   if (chainId === 31337) {
-    const linkToken = await get('LinkToken')
-    const MockOracle = await get('MockOracle')
-    linkTokenAddress = linkToken.address
-    oracle = MockOracle.address
-  } else {
-    linkTokenAddress = networkConfig.linkToken
-    oracle = networkConfig.oracle
+    return
   }
 
+  linkTokenAddress = networkConfig.linkToken
+  oracle = networkConfig.oracle
   const jobId = networkConfig.jobId
   const fee = networkConfig.fee
 

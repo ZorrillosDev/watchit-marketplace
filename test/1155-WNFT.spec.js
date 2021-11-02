@@ -1,6 +1,7 @@
 /* global ethers, network */
 const chai = require('chai')
 require('./utils/global')
+const bs58 = require('bs58')
 const { expect } = require('chai')
 const { BigNumber } = require('ethers')
 
@@ -11,6 +12,8 @@ const {
 } = require('../utils')
 
 const txOptions = { gasLimit: 800000 }
+
+
 
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe('WatchIt NFTs (WNFT)', function () {
