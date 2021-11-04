@@ -10,10 +10,10 @@ import LogoPng from '@assets/icons/icon.png'
 import { useTheme } from '@mui/material/styles'
 import {
   Toolbar, AppBar, Box, Slide,
-  useMediaQuery, useScrollTrigger
+  useMediaQuery, useScrollTrigger, Container
 } from '@mui/material'
 
-// ===========================|| HEADER VIEW ||=========================== //
+// ===========================|| HEADER - VIEW ||=========================== //
 
 export interface HeaderProps {
   isMenuOpen: boolean
@@ -28,29 +28,22 @@ const HeaderView: FC<HeaderProps & HeaderSearchProps> = (props): JSX.Element => 
   return (
     <Slide appear={false} direction='down' in={!trigger}>
       <AppBar
-        color='transparent'
         sx={{
           transform: !isMobile || (props.isMenuOpen && isMobile) ? 'none !important' : 'auto',
-          visibility: !isMobile || (props.isMenuOpen && isMobile) ? 'visible' : 'unset'
+          visibility: !isMobile || (props.isMenuOpen && isMobile) ? 'visible' : 'unset',
+          backgroundColor: (theme) => theme.palette.background.default
         }}
       >
-        <Toolbar
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            px: { xs: 2, sm: 3, lg: 6, xl: 14 }
-          }}
-        >
-          <Box
-            component='img'
-            sx={{ maxWidth: '50px', transform: 'translateY(-1px)' }}
-            alt='Logo Image'
-            src={LogoPng}
-          />
-          <HeaderSearch onSearch={props.onSearch} />
-          <Menu {...props} />
-        </Toolbar>
+        <Container>
+          <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <Box
+              component='img' alt='Logo Image' src={LogoPng}
+              sx={{ maxWidth: '50px', transform: 'translateY(-1px)' }}
+            />
+            <HeaderSearch onSearch={props.onSearch} />
+            <Menu {...props} />
+          </Toolbar>
+        </Container>
       </AppBar>
     </Slide>
   )

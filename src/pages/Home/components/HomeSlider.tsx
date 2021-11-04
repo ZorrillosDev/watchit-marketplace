@@ -107,23 +107,23 @@ export const HomeSliderWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   '& svg': {
     width: '1rem',
     height: '1rem'
-  },
-  [theme.breakpoints.up('xs')]: {
-    marginLeft: theme.spacing(-2),
-    width: 'calc(100% + 2rem)'
-  },
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(-3),
-    width: 'calc(100% + 3rem)'
-  },
-  [theme.breakpoints.up('lg')]: {
-    marginLeft: theme.spacing(-6),
-    width: 'calc(100% + 6rem)'
-  },
-  [theme.breakpoints.up('xl')]: {
-    marginLeft: theme.spacing(-14),
-    width: 'calc(100% + 14rem)'
   }
+  // [theme.breakpoints.up('xs')]: {
+  //   marginLeft: theme.spacing(-2),
+  //   width: 'calc(100% + 2rem)'
+  // },
+  // [theme.breakpoints.up('sm')]: {
+  //   marginLeft: theme.spacing(-3),
+  //   width: 'calc(100% + 3rem)'
+  // },
+  // [theme.breakpoints.up('lg')]: {
+  //   marginLeft: theme.spacing(-6),
+  //   width: 'calc(100% + 6rem)'
+  // },
+  // [theme.breakpoints.up('xl')]: {
+  //   marginLeft: theme.spacing(-14),
+  //   width: 'calc(100% + 14rem)'
+  // }
 }))
 
 export default HomeSlider
