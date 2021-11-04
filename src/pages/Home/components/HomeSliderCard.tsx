@@ -29,7 +29,9 @@ const HomeSliderCard: FC<{ slide: HomeSliderCardProps }> = ({ slide }): JSX.Elem
         top: { xs: '5%', lg: '10%' },
         fontWeight: 'bold',
         maxWidth: { xs: '90%', lg: '35%' },
-        color: (theme) => theme.palette.primary.dark
+        '&': {
+          color: (theme) => theme.palette.primary.dark
+        }
       }}
     >
       <Grid
@@ -41,7 +43,7 @@ const HomeSliderCard: FC<{ slide: HomeSliderCardProps }> = ({ slide }): JSX.Elem
           bgcolor: 'rgba(255,255,255,0.8)'
         }}
       >
-        <Typography variant='h3' sx={{ mb: 1.5 }}>{slide.title}</Typography>
+        <Typography variant='h2' color='primary.dark' sx={{ mb: 1.5 }}>{slide.title}</Typography>
         <Typography variant='body1'>{slide.description}</Typography>
       </Grid>
       <Grid

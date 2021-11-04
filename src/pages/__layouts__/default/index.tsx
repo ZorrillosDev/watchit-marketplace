@@ -5,23 +5,15 @@ import React, { FC, PropsWithChildren, ReactElement } from 'react'
 import Header from '@src/components/Header'
 
 // mui imports
-import { Container } from '@mui/material'
+import { Box } from '@mui/material'
 
 // ===========================|| DEFAULT LAYOUT ||=========================== //
 
 export const DefaultLayout: FC<PropsWithChildren<any>> = ({ children }): ReactElement => {
   return (
-    <Container
-      maxWidth={false}
-      sx={{
-        width: 1,
-        height: 1,
-        pt: 8,
-        px: { xs: 2, sm: 3, lg: 6, xl: 14 }
-      }}
-    >
+    <Box sx={{ width: 1, height: 1, pt: 8 }}>
       <Header />
       {children}
-    </Container>
+    </Box>
   )
 }
