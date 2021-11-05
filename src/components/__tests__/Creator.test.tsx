@@ -7,7 +7,7 @@ describe('<Creator />', () => {
     const component = shallow(
       <Creator
         name='jacob' username='jadapema' biography='test' coverUrl='www.com'
-        profileUrl='www.com' followers={4} isFollowing={true}
+        profileUrl='www.com' followers={4} isFollowing
       />
     )
 

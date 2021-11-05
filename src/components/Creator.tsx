@@ -1,30 +1,19 @@
 // mui imports
 import {
   Avatar,
-  AvatarGroup,
   Box,
-  CardHeader,
-  Grid,
   styled,
   Typography,
-  IconButton,
   CardMedia,
   CardContent,
   Card,
   CardProps,
-  CardHeaderProps,
   CardContentProps,
-  Menu,
-  MenuItem,
-  Tooltip,
   CardActions,
   Button,
   AvatarProps, Divider, TypographyProps
 } from '@mui/material'
 import React, { FC } from 'react'
-import { MoreHoriz } from '@mui/icons-material'
-import { IconEth } from '@components/Icons'
-import HeartCounter from '@components/HeartCounter'
 
 // ===========================|| POSTER ||=========================== //
 
@@ -43,37 +32,37 @@ const Creator: FC<CreatorProps> = (props): JSX.Element => {
     <CreatorWrapper>
       <CardMedia
         component='img'
-        height="200"
+        height='200'
         image={`${props.coverUrl}`}
         alt={`${props.username}`}
       />
       <CreatorProfileImg src={props.profileUrl} />
       <CreatorContent>
-        <Typography gutterBottom variant="h3" color='primary.dark'>
+        <Typography gutterBottom variant='h3' color='primary.dark'>
           {props.name}
         </Typography>
-        <Typography gutterBottom variant="h4" color='primary.dark' sx={{ opacity: 0.5 }}>
+        <Typography gutterBottom variant='h4' color='primary.dark' sx={{ opacity: 0.5 }}>
           {props.username}
         </Typography>
-        <TruncatedTypography variant="body2" color="primary">
+        <TruncatedTypography variant='body2' color='primary'>
           {props.biography}
         </TruncatedTypography>
       </CreatorContent>
       <Divider />
       <CardActions sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Box display='flex' flexDirection='column'>
-          <Typography gutterBottom variant="h3" color='primary.dark'>
+          <Typography gutterBottom variant='h3' color='primary.dark'>
             {props.followers}
           </Typography>
-          <Typography gutterBottom variant="h4" color='primary.dark' sx={{ opacity: 0.8 }}>
+          <Typography gutterBottom variant='h4' color='primary.dark' sx={{ opacity: 0.8 }}>
             Followers
           </Typography>
         </Box>
         <Button
-          variant={ props.isFollowing ? 'contained' : 'outlined' }
-          size="large" color='primary' sx={{ borderRadius: '3rem !important' }}
+          variant={props.isFollowing ? 'contained' : 'outlined'}
+          size='large' color='primary' sx={{ borderRadius: '3rem !important' }}
         >
-          { props.isFollowing ? 'Following' : 'Follow'}
+          {props.isFollowing ? 'Following' : 'Follow'}
         </Button>
       </CardActions>
     </CreatorWrapper>
@@ -107,11 +96,11 @@ export const TruncatedTypography = styled(Typography)<TypographyProps>(() => ({
   WebkitBoxOrient: 'vertical'
 }))
 
-export const CreatorProfileImg = styled(Avatar)<AvatarProps>(({theme}) => ({
+export const CreatorProfileImg = styled(Avatar)<AvatarProps>(({ theme }) => ({
   position: 'absolute',
-  top: 'calc(200px - 2.5rem)',
-  left: 'calc(50% - 2.5rem)',
+  top: 'calc(200px - 3rem)',
+  left: 'calc(50% - 3rem)',
   border: `2px solid ${theme.palette.background.paper}`,
-  width: '5rem',
-  height: '5rem'
+  width: '6rem',
+  height: '6rem'
 }))
