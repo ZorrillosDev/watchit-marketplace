@@ -16,18 +16,15 @@
 >
 >#### Rinkeby
 >
->* NFT: https://rinkeby.etherscan.io/address/0x343Fba94eb620dbEAB34eC6d6579e4A1745C9C00
->* FT: https://rinkeby.etherscan.io/address/0x14925Cc9dEC567d35116DB2750A1f8dbf1cAFFfE
->
->#### Goerli
->
->* NFT: https://goerli.etherscan.io/address/0x24515E4D1ad962b464b4590BE45c440f53cB8D59
->* FT: https://goerli.etherscan.io/address/0x46D198a4ab57e32Bd86730cf42a6Ae0e252ee15E
+>* NFT: https://rinkeby.etherscan.io/address/0x4C19692E17D96D4dcb93A09b01701B24aEB27633
+>* FT: https://rinkeby.etherscan.io/address/0x2056e4e85a8e725aa0a184A741eA309F4766073C
+>* PG: https://rinkeby.etherscan.io/address/0x6A815e663c6395bcb92e4C17735c9424A846064C
 >
 >#### Kovan
 >
->* NFT: https://kovan.etherscan.io/address/0x24E9Dea8DA6aF8704367678ee8D31B7F350CeC99
->* FT: https://kovan.etherscan.io/address/0x61286E2665AF720E9341a3839B29940190FFf142
+>* NFT: https://kovan.etherscan.io/address/0xED92FaC63bac12aFf786417b021bDcd28b6E5385
+>* FT: https://kovan.etherscan.io/address/0xDE312402930ed79DF40ed27296d0a61E1D179E57
+>* PG: https://kovan.etherscan.io/address/0x1b0Cd770a016e99Aa6B224aB0041201dAEC3Ca47
 ></details>
 
 ## Technical Concepts
@@ -41,6 +38,12 @@
 >  <summary>Lazy Minting</summary>
 >Content should be uploaded and processed but not minted until purchased, thus saving transaction fees.
 ></details>
+
+
+### Gitpod
+
+To run a fast and fully initialized set-up dev environment
+just go to our `ready-to-code` [gitpod](https://gitpod.io/#https://github.com/ZorrillosDev/watchit-marketplace)
 
 ## Install
 

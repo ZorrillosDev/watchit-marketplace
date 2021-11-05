@@ -1,11 +1,19 @@
-import { Container } from '@material-ui/core'
-import React, { FunctionComponent, PropsWithChildren, ReactElement } from 'react'
+// react imports
+import React, { FC, PropsWithChildren, ReactElement } from 'react'
 
-export const DefaultLayout: FunctionComponent<PropsWithChildren<any>> = (props): ReactElement => {
+// project imports
+import Header from '@src/components/Header'
+
+// mui imports
+import { Box } from '@mui/material'
+
+// ===========================|| DEFAULT LAYOUT ||=========================== //
+
+export const DefaultLayout: FC<PropsWithChildren<any>> = ({ children }): ReactElement => {
   return (
-    <Container maxWidth={false} disableGutters>
-      {props.children}
-    </Container>
-
+    <Box sx={{ width: 1, height: 1, pt: 8 }}>
+      <Header />
+      {children}
+    </Box>
   )
 }

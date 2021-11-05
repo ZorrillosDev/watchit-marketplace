@@ -1,12 +1,9 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "target": "es6",
+    "target": "es2017",
     "module": "es2015",
-    "lib": [
-      "es6",
-      "dom"
-    ],
+    "lib": ["es6", "dom"],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
@@ -18,25 +15,13 @@
     "resolveJsonModule": true,
     "baseUrl": "./",
     "rootDir": "./",
-    "typeRoots": [
-      "./node_modules/@types",
-      "./src/@types"
-    ],
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
     "paths": {
       "@public/*": [
         "public/*"
       ],
       "@src/*": [
         "src/*"
-      ],
-      "@i18n/*": [
-        "i18n/*"
-      ],
-      "@pages/*": [
-        "src/pages/*"
-      ],
-      "@layouts/*": [
-        "src/pages/__layouts__/*"
       ],
       "@state/*": [
         "src/redux/*"
@@ -50,20 +35,30 @@
       "@styles/*": [
         "src/styles/*"
       ],
+      "@layouts/*": [
+        "src/pages/__layouts__/*"
+      ],
       "@components/*": [
         "src/components/*"
-      ]
+      ],
+      "@navigation/*": [
+        "src/navigation/*"
+      ],
+      "@services/*": [
+        "src/services/*"
+      ],
+      "@pages/*": [
+        "src/pages/*"
+      ],
+      "@i18n/*": [
+        "src/i18n/*"
+      ],
     },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "importsNotUsedAsValues": "preserve",
     "incremental": true
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "**/node_modules",
-    "**/.*/"
-  ]
+  "include": ["src"],
+  "exclude": ["**/node_modules", "**/.*/"]
 }
