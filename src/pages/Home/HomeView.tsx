@@ -5,7 +5,7 @@ import React, { FC } from 'react'
 import HomeSlider, { HomeSliderProps } from '@pages/Home/components/HomeSlider'
 import { Box, BoxProps, styled } from '@mui/material'
 import HomeTrending from '@pages/Home/components/HomeTrending'
-import HomeMostLoved from "@pages/Home/components/HomeMostLoved";
+import HomeMostLoved from '@pages/Home/components/HomeMostLoved'
 
 // ===========================|| HOME - VIEW ||=========================== //
 
@@ -19,8 +19,8 @@ export const HomeView: FC<HomeSliderProps> = (props): JSX.Element => {
       <HomeSection>
         <HomeMostLoved />
       </HomeSection>
-      <HomeSection></HomeSection>
-      <HomeSection></HomeSection>
+      <HomeSection />
+      <HomeSection />
     </>
   )
 }

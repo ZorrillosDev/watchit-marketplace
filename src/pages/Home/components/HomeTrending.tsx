@@ -40,7 +40,7 @@ const HomeTrending: FC = (): JSX.Element => {
 export default HomeTrending
 
 // TODO delete this when data comes from backend
-const fakeMovies = [
+export const fakeMovies = [
   {
     creator: {
       username: '@gmena',
