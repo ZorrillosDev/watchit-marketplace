@@ -3,7 +3,7 @@ services:
   eth-devnet:
     container_name: eth-devnet
     image: node:lts-alpine
-    command: sh -c "npx hardhat node"
+    command: sh -c "npx hardhat node --no-deploy"
     volumes:
       - ./hardhat.config.js:/hardhat/hardhat.config.js
       - ./package.json:/hardhat/package.json
@@ -15,7 +15,7 @@ services:
     environment:
       HARDHAT_AUTOMINE: "${HARDHAT_AUTOMINE}"
     healthcheck:
-      test: ["CMD", "npx", "hardhat", "check"]
+      test: [ "CMD", "npx", "hardhat", "check" ]
       interval: 1m
       timeout: 5s
       retries: 3
@@ -40,7 +40,7 @@ services:
       - ./webpack:/ui/webpack
     working_dir: /ui
     healthcheck:
-      test: ["CMD", "wget", "localhost:3000", "-O", "/dev/null"]
+      test: [ "CMD", "wget", "localhost:3000", "-O", "/dev/null" ]
       interval: 1m
       timeout: 5s
       retries: 3
@@ -57,8 +57,8 @@ services:
     volumes:
       - ./.ipfs:/data/ipfs
     healthcheck:
-      test: ["CMD", "wget", "-S", "-O", "/dev/null",
-             "http://localhost:8080/ipfs/QmQPeNsJPyVWPFDVHb77w8G42Fvo15z4bG2X8D2GhfbSXc"]
+      test: [ "CMD", "wget", "-S", "-O", "/dev/null",
+              "http://localhost:8080/ipfs/QmQPeNsJPyVWPFDVHb77w8G42Fvo15z4bG2X8D2GhfbSXc" ]
       interval: 1m
       timeout: 5s
       retries: 3

@@ -1,22 +1,22 @@
 /* global ethers, network */
 require('./utils/global')
 const { expect } = require('chai')
-const { getFTContractAddress } = require('./utils')
-const CONTRACT_ADDRESS = getFTContractAddress(network.name)
 
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe('WVC', function () {
   let wvc
-  let owner, account1
+  let owner, client
 
   const txOptions = {}
 
   before(async function () {
-    ;[owner, account1] = await ethers.getSigners()
+    const accounts = await getNamedAccounts()
+    owner = await ethers.getSigner(accounts.deployer)
+    client = await ethers.getSigner(accounts.client)
 
     txOptions.gasPrice = await ethers.provider.getGasPrice()
-    const WVC = await ethers.getContractFactory('WVC')
-    wvc = WVC.attach(CONTRACT_ADDRESS)
+    const WVC = await deployments.get('WVC')
+    wvc = await ethers.getContractAt('WVC', WVC.address)
   })
 
   describe('Details', function () {
@@ -55,36 +55,36 @@ describe('WVC', function () {
     })
 
     it('allows owner to transfer tokens to account 1', async function () {
-      const initialBalance = await wvc.balanceOf(account1.address)
+      const initialBalance = await wvc.balanceOf(client.address)
 
       txOptions.gasLimit = await wvc
         .connect(owner)
         .estimateGas
-        .transfer(account1.address, transferAmount)
+        .transfer(client.address, transferAmount)
 
       const tx0 = await wvc
         .connect(owner)
-        .transfer(account1.address, transferAmount, txOptions)
+        .transfer(client.address, transferAmount, txOptions)
       await tx0.wait()
 
-      const endingBalance = await wvc.balanceOf(account1.address)
+      const endingBalance = await wvc.balanceOf(client.address)
       expect(endingBalance).to.equal(initialBalance.add(10))
     })
 
-    it('allows account1 to transfer tokens back', async () => {
-      const initialBalance = await wvc.balanceOf(account1.address)
+    it('allows client to transfer tokens back', async () => {
+      const initialBalance = await wvc.balanceOf(client.address)
 
       txOptions.gasLimit = await wvc
-        .connect(account1)
+        .connect(client)
         .estimateGas
         .transfer(owner.address, transferAmount)
 
       const tx0 = await wvc
-        .connect(account1)
+        .connect(client)
         .transfer(owner.address, transferAmount, txOptions)
       await tx0.wait()
 
-      const endingBalance = await wvc.balanceOf(account1.address)
+      const endingBalance = await wvc.balanceOf(client.address)
       expect(endingBalance).to.equal(initialBalance - 10)
     })
 
@@ -100,7 +100,7 @@ describe('WVC', function () {
 
       expect(recentEvents.length).to.be.at.least(2)
       expect(recentEvents.filter(e => e.args.to === owner.address).length).to.equal(1)
-      expect(recentEvents.filter(e => e.args.to === account1.address).length).to.equal(1)
+      expect(recentEvents.filter(e => e.args.to === client.address).length).to.equal(1)
     })
   })
 
@@ -143,7 +143,7 @@ describe('WVC', function () {
   })
 
   describe('Approval & Allowance', function () {
-    const amount = 1000
+    const amount = 10
     let initialBlockNumber
 
     before(async () => {
@@ -153,64 +153,59 @@ describe('WVC', function () {
     // Always set allowance to zero,then increase it
     // https://docs.google.com/document/d/1YLPtQxZu1UAvO9cZ1O2RPXBbT0mooh4DYKjA_jp-RLM/edit
 
-    it('allows addr1 to approve owner to spend 1000', async function () {
+    it('allows client to approve owner to spend 1000', async function () {
       txOptions.gasLimit = await wvc
         .connect(owner)
         .estimateGas
-        .approve(account1.address, 0)
+        .approve(client.address, 0)
 
       const tx0 = await wvc
         .connect(owner)
-        .approve(account1.address, 0, txOptions)
+        .approve(client.address, 0, txOptions)
       await tx0.wait()
 
-      const initialAllowance = await wvc.allowance(owner.address, account1.address)
+      const initialAllowance = await wvc.allowance(owner.address, client.address)
 
       txOptions.gasLimit = await wvc
         .connect(owner)
         .estimateGas
-        .increaseAllowance(account1.address, amount)
+        .increaseAllowance(client.address, amount)
 
       const tx1 = await wvc
         .connect(owner)
-        .increaseAllowance(account1.address, amount, txOptions)
+        .increaseAllowance(client.address, amount, txOptions)
       await tx1.wait()
 
-      const allowance = await wvc.allowance(owner.address, account1.address)
+      const allowance = await wvc.allowance(owner.address, client.address)
       expect(allowance).to.equal(initialAllowance.add(amount))
     })
 
-    it('allows account1 to transferFrom owner 50% of allowance', async () => {
-      const initialAllowance = await wvc.allowance(owner.address, account1.address)
-
-      txOptions.gasLimit = await wvc
-        .connect(account1)
-        .estimateGas
-        .transferFrom(owner.address, account1.address, initialAllowance.div(2))
+    it('allows client to transferFrom owner 50% of allowance', async () => {
+      const initialAllowance = await wvc.allowance(owner.address, client.address)
 
       const tx0 = await wvc
-        .connect(account1)
-        .transferFrom(owner.address, account1.address, initialAllowance.div(2))
+        .connect(client)
+        .transferFrom(owner.address, client.address, initialAllowance.div(2))
       await tx0.wait()
 
-      const allowance = await wvc.allowance(owner.address, account1.address)
+      const allowance = await wvc.allowance(owner.address, client.address)
       expect(allowance).to.equal(initialAllowance.div(2))
     })
 
-    it('decreases account1 allowance back to 0', async function () {
-      const initialAllowance = await wvc.allowance(owner.address, account1.address)
+    it('decreases client allowance back to 0', async function () {
+      const initialAllowance = await wvc.allowance(owner.address, client.address)
 
       txOptions.gasLimit = await wvc
         .connect(owner)
         .estimateGas
-        .decreaseAllowance(account1.address, initialAllowance)
+        .decreaseAllowance(client.address, initialAllowance)
 
       const tx2 = await wvc
         .connect(owner)
-        .decreaseAllowance(account1.address, initialAllowance, txOptions)
+        .decreaseAllowance(client.address, initialAllowance, txOptions)
       await tx2.wait()
 
-      const allowance = await wvc.allowance(owner.address, account1.address)
+      const allowance = await wvc.allowance(owner.address, client.address)
       expect(allowance).to.equal(0)
     })
 
