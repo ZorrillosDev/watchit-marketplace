@@ -17,9 +17,9 @@ import { useTheme } from '@mui/material/styles'
 import Poster from '@components/Poster'
 
 // TODO delete this when data comes from backend
-import { fakeMovies } from '@pages/Home/components/HomeTrending'
+import { FAKE_MOVIES } from "@src/config";
 
-// ===========================|| HOME - TRENDING ||=========================== //
+// ===========================|| HOME - MOST LOVED ||=========================== //
 
 SwiperCore.use([Pagination])
 
@@ -57,7 +57,7 @@ const HomeMostLoved: FC = (): JSX.Element => {
             }}
           >
             {
-              fakeMovies.map((poster) => (
+              FAKE_MOVIES.map((poster) => (
                 <SwiperSlide key={poster.title}>
                   <Poster {...poster} />
                 </SwiperSlide>
