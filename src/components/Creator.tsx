@@ -19,7 +19,7 @@ import {
   Tooltip,
   CardActions,
   Button,
-  AvatarProps
+  AvatarProps, Divider, TypographyProps
 } from '@mui/material'
 import React, { FC } from 'react'
 import { MoreHoriz } from '@mui/icons-material'
@@ -52,13 +52,14 @@ const Creator: FC<CreatorProps> = (props): JSX.Element => {
         <Typography gutterBottom variant="h3" color='primary.dark'>
           {props.name}
         </Typography>
-        <Typography gutterBottom variant="h4" color='primary.dark' sx={{ opacity: 0.8 }}>
+        <Typography gutterBottom variant="h4" color='primary.dark' sx={{ opacity: 0.5 }}>
           {props.username}
         </Typography>
-        <Typography variant="body2" color="primary">
+        <TruncatedTypography variant="body2" color="primary">
           {props.biography}
-        </Typography>
+        </TruncatedTypography>
       </CreatorContent>
+      <Divider />
       <CardActions sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Box display='flex' flexDirection='column'>
           <Typography gutterBottom variant="h3" color='primary.dark'>
@@ -70,7 +71,7 @@ const Creator: FC<CreatorProps> = (props): JSX.Element => {
         </Box>
         <Button
           variant={ props.isFollowing ? 'contained' : 'outlined' }
-          size="small" color='primary' sx={{ borderRadius: 3 }}
+          size="large" color='primary' sx={{ borderRadius: '3rem !important' }}
         >
           { props.isFollowing ? 'Following' : 'Follow'}
         </Button>
@@ -89,17 +90,28 @@ export const CreatorWrapper = styled(Card)<CardProps>(({ theme }) => ({
 }))
 
 export const CreatorContent = styled(CardContent)<CardContentProps>(() => ({
-  padding: '0.5rem !important',
+  paddingTop: '3.5rem',
   svg: {
     width: '0.9rem',
     height: '0.9rem'
   }
 }))
 
-export const CreatorProfileImg = styled(Avatar)<AvatarProps>(() => ({
+export const TruncatedTypography = styled(Typography)<TypographyProps>(() => ({
+  marginTop: '1rem',
+  overflow: 'hidden',
+  display: '-webkit-box',
+  width: '100%',
+  lineHeight: '17px',
+  WebkitLineClamp: 3,
+  WebkitBoxOrient: 'vertical'
+}))
+
+export const CreatorProfileImg = styled(Avatar)<AvatarProps>(({theme}) => ({
   position: 'absolute',
-  top: 'calc(100px - 2.5rem)',
-  left: 'calc(100% - 2.5rem)',
+  top: 'calc(200px - 2.5rem)',
+  left: 'calc(50% - 2.5rem)',
+  border: `2px solid ${theme.palette.background.paper}`,
   width: '5rem',
   height: '5rem'
 }))
