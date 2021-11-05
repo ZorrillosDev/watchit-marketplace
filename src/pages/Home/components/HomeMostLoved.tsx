@@ -17,7 +17,7 @@ import { useTheme } from '@mui/material/styles'
 import Poster from '@components/Poster'
 
 // TODO delete this when data comes from backend
-import { FAKE_MOVIES } from "@src/config";
+import { FAKE_MOVIES } from '@src/config'
 
 // ===========================|| HOME - MOST LOVED ||=========================== //
 

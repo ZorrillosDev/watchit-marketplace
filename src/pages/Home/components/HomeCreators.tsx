@@ -8,7 +8,7 @@ import { Grid, Typography, Container } from '@mui/material'
 import Creator from '@components/Creator'
 
 // TODO delete this when data comes from backend
-import { FAKE_CREATORS } from "@src/config";
+import { FAKE_CREATORS } from '@src/config'
 
 // ===========================|| HOME - CREATORS ||=========================== //
 
