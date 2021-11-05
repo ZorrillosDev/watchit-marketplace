@@ -102,5 +102,6 @@ export const CreatorProfileImg = styled(Avatar)<AvatarProps>(({ theme }) => ({
   left: 'calc(50% - 3rem)',
   border: `2px solid ${theme.palette.background.paper}`,
   width: '6rem',
-  height: '6rem'
+  height: '6rem',
+  boxShadow: '0 3px 10px rgba(0,0,0,0.25)'
 }))
