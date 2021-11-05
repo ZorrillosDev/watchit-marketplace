@@ -10,11 +10,11 @@ import Creator from '@components/Creator'
 const HomeCreators: FC = (): JSX.Element => {
   return (
     <Container>
-      <Grid container alignItems='center' justifyContent='space-between' spacing={6}>
+      <Grid spacing={6} container alignItems='center' justifyContent='space-between'>
         <Grid item xs={12} md={10} lg={6}>
           <Typography
-            variant='h3'
             color='primary.dark'
+            variant='h3'
           >
             FEATURED CREATORS
           </Typography>
@@ -24,7 +24,7 @@ const HomeCreators: FC = (): JSX.Element => {
             {
               fakeCreators.map((creator) => {
                 return (
-                  <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+                  <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={creator.username}>
                     <Creator {...creator} />
                   </Grid>
                 )
@@ -112,5 +112,5 @@ const fakeCreators = [
     biography: 'South African photographic artist working between New York and Cape Town. My work centers and explores identity Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica',
     followers: 923,
     isFollowing: false
-  },
+  }
 ]
