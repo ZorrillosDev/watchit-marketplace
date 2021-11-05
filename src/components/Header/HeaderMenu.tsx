@@ -6,14 +6,15 @@ import { Link } from 'react-router-dom'
 import { EXPLORE, FESTIVAL, SELL, WORK } from '@navigation/CONSTANTS'
 import i18n from '@src/i18n'
 import {
-  Menu as MenuIcon, AccountBalanceWallet,
+  Menu as MenuIcon,
   ChevronRight as ChevronRightIcon
 } from '@components/Icons'
 
 // mui imports
+import WalletButton from '@components/WalletButton'
 import {
   Hidden, styled, Backdrop, Drawer, Box,
-  Divider, IconButton, Button, Grid, BoxProps
+  Divider, IconButton, Grid, BoxProps
 } from '@mui/material'
 
 // ===========================|| HEADER MENU ||=========================== //
@@ -114,18 +115,7 @@ const HeaderMenuContent: FC = (): JSX.Element => {
           {i18n.t('GLOBAL_WORK')}
         </Item>
       </Link>
-      <Button
-        sx={{
-          mt: { xs: 1, md: 0 },
-          ml: { xs: 0, md: 1 },
-          borderRadius: 3
-        }}
-        variant='contained'
-        color='primary'
-        startIcon={<AccountBalanceWallet fontSize='inherit' />}
-      >
-        {i18n.t('GLOBAL_WALLET')}
-      </Button>
+      <WalletButton />
     </Grid>
   )
 }

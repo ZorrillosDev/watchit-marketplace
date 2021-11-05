@@ -3,6 +3,7 @@ import React, { FC, useEffect } from 'react'
 import { withRouter } from 'react-router'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router/immutable'
+import { Web3ReactProvider } from '@web3-react/core'
 
 // project imports
 import { Routing } from '@src/navigation'
@@ -14,6 +15,7 @@ import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/s
 import CssBaseline from '@mui/material/CssBaseline'
 import { PaletteMode } from '@mui/material'
 
+import { getLibrary } from '@src/w3/'
 // ===========================|| MAIN APP ||=========================== //
 
 const ConnectedApp = withRouter(Routing)
@@ -43,16 +45,18 @@ const App: FC = (): JSX.Element => {
   }, [mode])
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Provider store={store}>
-          <ConnectedRouter history={history}>
-            <ConnectedApp />
-          </ConnectedRouter>
-        </Provider>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <ColorModeContext.Provider value={colorMode}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Provider store={store}>
+            <ConnectedRouter history={history}>
+              <ConnectedApp />
+            </ConnectedRouter>
+          </Provider>
+        </ThemeProvider>
+      </ColorModeContext.Provider>
+    </Web3ReactProvider>
   )
 }
 
