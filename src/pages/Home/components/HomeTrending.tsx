@@ -7,8 +7,7 @@ import { Grid, Typography, Container } from '@mui/material'
 // PROJECT IMPORTS
 import Poster from '@components/Poster'
 // TODO delete this when data comes from backend
-import { FAKE_MOVIES } from "@src/config";
-
+import { FAKE_MOVIES } from '@src/config'
 
 // ===========================|| HOME - TRENDING ||=========================== //
 
