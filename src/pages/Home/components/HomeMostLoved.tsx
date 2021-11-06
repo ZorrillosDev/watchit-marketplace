@@ -36,7 +36,7 @@ const HomeMostLoved: FC = (): JSX.Element => {
     <HomeMostLovedWrapper>
       <Grid container alignItems='center' justifyContent='space-between' spacing={3}>
         <Grid item xs={12}>
-          <Typography variant='h2' color='primary.light' fontWeight={400} textAlign='center'>
+          <Typography variant='h2' color='primary.light' fontWeight={600} textAlign='center'>
             Most Loved Movies
           </Typography>
         </Grid>

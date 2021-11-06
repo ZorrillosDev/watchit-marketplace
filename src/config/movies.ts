@@ -18,11 +18,11 @@ export const FAKE_MOVIES = [
   {
     creator: {
       username: '@gmena',
-      profileUrl: 'https://mui.com/static/images/avatar/1.jpg'
+      profileUrl: 'https://mui.com/static/images/avatar/2.jpg'
     },
     owner: {
       username: '@jadapema',
-      profileUrl: 'https://mui.com/static/images/avatar/2.jpg'
+      profileUrl: 'https://mui.com/static/images/avatar/3.jpg'
     },
     posterUrl: 'https://cuevana3.io/wp-content/uploads/2021/08/safer-at-home-46847-poster-200x300.jpg',
     isFavorite: true,
@@ -38,7 +38,7 @@ export const FAKE_MOVIES = [
     },
     owner: {
       username: '@jadapema',
-      profileUrl: 'https://mui.com/static/images/avatar/2.jpg'
+      profileUrl: 'https://mui.com/static/images/avatar/4.jpg'
     },
     posterUrl: 'https://cuevana3.io/wp-content/uploads/2021/11/13-minutes-50881-poster-200x300.jpg',
     isFavorite: false,
@@ -50,11 +50,11 @@ export const FAKE_MOVIES = [
   {
     creator: {
       username: '@gmena',
-      profileUrl: 'https://mui.com/static/images/avatar/1.jpg'
+      profileUrl: 'https://mui.com/static/images/avatar/5.jpg'
     },
     owner: {
       username: '@jadapema',
-      profileUrl: 'https://mui.com/static/images/avatar/2.jpg'
+      profileUrl: 'https://mui.com/static/images/avatar/5.jpg'
     },
     posterUrl: 'https://cuevana3.io/wp-content/uploads/2021/11/cagefighter-worlds-collide-50877-poster-200x300.jpg',
     isFavorite: false,

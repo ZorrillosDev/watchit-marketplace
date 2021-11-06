@@ -17,7 +17,7 @@ const HomeCreators: FC = (): JSX.Element => {
     <Container>
       <Grid spacing={6} container alignItems='center' justifyContent='center'>
         <Grid item xs={12} md={10} lg={6}>
-          <Typography variant='h2' color='primary.dark' textAlign='center' fontWeight={400}>
+          <Typography variant='h2' color='primary.dark' textAlign='center' fontWeight={600}>
             Featured Creators
           </Typography>
         </Grid>
