@@ -2,14 +2,13 @@
 import React, { FC } from 'react'
 
 // MUI IMPORTS
-import {Grid, Typography, Container, Button} from '@mui/material'
+import { Grid, Typography, Container, Button } from '@mui/material'
 
 // PROJECT IMPORTS
 // TODO delete this when data comes from backend
-import { FAKE_MOVIES } from "@src/config";
-import {KeyboardArrowDown} from "@mui/icons-material";
-import HomeTrendingCard from "@pages/Home/components/HomeTrendingCard";
-
+import { FAKE_MOVIES } from '@src/config'
+import { KeyboardArrowDown } from '@mui/icons-material'
+import HomeTrendingCard from '@pages/Home/components/HomeTrendingCard'
 
 // ===========================|| HOME - TRENDING ||=========================== //
 
@@ -38,7 +37,7 @@ const HomeTrending: FC = (): JSX.Element => {
         <Grid item xs={12} display='flex' alignItems='center' justifyContent='center'>
           <Button
             variant='text' color='secondary' size='large'
-            sx={{ 'svg': { width: '1.5rem', height: '1.5rem', ml: 1, color: 'secondary' } }}
+            sx={{ svg: { width: '1.5rem', height: '1.5rem', ml: 1, color: 'secondary' } }}
           >
             <Typography variant='h3' color='secondary' textAlign='center' fontWeight={400}>
               See all

@@ -11,9 +11,9 @@ import SwiperCore, {
 } from 'swiper'
 
 // project imports
-import {Box, styled, BoxProps, Grid} from '@mui/material'
-import HomeSliderCard  from '@pages/Home/components/HomeSliderCard'
-import Poster, {PosterProps} from "@components/Poster";
+import { Box, styled, BoxProps, Grid } from '@mui/material'
+import HomeSliderCard from '@pages/Home/components/HomeSliderCard'
+import Poster, { PosterProps } from '@components/Poster'
 
 // ===========================|| HOME SLIDER ||=========================== //
 
@@ -41,7 +41,7 @@ const HomeSlider: FC<HomeSliderProps> = ({ slides }): JSX.Element => {
         {
           slides.map((slide) => (
             <SwiperSlide key={slide.posterUrl}>
-              <Box width={1} height={1} display="flex" alignItems='center' justifyContent='center'>
+              <Box width={1} height={1} display='flex' alignItems='center' justifyContent='center'>
                 <Grid container alignItems='center' justifyContent='center' zIndex={1}>
                   <Grid item sm={12} md={10} lg={8} xl={6}>
                     <Grid container spacing={3} flexDirection='row-reverse'>
@@ -114,10 +114,10 @@ export const HomeSliderWrapper = styled(Box)<BoxProps>(({ theme }) => ({
     '& .swiper-button-next, & .swiper-button-prev': {
       display: 'none'
     }
-  },
+  }
 }))
 
-export const HomeSliderBackground = styled(Box)<BoxProps & { src: string }>(({  src }) => ({
+export const HomeSliderBackground = styled(Box)<BoxProps & { src: string }>(({ src }) => ({
   position: 'absolute',
   top: 0,
   left: 0,
@@ -140,10 +140,10 @@ export const HomeSliderPosterWrapper = styled(Box)<BoxProps>(({ theme }) => ({
     boxShadow: '0 5px 15px rgba(0,0,0,0.3)'
   },
   [theme.breakpoints.up('sm')]: {
-    maxWidth: '15rem',
+    maxWidth: '15rem'
   },
   [theme.breakpoints.up('xl')]: {
-    maxWidth: '18rem',
+    maxWidth: '18rem'
   }
 }))
 

@@ -94,7 +94,7 @@ describe('Theme', () => {
     it('should have valid palette primary main', () => {
       const palette = theme?.defaultTheme?.palette?.primary
       expect(palette).toBeDefined()
-      expect(palette.main).toBe('#2286A5')
+      expect(palette.main).toBe('#155f75')
     })
 
     it('should have valid palette primary dark', () => {
@@ -106,19 +106,19 @@ describe('Theme', () => {
     it('should have valid palette secondary light', () => {
       const palette = theme?.defaultTheme?.palette?.secondary
       expect(palette).toBeDefined()
-      expect(palette.light).toBe('#ede7f6')
+      expect(palette.light).toBe('#f3c5ad')
     })
 
     it('should have valid palette secondary main', () => {
       const palette = theme?.defaultTheme?.palette?.secondary
       expect(palette).toBeDefined()
-      expect(palette.main).toBe('#673ab7')
+      expect(palette.main).toBe('#e17b22')
     })
 
     it('should have valid palette secondary dark', () => {
       const palette = theme?.defaultTheme?.palette?.secondary
       expect(palette).toBeDefined()
-      expect(palette.dark).toBe('#5e35b1')
+      expect(palette.dark).toBe('#a75206')
     })
 
     it('should have valid palette warning light', () => {
@@ -274,19 +274,19 @@ describe('Theme', () => {
     it('should have valid dark palette primary light', () => {
       const palette = theme?.darkTheme?.palette?.primary
       expect(palette).toBeDefined()
-      expect(palette.light).toBe('#29314f')
+      expect(palette.light).toBe('#6c7f8d')
     })
 
     it('should have valid dark palette primary main', () => {
       const palette = theme?.darkTheme?.palette?.primary
       expect(palette).toBeDefined()
-      expect(palette.main).toBe('#2196f3')
+      expect(palette.main).toBe('#ffffff')
     })
 
     it('should have valid dark palette primary dark', () => {
       const palette = theme?.darkTheme?.palette?.primary
       expect(palette).toBeDefined()
-      expect(palette.dark).toBe('#1e88e5')
+      expect(palette.dark).toBe('#ffffff')
     })
 
     it('should have valid dark palette secondary light', () => {
@@ -430,13 +430,13 @@ describe('Theme', () => {
     it('should have valid dark palette background', () => {
       const palette = theme?.darkTheme?.palette?.background.default
       expect(palette).toBeDefined()
-      expect(palette).toBe('#111936')
+      expect(palette).toBe('#172629')
     })
 
     it('should have valid dark palette background paper', () => {
       const palette = theme?.darkTheme?.palette?.background.paper
       expect(palette).toBeDefined()
-      expect(palette).toBe('#212946')
+      expect(palette).toBe('#111f22')
     })
 
     it('should have valid dark shape border radius', () => {

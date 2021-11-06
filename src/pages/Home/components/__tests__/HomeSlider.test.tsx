@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import HomeSlider  from '@pages/Home/components/HomeSlider'
-import { PosterProps } from "@components/Poster";
+import HomeSlider from '@pages/Home/components/HomeSlider'
+import { PosterProps } from '@components/Poster'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 

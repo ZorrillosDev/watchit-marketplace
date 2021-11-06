@@ -3,10 +3,10 @@ import React, { FC, useEffect, useState } from 'react'
 
 // project imports
 import { HomeView } from '@pages/Home/HomeView'
-import {PosterProps} from "@components/Poster";
+import { PosterProps } from '@components/Poster'
 
 // TODO delete this when data comes from backend
-import { FAKE_MOVIES } from "@src/config";
+import { FAKE_MOVIES } from '@src/config'
 
 // ===========================|| HOME CONTAINER ||=========================== //
 

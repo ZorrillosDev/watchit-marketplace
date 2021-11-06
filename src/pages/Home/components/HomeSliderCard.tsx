@@ -2,9 +2,10 @@
 import React, { FC } from 'react'
 
 // project imports
-import {Box, Typography, Avatar, Grid, styled, TypographyProps} from '@mui/material'
+import { Box, Typography, Avatar, Grid } from '@mui/material'
 import { IconEth, Favorite } from '@components/Icons'
-import {PosterProps} from "@components/Poster";
+import { PosterProps } from '@components/Poster'
+import TruncatedTypography from '@components/TruncatedTypography'
 
 // ===========================|| HOME SLIDER CARD ||=========================== //
 
@@ -12,14 +13,14 @@ const HomeSliderCard: FC<{ slide: PosterProps }> = ({ slide }): JSX.Element => {
   return (
     <Grid
       container direction='column'
-      sx={{fontWeight: 'bold', '&': {color: (theme) => theme.palette.primary.dark}}}
+      sx={{ fontWeight: 'bold', '&': { color: (theme) => theme.palette.primary.dark } }}
     >
       <Grid container direction='column' sx={{ p: 2 }}>
         <Typography variant='h2' color='primary' sx={{ mb: 1.5 }}>{slide.title}</Typography>
         <Typography variant='body2' color='primary' sx={{ display: { xs: 'none', md: 'block' } }}>
           {slide.description}
         </Typography>
-        <TruncatedTypography variant='body2' color='primary' sx={{ display: { xs: '-webkit-box', md: 'none' } }}>
+        <TruncatedTypography variant='body2' color='primary' sx={{ display: { xs: '-webkit-box', md: 'none' } }} lines={4}>
           {slide.description}
         </TruncatedTypography>
       </Grid>
@@ -46,15 +47,5 @@ const HomeSliderCard: FC<{ slide: PosterProps }> = ({ slide }): JSX.Element => {
     </Grid>
   )
 }
-
-export const TruncatedTypography = styled(Typography)<TypographyProps>(() => ({
-  marginTop: '1rem',
-  overflow: 'hidden',
-  display: '-webkit-box',
-  width: '100%',
-  lineHeight: '17px',
-  WebkitLineClamp: 4,
-  WebkitBoxOrient: 'vertical'
-}))
 
 export default HomeSliderCard

@@ -1,17 +1,16 @@
 // mui imports
 import {
-  Avatar,
   styled,
   Typography,
   CardMedia,
   CardContent,
   Card,
   CardProps,
-  CardContentProps,
-  AvatarProps, Divider, TypographyProps
+  CardContentProps, Divider
 } from '@mui/material'
 import React, { FC } from 'react'
-import {PosterProps} from "@components/Poster";
+import { PosterProps } from '@components/Poster'
+import TruncatedTypography from '@components/TruncatedTypography'
 
 // ===========================|| HOME TRENDING - CARD ||=========================== //
 
@@ -28,7 +27,7 @@ const HomeTrendingCard: FC<PosterProps> = (props): JSX.Element => {
         <Typography gutterBottom variant='h3' color='primary.dark'>
           {props.title}
         </Typography>
-        <TruncatedTypography variant='body2' color='primary'>
+        <TruncatedTypography variant='body2' color='primary' lines={3}>
           {props.description}
         </TruncatedTypography>
       </HomeTrendingCardContent>
@@ -51,14 +50,4 @@ export const HomeTrendingCardContent = styled(CardContent)<CardContentProps>(() 
     width: '0.9rem',
     height: '0.9rem'
   }
-}))
-
-export const TruncatedTypography = styled(Typography)<TypographyProps>(() => ({
-  marginTop: '1rem',
-  overflow: 'hidden',
-  display: '-webkit-box',
-  width: '100%',
-  lineHeight: '17px',
-  WebkitLineClamp: 2,
-  WebkitBoxOrient: 'vertical'
 }))

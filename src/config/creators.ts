@@ -34,5 +34,5 @@ export const FAKE_CREATORS = [
     biography: 'Fashion and Advertising photographer turn 3D virtual model creator!',
     followers: 3410,
     isFollowing: true
-  },
+  }
 ]

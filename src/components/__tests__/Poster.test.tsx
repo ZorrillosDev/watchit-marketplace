@@ -7,7 +7,7 @@ describe('<Poster />', () => {
     const component = shallow(
       <Poster
         title='test' price={3} rate={3}
-        isFavorite posterUrl='test' showDetails={true}
+        isFavorite posterUrl='test' showDetails
         creator={{ username: 'test', profileUrl: 'test' }}
         owner={{ username: 'test', profileUrl: 'test' }}
         description='test'

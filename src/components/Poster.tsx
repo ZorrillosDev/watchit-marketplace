@@ -7,12 +7,13 @@ import {
   styled,
   Typography,
   IconButton, CardMedia,
-  CardContent, Card, CardProps, CardHeaderProps, CardContentProps, Menu, MenuItem, Tooltip, TypographyProps
+  CardContent, Card, CardProps, CardHeaderProps, CardContentProps, Menu, MenuItem, Tooltip
 } from '@mui/material'
 import React, { FC } from 'react'
 import { MoreHoriz } from '@mui/icons-material'
 import { IconEth } from '@components/Icons'
 import HeartCounter from '@components/HeartCounter'
+import TruncatedTypography from '@components/TruncatedTypography'
 
 // ===========================|| POSTER ||=========================== //
 
@@ -51,7 +52,7 @@ const Poster: FC<PosterProps & {showDetails: boolean}> = (props): JSX.Element =>
         component='img' image={`${props.posterUrl}`} alt={`${props.title}`}
         sx={{ pointerEvents: 'none', userSelect: 'none' }}
       />
-      { props.showDetails && (
+      {props.showDetails && (
         <>
           <PosterHeader
             avatar={
@@ -105,7 +106,9 @@ const Poster: FC<PosterProps & {showDetails: boolean}> = (props): JSX.Element =>
                 <HeartCounter count={props.rate} favorite={props.isFavorite} />
               </Grid>
               <Grid item xs={12}>
-                <TruncatedTypography variant='body2' color='primary.dark' fontWeight={400}>{`${props.title}`}</TruncatedTypography>
+                <TruncatedTypography variant='body2' color='primary.dark' fontWeight={400} lines={1}>
+                  {`${props.title}`}
+                </TruncatedTypography>
               </Grid>
             </Grid>
           </PosterContent>
@@ -151,12 +154,4 @@ export const PosterContent = styled(CardContent)<CardContentProps>(() => ({
     width: '0.9rem',
     height: '0.9rem'
   }
-}))
-
-export const TruncatedTypography = styled(Typography)<TypographyProps>(() => ({
-  overflow: 'hidden',
-  display: '-webkit-box',
-  width: '100%',
-  WebkitLineClamp: 1,
-  WebkitBoxOrient: 'vertical'
 }))

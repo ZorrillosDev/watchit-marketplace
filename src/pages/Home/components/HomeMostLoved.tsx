@@ -17,8 +17,8 @@ import { useTheme } from '@mui/material/styles'
 import Poster from '@components/Poster'
 
 // TODO delete this when data comes from backend
-import { FAKE_MOVIES } from "@src/config";
-import {Color} from "@src/utils";
+import { FAKE_MOVIES } from '@src/config'
+import { Color } from '@src/utils'
 
 // ===========================|| HOME - MOST LOVED ||=========================== //
 
@@ -107,7 +107,7 @@ export const HomeMostLovedWrapper = styled(Container)<ContainerProps>(({ theme }
     '& .swiper-pagination-bullet-active': {
       '&::before': {
         backgroundColor: theme.palette.primary.light
-      },
+      }
     }
   }
 }))

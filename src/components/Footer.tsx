@@ -10,7 +10,6 @@ import {
 } from '@mui/material'
 
 // PROJECT IMPORTS
-import { IconEth, MoreHoriz } from '@components/Icons'
 import LogoWhite from '@assets/img/watchit_logo_white.svg'
 
 // ===========================|| FOOTER ||=========================== //
@@ -34,14 +33,14 @@ const Footer: FC = (): JSX.Element => {
             </Grid>
             <Grid item>
               <FooterSubscriptionWrapper>
-                <TextField fullWidth label="Your e-mail" id="subscription_email" />
-                <Button variant='contained' >Subscribe</Button>
+                <TextField fullWidth label='Your e-mail' id='subscription_email' />
+                <Button variant='contained'>Subscribe</Button>
               </FooterSubscriptionWrapper>
             </Grid>
           </Grid>
         </Grid>
         <Grid item xs={12} md={2} sx={{ display: { xs: 'none', md: 'block' } }} />
-        <Grid item xs={12} md={5} >
+        <Grid item xs={12} md={5}>
           <Grid container spacing={1}>
             <Grid item xs={4}>
               <Grid container spacing={0.3}>
@@ -89,7 +88,7 @@ const Footer: FC = (): JSX.Element => {
             <Grid item xs={4}>
               <Grid container spacing={0.3}>
                 <Grid item xs={12}>
-                  <Typography gutterBottom variant='h3' color='primary.light'>
+                  <Typography gutterBottom color='primary.light' variant='h3'>
                     Help
                   </Typography>
                 </Grid>
@@ -123,7 +122,8 @@ const Footer: FC = (): JSX.Element => {
         <Grid item xs={12}>
           <Typography
             variant='body1' color='primary.light' textAlign='center'
-            fontWeight={400} width={1} sx={{ opacity: 0.6, marginBottom: 2 }}>
+            fontWeight={400} width={1} sx={{ opacity: 0.6, marginBottom: 2 }}
+          >
             © 2021 ZorrillosDev Comunity
           </Typography>
         </Grid>
@@ -138,10 +138,10 @@ export const FooterWrapper = styled(Container)<ContainerProps>(({ theme }) => ({
   width: '100%',
   paddingTop: theme.spacing(5),
   marginBottom: '-3rem',
-  backgroundColor: Object.is(theme.palette.mode,'light')
+  backgroundColor: Object.is(theme.palette.mode, 'light')
     ? darken(theme.palette.primary.dark, 0.6)
     : darken(theme.palette.background.default, 0.2),
-  'a': {
+  a: {
     opacity: 0.6,
     textDecoration: 'none',
     '&:hover': {
@@ -150,7 +150,7 @@ export const FooterWrapper = styled(Container)<ContainerProps>(({ theme }) => ({
   }
 }))
 
-export const FooterLogoWrapper = styled(Box)<BoxProps>(( ) => ({
+export const FooterLogoWrapper = styled(Box)<BoxProps>(() => ({
   width: '10rem',
   height: '5rem',
   position: 'relative',
@@ -170,20 +170,20 @@ export const FooterSubscriptionWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   position: 'relative',
   '.MuiOutlinedInput-root, fieldset, input': {
     borderRadius: '24px',
-    backgroundColor: Object.is(theme.palette.mode,'light')
+    backgroundColor: Object.is(theme.palette.mode, 'light')
       ? darken(theme.palette.primary.dark, 0.6)
       : darken(theme.palette.background.default, 0.2),
     borderColor: theme.palette.primary.light
   },
-  'button': {
+  button: {
     position: 'absolute',
     top: '1px',
     right: '1px',
     height: 'calc(100% - 2px)',
     borderRadius: '4rem !important',
     boxShadow: 'none',
-    backgroundColor: Object.is(theme.palette.mode,'light')
+    backgroundColor: Object.is(theme.palette.mode, 'light')
       ? darken(theme.palette.primary.dark, 0.5)
-      : darken(theme.palette.background.default, 0.3),
+      : darken(theme.palette.background.default, 0.3)
   }
 }))

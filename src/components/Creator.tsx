@@ -11,9 +11,10 @@ import {
   CardContentProps,
   CardActions,
   Button,
-  AvatarProps, Divider, TypographyProps
+  AvatarProps, Divider
 } from '@mui/material'
 import React, { FC } from 'react'
+import TruncatedTypography from '@components/TruncatedTypography'
 
 // ===========================|| POSTER ||=========================== //
 
@@ -44,7 +45,7 @@ const Creator: FC<CreatorProps> = (props): JSX.Element => {
         <Typography gutterBottom variant='h4' color='primary.dark' sx={{ opacity: 0.5 }}>
           {props.username}
         </Typography>
-        <TruncatedTypography variant='body2' color='primary'>
+        <TruncatedTypography variant='body2' color='primary' lines={3}>
           {props.biography}
         </TruncatedTypography>
       </CreatorContent>
@@ -84,16 +85,6 @@ export const CreatorContent = styled(CardContent)<CardContentProps>(() => ({
     width: '0.9rem',
     height: '0.9rem'
   }
-}))
-
-export const TruncatedTypography = styled(Typography)<TypographyProps>(() => ({
-  marginTop: '1rem',
-  overflow: 'hidden',
-  display: '-webkit-box',
-  width: '100%',
-  lineHeight: '17px',
-  WebkitLineClamp: 3,
-  WebkitBoxOrient: 'vertical'
 }))
 
 export const CreatorProfileImg = styled(Avatar)<AvatarProps>(({ theme }) => ({
