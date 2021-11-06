@@ -60,7 +60,7 @@ describe('<WalletButton/>', () => {
   })
 
   it('should display wallet connection if success with metamask', () => {
-      jest.spyOn(web3, 'useMetamask')
+    jest.spyOn(web3, 'useMetamask')
       .mockImplementation(() => ({
         active: true,
         account: null,
