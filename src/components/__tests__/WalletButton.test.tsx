@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import WalletButton from '@components/WalletButton'
-import * as web3Core from '@web3-react/core'
+import * as web3 from '@src/hooks/useMetamask'
 import 'jest-styled-components'
 import { Button } from '@mui/material'
 import { getLibrary } from '@src/w3'
@@ -9,16 +9,14 @@ import { Web3ReactProvider } from '@web3-react/core'
 import { AccountBalanceWallet } from '@mui/icons-material'
 import { PixelArtIdenticon } from '@components/Identicon'
 
-jest.mock('@web3-react/core')
-
 /* eslint-disable no-undef */
 describe('<WalletButton/>', () => {
   beforeEach(() => {
-    jest.spyOn(web3Core, 'useWeb3React')
+    jest.spyOn(web3, 'useMetamask')
       .mockImplementation(() => ({
         active: false,
         account: null,
-        setError: jest.fn(),
+        error: undefined,
         activate: jest.fn(),
         deactivate: jest.fn()
       })
@@ -42,11 +40,11 @@ describe('<WalletButton/>', () => {
   })
 
   it('should display error message if wallet connection fail with metamask', () => {
-    jest.spyOn(web3Core, 'useWeb3React')
+    jest.spyOn(web3, 'useMetamask')
       .mockImplementation(() => ({
         active: false,
         account: null,
-        setError: jest.fn(),
+        error: undefined,
         deactivate: jest.fn(),
         activate () {
           throw new Error('Fail')
@@ -62,11 +60,11 @@ describe('<WalletButton/>', () => {
   })
 
   it('should display wallet connection if success with metamask', () => {
-    jest.spyOn(web3Core, 'useWeb3React')
+      jest.spyOn(web3, 'useMetamask')
       .mockImplementation(() => ({
         active: true,
         account: null,
-        setError: jest.fn(),
+        error: undefined,
         deactivate: jest.fn(),
         activate: jest.fn()
       })

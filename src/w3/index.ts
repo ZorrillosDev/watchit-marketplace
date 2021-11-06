@@ -7,5 +7,5 @@ export const getLibrary = (provider: any): Web3Provider =>
   new ethers.providers.Web3Provider(provider)
 
 export const Injected = new InjectedConnector({
-  supportedChainIds: [Chains.PRIVATE, Chains.RINKEBY, Chains.KOVAN]
+  supportedChainIds: [Chains.RINKEBY, Chains.KOVAN]
 })
