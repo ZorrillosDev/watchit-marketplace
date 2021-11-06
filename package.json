@@ -121,7 +121,17 @@
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.8.0"
   },
+  "browser": {
+    "crypto": false
+  },
   "dependencies": {
+    "@dicebear/adventurer-neutral": "^4.10.0",
+    "@dicebear/avatars": "^4.10.0",
+    "@dicebear/avatars-bottts-sprites": "^4.10.0",
+    "@dicebear/avatars-identicon-sprites": "^4.10.0",
+    "@dicebear/big-ears-neutral": "^4.10.0",
+    "@dicebear/pixel-art": "^4.10.0",
+    "@dicebear/pixel-art-neutral": "^4.10.0",
     "@emotion/cache": "^11.4.0",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
@@ -140,11 +150,13 @@
     "@types/redux-saga": "^0.10.5",
     "@types/styled-components": "^5.1.11",
     "@types/swiper": "^5.4.3",
-    "@web3-react/core": "^6.1.9",
+    "@usedapp/core": "^0.5.4",
     "acorn-import-assertions": "^1.7.6",
     "big.js": "^6.1.1",
     "circular-dependency-plugin": "^5.2.2",
     "connected-react-router": "^6.9.1",
+    "crypto": "^1.0.1",
+    "crypto-js": "^4.1.1",
     "dotenv": "^10.0.0",
     "framer-motion": "^4.1.17",
     "hardhat-deploy-ethers": "^0.3.0-beta.11",
@@ -185,9 +197,12 @@
   },
   "standard": {
     "ignore": [
+      "dist",
       "webpack.config.babel.js",
       "hardhat.config.js",
       "package.json",
+      "/src/**/*.tsx",
+      "/src/**/*.ts",
       ".gitignore",
       "/coverage/**",
       "/jscpd/**",
@@ -204,6 +219,7 @@
   "ts-standard": {
     "project": "tsconfig.json",
     "ignore": [
+      "dist",
       "webpack.config.babel.js",
       "hardhat.config.js",
       "package.json",

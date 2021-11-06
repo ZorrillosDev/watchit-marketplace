@@ -9,4 +9,11 @@ describe('Random util', () => {
     expect(randomNumber >= min).toBeTruthy()
     expect(randomNumber <= max).toBeTruthy()
   })
+
+  it('should return random value based on array input', () => {
+    const input = ['hi', 'test']
+    const random = Random.getRandomValueFromArray(input)
+
+    expect(input.includes(random)).toBeTruthy()
+  })
 })

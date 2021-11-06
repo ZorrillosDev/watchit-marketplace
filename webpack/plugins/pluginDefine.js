@@ -9,20 +9,10 @@ require('dotenv').config()
 import { DefinePlugin } from 'webpack'
 import { isDev, isDevServer, isProd, mode } from '../utils/env'
 
-const W_APP = /^MARKETPLACE_/i
-
-const filteredKeys = Object.keys(process.env)
-  .filter(key => W_APP.test(key))
-  .reduce(
-    (env, key) => {
-      env[key] = process.env[key]
-      return env
-    }, {})
-
 const config = {
   'process.env': {
     NODE_ENV: JSON.stringify(mode),
-    ...filteredKeys
+    ...process.env
   },
   IS_PROD: isProd,
   IS_DEV: isDev,
