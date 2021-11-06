@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/swiper-bundle.min.css'
 import 'swiper/swiper.min.css'
 import SwiperCore, {
-  Pagination
+  Pagination, Autoplay
 } from 'swiper'
 
 // MUI IMPORTS
@@ -18,28 +18,26 @@ import Poster from '@components/Poster'
 
 // TODO delete this when data comes from backend
 import { FAKE_MOVIES } from "@src/config";
+import {Color} from "@src/utils";
 
 // ===========================|| HOME - MOST LOVED ||=========================== //
 
-SwiperCore.use([Pagination])
+SwiperCore.use([Pagination, Autoplay])
 
 const HomeMostLoved: FC = (): JSX.Element => {
   const theme = useTheme()
-  let itemCount = 1
+  let itemCount = 2
   itemCount = useMediaQuery(theme.breakpoints.up('sm')) ? 3 : itemCount
   itemCount = useMediaQuery(theme.breakpoints.up('md')) ? 4 : itemCount
-  itemCount = useMediaQuery(theme.breakpoints.up('lg')) ? 7 : itemCount
-  itemCount = useMediaQuery(theme.breakpoints.up('xl')) ? 12 : itemCount
+  itemCount = useMediaQuery(theme.breakpoints.up('lg')) ? 6 : itemCount
+  itemCount = useMediaQuery(theme.breakpoints.up('xl')) ? 8 : itemCount
 
   return (
     <HomeMostLovedWrapper>
       <Grid container alignItems='center' justifyContent='space-between' spacing={3}>
-        <Grid item xs={12} md={10} lg={6}>
-          <Typography
-            variant='h3'
-            color='primary.dark'
-          >
-            MOST LOVED MOVIES
+        <Grid item xs={12}>
+          <Typography variant='h2' color='primary.light' fontWeight={400} textAlign='center'>
+            Most Loved Movies
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -49,8 +47,9 @@ const HomeMostLoved: FC = (): JSX.Element => {
             slidesPerGroup={1}
             loop
             autoplay={{
-              delay: 3000,
-              disableOnInteraction: false
+              delay: 1000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true
             }}
             pagination={{
               clickable: true
@@ -59,7 +58,7 @@ const HomeMostLoved: FC = (): JSX.Element => {
             {
               FAKE_MOVIES.map((poster) => (
                 <SwiperSlide key={poster.title}>
-                  <Poster {...poster} />
+                  <Poster {...poster} showDetails={false} />
                 </SwiperSlide>
               ))
             }
@@ -82,16 +81,33 @@ export const HomeMostLovedWrapper = styled(Container)<ContainerProps>(({ theme }
     paddingBottom: '4rem'
   },
   '& .swiper-pagination': {
-    bottom: '1rem',
+    bottom: '0',
     '& .swiper-pagination-bullet': {
-      width: '0.7rem',
-      height: '0.7rem',
-      backgroundColor: theme.palette.primary.main,
-      transition: 'all 0.5s ease-in-out'
+      width: '1.5rem',
+      height: '1.5rem',
+      margin: 0,
+      opacity: '1 !important',
+      backgroundColor: 'transparent',
+      position: 'relative',
+      '&:hover::before': {
+        backgroundColor: theme.palette.primary.light
+      },
+      '&::before': {
+        content: '""',
+        position: 'absolute',
+        top: 'calc(50% - 0.2rem)',
+        left: 'calc(50% - 0.2rem)',
+        width: '0.4rem',
+        height: '0.4rem',
+        borderRadius: '50%',
+        transition: 'all 0.3s ease-in-out',
+        backgroundColor: Color.addAlpha(theme.palette.primary.light, 0.4)
+      }
     },
     '& .swiper-pagination-bullet-active': {
-      width: '2rem !important',
-      borderRadius: '8px'
+      '&::before': {
+        backgroundColor: theme.palette.primary.light
+      },
     }
   }
 }))

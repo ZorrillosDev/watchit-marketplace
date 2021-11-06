@@ -4,92 +4,39 @@ import React, { FC } from 'react'
 // project imports
 import { Box, Typography, Avatar, Grid } from '@mui/material'
 import { IconEth, Favorite } from '@components/Icons'
+import {PosterProps} from "@components/Poster";
 
 // ===========================|| HOME SLIDER CARD ||=========================== //
 
-export interface HomeSliderCardProps {
-  title: string
-  description: string
-  owner: {
-    name: string
-    profilePicture: string
-  }
-  price: number
-  rate: number
-}
-
-const HomeSliderCard: FC<{ slide: HomeSliderCardProps }> = ({ slide }): JSX.Element => {
+const HomeSliderCard: FC<{ slide: PosterProps }> = ({ slide }): JSX.Element => {
   return (
     <Grid
-      container
-      direction='column'
-      sx={{
-        position: 'absolute',
-        right: '5%',
-        top: { xs: '5%', lg: '10%' },
-        fontWeight: 'bold',
-        maxWidth: { xs: '90%', lg: '35%' },
-        '&': {
-          color: (theme) => theme.palette.primary.dark
-        }
-      }}
+      container direction='column'
+      sx={{fontWeight: 'bold', '&': {color: (theme) => theme.palette.primary.dark}}}
     >
-      <Grid
-        container
-        direction='column'
-        sx={{
-          p: 2,
-          borderRadius: '0.5rem 0.5rem 0 0',
-          bgcolor: 'rgba(255,255,255,0.8)'
-        }}
-      >
-        <Typography variant='h2' color='primary.dark' sx={{ mb: 1.5 }}>{slide.title}</Typography>
-        <Typography variant='body1'>{slide.description}</Typography>
+      <Grid container direction='column' sx={{ p: 2 }}>
+        <Typography variant='h2' color='primary' sx={{ mb: 1.5 }}>{slide.title}</Typography>
+        <Typography variant='body2' color='primary'>{slide.description}</Typography>
       </Grid>
-      <Grid
-        container
-        alignItems='center'
-        wrap='nowrap'
-        justifyContent='space-between'
-        sx={{
-          py: 2,
-          px: 3,
-          mt: '2px',
-          borderRadius: '0 0 3rem 3rem',
-          bgcolor: 'rgba(255,255,255,0.8)'
-        }}
-      >
-        <Grid
-          container
-          alignItems='center'
-          justifyContent='center'
-        >
-          <Avatar alt='Profile picture' sizes='small' src={slide.owner.profilePicture} />
+      <Grid container alignItems='center' wrap='nowrap' justifyContent='space-between' sx={{ py: 2, px: 3 }}>
+        <Box display='flex' alignItems='center'>
+          <Avatar alt='Profile picture' sizes='small' src={slide.owner.profileUrl} />
           <Box sx={{ ml: 1 }}>
-            <Typography variant='body1'>{slide.owner.name}</Typography>
+            <Typography variant='body1'>{slide.owner.username}</Typography>
           </Box>
-        </Grid>
-        <Grid
-          container
-          alignItems='center'
-          justifyContent='center'
-          sx={{ px: 3 }}
-        >
+        </Box>
+        <Box display='flex' alignItems='center' justifyContent='center' sx={{ px: 3 }}>
           <IconEth color='primary' />
           <Box sx={{ ml: 1 }}>
             <Typography variant='body1'>{slide.price} ETH</Typography>
           </Box>
-        </Grid>
-        <Grid
-          container
-          alignItems='center'
-          justifyContent='center'
-        >
+        </Box>
+        <Box display='flex' alignItems='center' justifyContent='flex-end'>
           <Favorite color='error' />
           <Box sx={{ ml: 1 }}>
             <Typography variant='body1' color='error'>{slide.rate}</Typography>
           </Box>
-        </Grid>
+        </Box>
       </Grid>
     </Grid>
   )

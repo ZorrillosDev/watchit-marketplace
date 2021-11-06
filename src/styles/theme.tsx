@@ -377,6 +377,7 @@ export const typography = (mode: string): any => ({
     },
     body2: {
       letterSpacing: '0em',
+      fontSize: '1rem',
       fontWeight: 400,
       lineHeight: '1.5em',
       color: Object.is(mode, 'light') ? THEME_COLOR_GREY_700 : THEME_DARK_COLOR_GREY_700

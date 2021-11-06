@@ -73,7 +73,7 @@ export default Creator
 
 export const CreatorWrapper = styled(Card)<CardProps>(({ theme }) => ({
   position: 'relative',
-  backgroundColor: theme.palette.background.default,
+  backgroundColor: theme.palette.background.paper,
   boxShadow: '0 3px 6px rgba(0,0,0,0.16)',
   cursor: 'pointer'
 }))

@@ -7,7 +7,7 @@ import {
   styled,
   Typography,
   IconButton, CardMedia,
-  CardContent, Card, CardProps, CardHeaderProps, CardContentProps, Menu, MenuItem, Tooltip
+  CardContent, Card, CardProps, CardHeaderProps, CardContentProps, Menu, MenuItem, Tooltip, TypographyProps
 } from '@mui/material'
 import React, { FC } from 'react'
 import { MoreHoriz } from '@mui/icons-material'
@@ -16,7 +16,7 @@ import HeartCounter from '@components/HeartCounter'
 
 // ===========================|| POSTER ||=========================== //
 
-interface PosterProps {
+export interface PosterProps {
   creator: {
     username: string
     profileUrl: string
@@ -26,13 +26,14 @@ interface PosterProps {
     profileUrl: string
   }
   posterUrl: string
-  value: number
+  price: number
   title: string
-  favoriteCount: number
+  description: string
+  rate: number
   isFavorite: boolean
 }
 
-const Poster: FC<PosterProps> = (props): JSX.Element => {
+const Poster: FC<PosterProps & {showDetails: boolean}> = (props): JSX.Element => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
@@ -46,67 +47,70 @@ const Poster: FC<PosterProps> = (props): JSX.Element => {
 
   return (
     <PosterWrapper>
-      <PosterHeader
-        avatar={
-          <AvatarGroup max={2}>
-            <Tooltip title={`Owner: ${props.owner.username}`}>
-              <Avatar alt={`${props.owner.username} profile image`} src={`${props.owner.profileUrl}`} sx={{ width: 24, height: 24 }} />
-            </Tooltip>
-            <Tooltip title={`Creator: ${props.creator.username}`}>
-              <Avatar alt={`${props.creator.username} profile image`} src={`${props.creator.profileUrl}`} sx={{ width: 24, height: 24 }} />
-            </Tooltip>
-          </AvatarGroup>
-        }
-        action={
-          <IconButton aria-label='settings' onClick={handleClick}>
-            <MoreHoriz />
-          </IconButton>
-        }
-      />
-      <Menu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right'
-        }}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right'
-        }}
-      >
-        <MenuItem onClick={handleClose}>
-          Purchase
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          Share
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          Report
-        </MenuItem>
-      </Menu>
       <CardMedia
-        component='img'
-        image={`${props.posterUrl}`}
-        alt={`${props.title}`}
+        component='img' image={`${props.posterUrl}`} alt={`${props.title}`}
+        sx={{ pointerEvents: 'none', userSelect: 'none' }}
       />
-      <PosterContent>
-        <Grid container spacing={1}>
-          <Grid item xs={6}>
-            <Box display='flex' alignItems='center'>
-              <IconEth color='primary' />
-              <Typography variant='body1' display='inline' color='primary.dark' fontWeight='bold' sx={{ ml: 0.25 }}>{props.value} ETH</Typography>
-            </Box>
-          </Grid>
-          <Grid item display='flex' alignItems='center' justifyContent='flex-end' xs={6}>
-            <HeartCounter count={props.favoriteCount} favorite={props.isFavorite} />
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant='body1' color='primary.dark' fontWeight='bold'>{`${props.title}`}</Typography>
-          </Grid>
-        </Grid>
-      </PosterContent>
+      { props.showDetails && (
+        <>
+          <PosterHeader
+            avatar={
+              <AvatarGroup max={2}>
+                <Tooltip title={`Owner: ${props.owner.username}`}>
+                  <Avatar alt={`${props.owner.username} profile image`} src={`${props.owner.profileUrl}`} sx={{ width: 24, height: 24 }} />
+                </Tooltip>
+                <Tooltip title={`Creator: ${props.creator.username}`}>
+                  <Avatar alt={`${props.creator.username} profile image`} src={`${props.creator.profileUrl}`} sx={{ width: 24, height: 24 }} />
+                </Tooltip>
+              </AvatarGroup>
+            }
+            action={
+              <IconButton aria-label='settings' onClick={handleClick}>
+                <MoreHoriz />
+              </IconButton>
+            }
+          />
+          <Menu
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+          >
+            <MenuItem onClick={handleClose}>
+              Purchase
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              Share
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              Report
+            </MenuItem>
+          </Menu>
+          <PosterContent>
+            <Grid container spacing={1}>
+              <Grid item xs={6}>
+                <Box display='flex' alignItems='center'>
+                  <IconEth color='primary' />
+                  <Typography variant='body1' display='inline' color='primary.dark' fontWeight='bold' sx={{ ml: 0.25 }}>{props.price} ETH</Typography>
+                </Box>
+              </Grid>
+              <Grid item display='flex' alignItems='center' justifyContent='flex-end' xs={6}>
+                <HeartCounter count={props.rate} favorite={props.isFavorite} />
+              </Grid>
+              <Grid item xs={12}>
+                <TruncatedTypography variant='body2' color='primary.dark' fontWeight={400}>{`${props.title}`}</TruncatedTypography>
+              </Grid>
+            </Grid>
+          </PosterContent>
+        </>
+      )}
     </PosterWrapper>
   )
 }
@@ -115,22 +119,17 @@ export default Poster
 
 export const PosterWrapper = styled(Card)<CardProps>(({ theme }) => ({
   position: 'relative',
-  backgroundColor: theme.palette.background.default,
+  backgroundColor: theme.palette.background.paper,
   boxShadow: '0 3px 6px rgba(0,0,0,0.16)',
   cursor: 'pointer',
   '&, & .MuiCardMedia-root': {
     transition: 'all 0.3s ease-in-out'
   },
   '& .MuiCardMedia-root': {
-    width: 'calc(100% + 1px)',
-    maxHeight: '18.5rem'
+    width: 'calc(100% + 1px)'
   },
   '&:hover': {
-    transform: 'translateY(-5px)',
-    '.MuiCardMedia-root': {
-      width: 'calc(100% + 1rem)',
-      marginLeft: '-0.5rem'
-    }
+    transform: 'translateY(-1rem)'
   }
 }))
 
@@ -152,4 +151,12 @@ export const PosterContent = styled(CardContent)<CardContentProps>(() => ({
     width: '0.9rem',
     height: '0.9rem'
   }
+}))
+
+export const TruncatedTypography = styled(Typography)<TypographyProps>(() => ({
+  overflow: 'hidden',
+  display: '-webkit-box',
+  width: '100%',
+  WebkitLineClamp: 1,
+  WebkitBoxOrient: 'vertical'
 }))

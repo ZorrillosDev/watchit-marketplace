@@ -118,7 +118,7 @@ const HeaderMenuContent: FC = (): JSX.Element => {
         sx={{
           mt: { xs: 1, md: 0 },
           ml: { xs: 0, md: 1 },
-          borderRadius: 3
+          borderRadius: '3rem !important'
         }}
         variant='contained'
         color='primary'
@@ -139,7 +139,7 @@ export const Item = styled(Box)<{ active?: boolean } & BoxProps>(({ active, them
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  fontWeight: 'bold',
+  fontWeight: 400,
   '&:hover': {
     color: theme.palette.primary.dark
   },

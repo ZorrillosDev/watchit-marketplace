@@ -15,21 +15,18 @@ import { FAKE_CREATORS } from "@src/config";
 const HomeCreators: FC = (): JSX.Element => {
   return (
     <Container>
-      <Grid spacing={6} container alignItems='center' justifyContent='space-between'>
+      <Grid spacing={6} container alignItems='center' justifyContent='center'>
         <Grid item xs={12} md={10} lg={6}>
-          <Typography
-            color='primary.dark'
-            variant='h3'
-          >
-            FEATURED CREATORS
+          <Typography variant='h2' color='primary.dark' textAlign='center' fontWeight={400}>
+            Featured Creators
           </Typography>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} xl={10}>
           <Grid container spacing={3}>
             {
               FAKE_CREATORS.map((creator) => {
                 return (
-                  <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={creator.username}>
+                  <Grid item xs={12} sm={6} lg={3} key={creator.username}>
                     <Creator {...creator} />
                   </Grid>
                 )

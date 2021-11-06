@@ -21,6 +21,7 @@ const ConnectedApp = withRouter(Routing)
 const App: FC = (): JSX.Element => {
   // saved local storage theme or default light theme
   const defaultMode = (localStorage.getItem('theme') as PaletteMode ?? 'light')
+
   // theme control state
   const [mode, setMode] = React.useState<PaletteMode>(defaultMode)
   const colorMode = React.useMemo(() => ({
