@@ -1,11 +1,37 @@
-import { ethers } from 'ethers'
-import { Chains } from '@src/w3/types'
-import { Web3Provider } from '@ethersproject/providers'
-import { InjectedConnector } from '@web3-react/injected-connector'
+import {ChainId, Config} from '@usedapp/core'
+import {NetworkSetting} from "@w3/types";
+import {RINKEBY_ALCHEMY_API_KEY} from "@w3/CONSTANTS";
 
-export const getLibrary = (provider: any): Web3Provider =>
-  new ethers.providers.Web3Provider(provider)
+export const config: Config = {
+    readOnlyChainId: ChainId.Rinkeby,
+    readOnlyUrls: {
+        [ChainId.Rinkeby]: `https://eth-rinkeby.alchemyapi.io/v2/${RINKEBY_ALCHEMY_API_KEY}`,
+    },
+}
 
-export const Injected = new InjectedConnector({
-  supportedChainIds: [Chains.RINKEBY, Chains.KOVAN]
-})
+
+export function getNetworkSettings(networkName: ChainId | undefined): NetworkSetting {
+    /**
+     * @param {ChainId} networkName network to retrieve contract
+     * @return {NetworkSetting}
+     */
+
+
+    if (!networkName) return {} as NetworkSetting;
+    const contractAddressCollection: { [key: number]: NetworkSetting } = {
+        [ChainId.Kovan]: {
+            PURCHASE_GATEWAY: process.env.KOVAN_CONTRACT_PURCHASE_GATEWAY ?? "",
+            NFT: process.env.KOVAN_CONTRACT_NFT ?? "",
+            WVC: process.env.KOVAN_CONTRACT_FT ?? "",
+        },
+        [ChainId.Rinkeby]: {
+            PURCHASE_GATEWAY: process.env.RINKEBY_CONTRACT_PURCHASE_GATEWAY ?? "",
+            NFT: process.env.RINKEBY_CONTRACT_NFT ?? "",
+            WVC: process.env.RINKEBY_CONTRACT_FT ?? "",
+
+        }
+    }
+
+    return contractAddressCollection[networkName]
+
+}

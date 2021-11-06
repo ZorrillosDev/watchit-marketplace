@@ -1,9 +1,6 @@
-export enum Chains {
-  MAINNET = 1,
-  MORDEN,
-  ROPSTEN,
-  RINKEBY,
-  GOERLI,
-  KOVAN,
-  PRIVATE = 1337
+
+export interface NetworkSetting {
+  PURCHASE_GATEWAY: string,
+  NFT: string,
+  WVC: string
 }
