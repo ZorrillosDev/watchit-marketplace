@@ -5,7 +5,6 @@ import {Button} from '@mui/material'
 import {PixelArtIdenticon} from '@components/Identicon'
 import {useEtherBalance, useEthers} from '@usedapp/core'
 import {Ethers} from "@src/utils";
-import {useNFTBalanceOf} from "@hooks/useNFTContract";
 
 const WalletButton: FC = (): JSX.Element => {
     const {activateBrowserWallet, account} = useEthers()
@@ -28,12 +27,12 @@ const WalletButton: FC = (): JSX.Element => {
             onClick={() => activateBrowserWallet()}
         >
             {
-                account && etherBalance
-                    ? `${Ethers.getWeiToETH(etherBalance)} ETH`
+                account
+                    ? `${etherBalance ? Ethers.getWeiToETH(etherBalance) : 0} ETH`
                     : i18n.t('GLOBAL_WALLET')
             }
         </Button>
     )
 }
 
-export default WalletButton
+export default React.memo(WalletButton)

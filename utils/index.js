@@ -50,7 +50,7 @@ function getNetworkSettings (networkName) {
       WVC: process.env.RINKEBY_CONTRACT_FT,
       fee: '100000000000000000',
       oracle: '0xc57b33452b4f7bb189bb5afae9cc4aba1f7a4fd8',
-      jobId: '6d1bfe27e7034b1d87b5270556b17277',
+      jobId: '6b88e0402e5d415eb946e528b8e0c7ba',
       linkToken: '0x01BE23585060835E02B77ef475b0Cc51aA1e0709'
     },
     ropsten: {
