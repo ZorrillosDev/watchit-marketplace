@@ -31,8 +31,8 @@ const HomeTrending: FC = (): JSX.Element => {
                 Recent Movies
               </Typography>
             </Grid>
-            <Grid item xs={6}>
-              <Button variant='outlined' color='primary' startIcon={<FilterList />} >Filter</Button>
+            <Grid item xs={6} display='flex' alignItems='center' justifyContent='flex-end'>
+              <Button variant='outlined' color='primary' startIcon={<FilterList />} sx={{ borderRadius: '3rem !important' }} >Filter</Button>
             </Grid>
           </Grid>
         </Grid>
