@@ -9,13 +9,13 @@ require('dotenv').config()
 import { DefinePlugin } from 'webpack'
 import { isDev, isDevServer, isProd, mode } from '../utils/env'
 
-const W_APP = /^MARKETPLACE_/i
+const W_APP = /^(MARKETPLACE_|KOVAN_|RINKEBY_)/i
 
 const filteredKeys = Object.keys(process.env)
   .filter(key => W_APP.test(key))
   .reduce(
     (env, key) => {
-      env[key] = process.env[key]
+      env[key] = JSON.stringify(process.env[key])
       return env
     }, {})
 

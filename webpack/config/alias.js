@@ -3,6 +3,7 @@ import { rootDir } from '../utils/env'
 
 export const aliasItems = {
   '@src': join(rootDir, '/src'),
+  '@w3': join(rootDir, '/src/w3'),
   '@i18n': join(rootDir, '/src/i18n'),
   '@public': join(rootDir, '/public'),
   '@pages': join(rootDir, '/src/pages'),
