@@ -72,14 +72,13 @@ const HomeCreatorChip = styled(Chip)<ChipProps>(({ theme }) => ({
   width: '100%',
   alignItems: 'center',
   borderRadius: '3rem',
+  border: 'none',
   transition: 'all .2s ease-in-out',
-  background: theme.palette.primary.main,
   display: 'flex',
   justifyContent: 'flex-start',
   cursor: 'pointer',
   '.MuiChip-label, p': {
     margin: 0,
-    color: '#fff'
   }
 }))
 
