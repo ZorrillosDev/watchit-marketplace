@@ -142,11 +142,11 @@ export const PosterHeader = styled(CardHeader)<CardHeaderProps>(() => ({
   alignItems: 'center',
   justifyContent: 'space-between',
   width: '100%',
-  padding: '0.25rem 0.5rem'
+  padding: '0.25rem 0.7rem'
 }))
 
 export const PosterContent = styled(CardContent)<CardContentProps>(() => ({
-  padding: '0.5rem !important',
+  padding: '0.5rem 0.7 !important',
   svg: {
     width: '0.9rem',
     height: '0.9rem'
