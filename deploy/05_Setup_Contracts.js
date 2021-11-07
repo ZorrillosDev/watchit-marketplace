@@ -1,4 +1,4 @@
-const { autoFundCheck, getNetworkNameByChainId, getNetworkSettings } = require('../utils')
+const { autoFundCheck, getNetworkNameByChainId, getNetworkSettings } = require('../test/utils')
 const { ethers } = require('hardhat')
 
 module.exports = async ({

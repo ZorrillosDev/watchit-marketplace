@@ -9,4 +9,11 @@ describe('Ethers util', () => {
     expect(Ethers.getWeiToETH(wei, 2)).toBe(expected)
   })
 
+  it('should return expected uint256 from V1 cid', () => {
+    const v1 = 'bafkzvzacdkm3bu3t266ivacqjowxqi3hvpqsyijxhsb23rv7nj7a'
+    const expected = "01559ae4021a99b0d373d7bc8a80504bad782367abe12c21373c83adc6bf6a7e"
+
+    expect(Ethers.cidToUint256(v1)).toBe(expected)
+  })
+
 })
