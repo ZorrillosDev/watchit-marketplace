@@ -32,7 +32,9 @@ const HomeTrending: FC = (): JSX.Element => {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              <Button variant='outlined' color='primary' startIcon={<FilterList />} >Filter</Button>
+              <Button variant='outlined' color='primary' startIcon={<FilterList />}>
+                Filter
+              </Button>
             </Grid>
           </Grid>
         </Grid>
