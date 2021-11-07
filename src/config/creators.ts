@@ -1,7 +1,7 @@
 export const FAKE_CREATORS = [
   {
     name: 'Tyler Givens',
-    username: '@ty1000rd',
+    username: '0x0000',
     profileUrl: 'https://mui.com/static/images/avatar/1.jpg',
     coverUrl: 'https://images.unsplash.com/photo-1542500186-6edb30855637?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60',
     biography: 'Multidisciplinary artist based in NYC whose images and stories often engages with sex, escapism, and the end of the Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica',

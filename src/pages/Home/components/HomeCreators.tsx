@@ -46,7 +46,7 @@ const HomeCreators: FC = (): JSX.Element => {
                             {creator.name}
                           </TruncatedTypography>
                           <TruncatedTypography gutterBottom variant='body1' sx={{ opacity: 0.5 }} lines={1}>
-                            {creator.username}
+                            0x00000000
                           </TruncatedTypography>
                         </Box>
                       )}
