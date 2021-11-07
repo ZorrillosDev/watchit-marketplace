@@ -7,7 +7,7 @@ import { Grid, Typography, Container, Button, styled, GridProps, useMediaQuery }
 // PROJECT IMPORTS
 // TODO delete this when data comes from backend
 import { FAKE_MOVIES } from '@src/config'
-import { KeyboardArrowDown } from '@mui/icons-material'
+import { FilterList } from '@mui/icons-material'
 import Poster from '@components/Poster'
 import { useTheme } from '@mui/material/styles'
 
@@ -25,9 +25,16 @@ const HomeTrending: FC = (): JSX.Element => {
     <Container>
       <Grid container alignItems='center' justifyContent='center' spacing={6}>
         <Grid item xs={12}>
-          <Typography variant='h2' color='text.primary' fontWeight={600}>
-            Recent Movies
-          </Typography>
+          <Grid container>
+            <Grid item xs={6}>
+              <Typography variant='h2' color='text.primary' fontWeight={600}>
+                Recent Movies
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Button variant='outlined' color='primary' startIcon={<FilterList />} >Filter</Button>
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={12} display='flex' alignItems='center' justifyContent='center'>
           <Grid container spacing={3}>
@@ -44,17 +51,6 @@ const HomeTrending: FC = (): JSX.Element => {
               })
             }
           </Grid>
-        </Grid>
-        <Grid item xs={12} display='flex' alignItems='center' justifyContent='center'>
-          <Button
-            variant='text' color='primary' size='large'
-            sx={{ svg: { width: '1.5rem', height: '1.5rem', ml: 1, color: 'text.primary' } }}
-          >
-            <Typography variant='h3' color='text.primary' textAlign='center' fontWeight={400}>
-              See all
-            </Typography>
-            <KeyboardArrowDown />
-          </Button>
         </Grid>
       </Grid>
     </Container>
