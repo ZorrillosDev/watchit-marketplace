@@ -11,7 +11,6 @@ import {
 } from '@mui/material'
 import React, { FC } from 'react'
 import { MoreHoriz } from '@mui/icons-material'
-import { IconEth } from '@components/Icons'
 import HeartCounter from '@components/HeartCounter'
 import TruncatedTypography from '@components/TruncatedTypography'
 
@@ -47,11 +46,7 @@ const Poster: FC<PosterProps & {showDetails: boolean}> = (props): JSX.Element =>
   }
 
   return (
-    <PosterWrapper>
-      <CardMedia
-        component='img' image={`${props.posterUrl}`} alt={`${props.title}`}
-        sx={{ pointerEvents: 'none', userSelect: 'none' }}
-      />
+    <PosterWrapper showDetails={props.showDetails}>
       {props.showDetails && (
         <>
           <PosterHeader
@@ -94,25 +89,32 @@ const Poster: FC<PosterProps & {showDetails: boolean}> = (props): JSX.Element =>
               Report
             </MenuItem>
           </Menu>
-          <PosterContent>
-            <Grid container spacing={1}>
-              <Grid item xs={6}>
-                <Box display='flex' alignItems='center'>
-                  <IconEth color='primary' />
-                  <Typography variant='body1' display='inline' color='primary.dark' fontWeight='bold' sx={{ ml: 0.25 }}>{props.price} ETH</Typography>
-                </Box>
-              </Grid>
-              <Grid item display='flex' alignItems='center' justifyContent='flex-end' xs={6}>
-                <HeartCounter count={props.rate} favorite={props.isFavorite} />
-              </Grid>
-              <Grid item xs={12}>
-                <TruncatedTypography variant='body2' color='primary.dark' fontWeight={400} lines={1}>
-                  {`${props.title}`}
-                </TruncatedTypography>
-              </Grid>
-            </Grid>
-          </PosterContent>
         </>
+      )}
+      <PosterMediaContent showDetails={props.showDetails}>
+        <CardMedia
+          component='img' image={`${props.posterUrl}`} alt={`${props.title}`}
+          sx={{ pointerEvents: 'none', userSelect: 'none' }}
+        />
+      </PosterMediaContent>
+      {props.showDetails && (
+        <PosterContent>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <TruncatedTypography variant='body2' color='primary.dark' fontWeight={600} lines={1} sx={{ mt: 0 }}>
+                {`${props.title}`}
+              </TruncatedTypography>
+            </Grid>
+            <Grid item xs={6}>
+              <Box display='flex' alignItems='center'>
+                <Typography variant='body1' display='inline' color='text.primary' fontWeight='bold'>{props.price} ETH</Typography>
+              </Box>
+            </Grid>
+            <Grid item display='flex' alignItems='center' justifyContent='flex-end' xs={6}>
+              <HeartCounter count={props.rate} favorite={props.isFavorite} />
+            </Grid>
+          </Grid>
+        </PosterContent>
       )}
     </PosterWrapper>
   )
@@ -120,17 +122,16 @@ const Poster: FC<PosterProps & {showDetails: boolean}> = (props): JSX.Element =>
 
 export default Poster
 
-export const PosterWrapper = styled(Card)<CardProps>(({ theme }) => ({
+export const PosterWrapper = styled(Card, {
+  shouldForwardProp: (prop) => prop !== 'showDetails'
+})<CardProps & {showDetails: boolean}>(({ theme, showDetails }) => ({
   position: 'relative',
   backgroundColor: theme.palette.background.paper,
-  boxShadow: '0 3px 6px rgba(0,0,0,0.16)',
+  boxShadow: showDetails ? '0 3px 6px rgba(0,0,0,0.16)' : '',
   cursor: 'pointer',
-  '&, & .MuiCardMedia-root': {
-    transition: 'all 0.3s ease-in-out'
-  },
-  '& .MuiCardMedia-root': {
-    width: 'calc(100% + 1px)'
-  },
+  width: '100%',
+  height: '100%',
+  transition: 'all 0.3s ease-in-out',
   '&:hover': {
     transform: 'translateY(-1rem)'
   }
@@ -140,12 +141,8 @@ export const PosterHeader = styled(CardHeader)<CardHeaderProps>(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  position: 'absolute',
   width: '100%',
-  padding: '0.25rem 0.5rem',
-  top: 0,
-  left: 0,
-  backgroundColor: 'rgba(255,255,255,0.8)'
+  padding: '0.25rem 0.5rem'
 }))
 
 export const PosterContent = styled(CardContent)<CardContentProps>(() => ({
@@ -153,5 +150,24 @@ export const PosterContent = styled(CardContent)<CardContentProps>(() => ({
   svg: {
     width: '0.9rem',
     height: '0.9rem'
+  }
+}))
+
+export const PosterMediaContent = styled(CardContent, {
+  shouldForwardProp: (prop) => prop !== 'showDetails'
+})<CardContentProps & {showDetails: boolean}>(({ showDetails }) => ({
+  padding: '0.5rem !important',
+  width: '100%',
+  height: '100%',
+  maxHeight: showDetails ? 'calc(100% - 7rem)' : 'auto',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  img: {
+    height: 'auto',
+    maxHeight: '100%',
+    maxWidth: '100%',
+    borderRadius: '6px',
+    width: showDetails ? 'auto !important' : '100%'
   }
 }))

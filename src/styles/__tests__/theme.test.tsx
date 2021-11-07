@@ -88,7 +88,7 @@ describe('Theme', () => {
     it('should have valid palette primary light', () => {
       const palette = theme?.defaultTheme?.palette?.primary
       expect(palette).toBeDefined()
-      expect(palette.light).toBe('#e3f2fd')
+      expect(palette.light).toBe('#f3f9fd')
     })
 
     it('should have valid palette primary main', () => {

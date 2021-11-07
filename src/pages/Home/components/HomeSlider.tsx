@@ -7,68 +7,64 @@ import 'swiper/swiper-bundle.min.css'
 import 'swiper/swiper.min.css'
 import SwiperCore, {
   Autoplay,
-  Navigation, Pagination
+  Navigation
 } from 'swiper'
 
 // project imports
-import { Box, styled, BoxProps, Grid } from '@mui/material'
-import HomeSliderCard from '@pages/Home/components/HomeSliderCard'
+import { Box, styled, BoxProps, Grid, Container, ContainerProps, useMediaQuery } from '@mui/material'
 import Poster, { PosterProps } from '@components/Poster'
+import { useTheme } from '@mui/material/styles'
 
 // ===========================|| HOME SLIDER ||=========================== //
 
-SwiperCore.use([Navigation, Pagination, Autoplay])
+SwiperCore.use([Navigation, Autoplay])
 
 export interface HomeSliderProps {
   slides: PosterProps[]
 }
 
 const HomeSlider: FC<HomeSliderProps> = ({ slides }): JSX.Element => {
+  const theme = useTheme()
+  const movies = new Array(slides.length / 2).fill(0)
+  const moviesLength = movies.length
+  let sliderColumns = 2
+  sliderColumns = useMediaQuery(theme.breakpoints.up('sm')) ? 3 : sliderColumns
+  sliderColumns = useMediaQuery(theme.breakpoints.up('md')) ? 4 : sliderColumns
+  sliderColumns = useMediaQuery(theme.breakpoints.up('lg')) ? 6 : sliderColumns
+  sliderColumns = useMediaQuery(theme.breakpoints.up('xl')) ? 6 : sliderColumns
+
   return (
     <HomeSliderWrapper>
       <Swiper
         spaceBetween={0}
-        slidesPerView={1}
+        slidesPerView={sliderColumns}
         navigation
-        centeredSlides
         autoplay={{
           delay: 5000
         }}
-        pagination={{
-          clickable: true
-        }}
       >
         {
-          slides.map((slide) => (
-            <SwiperSlide key={slide.posterUrl}>
-              <Box width={1} height={1} display='flex' alignItems='center' justifyContent='center'>
-                <Grid container alignItems='center' justifyContent='center' zIndex={1}>
-                  <Grid item sm={12} md={10} lg={8} xl={6}>
-                    <Grid container spacing={3} flexDirection='row-reverse'>
-                      <Grid item xs={12} sm={6} display='flex' alignItems='center' justifyContent='center'>
-                        <HomeSliderPosterWrapper>
-                          <Poster {...slide} showDetails={false} />
-                        </HomeSliderPosterWrapper>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <HomeSliderCard slide={slide} />
-                      </Grid>
-                    </Grid>
+          movies.map((_, i) => {
+            return (
+              <SwiperSlide key={slides[i].title}>
+                <Grid container>
+                  <Grid item xs={12}>
+                    <Poster {...slides[i]} showDetails={false} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Poster {...slides[moviesLength + i]} showDetails={false} />
                   </Grid>
                 </Grid>
-                <HomeSliderBackground src={slide.posterUrl} />
-              </Box>
-            </SwiperSlide>
-          ))
+              </SwiperSlide>
+            )
+          })
         }
       </Swiper>
     </HomeSliderWrapper>
   )
 }
 
-export const HomeSliderWrapper = styled(Box)<BoxProps>(({ theme }) => ({
-  height: '100%',
-  maxHeight: 'calc(60vh - 3.5rem)',
+export const HomeSliderWrapper = styled(Container)<ContainerProps>(({ theme }) => ({
   display: 'block',
   position: 'relative',
   transition: 'all 0.5s ease-in-out',
@@ -79,26 +75,16 @@ export const HomeSliderWrapper = styled(Box)<BoxProps>(({ theme }) => ({
     height: '100%'
   },
   '& .swiper-button-next, & .swiper-button-prev': {
-    width: '4rem',
+    width: '40px',
+    height: '40px',
+    backgroundColor: theme.palette.background.default,
+    padding: '0.5rem',
+    borderRadius: '50%',
+    border: '1px solid rgba(4, 4, 5, 0.1)',
     '&:after': {
       color: theme.palette.primary.dark,
-      fontSize: '3rem',
+      fontSize: '1rem',
       fontWeight: 'bold'
-    }
-  },
-  '& .swiper-pagination': {
-    bottom: '1rem',
-    '& .swiper-pagination-bullet': {
-      width: '0.7rem',
-      height: '0.7rem',
-      backgroundColor: theme.palette.primary.dark,
-      transition: 'all 0.5s ease-in-out',
-      opacity: 1,
-      boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-    },
-    '& .swiper-pagination-bullet-active': {
-      width: '2rem !important',
-      borderRadius: '8px'
     }
   },
   '& .MuiAvatar-root': {
@@ -108,12 +94,6 @@ export const HomeSliderWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   '& svg': {
     width: '1rem',
     height: '1rem'
-  },
-  [theme.breakpoints.down('sm')]: {
-    maxHeight: 'calc(80vh - 2rem)',
-    '& .swiper-button-next, & .swiper-button-prev': {
-      display: 'none'
-    }
   }
 }))
 

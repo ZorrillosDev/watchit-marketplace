@@ -3,9 +3,8 @@ import React, { FC } from 'react'
 
 // project imports
 import HomeSlider, { HomeSliderProps } from '@pages/Home/components/HomeSlider'
-import { Box, BoxProps, darken, styled } from '@mui/material'
+import { Box, BoxProps, styled } from '@mui/material'
 import HomeTrending from '@pages/Home/components/HomeTrending'
-import HomeMostLoved from '@pages/Home/components/HomeMostLoved'
 import HomeCreators from '@pages/Home/components/HomeCreators'
 import Footer from '@components/Footer'
 
@@ -14,20 +13,13 @@ import Footer from '@components/Footer'
 export const HomeView: FC<HomeSliderProps> = (props): JSX.Element => {
   return (
     <>
-      <HomeSlider {...props} />
+      <HomeSection sx={{ backgroundColor: (theme) => theme.palette.primary.light }}>
+        <HomeSlider {...props} />
+      </HomeSection>
       <HomeSection>
         <HomeTrending />
       </HomeSection>
-      <HomeSection
-        sx={{
-          backgroundColor: (theme) => Object.is(theme.palette.mode, 'light')
-            ? darken(theme.palette.primary.dark, 0.6)
-            : darken(theme.palette.background.default, 0.6)
-        }}
-      >
-        <HomeMostLoved />
-      </HomeSection>
-      <HomeSection>
+      <HomeSection sx={{ backgroundColor: (theme) => theme.palette.primary.light }}>
         <HomeCreators />
       </HomeSection>
       <Footer />
@@ -36,8 +28,12 @@ export const HomeView: FC<HomeSliderProps> = (props): JSX.Element => {
 }
 
 export const HomeSection = styled(Box)<BoxProps>(({ theme }) => ({
-  paddingTop: '120px',
-  paddingBottom: '120px',
+  paddingTop: '60px',
+  paddingBottom: '60px',
+  '&:first-of-type': {
+    paddingTop: '60px',
+    paddingBottom: '60px'
+  },
   [theme.breakpoints.down('sm')]: {
     paddingTop: '60px',
     paddingBottom: '60px'

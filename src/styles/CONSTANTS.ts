@@ -1,5 +1,5 @@
 // Theme color constants
-export const THEME_COLOR_PRIMARY_LIGHT = '#e3f2fd'
+export const THEME_COLOR_PRIMARY_LIGHT = '#f3f9fd'
 export const THEME_COLOR_PRIMARY_MAIN = '#155f75'
 export const THEME_COLOR_PRIMARY_DARK = '#155f75'
 
