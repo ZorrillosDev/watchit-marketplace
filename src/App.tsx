@@ -14,7 +14,7 @@ import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/s
 import CssBaseline from '@mui/material/CssBaseline'
 import { PaletteMode } from '@mui/material'
 import { DAppProvider } from '@usedapp/core'
-import {config} from '@src/w3/'
+import { config } from '@src/w3/'
 // ===========================|| MAIN APP ||=========================== //
 
 const ConnectedApp = withRouter(Routing)
