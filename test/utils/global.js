@@ -1,6 +1,6 @@
 const CID = require('cids')
 const { expect } = require('chai')
-const { bs58toHex, hexToBs58, randomCID } = require('../../utils')
+const { bs58toHex, hexToBs58, randomCID } = require('./index')
 
 describe('Base 58 <--> Hex Conversion', function () {
   const str = 'QmPXME1oRtoT627YKaDPDQ3PwA8tdP9rWuAAweLzqSwRST'

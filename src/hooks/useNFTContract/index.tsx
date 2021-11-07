@@ -1,27 +1,40 @@
 import {useContractCall, useEthers} from "@usedapp/core";
 import {getNetworkSettings} from "@src/w3";
-import WNFT from '@src/w3/abi/WNFT.json'
-import {ethers} from "ethers";
-interface MetaMask {
-    activate: () => void
-    active: boolean
-    deactivate: () => void
-    account: string | null | undefined
-    library: any
-    error: Error | undefined
+import {WNFTAbi} from "@w3/CONSTANTS";
+import {Ethers} from "@src/utils";
+import {BigNumber} from "ethers";
+import {Falsy} from "@usedapp/core/dist/cjs/src/model/types";
+import {Contract} from '@ethersproject/contracts'
+import {useEffect, useState} from "react";
+
+export function useNFTBalanceOf(account: string | Falsy, cid: string): BigNumber {
+    const {chainId} = useEthers()
+    const networkSettings = getNetworkSettings(chainId)
+
+    const [tokenBalance] = useContractCall({
+        abi: WNFTAbi,
+        address: networkSettings.NFT,
+        method: 'balanceOf',
+        args: [account, Ethers.cidToUint256(cid)]
+    }) ?? []
+
+    return tokenBalance
 }
 
 
-export const useNFTBalanceOf = () => {
+export function useListenForEvent(event: string) {
     const {chainId} = useEthers()
     const networkSettings = getNetworkSettings(chainId)
-    // @ts-ignore
-    const wnftInterface = new ethers.utils.Interface(WNFT);
+    const contract = new Contract(networkSettings.NFT, WNFTAbi)
+    const [events, setEvent] = useState()
 
-    const [tokenBalance] = useContractCall({
-        abi: wnftInterface,
-        address: networkSettings.NFT,
-        method: 'balanceOf',
-        args: []
-    }) ?? []
+    useEffect(() => {
+        const listener = (...params: any) => setEvent(params)
+        contract.on(event, listener)
+        return () => {
+            contract.off(event, listener)
+        }
+    }, [event])
+
+    return events
 }

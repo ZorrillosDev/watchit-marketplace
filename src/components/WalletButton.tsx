@@ -6,8 +6,8 @@ import {PixelArtIdenticon} from '@components/Identicon'
 import {useEtherBalance, useEthers} from '@usedapp/core'
 import {Ethers} from "@src/utils";
 
-const WalletButton: FC = (): JSX.Element => {
-    const {activateBrowserWallet, account} = useEthers()
+const WalletButton: FC = React.memo((): JSX.Element => {
+    const {activateBrowserWallet, deactivate, account} = useEthers()
     const etherBalance = useEtherBalance(account)
 
     const icon: JSX.Element = account
@@ -24,7 +24,7 @@ const WalletButton: FC = (): JSX.Element => {
             variant='contained'
             color={'primary'}
             startIcon={icon}
-            onClick={() => activateBrowserWallet()}
+            onClick={() => !account ? activateBrowserWallet() : deactivate()}
         >
             {
                 account
@@ -33,6 +33,6 @@ const WalletButton: FC = (): JSX.Element => {
             }
         </Button>
     )
-}
+})
 
-export default React.memo(WalletButton)
+export default WalletButton
