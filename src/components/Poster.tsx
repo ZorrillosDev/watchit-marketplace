@@ -146,7 +146,7 @@ export const PosterHeader = styled(CardHeader)<CardHeaderProps>(() => ({
 }))
 
 export const PosterContent = styled(CardContent)<CardContentProps>(() => ({
-  padding: '0.5rem 0.7 !important',
+  padding: '0.5rem 0.7rem !important',
   svg: {
     width: '0.9rem',
     height: '0.9rem'
@@ -159,7 +159,7 @@ export const PosterMediaContent = styled(CardContent, {
   padding: '0.5rem !important',
   width: '100%',
   height: '100%',
-  maxHeight: showDetails ? 'calc(100% - 7rem)' : 'auto',
+  maxHeight: showDetails ? 'calc(100% - 6.65rem)' : 'auto',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
