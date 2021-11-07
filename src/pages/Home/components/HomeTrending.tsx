@@ -15,7 +15,7 @@ import { useTheme } from '@mui/material/styles'
 
 const HomeTrending: FC = (): JSX.Element => {
   const theme = useTheme()
-  const moviesRows = 5
+  const moviesRows = 2
   let moviesColumns = 2
   moviesColumns = useMediaQuery(theme.breakpoints.up('md')) ? 3 : moviesColumns
   moviesColumns = useMediaQuery(theme.breakpoints.up('lg')) ? 4 : moviesColumns
@@ -26,7 +26,7 @@ const HomeTrending: FC = (): JSX.Element => {
       <Grid container alignItems='center' justifyContent='center' spacing={6}>
         <Grid item xs={12}>
           <Typography variant='h2' color='text.primary' fontWeight={600}>
-            Movies in Trending
+            Recent Movies
           </Typography>
         </Grid>
         <Grid item xs={12} display='flex' alignItems='center' justifyContent='center'>
