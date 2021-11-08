@@ -78,7 +78,7 @@ const HomeCreatorChip = styled(Chip)<ChipProps>(({ theme }) => ({
   justifyContent: 'flex-start',
   cursor: 'pointer',
   '.MuiChip-label, p': {
-    margin: 0,
+    margin: 0
   }
 }))
 

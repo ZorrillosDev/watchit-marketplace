@@ -11,7 +11,7 @@ import SwiperCore, {
 } from 'swiper'
 
 // project imports
-import { Box, styled, BoxProps, Grid, Container, ContainerProps, useMediaQuery } from '@mui/material'
+import { styled, Grid, Container, ContainerProps, useMediaQuery } from '@mui/material'
 import Poster, { PosterProps } from '@components/Poster'
 import { useTheme } from '@mui/material/styles'
 
@@ -96,6 +96,5 @@ export const HomeSliderWrapper = styled(Container)<ContainerProps>(({ theme }) =
     height: '1rem'
   }
 }))
-
 
 export default HomeSlider
