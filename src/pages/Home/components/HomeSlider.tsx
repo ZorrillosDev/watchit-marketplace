@@ -12,7 +12,8 @@ import SwiperCore, {
 
 // project imports
 import { styled, Grid, Container, ContainerProps, useMediaQuery } from '@mui/material'
-import Poster, { PosterProps } from '@components/Poster'
+import { HomeRecentPosterProps } from '@pages/Home/components/HomeRecentPoster'
+import Poster from '@components/Poster'
 import { useTheme } from '@mui/material/styles'
 
 // ===========================|| HOME SLIDER ||=========================== //
@@ -20,7 +21,7 @@ import { useTheme } from '@mui/material/styles'
 SwiperCore.use([Navigation, Autoplay])
 
 export interface HomeSliderProps {
-  slides: PosterProps[]
+  slides: HomeRecentPosterProps[]
 }
 
 const HomeSlider: FC<HomeSliderProps> = ({ slides }): JSX.Element => {
@@ -49,10 +50,10 @@ const HomeSlider: FC<HomeSliderProps> = ({ slides }): JSX.Element => {
               <SwiperSlide key={slides[i].title}>
                 <Grid container>
                   <Grid item xs={12}>
-                    <Poster {...slides[i]} showDetails={false} />
+                    <Poster {...slides[i]} />
                   </Grid>
                   <Grid item xs={12}>
-                    <Poster {...slides[moviesLength + i]} showDetails={false} />
+                    <Poster {...slides[moviesLength + i]} />
                   </Grid>
                 </Grid>
               </SwiperSlide>

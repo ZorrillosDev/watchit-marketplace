@@ -2,16 +2,16 @@
 import React, { FC } from 'react'
 
 // MUI IMPORTS
-import { Grid, Typography, Container, Button, styled, GridProps, useMediaQuery } from '@mui/material'
+import { Grid, Typography, Container, Button, useMediaQuery } from '@mui/material'
 
 // PROJECT IMPORTS
 // TODO delete this when data comes from backend
 import { FAKE_MOVIES } from '@src/config'
 import { FilterList } from '@mui/icons-material'
-import Poster from '@components/Poster'
 import { useTheme } from '@mui/material/styles'
+import HomeRecentPoster from '@pages/Home/components/HomeRecentPoster'
 
-// ===========================|| HOME - TRENDING ||=========================== //
+// ===========================|| HOME - RECENT ||=========================== //
 
 const HomeRecent: FC = (): JSX.Element => {
   const theme = useTheme()
@@ -44,11 +44,7 @@ const HomeRecent: FC = (): JSX.Element => {
               FAKE_MOVIES.map((poster, i) => {
                 const moviesMax = moviesColumns * moviesRows
                 return (i < moviesMax)
-                  ? (
-                    <HomeRecentPosterWrapper item key={poster.title}>
-                      <Poster {...poster} showDetails />
-                    </HomeRecentPosterWrapper>
-                  )
+                  ? <HomeRecentPoster {...poster} key={poster.title} />
                   : <React.Fragment key={poster.title} />
               })
             }
@@ -60,23 +56,3 @@ const HomeRecent: FC = (): JSX.Element => {
 }
 
 export default HomeRecent
-
-export const HomeRecentPosterWrapper = styled(Grid)<GridProps>(({ theme }) => ({
-  width: '100%',
-  height: '25rem',
-  [theme.breakpoints.up('xs')]: {
-    maxWidth: '100%'
-  },
-  [theme.breakpoints.up('sm')]: {
-    maxWidth: 'calc(100% / 2)'
-  },
-  [theme.breakpoints.up('md')]: {
-    maxWidth: 'calc(100% / 3)'
-  },
-  [theme.breakpoints.up('lg')]: {
-    maxWidth: 'calc(100% / 4)'
-  },
-  [theme.breakpoints.up('xl')]: {
-    maxWidth: 'calc(100% / 5)'
-  }
-}))
