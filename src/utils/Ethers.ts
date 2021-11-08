@@ -1,7 +1,7 @@
 /* eslint-disable  @typescript-eslint/no-namespace */
 
 import { CID } from 'multiformats/cid'
-import {base16}  from "multiformats/bases/base16"
+import { base16 } from 'multiformats/bases/base16'
 import { BigNumber, ethers } from 'ethers'
 
 export namespace Ethers {
