@@ -1,10 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import HomeTrending from '@pages/Home/components/HomeTrending'
+import HomeRecent from '@pages/Home/components/HomeRecent'
 
-describe('<HomeTrending />', () => {
+describe('<HomeRecent />', () => {
   it('should render', () => {
-    const component = shallow(<HomeTrending />)
+    const component = shallow(<HomeRecent />)
 
     expect(component).toMatchSnapshot()
   })

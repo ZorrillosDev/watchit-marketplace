@@ -13,7 +13,7 @@ import { useTheme } from '@mui/material/styles'
 
 // ===========================|| HOME - TRENDING ||=========================== //
 
-const HomeTrending: FC = (): JSX.Element => {
+const HomeRecent: FC = (): JSX.Element => {
   const theme = useTheme()
   const moviesRows = 2
   let moviesColumns = 2
@@ -45,9 +45,9 @@ const HomeTrending: FC = (): JSX.Element => {
                 const moviesMax = moviesColumns * moviesRows
                 return (i < moviesMax)
                   ? (
-                    <HomeTrendingPosterWrapper item key={poster.title}>
+                    <HomeRecentPosterWrapper item key={poster.title}>
                       <Poster {...poster} showDetails />
-                    </HomeTrendingPosterWrapper>
+                    </HomeRecentPosterWrapper>
                   )
                   : <React.Fragment key={poster.title} />
               })
@@ -59,9 +59,9 @@ const HomeTrending: FC = (): JSX.Element => {
   )
 }
 
-export default HomeTrending
+export default HomeRecent
 
-export const HomeTrendingPosterWrapper = styled(Grid)<GridProps>(({ theme }) => ({
+export const HomeRecentPosterWrapper = styled(Grid)<GridProps>(({ theme }) => ({
   width: '100%',
   height: '25rem',
   [theme.breakpoints.up('xs')]: {

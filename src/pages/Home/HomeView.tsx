@@ -4,7 +4,7 @@ import React, { FC } from 'react'
 // project imports
 import HomeSlider, { HomeSliderProps } from '@pages/Home/components/HomeSlider'
 import { Box, BoxProps, styled } from '@mui/material'
-import HomeTrending from '@pages/Home/components/HomeTrending'
+import HomeRecent from '@pages/Home/components/HomeRecent'
 import HomeCreators from '@pages/Home/components/HomeCreators'
 import Footer from '@components/Footer'
 
@@ -17,7 +17,7 @@ export const HomeView: FC<HomeSliderProps> = (props): JSX.Element => {
         <HomeSlider {...props} />
       </HomeSection>
       <HomeSection>
-        <HomeTrending />
+        <HomeRecent />
       </HomeSection>
       <HomeSection sx={{ backgroundColor: (theme) => theme.palette.primary.light }}>
         <HomeCreators />

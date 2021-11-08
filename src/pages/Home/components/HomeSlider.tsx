@@ -97,34 +97,5 @@ export const HomeSliderWrapper = styled(Container)<ContainerProps>(({ theme }) =
   }
 }))
 
-export const HomeSliderBackground = styled(Box)<BoxProps & { src: string }>(({ src }) => ({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  zIndex: 0,
-  width: '100%',
-  height: '100%',
-  backgroundImage: `url(${src})`,
-  backgroundSize: 'cover',
-  backgroundColor: 'rgb(255, 255, 255)',
-  backgroundPosition: 'center center',
-  opacity: 0.3,
-  filter: 'blur(10px)',
-  WebkitMask: 'linear-gradient(rgb(255, 255, 255), transparent)'
-}))
-
-export const HomeSliderPosterWrapper = styled(Box)<BoxProps>(({ theme }) => ({
-  width: '100%',
-  maxWidth: '10rem',
-  '&:hover > div': {
-    boxShadow: '0 5px 15px rgba(0,0,0,0.3)'
-  },
-  [theme.breakpoints.up('sm')]: {
-    maxWidth: '15rem'
-  },
-  [theme.breakpoints.up('xl')]: {
-    maxWidth: '18rem'
-  }
-}))
 
 export default HomeSlider

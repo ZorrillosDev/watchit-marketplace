@@ -103,15 +103,25 @@ const Poster: FC<PosterProps & { showDetails: boolean }> = (props): JSX.Element 
                 <PosterContent>
                     <Grid container spacing={1}>
                         <Grid item xs={12}>
-                            <TruncatedTypography variant='body2' color='primary.dark' fontWeight={600} lines={1}
-                                                 sx={{mt: 0}}>
+                            <TruncatedTypography
+                                variant='body2'
+                                color='primary.dark'
+                                fontWeight={600} lines={1}
+                                sx={{mt: 0}}
+                            >
                                 {`${props.title}`}
                             </TruncatedTypography>
                         </Grid>
                         <Grid item xs={6}>
                             <Box display='flex' alignItems='center'>
-                                <Typography variant='body1' display='inline' color='text.primary'
-                                            fontWeight='bold'>{props.price} ETH</Typography>
+                                <Typography
+                                    variant='body1'
+                                    display='inline'
+                                    color='text.primary'
+                                    fontWeight='bold'
+                                >
+                                    {props.price} ETH
+                                </Typography>
                             </Box>
                         </Grid>
                         <Grid item display='flex' alignItems='center' justifyContent='flex-end' xs={6}>
