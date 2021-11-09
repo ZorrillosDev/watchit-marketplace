@@ -28,6 +28,7 @@ const HomeSlider: FC<HomeSliderProps> = ({ slides }): JSX.Element => {
   const theme = useTheme()
   const movies = new Array(slides.length / 2).fill(0)
   const moviesLength = movies.length
+
   let sliderColumns = 2
   sliderColumns = useMediaQuery(theme.breakpoints.up('sm')) ? 3 : sliderColumns
   sliderColumns = useMediaQuery(theme.breakpoints.up('md')) ? 4 : sliderColumns
@@ -47,7 +48,7 @@ const HomeSlider: FC<HomeSliderProps> = ({ slides }): JSX.Element => {
         {
           movies.map((_, i) => {
             return (
-              <SwiperSlide key={slides[i].title}>
+              <SwiperSlide key={i}>
                 <Grid container>
                   <Grid item xs={12}>
                     <Poster {...slides[i]} />
