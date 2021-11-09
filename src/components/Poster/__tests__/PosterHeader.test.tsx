@@ -4,7 +4,7 @@ import { PosterHeader } from '@components/Poster'
 
 describe('<PosterHeader />', () => {
   it('should render', () => {
-    const component = shallow(<PosterHeader creator={'test'} />)
+    const component = shallow(<PosterHeader creator='test' />)
 
     expect(component).toMatchSnapshot()
   })

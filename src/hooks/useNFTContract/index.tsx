@@ -7,7 +7,6 @@ import { Falsy } from '@usedapp/core/dist/cjs/src/model/types'
 import { Contract } from '@ethersproject/contracts'
 import { useEffect, useState } from 'react'
 
-
 export function useNFTBalanceOf (account: string | Falsy, cid: string): BigNumber {
   const { chainId } = useEthers()
   const networkSettings = getNetworkSettings(chainId)
