@@ -6,26 +6,25 @@ import { Grid, Typography, Container, Button, useMediaQuery } from '@mui/materia
 
 // PROJECT IMPORTS
 // TODO delete this when data comes from backend
-import {FAKE_MOVIES} from '@src/config'
-import {FilterList} from '@mui/icons-material'
-import {useTheme} from '@mui/material/styles'
-import {Theme} from "@mui/system";
+import { FAKE_MOVIES } from '@src/config'
+import { FilterList } from '@mui/icons-material'
+import { useTheme } from '@mui/material/styles'
+import { Theme } from '@mui/system'
 import HomeRecentPoster from '@pages/Home/components/HomeRecentPoster'
-import {MOVIES_COLUMNS, MOVIES_ROWS} from "@pages/Home/CONSTANTS";
+import { MOVIES_COLUMNS, MOVIES_ROWS } from '@pages/Home/CONSTANTS'
 
 // ===========================|| HOME - RECENT ||=========================== //
 
-
 const HomeRecent: FC = (): JSX.Element => {
-    const theme: Theme = useTheme()
+  const theme: Theme = useTheme()
 
-    const getMoviesColumns = (theme: Theme) => {
-        let moviesColumns = MOVIES_COLUMNS
-        moviesColumns = useMediaQuery(theme.breakpoints.up('md')) ? 3 : moviesColumns
-        moviesColumns = useMediaQuery(theme.breakpoints.up('lg')) ? 4 : moviesColumns
-        moviesColumns = useMediaQuery(theme.breakpoints.up('xl')) ? 5 : moviesColumns
-        return moviesColumns
-    }
+  const getMoviesColumns = (theme: Theme): number => {
+    let moviesColumns = MOVIES_COLUMNS
+    moviesColumns = useMediaQuery(theme.breakpoints.up('md')) ? 3 : moviesColumns
+    moviesColumns = useMediaQuery(theme.breakpoints.up('lg')) ? 4 : moviesColumns
+    moviesColumns = useMediaQuery(theme.breakpoints.up('xl')) ? 5 : moviesColumns
+    return moviesColumns
+  }
 
   return (
     <Container>
@@ -48,7 +47,7 @@ const HomeRecent: FC = (): JSX.Element => {
           <Grid container spacing={3}>
             {
               FAKE_MOVIES.map((poster, i) => {
-                const moviesMax = getMoviesColumns(theme)  * MOVIES_ROWS
+                const moviesMax = getMoviesColumns(theme) * MOVIES_ROWS
                 return (i < moviesMax)
                   ? <HomeRecentPoster {...poster} key={poster.title} />
                   : <React.Fragment key={poster.title} />
