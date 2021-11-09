@@ -1,4 +1,5 @@
-import { Movie, ThunkAction, ThunkDispatcher } from '@state/types'
+import { ThunkAction, ThunkDispatcher } from '@state/types'
+import { Movie } from '@state/types/movies'
 import { RecentMoviesArgs } from '@state/recents/types'
 import { setMovies } from '@state/recents/reducer'
 import { API_ENDPOINT } from '@state/CONSTANTS'
