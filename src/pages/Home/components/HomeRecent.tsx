@@ -17,7 +17,7 @@ import { Movie } from '@state/types'
 
 // ===========================|| HOME - RECENT ||=========================== //
 
-const HomeRecent: FC<RecentMoviesState & RecentMoviesActions> = ({ recent, fetchRecentMovies }): JSX.Element => {
+const HomeRecent: FC<RecentMoviesState & RecentMoviesActions> = ({ movies, fetchRecentMovies }): JSX.Element => {
   const theme: Theme = useTheme()
   let moviesColumns = MOVIES_COLUMNS
   moviesColumns = useMediaQuery(theme.breakpoints.up('md')) ? 3 : moviesColumns
@@ -51,7 +51,7 @@ const HomeRecent: FC<RecentMoviesState & RecentMoviesActions> = ({ recent, fetch
         <Grid item xs={12} display='flex' alignItems='center' justifyContent='center'>
           <Grid container spacing={3}>
             {
-              recent !== undefined ? recent.map((movie: Movie, i: number) => {
+              movies !== undefined ? movies.map((movie: Movie, i: number) => {
                 const moviesMax = moviesColumns * MOVIES_ROWS
                 return (i < moviesMax)
                   ? <HomeRecentPoster {...movie} key={i} />
@@ -68,7 +68,7 @@ const HomeRecent: FC<RecentMoviesState & RecentMoviesActions> = ({ recent, fetch
 const mapDispatchToProps: Partial<RecentMoviesActions> = { fetchRecentMovies }
 const mapStateToProps = (state: RootStateOrAny): RecentMoviesState => {
   return {
-    recent: state.recent.recent
+    movies: state.recent.movies
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(HomeRecent)
