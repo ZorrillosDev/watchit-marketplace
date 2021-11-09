@@ -13,7 +13,7 @@ import HomeRecentPoster from '@pages/Home/components/HomeRecentPoster'
 import { MOVIES_COLUMNS, MOVIES_ROWS } from '@pages/Home/CONSTANTS'
 import { RecentMoviesActions, fetchRecentMovies } from '@state/recents/actions'
 import { RecentMoviesState } from '@state/recents/reducer'
-import { Movie } from '@state/types'
+import { Movie } from '@state/types/movies'
 
 // ===========================|| HOME - RECENT ||=========================== //
 

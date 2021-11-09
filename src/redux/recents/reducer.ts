@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Movie } from '@state/types'
+import { Movie } from '@state/types/movies'
 
 export interface RecentMoviesState {
   movies: Movie[]
