@@ -7,7 +7,7 @@ import { Box, Grid, styled, Typography, CardContent, CardContentProps } from '@m
 // PROJECT IMPORTS
 import HeartCounter from '@components/HeartCounter'
 import TruncatedTypography from '@components/TruncatedTypography'
-import {Ethers} from "@src/utils";
+import { Ethers } from '@src/utils'
 
 // ===========================|| POSTER - FOOTER ||=========================== //
 
