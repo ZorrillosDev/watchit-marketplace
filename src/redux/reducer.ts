@@ -1,11 +1,11 @@
 import { connectRouter } from 'connected-react-router'
 import { Reducer, combineReducers } from 'redux'
 import { History } from 'history'
-import AppReducers from '@state/app/reducer'
+import RecentReducers from '@state/recents/reducer'
 
 const createRootReducer = (history: History): Reducer => {
   return combineReducers({
-    app: AppReducers,
+    recent: RecentReducers,
     router: connectRouter(history)
   })
 }

@@ -11,10 +11,9 @@ import TruncatedTypography from '@components/TruncatedTypography'
 // ===========================|| POSTER - FOOTER ||=========================== //
 
 export interface PosterFooterProps {
-  price: number
-  title: string
-  rate: number
-  isFavorite: boolean
+  name: string
+  price?: number
+  rating?: number
 }
 
 export const PosterFooter: FC<PosterFooterProps> = (props): JSX.Element => {
@@ -28,7 +27,7 @@ export const PosterFooter: FC<PosterFooterProps> = (props): JSX.Element => {
             fontWeight={600} lines={1}
             sx={{ mt: 0 }}
           >
-            {`${props.title}`}
+            {`${props.name}`}
           </TruncatedTypography>
         </Grid>
         <Grid item xs={6}>
@@ -39,12 +38,12 @@ export const PosterFooter: FC<PosterFooterProps> = (props): JSX.Element => {
               color='text.primary'
               fontWeight='bold'
             >
-              {props.price} ETH
+              {props.price ?? 0} ETH
             </Typography>
           </Box>
         </Grid>
         <Grid item display='flex' alignItems='center' justifyContent='flex-end' xs={6}>
-          <HeartCounter count={props.rate} favorite={props.isFavorite} />
+          <HeartCounter count={props.rating ?? 0}/>
         </Grid>
       </Grid>
     </PosterFooterWrapper>

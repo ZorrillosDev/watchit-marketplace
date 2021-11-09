@@ -4,7 +4,7 @@ import { PosterMedia } from '@components/Poster'
 
 describe('<PosterMedia />', () => {
   it('should render', () => {
-    const component = shallow(<PosterMedia title='test' posterUrl='test' />)
+    const component = shallow(<PosterMedia name='test' image='test' />)
 
     expect(component).toMatchSnapshot()
   })

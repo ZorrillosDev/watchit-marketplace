@@ -5,7 +5,7 @@ import { Favorite, FavoriteBorder } from '@components/Icons'
 
 // ===========================|| POSTER ||=========================== //
 
-const HeartCounter: FC<{ count: number, favorite: boolean }> = ({ count, favorite }): JSX.Element => {
+const HeartCounter: FC<{ count: number, favorite?: boolean }> = ({ count, favorite }): JSX.Element => {
   return (
     <HeartCounterWrapper display='flex' justifyContent='center' alignItems='center' color='primary'>
       {favorite

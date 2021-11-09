@@ -4,7 +4,7 @@ import { PosterFooter } from '@components/Poster'
 
 describe('<PosterFooter />', () => {
   it('should render', () => {
-    const component = shallow(<PosterFooter isFavorite title='test' price={3} rate={4} />)
+    const component = shallow(<PosterFooter name='test' price={3} rating={4} />)
 
     expect(component).toMatchSnapshot()
   })

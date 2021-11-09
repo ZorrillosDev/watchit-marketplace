@@ -8,8 +8,8 @@ import { SxProps } from '@mui/system'
 // ===========================|| POSTER - MEDIA ||=========================== //
 
 export interface PosterMediaProps {
-  posterUrl: string
-  title: string
+  image: string
+  name: string
   sx?: SxProps<Theme>
 }
 
@@ -17,7 +17,7 @@ export const PosterMedia: FC<PosterMediaProps> = (props): JSX.Element => {
   return (
     <PosterMediaContent sx={props.sx}>
       <CardMedia
-        component='img' image={`${props.posterUrl}`} alt={`${props.title}`}
+        component='img' image={`${props.image}`} alt={`${props.name}`}
         sx={{ pointerEvents: 'none', userSelect: 'none' }}
       />
     </PosterMediaContent>
