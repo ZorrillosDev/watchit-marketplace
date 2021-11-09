@@ -5,14 +5,15 @@ import { base16 } from 'multiformats/bases/base16'
 import { BigNumber, ethers } from 'ethers'
 
 export namespace Ethers {
-  export function getWeiToETH (wei: BigNumber | number, decimals: number = 6): string {
+  export function getWeiToETH (wei: BigNumber | number, decimals: number = 2): string {
     /**
      * Format Wei to ETH with fixed decimals
      * @param {BigNumber} wei
      * @param {number} decimals
      * @return {string} ETH
      */
-    const eth = ethers.utils.formatEther(wei)
+
+    const eth = ethers.utils.formatEther(wei.toString())
     return (+eth).toFixed(decimals)
   }
 
