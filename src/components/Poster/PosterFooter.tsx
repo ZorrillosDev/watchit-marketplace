@@ -43,7 +43,7 @@ export const PosterFooter: FC<PosterFooterProps> = (props): JSX.Element => {
           </Box>
         </Grid>
         <Grid item display='flex' alignItems='center' justifyContent='flex-end' xs={6}>
-          <HeartCounter count={props.rating ?? 0}/>
+          <HeartCounter count={props.rating ?? 0} />
         </Grid>
       </Grid>
     </PosterFooterWrapper>

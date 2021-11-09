@@ -8,7 +8,7 @@ import { Favorite, FavoriteBorder } from '@components/Icons'
 const HeartCounter: FC<{ count: number, favorite?: boolean }> = ({ count, favorite }): JSX.Element => {
   return (
     <HeartCounterWrapper display='flex' justifyContent='center' alignItems='center' color='primary'>
-      {favorite
+      {favorite !== undefined
         ? <Favorite />
         : <FavoriteBorder />}
       <Typography variant='body1' display='inline' fontWeight='bold'>{count}</Typography>
