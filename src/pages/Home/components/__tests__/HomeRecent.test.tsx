@@ -1,5 +1,5 @@
 import React from 'react'
-import {mount, shallow} from 'enzyme'
+import {shallow} from 'enzyme'
 import HomeRecent from '@pages/Home/components/HomeRecent'
 import {Provider} from 'react-redux'
 import {store} from '@state/store'
