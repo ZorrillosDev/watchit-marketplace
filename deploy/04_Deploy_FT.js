@@ -1,4 +1,4 @@
-const { writeInEnv, getNetworkNameByChainId } = require('../utils')
+const { writeInEnv, getNetworkNameByChainId } = require('../test/utils')
 
 module.exports = async ({
   getNamedAccounts,

@@ -1,11 +1,11 @@
 // Theme color constants
-export const THEME_COLOR_PRIMARY_LIGHT = '#e3f2fd'
-export const THEME_COLOR_PRIMARY_MAIN = '#2286A5'
+export const THEME_COLOR_PRIMARY_LIGHT = '#f3f9fd'
+export const THEME_COLOR_PRIMARY_MAIN = '#155f75'
 export const THEME_COLOR_PRIMARY_DARK = '#155f75'
 
-export const THEME_COLOR_SECONDARY_LIGHT = '#ede7f6'
-export const THEME_COLOR_SECONDARY_MAIN = '#673ab7'
-export const THEME_COLOR_SECONDARY_DARK = '#5e35b1'
+export const THEME_COLOR_SECONDARY_LIGHT = '#f3c5ad'
+export const THEME_COLOR_SECONDARY_MAIN = '#e17b22'
+export const THEME_COLOR_SECONDARY_DARK = '#a75206'
 
 export const THEME_COLOR_WARNING_LIGHT = '#fff8e1'
 export const THEME_COLOR_WARNING_MAIN = '#ffe57f'
@@ -35,9 +35,9 @@ export const THEME_SHAPE_BORDER_RADIUS: number = 8
 
 export const THEME_GRID_SPACING = 2
 
-export const THEME_DARK_COLOR_PRIMARY_LIGHT = '#29314f'
-export const THEME_DARK_COLOR_PRIMARY_MAIN = '#2196f3'
-export const THEME_DARK_COLOR_PRIMARY_DARK = '#1e88e5'
+export const THEME_DARK_COLOR_PRIMARY_LIGHT = '#6c7f8d'
+export const THEME_DARK_COLOR_PRIMARY_MAIN = '#ffffff'
+export const THEME_DARK_COLOR_PRIMARY_DARK = '#ffffff'
 
 export const THEME_DARK_COLOR_SECONDARY_LIGHT = '#1b1e45'
 export const THEME_DARK_COLOR_SECONDARY_MAIN = '#7c4dff'
@@ -64,5 +64,5 @@ export const THEME_DARK_COLOR_GREY_600 = '#757575'
 export const THEME_DARK_COLOR_GREY_700 = '#bdc8f0'
 export const THEME_DARK_COLOR_GREY_900 = '#d7dcec'
 
-export const THEME_DARK_BACKGROUND_DEFAULT = '#111936'
-export const THEME_DARK_BACKGROUND_PAPER = '#212946'
+export const THEME_DARK_BACKGROUND_DEFAULT = '#172629'
+export const THEME_DARK_BACKGROUND_PAPER = '#111f22'

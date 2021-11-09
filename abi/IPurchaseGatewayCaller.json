@@ -1,0 +1,25 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "contract IPurchaseGateway",
+        "name": "oracle",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "buyer",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "cid",
+        "type": "uint256"
+      }
+    ],
+    "name": "safeTransferTo",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  }
+]

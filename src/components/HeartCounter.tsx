@@ -7,7 +7,7 @@ import { Favorite, FavoriteBorder } from '@components/Icons'
 
 const HeartCounter: FC<{ count: number, favorite: boolean }> = ({ count, favorite }): JSX.Element => {
   return (
-    <HeartCounterWrapper display='flex' justifyContent='center' alignItems='center' color='error.dark'>
+    <HeartCounterWrapper display='flex' justifyContent='center' alignItems='center' color='primary'>
       {favorite
         ? <Favorite />
         : <FavoriteBorder />}
@@ -18,7 +18,7 @@ const HeartCounter: FC<{ count: number, favorite: boolean }> = ({ count, favorit
 
 export default HeartCounter
 
-export const HeartCounterWrapper = styled(Box)<BoxProps>(() => ({
+export const HeartCounterWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   cursor: 'pointer',
   svg: {
     width: '0.9rem',

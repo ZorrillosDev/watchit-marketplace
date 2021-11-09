@@ -4,36 +4,38 @@ import React, { FC } from 'react'
 // project imports
 import HomeSlider, { HomeSliderProps } from '@pages/Home/components/HomeSlider'
 import { Box, BoxProps, styled } from '@mui/material'
-import HomeTrending from '@pages/Home/components/HomeTrending'
-import HomeMostLoved from '@pages/Home/components/HomeMostLoved'
+import HomeRecent from '@pages/Home/components/HomeRecent'
 import HomeCreators from '@pages/Home/components/HomeCreators'
+import Footer from '@components/Footer'
 
 // ===========================|| HOME - VIEW ||=========================== //
 
 export const HomeView: FC<HomeSliderProps> = (props): JSX.Element => {
   return (
     <>
-      <HomeSlider {...props} />
-      <HomeSection>
-        <HomeTrending />
+      <HomeSection sx={{ backgroundColor: (theme) => theme.palette.primary.light }}>
+        <HomeSlider {...props} />
       </HomeSection>
       <HomeSection>
-        <HomeMostLoved />
+        <HomeRecent />
       </HomeSection>
-      <HomeSection>
+      <HomeSection sx={{ backgroundColor: (theme) => theme.palette.primary.light }}>
         <HomeCreators />
       </HomeSection>
-      <HomeSection />
+      <Footer />
     </>
   )
 }
 
 export const HomeSection = styled(Box)<BoxProps>(({ theme }) => ({
-  paddingTop: '120px',
+  paddingTop: '60px',
+  paddingBottom: '60px',
+  '&:first-of-type': {
+    paddingTop: '60px',
+    paddingBottom: '60px'
+  },
   [theme.breakpoints.down('sm')]: {
     paddingTop: '60px',
-    '&:first-of-type': {
-      paddingTop: '42px'
-    }
+    paddingBottom: '60px'
   }
 }))

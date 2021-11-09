@@ -134,21 +134,7 @@ export const globalComponentOverrides = {
   MuiContainer: {
     styleOverrides: {
       root: {
-        maxWidth: 'initial !important',
-        paddingLeft: '1rem',
-        paddingRight: '1rem',
-        '@media (min-width: 600px)': {
-          paddingLeft: '1.5rem',
-          paddingRight: '1.5rem'
-        },
-        '@media (min-width: 1280px)': {
-          paddingLeft: '3rem',
-          paddingRight: '3rem'
-        },
-        '@media (min-width: 1920px)': {
-          paddingLeft: '7rem',
-          paddingRight: '7rem'
-        }
+        maxWidth: '1500px !important'
       }
     }
   }
@@ -377,6 +363,7 @@ export const typography = (mode: string): any => ({
     },
     body2: {
       letterSpacing: '0em',
+      fontSize: '1rem',
       fontWeight: 400,
       lineHeight: '1.5em',
       color: Object.is(mode, 'light') ? THEME_COLOR_GREY_700 : THEME_DARK_COLOR_GREY_700

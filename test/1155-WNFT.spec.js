@@ -1,5 +1,5 @@
 /* global ethers, network */
-const chai = require('chai')
+require('chai')
 require('./utils/global')
 const bs58 = require('bs58')
 const { expect } = require('chai')
@@ -9,7 +9,7 @@ const {
   bs58toHex,
   hexToBs58,
   randomCID
-} = require('../utils')
+} = require('./utils')
 
 const txOptions = { gasLimit: 800000 }
 
