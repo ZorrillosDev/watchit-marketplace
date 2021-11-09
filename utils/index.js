@@ -49,7 +49,7 @@ function getNetworkSettings (networkName) {
       NFT: process.env.RINKEBY_CONTRACT_NFT,
       WVC: process.env.RINKEBY_CONTRACT_FT,
       fee: '100000000000000000',
-      oracle: '0xc57b33452b4f7bb189bb5afae9cc4aba1f7a4fd8',
+      oracle: '0x7AFe1118Ea78C1eae84ca8feE5C65Bc76CcF879e',
       jobId: '6d1bfe27e7034b1d87b5270556b17277',
       linkToken: '0x01BE23585060835E02B77ef475b0Cc51aA1e0709'
     },
@@ -71,6 +71,7 @@ function getNetworkSettings (networkName) {
     linkToken: process.env.LOCALHOST_CHAINLINK_LINK
   }
 }
+
 
 const bs58toHex = (b58) => `0x${Buffer.from(bs58.decode(b58).slice(2)).toString('hex')}`
 const hexToBs58 = (hex) => bs58.encode(Buffer.from(`1220${hex.slice(2)}`, 'hex'))

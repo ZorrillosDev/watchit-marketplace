@@ -4,11 +4,13 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import {Hex} from "./lib/Strings.sol";
 import "./chainlink/IPurchaseGateway.sol";
 import "./chainlink/IPurchaseGatewayCaller.sol";
 
 contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable, IPurchaseGatewayCaller {
     error InvalidPurchaseOperation();
+    using Hex for uint256;
 
     uint8 internal constant NFT_SUPPLY = 1;
     bytes32 public constant NFT_MINTER_ROLE = keccak256("NFT_MINTER_ROLE");
@@ -18,9 +20,22 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable, IPurchaseGatewayC
     uint32 public version;
 
     function initialize() public initializer {
-        __ERC1155_init("ipfs://{id}");
+        __ERC1155_init("ipfs://f0{id}/index.json");
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _setupRole(NFT_MINTER_ROLE, msg.sender);
+    }
+
+
+    function uri(uint256 _tokenId) public view virtual override returns (string memory) {
+        string memory hexTokenToString;
+        hexTokenToString = _tokenId.toHexStr();
+        return string(
+            abi.encodePacked(
+                "ipfs://f0",
+                hexTokenToString,
+                "/index.json"
+            )
+        );
     }
 
     function upgrade() external {
