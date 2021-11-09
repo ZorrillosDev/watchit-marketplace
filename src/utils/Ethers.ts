@@ -5,7 +5,7 @@ import { base16 } from 'multiformats/bases/base16'
 import { BigNumber, ethers } from 'ethers'
 
 export namespace Ethers {
-  export function getWeiToETH (wei: BigNumber, decimals: number = 2): string {
+  export function getWeiToETH (wei: BigNumber | number, decimals: number = 6): string {
     /**
      * Format Wei to ETH with fixed decimals
      * @param {BigNumber} wei

@@ -7,12 +7,13 @@ import { Box, Grid, styled, Typography, CardContent, CardContentProps } from '@m
 // PROJECT IMPORTS
 import HeartCounter from '@components/HeartCounter'
 import TruncatedTypography from '@components/TruncatedTypography'
+import {Ethers} from "@src/utils";
 
 // ===========================|| POSTER - FOOTER ||=========================== //
 
 export interface PosterFooterProps {
   name: string
-  price?: number
+  price: number
   rating?: number
 }
 
@@ -38,7 +39,7 @@ export const PosterFooter: FC<PosterFooterProps> = (props): JSX.Element => {
               color='text.primary'
               fontWeight='bold'
             >
-              {props.price ?? 0} ETH
+              {Ethers.getWeiToETH(props.price)} ETH
             </Typography>
           </Box>
         </Grid>

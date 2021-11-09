@@ -34,6 +34,7 @@ export type Genres = typeof GenresList[number]
 export interface MovieProperties {
   date_uploaded_unix: number
   genres: Genres
+  price: number,
   group_name: string
   imdb_code: string
   language: string
