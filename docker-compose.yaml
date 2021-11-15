@@ -3,7 +3,7 @@ services:
   eth-devnet:
     container_name: eth-devnet
     image: node:lts-alpine
-    command: sh -c "npx hardhat node --no-deploy"
+    command: sh -c "npx hardhat node"
     volumes:
       - ./tasks:/hardhat/tasks
       - ./deployments:/hardhat/deployments
