@@ -227,14 +227,20 @@ describe('WatchIt NFTs (WNFT)', function () {
       const tokenTx = await wnft.mint(client.address, token, txOptions)
       await tokenTx.wait()
 
-      const currentOwnerBalance = await wnft.balanceOf(client.address, token, txOptions)
-      const currentHolder = await wnft.holderOf(token)
-      expect(currentOwnerBalance).to.equal(1)
-      expect(currentHolder).to.equal(client.address)
-
       // Request purchase CID token NFT with caller address to delegate back call
       const purchase = await wnft.connect(deployer).safePurchaseTo(token, { value })
       expect(purchase.wait()).to.be.reverted // eslint-disable-line
+    })
+
+    it('should fail with approval price + invalid value', async () => {
+      // Integration tests
+      const token = bs58toHex((await randomCID()).toString())
+      const tokenTx = await wnft.mint(client.address, token, txOptions)
+      await tokenTx.wait()
+
+      // Request purchase CID token NFT with caller address to delegate back call
+      await (await wnft.connect(client).setApprovalFor(deployer.address, token, value)).wait()
+      await (await wnft.connect(deployer).safePurchase(token, { value: BigNumber.from('1000') })).wait()
     })
   })
 })
