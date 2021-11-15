@@ -17,7 +17,7 @@ const value = BigNumber.from('10000000000000000')
 describe('WatchIt NFTs (WNFT)', function () {
   this.timeout(0)
 
-  let wnft, purchase
+  let wnft
   let deployer, client
   // Example token uri. CID is not valid one.
   // TODO: ERC1155 Metadata
@@ -36,11 +36,6 @@ describe('WatchIt NFTs (WNFT)', function () {
     const accounts = await getNamedAccounts()
     deployer = await ethers.getSigner(accounts.deployer)
     client = await ethers.getSigner(accounts.client)
-
-    // console.log(owner.address) //0xEe99CeFF640d37Edd9cac8c7cfF4Ed4cD609f435
-    // await deployments.fixture(['mocks', 'api'])
-    const PurchaseGateway = await deployments.get('PurchaseGateway')
-    purchase = await ethers.getContractAt('PurchaseGateway', PurchaseGateway.address)
 
     txOptions.gasPrice = await ethers.provider.getGasPrice()
     const NFToken = await deployments.get('WNFT')
