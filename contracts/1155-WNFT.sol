@@ -86,7 +86,7 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
 
         address payable seller = payable(holders[cid]);
         (bool successPay,) = seller.call{value : msg.value}("");
-        require(successPay, "Failed to transfer token to seller");
+        require(successPay, "Failed to transfer payment to seller");
 
         _safeTransferFrom(holders[cid], msg.sender, cid, NFT_SUPPLY, "0x0");
         holders[cid] = msg.sender;
