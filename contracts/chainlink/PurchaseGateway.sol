@@ -12,6 +12,7 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
 
     bytes32 internal _jobId;
     uint256 internal _fees;
+    uint8 internal constant NFT_SUPPLY = 1;
 
     struct RequestCommitment {
         address caller; /// The contract caller
@@ -48,6 +49,51 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
         }
     }
 
+    /** @notice Call to `caller contract` method holderOf to get current NFT holder
+      * @param _requestId chain link request identifier.
+      */
+    function holderOfCall(bytes32 _requestId) internal returns (address) {
+        (bool success, bytes memory data) = requests[_requestId].caller.call(
+            abi.encodeWithSignature("holderOf(uint256)", requests[_requestId].cid)
+        );
+
+        require(success, "Invalid callee");
+        return abi.decode(data, (address));
+    }
+
+    /** @notice Call to `caller contract` method _safeTransferFrom to transfer token
+      * @param _requestId chain link request identifier.
+      * @param seller Current owner
+      */
+    function safeTransferFromCall(bytes32 _requestId, address seller) internal {
+        (bool success,) = requests[_requestId].caller.call(
+            abi.encodeWithSignature(
+                "safeTransferTo(address,uint256)",
+                requests[_requestId].buyer,
+                requests[_requestId].cid
+            )
+        );
+
+        require(success, "Cannot transfer token");
+    }
+
+    /** @notice Handle callback to callee for NFT purchase
+      * @param _requestId chain link request identifier.
+      * @dev emit PurchaseRequestDone event when delegate callback is done
+      */
+    function callBackToCaller(bytes32 _requestId) internal {
+        /// Step 3 => gateway oracle delegate call to this method to finish purchase
+        /// Delegate call from callback contract oracle
+        address owner = holderOfCall(_requestId);
+        require(prices[requests[_requestId].cid] > 0, "Invalid CID price");
+        require(requests[_requestId].bid >= prices[requests[_requestId].cid], "Not enough ETH");
+
+        address payable seller = payable(owner);
+        (bool successPay,) = seller.call{value : prices[requests[_requestId].cid]}("");
+        require(successPay, "Failed to transfer token to seller");
+        safeTransferFromCall(_requestId, owner);
+    }
+
     /** @notice Receive the response in form of multiple-variable
       * @param _requestId chain link request identifier.
       * @param _price the price returned by API
@@ -61,21 +107,9 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
         /// Step 2 => gateway oracle exec callback with received data
         /// delegate call to `purchase` method back here to `IPurchaseGatewayCaller` contract
         /// delegate call context https://solidity-by-example.org/delegatecall/
-        prices[requests[_requestId].cid] = _price; // set current price before delegate call
-        (bool success,) = requests[_requestId].caller.call{value : requests[_requestId].bid}(
-            abi.encodeWithSignature(
-                "safeTransferTo(address,address,uint256)",
-                address(this),
-                requests[_requestId].buyer,
-                requests[_requestId].cid
-            )
-        );
-
-        if (!success) {
-            revert FailedChainLinkDelegation();
-        }
-
-
+        prices[requests[_requestId].cid] = _price;
+        // set current price before delegate call
+        callBackToCaller(_requestId);
         delete requests[_requestId];
         emit PurchaseRequestDone(
             _requestId,

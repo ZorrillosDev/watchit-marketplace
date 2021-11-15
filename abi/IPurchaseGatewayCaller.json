@@ -2,13 +2,27 @@
   {
     "inputs": [
       {
-        "internalType": "contract IPurchaseGateway",
-        "name": "oracle",
-        "type": "address"
-      },
+        "internalType": "uint256",
+        "name": "cid",
+        "type": "uint256"
+      }
+    ],
+    "name": "holderOf",
+    "outputs": [
       {
         "internalType": "address",
-        "name": "buyer",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_buyer",
         "type": "address"
       },
       {
@@ -19,7 +33,7 @@
     ],
     "name": "safeTransferTo",
     "outputs": [],
-    "stateMutability": "payable",
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]
