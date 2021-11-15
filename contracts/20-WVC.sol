@@ -9,11 +9,6 @@ contract WVC is ERC20, AccessControl {
     bool private initialized;
     uint32 public version;
 
-    function upgrade() public {
-        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Version cannot be updated.");
-        version++;
-    }
-
     constructor(uint256 initialSupply) ERC20("WatchIt Video Coin", "WVC") public {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _mint(msg.sender, initialSupply);
