@@ -14,7 +14,8 @@ module.exports = async ({
   const ft = await deploy('WVC', {
     contract: 'WVC',
     from: deployer,
-    log: true
+    log: true,
+    args: [2000]
   })
 
   log('Run FT contract with following command:')
