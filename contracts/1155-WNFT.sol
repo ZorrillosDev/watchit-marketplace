@@ -55,6 +55,9 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable, IPurchaseGatewayC
     * @notice This works like setApprovalForAll with cid reference instead of sender
     * Why this? ApprovalForAll set approval for every action from operator. In our case we need
     * allow actions for specific cid and operator
+    * @param operator current buyer
+    * @param cid NFT id
+    * @param approved True if approved else False
     * @dev See {IERC1155-setApprovalForAll}.
     *
      */
