@@ -4,6 +4,7 @@ module.exports = async ({
   getNamedAccounts,
   deployments
 }) => {
+  return false // omit
   const { deploy, log } = deployments
   const { deployer } = await getNamedAccounts()
   const chainId = await getChainId()
