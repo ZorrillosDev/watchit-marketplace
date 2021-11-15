@@ -22,9 +22,8 @@ node_modules:
 
 
 deps: node_modules
-	npx hardhat compile
 	docker-compose up -d
-	sleep 5
+	npx hardhat deploy --network localhost
 
 deploy-rinkeby:
 	npx hardhat deploy --network rinkeby

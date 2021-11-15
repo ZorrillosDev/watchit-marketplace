@@ -4,6 +4,7 @@ const { ethers } = require('hardhat')
 module.exports = async ({
   deployments
 }) => {
+  return false// temp omit
   let linkToken
   const { log, get } = deployments
   const chainId = await getChainId()

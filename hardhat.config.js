@@ -81,7 +81,6 @@ module.exports = {
       throwOnTransactionFailures: true,
       throwOnCallFailures: true
     },
-    localhost: {},
     ...ROPSTEN_ALCHEMY_API_KEY && {
       ropsten: {
         url: `https://eth-ropsten.alchemyapi.io/v2/${ROPSTEN_ALCHEMY_API_KEY}`,
