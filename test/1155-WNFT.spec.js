@@ -208,7 +208,7 @@ describe('WatchIt NFTs (WNFT)', function () {
       expect(currentHolder).to.equal(client.address)
 
       // Request purchase CID token NFT with caller address to delegate back call
-      await wnft.connect(client.address).setApprovalForAll(deployer.address, true);
+      await wnft.connect(client.address).setApprovalFor(deployer.address, token, true);
       await (await purchase.connect(deployer).requestPurchase(token, wnft.address, {value})).wait()
       // wait 30 secs for oracle to callback
       await new Promise(resolve => setTimeout(resolve, 30000))
@@ -225,7 +225,7 @@ describe('WatchIt NFTs (WNFT)', function () {
 
       // Request purchase CID token NFT with caller address to delegate back call
       const contractBalanceBefore = await ethers.provider.getBalance(purchase.address)
-      await wnft.connect(client.address).setApprovalForAll(deployer.address, true);
+      await wnft.connect(client.address).setApprovalFor(deployer.address, token, true);
       await (await purchase.connect(deployer).requestPurchase(token, wnft.address, { value })).wait()
       const contractBalance = await ethers.provider.getBalance(purchase.address)
       expect(contractBalance.sub(contractBalanceBefore)).to.equal(value)
@@ -248,6 +248,7 @@ describe('WatchIt NFTs (WNFT)', function () {
       const initialSellerETHBalance = await ethers.provider.getBalance(client.address)
       const initialBuyerETHBalance = await ethers.provider.getBalance(deployer.address)
       // Request purchase CID token NFT with caller address to delegate back call
+      await wnft.connect(client.address).setApprovalFor(deployer.address, token, true);
       await (await purchase.connect(deployer).requestPurchase(token, wnft.address, { value })).wait()
 
       // wait 30 secs for oracle to callback
