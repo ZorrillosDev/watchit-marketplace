@@ -195,7 +195,7 @@ describe('WatchIt NFTs (WNFT)', function () {
 
       // Request purchase CID token NFT with caller address to delegate back call
       await (await wnft.connect(client).setApprovalFor(deployer.address, token, value)).wait()
-      await (await wnft.connect(deployer).safePurchaseTo(token, { value })).wait()
+      await (await wnft.connect(deployer).safePurchase(token, { value })).wait()
       const newHolder = await wnft.holderOf(token)
       expect(newHolder).to.equal(deployer.address)
     })
@@ -228,7 +228,7 @@ describe('WatchIt NFTs (WNFT)', function () {
       await tokenTx.wait()
 
       // Request purchase CID token NFT with caller address to delegate back call
-      const purchase = await wnft.connect(deployer).safePurchaseTo(token, { value })
+      const purchase = await wnft.connect(deployer).safePurchase(token, { value })
       expect(purchase.wait()).to.be.reverted // eslint-disable-line
     })
 
