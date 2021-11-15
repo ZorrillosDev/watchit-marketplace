@@ -12,6 +12,7 @@ const {
 } = require('./utils')
 
 const txOptions = { gasLimit: 800000 }
+const value = BigNumber.from('10000000000000000')
 
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe('WatchIt NFTs (WNFT)', function () {
@@ -183,7 +184,6 @@ describe('WatchIt NFTs (WNFT)', function () {
 
     it('should purchase with approval price', async () => {
       // Integration tests
-      const value = BigNumber.from('10000000000000000')
       const token = bs58toHex((await randomCID()).toString())
       const tokenTx = await wnft.mint(client.address, token, txOptions)
       await tokenTx.wait()
@@ -200,10 +200,8 @@ describe('WatchIt NFTs (WNFT)', function () {
       expect(newHolder).to.equal(deployer.address)
     })
 
-
     it('should subtract => add balance from buyer to seller', async () => {
       // Integration tests
-      const value = BigNumber.from('10000000000000000')
       const token = bs58toHex((await randomCID()).toString())
       const tokenTx = await wnft.mint(client.address, token, txOptions)
       await tokenTx.wait()
@@ -221,6 +219,22 @@ describe('WatchIt NFTs (WNFT)', function () {
       expect(newSellerBalance.gte(initialSellerETHBalance)).to.equal(true)
       const newBuyerBalance = await ethers.provider.getBalance(deployer.address)
       expect(newBuyerBalance.lte(initialBuyerETHBalance.sub(value))).to.equal(true)
+    })
+
+    it('should fail without approval price', async () => {
+      // Integration tests
+      const token = bs58toHex((await randomCID()).toString())
+      const tokenTx = await wnft.mint(client.address, token, txOptions)
+      await tokenTx.wait()
+
+      const currentOwnerBalance = await wnft.balanceOf(client.address, token, txOptions)
+      const currentHolder = await wnft.holderOf(token)
+      expect(currentOwnerBalance).to.equal(1)
+      expect(currentHolder).to.equal(client.address)
+
+      // Request purchase CID token NFT with caller address to delegate back call
+      const purchase = await wnft.connect(deployer).safePurchaseTo(token, { value })
+      expect(purchase.wait()).to.be.reverted // eslint-disable-line
     })
   })
 })
