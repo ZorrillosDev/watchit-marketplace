@@ -81,7 +81,7 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
     function safePurchase(uint256 cid) public payable {
         require(holders[cid] != address(0x0), "Invalid cid");
         require(holders[cid] != msg.sender, "Invalid buyer");
-        require(isApprovedFor(msg.sender, cid), "ERC1155: caller is not owner nor approved");
+        require(isApprovedFor(msg.sender, cid), "Caller is not owner nor approved");
         require(msg.value == _nftApprovals[cid][msg.sender], "Invalid amount for approved bid");
 
         address payable seller = payable(holders[cid]);
