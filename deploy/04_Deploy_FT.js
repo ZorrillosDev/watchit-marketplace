@@ -14,21 +14,7 @@ module.exports = async ({
   const ft = await deploy('WVC', {
     contract: 'WVC',
     from: deployer,
-    log: true,
-    proxy: {
-      owner: deployer,
-      // https://hardhat.org/plugins/hardhat-deploy.html#deploying-and-upgrading-proxies
-      execute: {
-        init: {
-          methodName: 'initialize',
-          args: [2000]
-        },
-        onUpgrade: {
-          methodName: 'upgrade',
-          args: []
-        }
-      }
-    }
+    log: true
   })
 
   log('Run FT contract with following command:')

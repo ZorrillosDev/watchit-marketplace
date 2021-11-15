@@ -14,6 +14,9 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable, IPurchaseGatewayC
 
     uint8 internal constant NFT_SUPPLY = 1;
     bytes32 public constant NFT_MINTER_ROLE = keccak256("NFT_MINTER_ROLE");
+    mapping(uint256 => mapping(address => bool)) private _nftApprovals;
+
+    event ApprovalForCID(address indexed operator, uint256 cid, bool approved);
 
     /// The current NFT holder
     mapping(uint256 => address) internal holders;
@@ -48,34 +51,41 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable, IPurchaseGatewayC
         _setURI(newuri);
     }
 
-    /** @notice Handle delegated call from oracle with metadata needed for purchase
-      * @param oracle origin delegate call.
-      * @param _buyer current request to buy.
+    /**
+    * @notice This works like setApprovalForAll with cid reference instead of sender
+    * Why this? ApprovalForAll set approval for every action from operator. In our case we need
+    * allow actions for specific cid and operator
+    * @dev See {IERC1155-setApprovalForAll}.
+    *
+     */
+    function setApprovalFor(address operator, uint256 cid, bool approved) public virtual {
+        require(_msgSender() != operator, "ERC1155: setting approval status for self");
+        require(_msgSender() == holders[cid], "Only owner can set approval for CID");
+
+        _nftApprovals[cid][operator] = approved;
+        emit ApprovalForCID(operator, cid, approved);
+    }
+
+    /**
+     * @dev See {IERC1155-isApprovedForAll}.
+     */
+    function isApprovedFor(address operator, uint256 cid) public view virtual returns (bool) {
+        return _nftApprovals[cid][operator];
+    }
+
+    /** @notice Check for safe transfer from using custom approval
+      * @param buyer current request to buy.
       * @param cid IPFS content unique identifier.
       * @dev emit PurchaseResponseReceived on purchase ready to get done
       */
-    function safeTransferTo(IPurchaseGateway oracle, address _buyer, uint256 cid) public payable override {
-        /// Step 3 => gateway oracle delegate call to this method to finish purchase
-        /// Delegate call from callback contract oracle
-        (bool success, bytes memory data) = address(oracle).call(
-            abi.encodeWithSignature("getCurrentPriceForCID(uint256)", cid)
-        );
-
-        require(success, "Invalid oracle request");
-        address payable seller = payable(holders[cid]);
-        uint256 price = abi.decode(data, (uint256));
-        require(price > 0, "Invalid CID price");
-        require(balanceOf(holders[cid], cid) > 0, "Invalid seller");
-        require(msg.value >= price, "Not enough ETH");
-
-        (bool successPay,) = seller.call{value : price}("");
-        require(successPay, "Failed to send Ether");
-
-        _safeTransferFrom(holders[cid], _buyer, cid, NFT_SUPPLY, "0x0");
-        holders[cid] = _buyer;
+    function safeTransferTo(address buyer, uint256 cid) public override {
+        require(holders[cid] != buyer, "Invalid buyer");
+        require(isApprovedFor(buyer, cid), "ERC1155: caller is not owner nor approved");
+        _safeTransferFrom(holders[cid], buyer, cid, NFT_SUPPLY, "0x0");
+        holders[cid] = buyer;
     }
 
-    function holderOf(uint256 cid) view external returns (address){
+    function holderOf(uint256 cid) view external override returns (address){
         return holders[cid];
     }
 
