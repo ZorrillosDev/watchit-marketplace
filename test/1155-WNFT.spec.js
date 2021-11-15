@@ -240,7 +240,8 @@ describe('WatchIt NFTs (WNFT)', function () {
 
       // Request purchase CID token NFT with caller address to delegate back call
       await (await wnft.connect(client).setApprovalFor(deployer.address, token, value)).wait()
-      await (await wnft.connect(deployer).safePurchase(token, { value: BigNumber.from('1000') })).wait()
+      const purchase = await wnft.connect(deployer).safePurchase(token, { value: BigNumber.from('1000') })
+      expect(purchase.wait()).to.be.reverted // eslint-disable-line
     })
   })
 })
