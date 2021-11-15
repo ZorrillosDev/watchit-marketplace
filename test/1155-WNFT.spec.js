@@ -181,7 +181,7 @@ describe('WatchIt NFTs (WNFT)', function () {
 
   describe('Purchase', function () {
 
-    it.skip('should purchase with approval price', async () => {
+    it('should purchase with approval price', async () => {
       // Integration tests
       const value = BigNumber.from('10000000000000000')
       const token = bs58toHex((await randomCID()).toString())
