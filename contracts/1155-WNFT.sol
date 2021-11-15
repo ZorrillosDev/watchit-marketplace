@@ -85,7 +85,7 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
         require(msg.value == _nftApprovals[cid][msg.sender], "Invalid amount for approved bid");
 
         address payable seller = payable(holders[cid]);
-        (bool successPay,) = seller.call{value:msg.value}("");
+        (bool successPay,) = seller.call{value : msg.value}("");
         require(successPay, "Failed to transfer token to seller");
 
         _safeTransferFrom(holders[cid], msg.sender, cid, NFT_SUPPLY, "0x0");
@@ -114,8 +114,8 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
         uint[] memory amounts = new uint[](cids.length);
 
         for (uint i = 0; i < cids.length; i++) {
+            require(holders[cids[i]] == address(0x0), 'This token ID has already been minted');
             ids[i] = cids[i];
-            require(holders[ids[i]] == address(0x0), 'This token ID has already been minted');
             holders[ids[i]] = to;
             amounts[i] = NFT_SUPPLY;
         }
