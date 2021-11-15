@@ -74,7 +74,9 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
             )
         );
 
-        require(success, "Cannot transfer token");
+        if (!success) {
+            revert FailedChainLinkDelegation();
+        }
     }
 
     /** @notice Handle callback to callee for NFT purchase

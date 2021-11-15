@@ -13,8 +13,6 @@ const {
 
 const txOptions = { gasLimit: 800000 }
 
-
-
 // see: https://github.com/mawrkus/js-unit-testing-guide
 describe('WatchIt NFTs (WNFT)', function () {
   this.timeout(0)
@@ -185,9 +183,9 @@ describe('WatchIt NFTs (WNFT)', function () {
     // Skip local environment
     if (!['kovan', 'rinkeby'].includes(network.name)) { return }
 
-    it('should make an API request successfully', async () => {
+    it.skip('should make an API request successfully', async () => {
       const token = bs58toHex((await randomCID()).toString())
-      const value = BigNumber.from('1000000000000')
+      const value = BigNumber.from('10000000000000000')
       // Request purchase CID token NFT with caller address to delegate back call
       const transaction = await purchase.requestPurchase(token, wnft.address, { value })
       const tx = await transaction.wait()
@@ -197,7 +195,7 @@ describe('WatchIt NFTs (WNFT)', function () {
 
     it('should purchase with API price from gateway', async () => {
       // Integration tests
-      const value = BigNumber.from('1000000000000')
+      const value = BigNumber.from('10000000000000000')
       const token = bs58toHex((await randomCID()).toString())
       const tokenTx = await wnft.mint(client.address, token, txOptions)
       await tokenTx.wait()
@@ -208,8 +206,8 @@ describe('WatchIt NFTs (WNFT)', function () {
       expect(currentHolder).to.equal(client.address)
 
       // Request purchase CID token NFT with caller address to delegate back call
-      await wnft.connect(client.address).setApprovalFor(deployer.address, token, true);
-      await (await purchase.connect(deployer).requestPurchase(token, wnft.address, {value})).wait()
+      await (await wnft.connect(client).setApprovalFor(deployer.address, token, true)).wait()
+      await (await purchase.connect(deployer).requestPurchase(token, wnft.address, { value })).wait()
       // wait 30 secs for oracle to callback
       await new Promise(resolve => setTimeout(resolve, 30000))
       const newHolder = await wnft.holderOf(token)
@@ -218,14 +216,14 @@ describe('WatchIt NFTs (WNFT)', function () {
 
     it('should retrieve corresponding price for CID from API', async () => {
       // Integration tests
-      const value = BigNumber.from('1000000000000')
+      const value = BigNumber.from('10000000000000000')
       const token = bs58toHex((await randomCID()).toString())
       const tokenTx = await wnft.mint(client.address, token, txOptions)
       await tokenTx.wait()
 
       // Request purchase CID token NFT with caller address to delegate back call
       const contractBalanceBefore = await ethers.provider.getBalance(purchase.address)
-      await wnft.connect(client.address).setApprovalFor(deployer.address, token, true);
+      await (await wnft.connect(client).setApprovalFor(deployer.address, token, true)).wait()
       await (await purchase.connect(deployer).requestPurchase(token, wnft.address, { value })).wait()
       const contractBalance = await ethers.provider.getBalance(purchase.address)
       expect(contractBalance.sub(contractBalanceBefore)).to.equal(value)
@@ -236,10 +234,9 @@ describe('WatchIt NFTs (WNFT)', function () {
       expect(currentPrice).to.equal(value)
     })
 
-
     it('should subtract => add balance from buyer to seller', async () => {
       // Integration tests
-      const value = BigNumber.from('1000000000000')
+      const value = BigNumber.from('10000000000000000')
       const token = bs58toHex((await randomCID()).toString())
       const tokenTx = await wnft.mint(client.address, token, txOptions)
       await tokenTx.wait()
@@ -248,7 +245,7 @@ describe('WatchIt NFTs (WNFT)', function () {
       const initialSellerETHBalance = await ethers.provider.getBalance(client.address)
       const initialBuyerETHBalance = await ethers.provider.getBalance(deployer.address)
       // Request purchase CID token NFT with caller address to delegate back call
-      await wnft.connect(client.address).setApprovalFor(deployer.address, token, true);
+      await (await wnft.connect(client).setApprovalFor(deployer.address, token, true)).wait()
       await (await purchase.connect(deployer).requestPurchase(token, wnft.address, { value })).wait()
 
       // wait 30 secs for oracle to callback
