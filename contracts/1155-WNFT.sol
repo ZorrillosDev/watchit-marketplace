@@ -5,18 +5,16 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import {Hex} from "./lib/Strings.sol";
-import "./chainlink/IPurchaseGateway.sol";
-import "./chainlink/IPurchaseGatewayCaller.sol";
 
-contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable, IPurchaseGatewayCaller {
+contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
     error InvalidPurchaseOperation();
     using Hex for uint256;
 
     uint8 internal constant NFT_SUPPLY = 1;
     bytes32 public constant NFT_MINTER_ROLE = keccak256("NFT_MINTER_ROLE");
-    mapping(uint256 => mapping(address => bool)) private _nftApprovals;
+    mapping(uint256 => mapping(address => uint256)) private _nftApprovals;
 
-    event ApprovalForCID(address indexed operator, uint256 cid, bool approved);
+    event ApprovalForCID(address indexed operator, uint256 cid, uint256 approved);
 
     /// The current NFT holder
     mapping(uint256 => address) internal holders;
@@ -57,11 +55,11 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable, IPurchaseGatewayC
     * allow actions for specific cid and operator
     * @param operator current buyer
     * @param cid NFT id
-    * @param approved True if approved else False
+    * @param approved bid amount for cid
     * @dev See {IERC1155-setApprovalForAll}.
     *
      */
-    function setApprovalFor(address operator, uint256 cid, bool approved) public virtual {
+    function setApprovalFor(address operator, uint256 cid, uint256 approved) public virtual {
         require(_msgSender() != operator, "ERC1155: setting approval status for self");
         require(_msgSender() == holders[cid], "Only owner can set approval for CID");
 
@@ -73,22 +71,28 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable, IPurchaseGatewayC
      * @dev See {IERC1155-isApprovedForAll}.
      */
     function isApprovedFor(address operator, uint256 cid) public view virtual returns (bool) {
-        return _nftApprovals[cid][operator];
+        return _nftApprovals[cid][operator] != 0;
     }
 
     /** @notice Check for safe transfer from using custom approval
-      * @param buyer current request to buy.
       * @param cid IPFS content unique identifier.
       * @dev emit PurchaseResponseReceived on purchase ready to get done
       */
-    function safeTransferTo(address buyer, uint256 cid) public override {
-        require(holders[cid] != buyer, "Invalid buyer");
-        require(isApprovedFor(buyer, cid), "ERC1155: caller is not owner nor approved");
-        _safeTransferFrom(holders[cid], buyer, cid, NFT_SUPPLY, "0x0");
-        holders[cid] = buyer;
+    function safePurchase(uint256 cid) public payable {
+        require(holders[cid] != address(0x0), "Invalid cid");
+        require(holders[cid] != msg.sender, "Invalid buyer");
+        require(isApprovedFor(msg.sender, cid), "ERC1155: caller is not owner nor approved");
+        require(msg.value == _nftApprovals[cid][msg.sender], "Invalid amount for approved bid");
+
+        address payable seller = payable(holders[cid]);
+        (bool successPay,) = seller.call{value:msg.value}("");
+        require(successPay, "Failed to transfer token to seller");
+
+        _safeTransferFrom(holders[cid], msg.sender, cid, NFT_SUPPLY, "0x0");
+        holders[cid] = msg.sender;
     }
 
-    function holderOf(uint256 cid) view external override returns (address){
+    function holderOf(uint256 cid) view external returns (address){
         return holders[cid];
     }
 
@@ -142,7 +146,7 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable, IPurchaseGatewayC
     override(ERC1155Upgradeable, AccessControlUpgradeable)
     returns (bool)
     {
-        return interfaceId == type(IPurchaseGatewayCaller).interfaceId || super.supportsInterface(interfaceId);
+        return super.supportsInterface(interfaceId);
     }
 
 }

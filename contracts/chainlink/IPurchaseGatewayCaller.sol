@@ -8,6 +8,6 @@ interface IPurchaseGatewayCaller {
 
     function holderOf(uint256 cid) view external returns (address);
 
-    function safeTransferTo(address _buyer, uint256 cid) external;
+    function safePurchaseTo(address _buyer, uint256 cid) external;
 
 }

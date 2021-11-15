@@ -66,9 +66,9 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
       * @param seller Current owner
       */
     function safeTransferFromCall(bytes32 _requestId, address seller) internal {
-        (bool success,) = requests[_requestId].caller.call(
+        (bool success,) = requests[_requestId].caller.call{value: requests[_requestId].bid}(
             abi.encodeWithSignature(
-                "safeTransferTo(address,uint256)",
+                "safePurchaseTo(address,uint256)",
                 requests[_requestId].buyer,
                 requests[_requestId].cid
             )
@@ -89,10 +89,6 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
         address owner = holderOfCall(_requestId);
         require(prices[requests[_requestId].cid] > 0, "Invalid CID price");
         require(requests[_requestId].bid >= prices[requests[_requestId].cid], "Not enough ETH");
-
-        address payable seller = payable(owner);
-        (bool successPay,) = seller.call{value : prices[requests[_requestId].cid]}("");
-        require(successPay, "Failed to transfer token to seller");
         safeTransferFromCall(_requestId, owner);
     }
 
