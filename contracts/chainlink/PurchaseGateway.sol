@@ -116,7 +116,6 @@ contract PurchaseGateway is ChainlinkClient, IPurchaseGateway, IERC165 {
             _price
         );
 
-
     }
 
     /** @notice Return current NFT price by cid
