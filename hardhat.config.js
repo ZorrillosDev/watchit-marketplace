@@ -87,7 +87,6 @@ module.exports = {
         from: `0x${OWNER_KEY}`,
         accounts: [`0x${OWNER_KEY}`, `0x${SECONDARY_KEY}`],
         saveDeployments: true,
-        timeout: 60 * 1000
       }
     },
     ...RINKEBY_ALCHEMY_API_KEY && {
@@ -96,7 +95,6 @@ module.exports = {
         from: `0x${OWNER_KEY}`,
         accounts: [`0x${OWNER_KEY}`, `0x${SECONDARY_KEY}`],
         saveDeployments: true,
-        timeout: 60 * 20 * 1000
       }
     },
     ...KOVAN_ALCHEMY_API_KEY && {
@@ -105,11 +103,10 @@ module.exports = {
         from: `0x${OWNER_KEY}`,
         saveDeployments: true,
         accounts: [`0x${OWNER_KEY}`, `0x${SECONDARY_KEY}`],
-        timeout: 60 * 1000
       }
     }
   },
   mocha: {
-    timeout: 100000
+    timeout: 0
   }
 }
