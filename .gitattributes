@@ -15,10 +15,11 @@
 ##   This will handle all files NOT defined below.
 ## https://github.com/alexkaratarakis/gitattributes
 
+*                 text=auto
+
+# Excluded dirs
 abi/* export-ignore
 deployments/* export-ignore
-
-*                 text=auto
 
 # Source code
 *.bash            text eol=lf
