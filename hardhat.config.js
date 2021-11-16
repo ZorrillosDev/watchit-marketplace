@@ -96,7 +96,7 @@ module.exports = {
         from: `0x${OWNER_KEY}`,
         accounts: [`0x${OWNER_KEY}`, `0x${SECONDARY_KEY}`],
         saveDeployments: true,
-        timeout: 60 * 1000
+        timeout: 60 * 20 * 1000
       }
     },
     ...KOVAN_ALCHEMY_API_KEY && {
