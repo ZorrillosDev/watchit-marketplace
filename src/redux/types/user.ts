@@ -1,4 +1,4 @@
 export interface User {
-    address: string,
-    movies?: number
+  address: string
+  movies?: number
 }
