@@ -73,6 +73,6 @@ const mapStateToProps = (state: RootStateOrAny): MoviesState => {
 }
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(React.memo(HomeRecent))
