@@ -1,7 +1,7 @@
-import reducer, { addMovie, initialState, setMovies } from '@state/recents/reducer'
+import reducer, { addMovie, initialState, setMovies } from '@state/movies/reducer'
 import { ThunkDispatcher, ThunkAction } from '@state/types'
 import { Movie } from '@state/types/movies'
-import { fetchRecentMovies } from '@state/recents/actions'
+import { fetchRecentMovies } from '@state/movies/actions'
 import { FAKE_MOVIES } from '@src/config'
 
 // @ts-expect-error
@@ -11,7 +11,7 @@ window.fetch = jest.fn(async () =>
   })
 )
 
-describe('Recents store', () => {
+describe('Movies store', () => {
   let movies: Movie[]
   let dispatch: ThunkDispatcher
   let getState: () => unknown
@@ -31,20 +31,20 @@ describe('Recents store', () => {
   it('should handle add for movies', () => {
     const current = reducer(initialState, addMovie(movies[0]))
 
-    expect(current).toEqual({ ...initialState, ...{ movies: [movies[0]] } })
+    expect(current).toEqual({ ...initialState, ...{ collection: [movies[0]] } })
     expect(reducer(current, addMovie(movies[0]))).toEqual({
       ...initialState,
-      movies: [movies[0], movies[0]]
+      collection: [movies[0], movies[0]]
     })
   })
 
   it('should handle set for movie collection', () => {
     const current = reducer(initialState, setMovies(movies))
 
-    expect(current).toEqual({ ...initialState, ...{ movies } })
+    expect(current).toEqual({ ...initialState, ...{ collection: movies } })
     expect(reducer(current, setMovies(movies))).toEqual({
       ...initialState,
-      movies
+      collection: movies
     })
   })
 

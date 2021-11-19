@@ -11,13 +11,13 @@ import { useTheme } from '@mui/material/styles'
 import { Theme } from '@mui/system'
 import HomeRecentPoster from '@pages/Home/components/HomeRecentPoster'
 import { MOVIES_COLUMNS, MOVIES_ROWS } from '@pages/Home/CONSTANTS'
-import { RecentMoviesActions, fetchRecentMovies } from '@state/recents/actions'
-import { RecentMoviesState } from '@state/recents/reducer'
+import { MoviesActions, fetchRecentMovies } from '@state/movies/actions'
+import { MoviesState } from '@state/movies/reducer'
 import { Movie } from '@state/types/movies'
 
 // ===========================|| HOME - RECENT ||=========================== //
 
-const HomeRecent: FC<RecentMoviesState & RecentMoviesActions> = ({ movies, fetchRecentMovies }): JSX.Element => {
+const HomeRecent: FC<MoviesState & MoviesActions> = ({ collection, fetchRecentMovies }): JSX.Element => {
   const theme: Theme = useTheme()
   let moviesColumns = MOVIES_COLUMNS
   moviesColumns = useMediaQuery(theme.breakpoints.up('md')) ? 3 : moviesColumns
@@ -51,7 +51,7 @@ const HomeRecent: FC<RecentMoviesState & RecentMoviesActions> = ({ movies, fetch
         <Grid item xs={12} display='flex' alignItems='center' justifyContent='center'>
           <Grid container spacing={3}>
             {
-              movies !== undefined ? movies.map((movie: Movie, i: number) => {
+              collection !== undefined ? collection.map((movie: Movie, i: number) => {
                 const moviesMax = moviesColumns * MOVIES_ROWS
                 return (i < moviesMax)
                   ? <HomeRecentPoster {...movie} key={i} />
@@ -65,10 +65,14 @@ const HomeRecent: FC<RecentMoviesState & RecentMoviesActions> = ({ movies, fetch
   )
 }
 
-const mapDispatchToProps: Partial<RecentMoviesActions> = { fetchRecentMovies }
-const mapStateToProps = (state: RootStateOrAny): RecentMoviesState => {
+const mapDispatchToProps: Partial<MoviesActions> = { fetchRecentMovies }
+const mapStateToProps = (state: RootStateOrAny): MoviesState => {
   return {
-    movies: state.recent.movies
+    collection: state.movies.collection
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(HomeRecent)
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(React.memo(HomeRecent))
