@@ -9,8 +9,8 @@ import LogoPng from '@assets/icons/icon.png'
 // mui imports
 import { useTheme } from '@mui/material/styles'
 import {
-  Toolbar, AppBar, Box, Slide,
-  useMediaQuery, useScrollTrigger, Container
+  Toolbar, AppBar, Box,
+  useMediaQuery, Container
 } from '@mui/material'
 
 // ===========================|| HEADER - VIEW ||=========================== //
@@ -21,12 +21,11 @@ export interface HeaderProps {
 }
 
 const HeaderView: FC<HeaderProps & HeaderSearchProps> = (props): JSX.Element => {
-  const trigger = useScrollTrigger()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
-    <Slide appear={false} direction='down' in={!trigger}>
+    <>
       <AppBar
         sx={{
           transform: !isMobile || (props.isMenuOpen && isMobile) ? 'none !important' : 'auto',
@@ -45,7 +44,7 @@ const HeaderView: FC<HeaderProps & HeaderSearchProps> = (props): JSX.Element => 
           </Toolbar>
         </Container>
       </AppBar>
-    </Slide>
+    </>
   )
 }
 
