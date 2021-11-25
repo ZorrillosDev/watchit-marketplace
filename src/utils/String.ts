@@ -11,4 +11,12 @@ export namespace String {
          */
     return (!text || /^\s*$/.test(text) || text.length === 0)
   }
+  export const minifyHash = (hash: string): string => {
+    /**
+         * Minify hash to '0x000...000'
+         * @param {string} string
+         * @return {boolean} invalid or valid string
+         */
+    return `${hash.substr(0, 4)}...${hash.substr(hash.length - 3)}`
+  }
 }

@@ -143,6 +143,7 @@
     "@mui/system": "^5.0.3",
     "@openzeppelin/test-helpers": "^0.5.11",
     "@reduxjs/toolkit": "^1.6.1",
+    "@tabler/icons": "^1.44.0",
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.16",
     "@types/react-router": "^5.1.16",
