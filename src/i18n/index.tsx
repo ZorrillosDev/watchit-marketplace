@@ -1,10 +1,11 @@
 import i18Next from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import {initReactI18next, useTranslation} from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 // Languages
 import en from './langs/en.json';
 import es from './langs/es.json';
+import React, {FC} from "react";
 
 // default lang
 export const defaultLang = 'en';
@@ -40,3 +41,9 @@ export const langKeys = Object.keys(en).reduce((o: any, e: string) => {
 }, {});
 
 export default i18n;
+
+export const Translation: FC<{ target: string }> = ({ target, children }) => {
+  const { t } = useTranslation();
+
+  return (<>{t(target)}{children}</>)
+}

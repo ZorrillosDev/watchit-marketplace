@@ -5,8 +5,9 @@ import Explore from '@pages/Explore'
 import Festival from '@pages/Festival'
 import Sell from '@pages/Sell'
 import Work from '@pages/Work'
+import MovieProfile from '@pages/Movie/Profile'
 import { DefaultLayout } from '@layouts/default'
-import { ROOT, EXPLORE, FESTIVAL, SELL, WORK } from '@navigation/CONSTANTS'
+import { ROOT, EXPLORE, FESTIVAL, SELL, WORK, MOVIE } from '@navigation/CONSTANTS'
 
 export const Routing: FC = (): JSX.Element => {
   return (
@@ -36,6 +37,16 @@ export const Routing: FC = (): JSX.Element => {
           <Work />
         </DefaultLayout>
       </Route>
+      <Route
+        path={MOVIE}
+        render={
+          (e) => (
+            <DefaultLayout>
+              <MovieProfile id={e.match.params.id} />
+            </DefaultLayout>
+          )
+        }
+      />
     </Switch>
   )
 }
