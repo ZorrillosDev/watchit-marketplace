@@ -28,7 +28,7 @@ const MovieProfileUser: FC<MovieProfileUserProps> = (props): JSX.Element => {
       label={(
         <Box display='flex' flexDirection='column' paddingRight={1}>
           <MovieProfileAddressTypography variant='body1'>
-            {String.minifyHash(props?.address ?? '')}
+            {props?.address}
           </MovieProfileAddressTypography>
           <Typography gutterBottom variant='body1' sx={{ opacity: 0.5 }}>
             {
