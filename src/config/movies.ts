@@ -16,7 +16,7 @@ export const FAKE_MOVIES = [
   },
   {
     creator: {
-      address: '0x00340034003400340034003400340034003400340034003400340034003400340034003400340034',
+      address: '0xEe99CeFF640d37Edd9cac8c7cfF4Ed4cD609f435',
       movies: 10
     },
     owner: {
