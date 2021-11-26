@@ -13,6 +13,6 @@ describe('String util', () => {
 
   it('should return expected minified hash', () => {
     const minifiedHash = String.minifyHash('0xEe99CeFF640d37Edd9cac8c7cfF4Ed4cD609f435')
-    expect(minifiedHash).toBe('0xEe99CeFF64...35')
+    expect(minifiedHash).toBe('0xEe...435')
   })
 })
