@@ -10,4 +10,9 @@ describe('String util', () => {
     const isInvalid = String.invalidString('hello world')
     expect(isInvalid).toBeFalsy()
   })
+
+  it('should return expected minified hash', () => {
+    const minifiedHash = String.minifyHash('0xEe99CeFF640d37Edd9cac8c7cfF4Ed4cD609f435')
+    expect(minifiedHash).toBe('0xEe99CeFF64...35')
+  })
 })
