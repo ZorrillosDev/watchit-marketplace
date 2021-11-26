@@ -169,8 +169,8 @@ export const MovieProfileView: FC<MovieProfileViewProps> = (props): JSX.Element 
 
 const MovieProfileCreatorTypography = styled(Typography)<TypographyProps>(() => ({
   position: 'absolute',
-  right: '0.5rem',
-  top: '0.5rem',
+  right: '1rem',
+  top: '1rem',
   fontWeight: 500
 }))
 
