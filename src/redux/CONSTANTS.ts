@@ -1,1 +1,1 @@
-export const API_ENDPOINT = process.env.MARKETPLACE_API ?? `http://localhost:5000`
+export const API_ENDPOINT = process.env.MARKETPLACE_API ?? 'http://localhost:5000'
