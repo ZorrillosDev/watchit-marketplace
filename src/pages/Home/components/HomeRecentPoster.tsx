@@ -19,19 +19,19 @@ import {Movie} from '@state/types/movies'
 const HomeRecentPoster: FC<Movie> = (props): JSX.Element => {
     const {
         creator,
-        image,
+        posters,
         path,
-        name,
-        properties
+        title,
+        price
     } = props
 
     return (
         <HomeRecentPosterWrapper item>
-            <Link to={path}>
+            <Link to={path} style={{ textDecoration: 'none' }}>
                 <PosterWrapper>
                     <PosterHeader creator={creator}/>
-                    <PosterMedia image={image} name={name}/>
-                    <PosterFooter price={properties.price} name={name}/>
+                    <PosterMedia image={posters.medium} name={title}/>
+                    <PosterFooter price={price} name={title}/>
                 </PosterWrapper>
             </Link>
         </HomeRecentPosterWrapper>

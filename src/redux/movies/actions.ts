@@ -14,8 +14,7 @@ export const fetchRecentMovies = <P extends MoviesArgs>(args?: P): ThunkAction<P
   return async (dispatch: ThunkDispatcher) => {
     try {
       fetch(`${API_ENDPOINT}/cache/recent`).then(async (res) => {
-        const data = await res.json()
-        const moviesCollection: Movie[] = data.map((el: { properties: Movie }) => el.properties)
+        const moviesCollection: Movie[] = await res.json()
         // Set valid result from API
         dispatch(setMovies(moviesCollection))
       }).catch((error) => console.log(error))
