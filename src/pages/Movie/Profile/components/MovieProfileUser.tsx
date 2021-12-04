@@ -10,7 +10,6 @@ import {
 // PROJECT IMPORTS
 import { PixelArtIdenticon } from '@components/Identicon'
 import { User } from '@state/types/user'
-import { String } from '@src/utils'
 import { Translation } from '@src/i18n'
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */

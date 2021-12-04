@@ -20,7 +20,7 @@ import { connect, RootStateOrAny } from 'react-redux'
 import { Userstate } from '@state/users/reducer'
 import { User } from '@state/types/user'
 import { PixelArtIdenticon } from '@components/Identicon'
-import {String} from "@src/utils";
+import { String } from '@src/utils'
 
 // ===========================|| HOME - CREATORS ||=========================== //
 
@@ -42,7 +42,7 @@ const HomeCreators: FC<Userstate & UsersActions> = ({ collection, fetchCreators 
             {
               collection !== undefined ? collection.map((user: User, i: number) => {
                 return (
-                    <Grid item xs={6} sm={4} md={3} lg={2} key={i}>
+                  <Grid item xs={6} sm={4} md={3} lg={2} key={i}>
                     <HomeCreatorChip
                       icon={<PixelArtIdenticon seed={user.address} />}
                       label={(

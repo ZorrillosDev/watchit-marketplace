@@ -1,3 +1,4 @@
+export const MOVIE_EXTRA_FIELDS_LIMIT = 5
 export const FAKE_MOVIES = [
   {
     creator: {

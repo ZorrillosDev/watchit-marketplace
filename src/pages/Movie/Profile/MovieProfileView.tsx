@@ -15,7 +15,6 @@ import {
   IconPlayerPlay,
   IconEye,
   IconExternalLink,
-  IconBox,
   IconList,
   IconChevronDown
 } from '@tabler/icons'
@@ -89,25 +88,27 @@ export const MovieProfileView: FC<MovieProfileViewProps> = (props): JSX.Element 
                   </Grid>
                   <Grid item xs={12}>
                     <MovieProfileSection
-                        component={Button}
-                        text={<Translation target='MOVIE_PROFILE_VIEW_WATCHIT' />}
-                        iconEnd={<IconPlayerPlay stroke={1} />}
-                        iconStart={<IconMovie stroke={1} />} />
+                      component={Button}
+                      text={<Translation target='MOVIE_PROFILE_VIEW_WATCHIT' />}
+                      iconEnd={<IconPlayerPlay stroke={1} />}
+                      iconStart={<IconMovie stroke={1} />}
+                    />
                   </Grid>
                   <Grid item xs={12}>
                     <MovieProfileSection
-                        component={Button}
-                        text={<Translation target='MOVIE_PROFILE_VIEW_ETHERSCAN' />}
-                        iconStart={<IconEye stroke={1} />}
-                        iconEnd={<IconExternalLink stroke={1} />} />
+                      component={Button}
+                      text={<Translation target='MOVIE_PROFILE_VIEW_ETHERSCAN' />}
+                      iconStart={<IconEye stroke={1} />}
+                      iconEnd={<IconExternalLink stroke={1} />}
+                    />
                   </Grid>
-                  {/*<Grid item xs={12}>*/}
+                  {/* <Grid item xs={12}> */}
                   {/*  <MovieProfileSection */}
                   {/*      component={Button} */}
-                  {/*      text={<Translation target='MOVIE_PROFILE_VIEW_IPFS' />}*/}
+                  {/*      text={<Translation target='MOVIE_PROFILE_VIEW_IPFS' />} */}
                   {/*      iconEnd={<IconExternalLink stroke={1} />} */}
-                  {/*      iconStart={<IconBox stroke={1} />} />*/}
-                  {/*</Grid>*/}
+                  {/*      iconStart={<IconBox stroke={1} />} /> */}
+                  {/* </Grid> */}
                   <Grid item xs={12}>
                     <MovieProfileOffersAccordion defaultExpanded>
                       <AccordionSummary expandIcon={<IconChevronDown stroke={1.5} />}>
