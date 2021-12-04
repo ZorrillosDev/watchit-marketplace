@@ -1,5 +1,6 @@
 // REACT IMPORTS
 import React, { FC } from 'react'
+import { Link } from 'react-router-dom'
 
 // MUI IMPORTS
 import { Grid, styled, GridProps } from '@mui/material'
@@ -18,19 +19,23 @@ import { Movie } from '@state/types/movies'
 const HomeRecentPoster: FC<Movie> = (props): JSX.Element => {
   const {
     creator,
-    image,
-    name,
-    properties
+    posters,
+    path,
+    title,
+    price
   } = props
 
   return (
     <HomeRecentPosterWrapper item>
-      <PosterWrapper>
-        <PosterHeader creator={creator} />
-        <PosterMedia image={image} name={name} />
-        <PosterFooter price={properties.price} name={name} />
-      </PosterWrapper>
+      <Link to={path} style={{ textDecoration: 'none' }}>
+        <PosterWrapper>
+          <PosterHeader creator={creator} />
+          <PosterMedia image={posters.medium} name={title} />
+          <PosterFooter price={price} name={title} />
+        </PosterWrapper>
+      </Link>
     </HomeRecentPosterWrapper>
+
   )
 }
 

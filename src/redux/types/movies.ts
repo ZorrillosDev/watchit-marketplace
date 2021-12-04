@@ -1,4 +1,3 @@
-
 export const GenresList = [
   'All',
   'Action',
@@ -31,9 +30,18 @@ export const GenresList = [
 
 export type Genres = typeof GenresList[number]
 
-export interface MovieProperties {
+export interface PosterCollection {
+  small: string
+  medium: string
+  large: string
+}
+
+export interface Movie {
+  creator: string
+  description: string
+  path: string
+  title: string
   date_uploaded_unix: number
-  genres: Genres
   price: number
   group_name: string
   imdb_code: string
@@ -42,15 +50,8 @@ export interface MovieProperties {
   rating: number
   runtime: number
   synopsis: string
-  title: string
   trailer_code: string
   year: number
-}
-
-export interface Movie {
-  creator: string
-  description: string
-  image: string
-  name: string
-  properties: MovieProperties
+  genres: Genres
+  posters: PosterCollection
 }
