@@ -1,7 +1,7 @@
 export interface UsersArgs {
-    limit?: number
+  limit?: number
 }
 
 export interface UsersActions {
-    fetchCreators: <P extends UsersArgs>(args?: P) => void
+  fetchCreators: <P extends UsersArgs>(args?: P) => void
 }

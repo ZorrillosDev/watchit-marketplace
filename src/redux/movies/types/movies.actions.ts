@@ -1,8 +1,7 @@
 export interface MoviesArgs {
-    limit?: number
+  limit?: number
 }
 
 export interface MoviesActions {
-    fetchRecentMovies: <P extends MoviesArgs>(args?: P) => void
+  fetchRecentMovies: <P extends MoviesArgs>(args?: P) => void
 }
-

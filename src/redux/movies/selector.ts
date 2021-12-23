@@ -1,3 +1,4 @@
-import {RootStateOrAny} from "react-redux";
+import { RootStateOrAny } from 'react-redux'
+import { Movie } from '@state/movies/types'
 
-export const selectCollection = (state: RootStateOrAny)=> state.movies.collection
+export const selectCollection = (state: RootStateOrAny): Movie[] => state.movies.collection

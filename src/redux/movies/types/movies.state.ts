@@ -1,5 +1,5 @@
-import {Movie} from "./movies";
+import { Movie } from './movies'
 
 export interface MoviesState {
-    collection: Movie[]
+  collection: Movie[]
 }

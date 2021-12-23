@@ -1,3 +1,4 @@
-import {RootStateOrAny} from "react-redux";
+import { RootStateOrAny } from 'react-redux'
+import { User } from '@state/users/types'
 
-export const selectCreations = (state: RootStateOrAny)=> state.users.creations
+export const selectCreations = (state: RootStateOrAny): User[] => (state.users.creators)
