@@ -9,7 +9,7 @@ import {
 
 // PROJECT IMPORTS
 import { PixelArtIdenticon } from '@components/Identicon'
-import { User } from '@state/types/user'
+import { User } from '@state/users/types'
 import { Translation } from '@src/i18n'
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */

@@ -1,6 +1,6 @@
 import reducer, { addMovie, initialState, setMovies } from '@state/movies/reducer'
 import { ThunkDispatcher, ThunkAction } from '@state/types'
-import { Movie } from '@state/types/movies'
+import { Movie } from '@state/movies/types/movies'
 import { fetchRecentMovies } from '@state/movies/actions'
 import { FAKE_MOVIES } from '@src/config'
 

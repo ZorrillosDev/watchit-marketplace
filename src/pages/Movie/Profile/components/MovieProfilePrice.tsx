@@ -11,7 +11,7 @@ import {
 import MovieProfileUser from '@pages/Movie/Profile/components/MovieProfileUser'
 import { PosterFooterProps } from '@components/Poster'
 import { IconEth } from '@components/Icons'
-import { User } from '@state/types/user'
+import { User } from '@state/users/types'
 import { Translation } from '@src/i18n'
 
 // ===========================|| MOVIE - PROFILE - PRICE ||=========================== //

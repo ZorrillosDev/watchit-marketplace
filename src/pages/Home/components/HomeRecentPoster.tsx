@@ -12,7 +12,7 @@ import {
   PosterFooter,
   PosterMedia
 } from '@components/Poster'
-import { Movie } from '@state/types/movies'
+import { Movie } from '@state/movies/types/movies'
 
 // ===========================|| HOME - RECENT - POSTER ||=========================== //
 

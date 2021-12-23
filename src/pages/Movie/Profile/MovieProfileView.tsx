@@ -29,7 +29,7 @@ import MovieProfilePrice from '@pages/Movie/Profile/components/MovieProfilePrice
 import MovieProfileUser from '@pages/Movie/Profile/components/MovieProfileUser'
 import Poster, { PosterFooterProps, PosterMediaProps } from '@components/Poster'
 import TruncatedTypography from '@components/TruncatedTypography'
-import { User } from '@state/types/user'
+import { User } from '@state/users/types'
 import Footer from '@components/Footer'
 import { Translation } from '@src/i18n'
 
@@ -102,13 +102,6 @@ export const MovieProfileView: FC<MovieProfileViewProps> = (props): JSX.Element 
                       iconEnd={<IconExternalLink stroke={1} />}
                     />
                   </Grid>
-                  {/* <Grid item xs={12}> */}
-                  {/*  <MovieProfileSection */}
-                  {/*      component={Button} */}
-                  {/*      text={<Translation target='MOVIE_PROFILE_VIEW_IPFS' />} */}
-                  {/*      iconEnd={<IconExternalLink stroke={1} />} */}
-                  {/*      iconStart={<IconBox stroke={1} />} /> */}
-                  {/* </Grid> */}
                   <Grid item xs={12}>
                     <MovieProfileOffersAccordion defaultExpanded>
                       <AccordionSummary expandIcon={<IconChevronDown stroke={1.5} />}>

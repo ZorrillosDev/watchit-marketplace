@@ -1,6 +1,6 @@
-import reducer, { setUsers, initialState } from '@state/users/reducer'
+import reducer, { setUsersCreations, initialState } from '@state/users/reducer'
 import { ThunkDispatcher, ThunkAction } from '@state/types'
-import { User } from '@state/types/user'
+import { User } from '@state/users/types/user'
 import { fetchCreators } from '@state/users/actions'
 import { FAKE_CREATORS } from '@src/config'
 
@@ -29,10 +29,10 @@ describe('Users store', () => {
   })
 
   it('should handle set for users collection', () => {
-    const current = reducer(initialState, setUsers(users))
+    const current = reducer(initialState, setUsersCreations(users))
 
     expect(current).toEqual({ ...initialState, ...{ collection: users } })
-    expect(reducer(current, setUsers(users))).toEqual({
+    expect(reducer(current, setUsersCreations(users))).toEqual({
       ...initialState,
       collection: users
     })
