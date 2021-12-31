@@ -4,9 +4,6 @@ import { rootDir } from '../utils/env'
 
 const config = {
   patterns: [{
-    from: join(rootDir, './public/sw.js'),
-    to: 'sw.js'
-  },{
     from: join(rootDir, './src/assets'),
     to: 'assets'
   }]
