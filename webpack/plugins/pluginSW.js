@@ -5,5 +5,5 @@ const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
 export const workBoxSW = new WorkboxWebpackPlugin.InjectManifest({
     swSrc: join(rootDir, "./src/src-sw.js"),
     swDest: "sw.js",
-    maximumFileSizeToCacheInBytes: 4000000
+    maximumFileSizeToCacheInBytes: 4000000000
 })

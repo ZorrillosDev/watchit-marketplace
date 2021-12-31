@@ -15,7 +15,7 @@ import { PixelArtIdenticon } from '@components/Identicon'
 import { String } from '@src/utils'
 
 // ===========================|| HOME - CREATORS ||=========================== //
-export const HomeCreatorsItems: FC<{ user: User }> = ({ user }): JSX.Element => {
+export const HomeCreatorsView: FC<{ user: User }> = ({ user }): JSX.Element => {
   return (
     <Grid item xs={6} sm={4} md={3} lg={2}>
       <HomeCreatorChip

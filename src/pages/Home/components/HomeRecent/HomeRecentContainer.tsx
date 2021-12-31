@@ -9,15 +9,15 @@ import { Grid, Typography, Container, Button, useMediaQuery } from '@mui/materia
 import { FilterList } from '@mui/icons-material'
 import { useTheme } from '@mui/material/styles'
 import { Theme } from '@mui/system'
-import HomeRecentPoster from '@pages/Home/components/HomeRecentPoster'
 import { MOVIES_COLUMNS, MOVIES_ROWS } from '@pages/Home/CONSTANTS'
 import { fetchRecentMovies } from '@state/movies/actions'
 import { Movie, MoviesState, MoviesActions } from '@state/movies/types'
 import { selectCollection } from '@state/movies/selector'
+import HomeRecentView from './HomeRecentView'
 
 // ===========================|| HOME - RECENT ||=========================== //
 
-const HomeRecent: FC<MoviesState & MoviesActions> = ({ collection, fetchRecentMovies }): JSX.Element => {
+const HomeRecentContainer: FC<MoviesState & MoviesActions> = ({ collection, fetchRecentMovies }): JSX.Element => {
   const theme: Theme = useTheme()
   let moviesColumns = MOVIES_COLUMNS
   moviesColumns = useMediaQuery(theme.breakpoints.up('md')) ? 3 : moviesColumns
@@ -54,7 +54,7 @@ const HomeRecent: FC<MoviesState & MoviesActions> = ({ collection, fetchRecentMo
               collection !== undefined ? collection.map((movie: Movie, i: number) => {
                 const moviesMax = moviesColumns * MOVIES_ROWS
                 return (i < moviesMax)
-                  ? <HomeRecentPoster {...movie} key={i} />
+                  ? <HomeRecentView {...movie} key={i} />
                   : <React.Fragment key={i} />
               }) : <></>
             }
@@ -66,12 +66,12 @@ const HomeRecent: FC<MoviesState & MoviesActions> = ({ collection, fetchRecentMo
 }
 
 const mapDispatchToProps: Partial<MoviesActions> = { fetchRecentMovies }
-const mapStateToProps = (state: RootStateOrAny): MoviesState => {
+const mapStateToProps = (state: RootStateOrAny): Partial<MoviesState> => {
   const collection = selectCollection(state)
   return { collection }
 }
 
-export default connect(
+export const HomeRecent = connect(
   mapStateToProps,
   mapDispatchToProps
-)(React.memo(HomeRecent))
+)(React.memo(HomeRecentContainer))

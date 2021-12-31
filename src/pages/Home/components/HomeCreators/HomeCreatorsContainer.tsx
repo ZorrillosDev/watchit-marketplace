@@ -14,11 +14,11 @@ import { fetchCreators } from '@state/users/actions'
 import { connect, RootStateOrAny } from 'react-redux'
 import { selectCreations } from '@state/users/selector'
 import { User, UserState, UsersActions } from '@state/users/types'
-import { HomeCreatorsItems } from '@pages/Home/components/HomeCreatorsItems'
+import { HomeCreatorsView } from './HomeCreatorsView'
 
 // ===========================|| HOME - CREATORS ||=========================== //
 
-const HomeCreators: FC<UserState & UsersActions> = ({ creators, fetchCreators }): JSX.Element => {
+const HomeCreatorsContainer: FC<UserState & UsersActions> = ({ creators, fetchCreators }): JSX.Element => {
   useEffect(() => {
     fetchCreators()
   }, [])
@@ -35,7 +35,7 @@ const HomeCreators: FC<UserState & UsersActions> = ({ creators, fetchCreators })
           <Grid container spacing={3} display='flex' flexWrap='wrap' justifyContent='space-between'>
             {
               creators !== undefined ? creators.map((user: User, i: number) => {
-                return <HomeCreatorsItems user={user} key={i} />
+                return <HomeCreatorsView user={user} key={i} />
               }) : <></>
             }
           </Grid>
@@ -51,7 +51,7 @@ const mapStateToProps = (state: RootStateOrAny): UserState => {
   return { creators }
 }
 
-export default connect(
+export const HomeCreators = connect(
   mapStateToProps,
   mapDispatchToProps
-)(HomeCreators)
+)(HomeCreatorsContainer)

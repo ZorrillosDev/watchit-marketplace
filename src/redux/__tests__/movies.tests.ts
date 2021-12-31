@@ -58,7 +58,7 @@ describe('Movies store', () => {
 
     it('should call recent action with valid args ', async () => {
       await actionForFetchRecent(dispatch, getState, undefined)
-      expect(fetch).toHaveBeenCalledWith('http://localhost:5000/cache/recent')
+      expect(fetch).toHaveBeenCalledWith('http://localhost:5000/v0/marketplace/cache/movie/recent')
     })
   })
 })

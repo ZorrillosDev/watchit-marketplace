@@ -16,7 +16,7 @@ import { Movie } from '@state/movies/types/movies'
 
 // ===========================|| HOME - RECENT - POSTER ||=========================== //
 
-const HomeRecentPoster: FC<Movie> = (props): JSX.Element => {
+const HomeRecentView: FC<Movie> = (props): JSX.Element => {
   const {
     creator,
     posters,
@@ -39,7 +39,7 @@ const HomeRecentPoster: FC<Movie> = (props): JSX.Element => {
   )
 }
 
-export default HomeRecentPoster
+export default HomeRecentView
 
 export const HomeRecentPosterWrapper = styled(Grid)<GridProps>(({ theme }) => ({
   width: '100%',
