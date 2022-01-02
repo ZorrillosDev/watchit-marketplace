@@ -31,10 +31,10 @@ describe('Users store', () => {
   it('should handle set for users collection', () => {
     const current = reducer(initialState, setCreators(users))
 
-    expect(current).toEqual({ ...initialState, ...{ collection: users } })
+    expect(current).toEqual({ ...initialState, ...{ creators: users } })
     expect(reducer(current, setCreators(users))).toEqual({
       ...initialState,
-      collection: users
+      creators: users
     })
   })
 

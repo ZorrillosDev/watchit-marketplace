@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import MovieProfileHeader from '@pages/Movie/Profile/components/MovieProfileHeader'
+import MovieProfileHeader from '@pages/Movie/components/MovieProfileHeader'
 import i18n from '@src/i18n'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */

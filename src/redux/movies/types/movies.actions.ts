@@ -1,12 +1,12 @@
 export interface MovieArgs {
-    id: number
+  id?: string
 }
 
 export interface MoviesArgs {
-    limit?: number
+  limit?: number
 }
 
 export interface MoviesActions {
-    fetchRecentMovies: <P extends MoviesArgs>(args?: P) => void,
-    fetchMovieProfile: <P extends MovieArgs>(args?: P) => void,
+  fetchRecentMovies: <P extends MoviesArgs>(args?: P) => void
+  fetchMovieProfile: <P extends MovieArgs>(args: P) => void
 }

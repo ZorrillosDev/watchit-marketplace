@@ -12,6 +12,7 @@ export default function registerServiceWorker () {
        * only on the updated
        */
       if (event.isUpdate) {
+        // eslint-disable-next-line no-undef
         if (confirm('New app update is available!. Click OK to refresh')) {
           window.location.reload()
         }

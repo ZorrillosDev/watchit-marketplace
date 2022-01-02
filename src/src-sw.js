@@ -20,6 +20,7 @@ clientsClaim()
  * We are not wrapping it in a 'message' event as per the new update.
  * @see https://developers.google.com/web/tools/workbox/modules/workbox-core
  */
+// eslint-disable-next-line no-undef
 self.skipWaiting()
 
 /**
@@ -28,6 +29,7 @@ self.skipWaiting()
  * This variable must be present somewhere in your service worker file,
  * even if you decide not to use precaching. See https://cra.link/PWA
  */
+// eslint-disable-next-line no-undef
 precacheAndRoute(self.__WB_MANIFEST)
 
 // Cache the Google Fonts stylesheets with a stale-while-revalidate strategy.

@@ -20,30 +20,22 @@ import {
 } from '@tabler/icons'
 
 // PROJECT IMPORTS
-import MovieProfileSection, { MovieProfileSectionWrapper } from '@pages/Movie/Profile/components/MovieProfileSection'
-import MovieProfileActivityTable from '@pages/Movie/Profile/components/MovieProfileActivityTable'
-import MovieProfileOffersTable from '@pages/Movie/Profile/components/MovieProfileOffersTable'
-import MovieProfileHeader from '@pages/Movie/Profile/components/MovieProfileHeader'
-import MovieProfileDetail from '@pages/Movie/Profile/components/MovieProfileDetail'
-import MovieProfilePrice from '@pages/Movie/Profile/components/MovieProfilePrice'
-import MovieProfileUser from '@pages/Movie/Profile/components/MovieProfileUser'
+import MovieProfileSection, { MovieProfileSectionWrapper } from '@pages/Movie/components/MovieProfileSection'
+import MovieProfileActivityTable from '@pages/Movie/components/MovieProfileActivityTable'
+import MovieProfileOffersTable from '@pages/Movie/components/MovieProfileOffersTable'
+import MovieProfileHeader from '@pages/Movie/components/MovieProfileHeader'
+import MovieProfileDetail from '@pages/Movie/components/MovieProfileDetail'
+import MovieProfilePrice from '@pages/Movie/components/MovieProfilePrice'
+import MovieProfileUser from '@pages/Movie/components/MovieProfileUser'
 import Poster, { PosterFooterProps, PosterMediaProps } from '@components/Poster'
 import TruncatedTypography from '@components/TruncatedTypography'
-import { User } from '@state/users/types'
 import Footer from '@components/Footer'
 import { Translation } from '@src/i18n'
+import { Movie } from '@state/movies/types'
 
 // ===========================|| MOVIE - PROFILE - VIEW ||=========================== //
 
-type PosterProps = PosterMediaProps & PosterFooterProps
-
-export interface MovieProfileViewProps extends PosterProps {
-  creator: User
-  owner: User
-  description: string
-}
-
-export const MovieProfileView: FC<MovieProfileViewProps> = (props): JSX.Element => {
+export const MovieProfileView: FC<Movie> = (props): JSX.Element => {
   const [value, setValue] = React.useState('1')
 
   const handleChange = (event: React.SyntheticEvent, newValue: string): void => {
@@ -62,10 +54,10 @@ export const MovieProfileView: FC<MovieProfileViewProps> = (props): JSX.Element 
               <Grid item xs={12} sm={5}>
                 <Grid container spacing={3}>
                   <Grid item xs={12}>
-                    <Poster {...props} />
+                    <Poster image={props.posters.large} name={props.title} />
                   </Grid>
                   <Grid item xs={12}>
-                    <Typography variant='h2' color='primary'>{props.name}</Typography>
+                    <Typography variant='h2' color='primary'>{props.title}</Typography>
                   </Grid>
                   <Grid item xs={12}>
                     <TruncatedTypography variant='h4' color='primary' fontWeight={400} lines={5} sx={{ m: 0 }}>
@@ -77,10 +69,10 @@ export const MovieProfileView: FC<MovieProfileViewProps> = (props): JSX.Element 
               <Grid item xs={12} sm={7}>
                 <Grid container spacing={3}>
                   <MovieProfileHeader sx={{ display: { xs: 'none', md: 'flex' } }} />
-                  <MovieProfilePrice {...props} />
+                  <MovieProfilePrice price={props.price} name={props.title} />
                   <Grid item xs={12} sx={{ pt: '3rem !important' }}>
                     <MovieProfileSectionWrapper>
-                      <MovieProfileUser {...props.creator} />
+                      <MovieProfileUser address={props.creator} />
                       <MovieProfileCreatorTypography variant='body1' color='primary'>
                         <Translation target='MOVIE_PROFILE_CREATOR' />
                       </MovieProfileCreatorTypography>

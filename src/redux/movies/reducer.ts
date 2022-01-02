@@ -10,7 +10,7 @@ const recentReducer = createSlice({
   name: 'movies',
   initialState,
   reducers: {
-    setMovie(state: MoviesState, action: PayloadAction<Movie>) {
+    setMovie (state: MoviesState, action: PayloadAction<Movie>) {
       state.movie = action.payload
     },
     setMovies (state: MoviesState, action: PayloadAction<Movie[]>) {
@@ -23,5 +23,5 @@ const recentReducer = createSlice({
 })
 
 const { actions, reducer } = recentReducer
-export const { setMovies, addMovie } = actions
+export const { setMovies, setMovie, addMovie } = actions
 export default reducer

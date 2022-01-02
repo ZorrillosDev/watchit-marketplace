@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 
 // PROJECT IMPORTS
-import MovieProfileUser from '@pages/Movie/Profile/components/MovieProfileUser'
+import MovieProfileUser from '@pages/Movie/components/MovieProfileUser'
 import { Translation } from '@src/i18n'
 
 // ===========================|| MOVIE - PROFILE - ACTIVITY - TABLE ||=========================== //
@@ -31,7 +31,7 @@ const MovieProfileActivityTable: FC = (): JSX.Element => {
               20/11/21
             </TableCell>
             <TableCell sx={{ opacity: 0.8 }}>
-              <MovieProfileUser address='00x8372827830203' showMovies={false} />
+              <MovieProfileUser address='00x8372827830203' />
             </TableCell>
             <TableCell sx={{ opacity: 0.8 }}>
               # 2
@@ -45,7 +45,7 @@ const MovieProfileActivityTable: FC = (): JSX.Element => {
               20/11/21
             </TableCell>
             <TableCell sx={{ opacity: 0.8 }}>
-              <MovieProfileUser address='00x83728278302325' showMovies={false} />
+              <MovieProfileUser address='00x83728278302325' />
             </TableCell>
             <TableCell sx={{ opacity: 0.8 }}>
               # 1

@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import MovieProfileSection from '@pages/Movie/Profile/components/MovieProfileSection'
+import MovieProfileSection from '@pages/Movie/components/MovieProfileSection'
 import { Map, Store } from '@components/Icons'
 import { Typography } from '@mui/material'
 

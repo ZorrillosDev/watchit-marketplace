@@ -5,7 +5,7 @@ import React, { FC } from 'react'
 import { Avatar, Button, ButtonProps, Grid, styled, Theme, Typography, Zoom } from '@mui/material'
 
 // THIRD PARTY
-import { IconMovie, IconHeart, IconShare } from '@tabler/icons'
+import { IconHeart, IconShare } from '@tabler/icons'
 
 // PROJECT IMPORTS
 import { Fingerprint, MoreHoriz } from '@components/Icons'
@@ -41,16 +41,6 @@ const MovieProfileHeader: FC<{sx?: SxProps<Theme>}> = ({ sx }): JSX.Element => {
             <Typography sx={{ pl: 1 }}>
               <Translation target='MOVIE_PROFILE_HEADER_SHARE' />
             </Typography>
-          </MovieProfileButton>
-        </Grid>
-        <Grid item>
-          <MovieProfileButton size='small'>
-            <IconMovie stroke={1} />
-          </MovieProfileButton>
-        </Grid>
-        <Grid item>
-          <MovieProfileButton size='small'>
-            <MoreHoriz />
           </MovieProfileButton>
         </Grid>
       </Grid>

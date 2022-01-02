@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 
 // PROJECT IMPORTS
-import MovieProfileUser from '@pages/Movie/Profile/components/MovieProfileUser'
+import MovieProfileUser from '@pages/Movie/components/MovieProfileUser'
 import { PosterFooterProps } from '@components/Poster'
 import { IconEth } from '@components/Icons'
 import { User } from '@state/users/types'
@@ -17,7 +17,7 @@ import { Translation } from '@src/i18n'
 // ===========================|| MOVIE - PROFILE - PRICE ||=========================== //
 
 export interface MovieProfilePriceProps extends PosterFooterProps {
-  owner: User
+  owner?: User
 }
 
 const MovieProfilePrice: FC<MovieProfilePriceProps> = (props): JSX.Element => {
@@ -55,9 +55,9 @@ const MovieProfilePrice: FC<MovieProfilePriceProps> = (props): JSX.Element => {
                   <Translation target='MOVIE_PROFILE_OWNER' />
                 </Typography>
               </Grid>
-              <Grid item xs={12} display='flex'>
-                <MovieProfileUser {...props.owner} />
-              </Grid>
+              {/*<Grid item xs={12} display='flex'>*/}
+              {/*  <MovieProfileUser {...props.owner} />*/}
+              {/*</Grid>*/}
             </Grid>
           </Grid>
         </Grid>

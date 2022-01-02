@@ -1,12 +1,13 @@
-import {API_ENDPOINT} from '@state/CONSTANTS'
+import { API_ENDPOINT } from '@state/CONSTANTS'
 
 export enum Endpoints {
-    recent = '/cache/movie/recent',
-    profile = '/cache/movie/profile'
+  recent = '/cache/movie/recent',
+  profile = '/cache/movie/profile'
 }
 
-export default async (path: Endpoints = Endpoints.recent): Promise<any> => (
-    await fetch(`${API_ENDPOINT}${path}`).then(async (res) =>
-        res.ok ? await res.json() : await Promise.reject(res)
-    )
-)
+export default async (path: Endpoints = Endpoints.recent, args?: any): Promise<any> => {
+  const params = args !== undefined ? `?${new URLSearchParams(args).toString()}` : ''
+  return await fetch(`${API_ENDPOINT}${path}${params}`).then(async (res) =>
+    res.ok ? await res.json() : await Promise.reject(res)
+  )
+}

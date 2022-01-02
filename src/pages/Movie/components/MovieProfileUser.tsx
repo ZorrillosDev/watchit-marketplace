@@ -9,18 +9,12 @@ import {
 
 // PROJECT IMPORTS
 import { PixelArtIdenticon } from '@components/Identicon'
-import { User } from '@state/users/types'
-import { Translation } from '@src/i18n'
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
 // ===========================|| MOVIE - PROFILE - USER ||=========================== //
 
-export interface MovieProfileUserProps extends User {
-  showMovies?: boolean
-}
-
-const MovieProfileUser: FC<MovieProfileUserProps> = (props): JSX.Element => {
+const MovieProfileUser: FC<{ address: string }> = (props): JSX.Element => {
   return (
     <MovieProfileUserChip
       icon={<PixelArtIdenticon seed={props?.address} size={35} />}
@@ -29,15 +23,6 @@ const MovieProfileUser: FC<MovieProfileUserProps> = (props): JSX.Element => {
           <MovieProfileAddressTypography variant='body1'>
             {props?.address}
           </MovieProfileAddressTypography>
-          <Typography gutterBottom variant='body1' sx={{ opacity: 0.5 }}>
-            {
-              props.showMovies &&
-                <>
-                  <Translation target='MOVIE_PROFILE_MINTED' />
-                  {props?.movies}
-                </>
-            }
-          </Typography>
         </Box>
       )}
       variant='outlined'
@@ -45,10 +30,6 @@ const MovieProfileUser: FC<MovieProfileUserProps> = (props): JSX.Element => {
       color='primary'
     />
   )
-}
-
-MovieProfileUser.defaultProps = {
-  showMovies: true
 }
 
 export default MovieProfileUser

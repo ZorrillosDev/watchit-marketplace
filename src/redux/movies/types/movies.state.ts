@@ -1,6 +1,6 @@
 import { Movie } from './movies'
 
 export interface MoviesState {
-  movie: Movie,
+  movie: Movie
   collection: Movie[]
 }

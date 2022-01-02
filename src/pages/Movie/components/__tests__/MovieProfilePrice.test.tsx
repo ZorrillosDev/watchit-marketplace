@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import MovieProfilePrice from '@pages/Movie/Profile/components/MovieProfilePrice'
+import MovieProfilePrice from '@pages/Movie/components/MovieProfilePrice'
 import i18n from '@src/i18n'
 import { Typography } from '@mui/material'
 

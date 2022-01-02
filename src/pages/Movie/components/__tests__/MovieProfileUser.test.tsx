@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import MovieProfileUser from '@pages/Movie/Profile/components/MovieProfileUser'
+import MovieProfileUser from '@pages/Movie/components/MovieProfileUser'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 
