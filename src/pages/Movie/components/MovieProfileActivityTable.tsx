@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 
 // MUI IMPORTS
 import {
-  styled, Typography, Table, TableHead,
+  styled, Table, TableHead,
   TableCell, TableBody, TableRow, TableProps, TableContainer, Paper
 } from '@mui/material'
 
@@ -13,7 +13,18 @@ import { Translation } from '@src/i18n'
 
 // ===========================|| MOVIE - PROFILE - ACTIVITY - TABLE ||=========================== //
 
-const MovieProfileActivityTable: FC = (): JSX.Element => {
+export interface ActivityTableRow {
+  date: string
+  owner: string
+  edition: string | number
+  description: string
+}
+
+export interface MovieProfileActivityTableProps {
+  rows: ActivityTableRow[]
+}
+
+const MovieProfileActivityTable: FC<MovieProfileActivityTableProps> = ({ rows }): JSX.Element => {
   return (
     <TableContainer component={Paper}>
       <MovieProfileActivityTableWrapper size='small'>
@@ -26,37 +37,32 @@ const MovieProfileActivityTable: FC = (): JSX.Element => {
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell sx={{ opacity: 0.8 }}>
-              20/11/21
-            </TableCell>
-            <TableCell sx={{ opacity: 0.8 }}>
-              <MovieProfileUser address='00x8372827830203' />
-            </TableCell>
-            <TableCell sx={{ opacity: 0.8 }}>
-              # 2
-            </TableCell>
-            <TableCell sx={{ opacity: 0.8 }}>
-              Acquired for 4.1 ETH <Typography variant='body1' sx={{ display: 'inline' }}>($ 6,940.54)</Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell sx={{ opacity: 0.8 }}>
-              20/11/21
-            </TableCell>
-            <TableCell sx={{ opacity: 0.8 }}>
-              <MovieProfileUser address='00x83728278302325' />
-            </TableCell>
-            <TableCell sx={{ opacity: 0.8 }}>
-              # 1
-            </TableCell>
-            <TableCell sx={{ opacity: 0.8 }}>
-              Created
-            </TableCell>
-          </TableRow>
+          {rows.map((row, index) => {
+            return <MovieProfileActivityTableRow {...row} key={index} />
+          })}
         </TableBody>
       </MovieProfileActivityTableWrapper>
     </TableContainer>
+  )
+}
+
+const MovieProfileActivityTableRow: FC<ActivityTableRow> = (props): JSX.Element => {
+  return (
+    <TableRow>
+      <TableCell sx={{ opacity: 0.8 }}>
+        {props.date}
+      </TableCell>
+      <TableCell sx={{ opacity: 0.8 }}>
+        <MovieProfileUser address={props.owner} />
+      </TableCell>
+      <TableCell sx={{ opacity: 0.8 }}>
+        # {props.edition}
+      </TableCell>
+      <TableCell sx={{ opacity: 0.8 }}>
+        {props.description}
+        {/* Acquired for 4.1 ETH <Typography variant='body1' sx={{ display: 'inline' }}>($ 6,940.54)</Typography> */}
+      </TableCell>
+    </TableRow>
   )
 }
 

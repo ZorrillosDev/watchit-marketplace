@@ -8,7 +8,7 @@ import { Avatar, Button, ButtonProps, Grid, styled, Theme, Typography, Zoom } fr
 import { IconHeart, IconShare } from '@tabler/icons'
 
 // PROJECT IMPORTS
-import { Fingerprint, MoreHoriz } from '@components/Icons'
+import { Fingerprint } from '@components/Icons'
 import { LightTooltip } from '@components/Tooltip'
 import { Translation } from '@src/i18n'
 import { SxProps } from '@mui/system'

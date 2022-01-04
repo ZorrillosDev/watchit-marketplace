@@ -9,18 +9,18 @@ import {
 
 // PROJECT IMPORTS
 import MovieProfileUser from '@pages/Movie/components/MovieProfileUser'
-import { PosterFooterProps } from '@components/Poster'
 import { IconEth } from '@components/Icons'
-import { User } from '@state/users/types'
 import { Translation } from '@src/i18n'
 
-// ===========================|| MOVIE - PROFILE - PRICE ||=========================== //
+// ===========================|| MOVIE - PROFILE - PRICE - VIEW ||=========================== //
 
-export interface MovieProfilePriceProps extends PosterFooterProps {
-  owner?: User
+export interface MovieProfilePriceProps {
+  owner: string
+  price: number
+  fiatPrice: number
 }
 
-const MovieProfilePrice: FC<MovieProfilePriceProps> = (props): JSX.Element => {
+export const MovieProfilePriceView: FC<MovieProfilePriceProps> = (props): JSX.Element => {
   return (
     <Grid item xs={12}>
       <MovieProfilePriceSectionWrapper>
@@ -40,7 +40,7 @@ const MovieProfilePrice: FC<MovieProfilePriceProps> = (props): JSX.Element => {
               </MovieProfilePriceSection>
               <Grid item xs={12}>
                 <Typography variant='body2' color='text.secondary' textAlign='left'>
-                  $ {props.price * 4239}
+                  $ {props.fiatPrice}
                 </Typography>
               </Grid>
             </Grid>
@@ -55,9 +55,9 @@ const MovieProfilePrice: FC<MovieProfilePriceProps> = (props): JSX.Element => {
                   <Translation target='MOVIE_PROFILE_OWNER' />
                 </Typography>
               </Grid>
-              {/*<Grid item xs={12} display='flex'>*/}
-              {/*  <MovieProfileUser {...props.owner} />*/}
-              {/*</Grid>*/}
+              <Grid item xs={12} display='flex'>
+                <MovieProfileUser address={props.owner} />
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
@@ -68,8 +68,6 @@ const MovieProfilePrice: FC<MovieProfilePriceProps> = (props): JSX.Element => {
     </Grid>
   )
 }
-
-export default MovieProfilePrice
 
 export const MovieProfilePriceSectionWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   width: '100%',

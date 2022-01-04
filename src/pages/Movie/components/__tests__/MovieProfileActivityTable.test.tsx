@@ -7,7 +7,7 @@ import i18n from '@src/i18n'
 
 describe('<MovieProfileActivityTable />', () => {
   it('should render', () => {
-    const component = shallow(<MovieProfileActivityTable />)
+    const component = shallow(<MovieProfileActivityTable rows={[]} />)
 
     expect(component).toMatchSnapshot()
   })
@@ -17,7 +17,7 @@ describe('<MovieProfileActivityTable />', () => {
     const translate2 = i18n.t('MOVIE_PROFILE_OWNER')
     const translate3 = i18n.t('MOVIE_PROFILE_ACTIVITY_EDITION')
     const translate4 = i18n.t('MOVIE_PROFILE_ACTIVITY_DETAILS')
-    const component = mount(<MovieProfileActivityTable />)
+    const component = mount(<MovieProfileActivityTable rows={[]} />)
     const tableHeader1 = component.find('th').at(0)
     const tableHeader2 = component.find('th').at(1)
     const tableHeader3 = component.find('th').at(2)

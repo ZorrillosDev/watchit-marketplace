@@ -7,7 +7,7 @@ import i18n from '@src/i18n'
 
 describe('<MovieProfileOffersTable />', () => {
   it('should render', () => {
-    const component = shallow(<MovieProfileOffersTable />)
+    const component = shallow(<MovieProfileOffersTable rows={[]} />)
 
     expect(component).toMatchSnapshot()
   })
@@ -18,7 +18,7 @@ describe('<MovieProfileOffersTable />', () => {
     const translate3 = i18n.t('MOVIE_PROFILE_OFFERS_TABLE_USD_PRICE')
     const translate4 = i18n.t('MOVIE_PROFILE_OFFERS_TABLE_DATE')
     const translate5 = i18n.t('MOVIE_PROFILE_OFFERS_TABLE_EXPIRATION')
-    const component = mount(<MovieProfileOffersTable />)
+    const component = mount(<MovieProfileOffersTable rows={[]} />)
     const th1 = component.find('th').at(0)
     const th2 = component.find('th').at(1)
     const th3 = component.find('th').at(2)
