@@ -1,21 +1,13 @@
 import { ThunkAction, ThunkDispatcher } from '@state/types'
-import { UsersArgs } from '@state/users/types'
-import { API_ENDPOINT } from '@state/CONSTANTS'
-import { User } from '@state/types/user'
-import { setUsers } from '@state/users/reducer'
-
-export interface UsersActions {
-  fetchCreators: <P extends UsersArgs>(args?: P) => void
-}
+import { User, UsersArgs } from '@state/users/types'
+import { setCreators } from '@state/users/reducer'
+import fetch, { Endpoints } from './service'
 
 export const fetchCreators = <P extends UsersArgs>(args?: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      fetch(`${API_ENDPOINT}/cache/creators`).then(async (res) => {
-        const usersCollection: User[] = await res.json()
-        // Set valid result from API
-        dispatch(setUsers(usersCollection))
-      }).catch((error) => console.log(error))
+      const usersCollection: User[] = await fetch(Endpoints.recent)
+      dispatch(setCreators(usersCollection))
     } catch (e) {
       // TODO handle error here
     }

@@ -1,6 +1,6 @@
-import reducer, { addMovie, initialState, setMovies } from '@state/movies/reducer'
+import reducer, { addMovie, initialState, setMovies, setMovie } from '@state/movies/reducer'
 import { ThunkDispatcher, ThunkAction } from '@state/types'
-import { Movie } from '@state/types/movies'
+import { Movie } from '@state/movies/types/movies'
 import { fetchRecentMovies } from '@state/movies/actions'
 import { FAKE_MOVIES } from '@src/config'
 
@@ -38,6 +38,16 @@ describe('Movies store', () => {
     })
   })
 
+  it('should handle set movie', () => {
+    const current = reducer(initialState, setMovie(movies[0]))
+
+    expect(current).toEqual({ ...initialState, ...{ collection: movies[0] } })
+    expect(reducer(current, setMovie(movies[0]))).toEqual({
+      ...initialState,
+      movie: movies[0]
+    })
+  })
+
   it('should handle set for movie collection', () => {
     const current = reducer(initialState, setMovies(movies))
 
@@ -58,7 +68,7 @@ describe('Movies store', () => {
 
     it('should call recent action with valid args ', async () => {
       await actionForFetchRecent(dispatch, getState, undefined)
-      expect(fetch).toHaveBeenCalledWith('http://localhost:5000/cache/recent')
+      expect(fetch).toHaveBeenCalledWith('http://localhost:5000/cache/movie/recent')
     })
   })
 })

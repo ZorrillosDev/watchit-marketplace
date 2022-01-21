@@ -1,6 +1,6 @@
-import reducer, { setUsers, initialState } from '@state/users/reducer'
+import reducer, { setCreators, initialState } from '@state/users/reducer'
 import { ThunkDispatcher, ThunkAction } from '@state/types'
-import { User } from '@state/types/user'
+import { User } from '@state/users/types/user'
 import { fetchCreators } from '@state/users/actions'
 import { FAKE_CREATORS } from '@src/config'
 
@@ -29,12 +29,12 @@ describe('Users store', () => {
   })
 
   it('should handle set for users collection', () => {
-    const current = reducer(initialState, setUsers(users))
+    const current = reducer(initialState, setCreators(users))
 
-    expect(current).toEqual({ ...initialState, ...{ collection: users } })
-    expect(reducer(current, setUsers(users))).toEqual({
+    expect(current).toEqual({ ...initialState, ...{ creators: users } })
+    expect(reducer(current, setCreators(users))).toEqual({
       ...initialState,
-      collection: users
+      creators: users
     })
   })
 
@@ -48,7 +48,7 @@ describe('Users store', () => {
 
     it('should call recent action with valid args ', async () => {
       await actionForFetchCreators(dispatch, getState, undefined)
-      expect(fetch).toHaveBeenCalledWith('http://localhost:5000/cache/creators')
+      expect(fetch).toHaveBeenCalledWith('http://localhost:5000/cache/creator/recent')
     })
   })
 })

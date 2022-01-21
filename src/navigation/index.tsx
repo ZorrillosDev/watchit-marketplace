@@ -5,7 +5,7 @@ import Explore from '@pages/Explore'
 import Festival from '@pages/Festival'
 import Sell from '@pages/Sell'
 import Work from '@pages/Work'
-import MovieProfile from '@pages/Movie/Profile'
+import MovieProfile from '@pages/Movie'
 import MovieCreate from '@pages/Movie/Create'
 import { DefaultLayout } from '@layouts/default'
 import { ROOT, EXPLORE, FESTIVAL, SELL, WORK, MOVIE, MOVIE_CREATE } from '@navigation/CONSTANTS'
@@ -43,7 +43,7 @@ export const Routing: FC = (): JSX.Element => {
         render={
           (e) => (
             <DefaultLayout>
-              <MovieProfile id={e.match.params.id} />
+              <MovieProfile />
             </DefaultLayout>
           )
         }

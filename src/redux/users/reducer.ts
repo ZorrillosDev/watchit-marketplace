@@ -1,21 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { User } from '@state/types/user'
+import { User, UserState } from '@state/users/types'
 
-export interface Userstate {
-  collection: User[]
-}
-
-export const initialState: Userstate = { collection: [] }
+export const initialState: UserState = { creators: [] }
 const recentReducer = createSlice({
   name: 'creators',
   initialState,
   reducers: {
-    setUsers (state: Userstate, action: PayloadAction<User[]>) {
-      state.collection = action.payload
+    setCreators (state: UserState, action: PayloadAction<User[]>) {
+      state.creators = action.payload
     }
   }
 })
 
 const { actions, reducer } = recentReducer
-export const { setUsers } = actions
+export const { setCreators } = actions
 export default reducer

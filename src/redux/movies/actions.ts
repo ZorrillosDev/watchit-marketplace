@@ -1,23 +1,24 @@
 import { ThunkAction, ThunkDispatcher } from '@state/types'
-import { Movie } from '@state/types/movies'
-import { MoviesArgs } from '@state/movies/types'
-import { setMovies } from '@state/movies/reducer'
-import { API_ENDPOINT } from '@state/CONSTANTS'
+import { Movie, MoviesArgs, MovieArgs } from '@state/movies/types'
+import { setMovies, setMovie } from '@state/movies/reducer'
+import fetch, { Endpoints } from './service'
 
-export { setMovies, addMovie } from '@state/movies/reducer'
-
-export interface MoviesActions {
-  fetchRecentMovies: <P extends MoviesArgs>(args?: P) => void
+export { setMovies, setMovie, addMovie } from '@state/movies/reducer'
+export const fetchMovieProfile = <P extends MovieArgs>(args: P): ThunkAction<Promise<void>> => {
+  return async (dispatch: ThunkDispatcher) => {
+    try {
+      const movie: Movie = await fetch(Endpoints.profile, args)
+      dispatch(setMovie(movie))
+    } catch (e) {
+      // TODO handle error here
+    }
+  }
 }
-
 export const fetchRecentMovies = <P extends MoviesArgs>(args?: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      fetch(`${API_ENDPOINT}/cache/recent`).then(async (res) => {
-        const moviesCollection: Movie[] = await res.json()
-        // Set valid result from API
-        dispatch(setMovies(moviesCollection))
-      }).catch((error) => console.log(error))
+      const moviesCollection: Movie[] = await fetch(Endpoints.recent, args)
+      dispatch(setMovies(moviesCollection))
     } catch (e) {
       // TODO handle error here
     }

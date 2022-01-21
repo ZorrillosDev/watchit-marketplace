@@ -1,19 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Movie } from '@state/types/movies'
+import { Movie, MoviesState } from '@state/movies/types'
 
-export interface MoviesState {
-  collection: Movie[]
+export const initialState: MoviesState = {
+  movie: {} as any,
+  collection: [] as any
 }
 
-export const initialState: MoviesState = { collection: [] as any }
 const recentReducer = createSlice({
   name: 'movies',
   initialState,
   reducers: {
+    setMovie (state: MoviesState, action: PayloadAction<Movie>) {
+      state.movie = action.payload
+    },
     setMovies (state: MoviesState, action: PayloadAction<Movie[]>) {
       state.collection = action.payload
     },
-
     addMovie (state: MoviesState, action: PayloadAction<Movie>) {
       state.collection.push(action.payload)
     }
@@ -21,5 +23,5 @@ const recentReducer = createSlice({
 })
 
 const { actions, reducer } = recentReducer
-export const { setMovies, addMovie } = actions
+export const { setMovies, setMovie, addMovie } = actions
 export default reducer
