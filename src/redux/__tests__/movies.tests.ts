@@ -41,7 +41,7 @@ describe('Movies store', () => {
   it('should handle set movie', () => {
     const current = reducer(initialState, setMovie(movies[0]))
 
-    expect(current).toEqual({ ...initialState, ...{ collection: movies[0] } })
+    expect(current).toEqual({ ...initialState, ...{ movie: movies[0] } })
     expect(reducer(current, setMovie(movies[0]))).toEqual({
       ...initialState,
       movie: movies[0]
