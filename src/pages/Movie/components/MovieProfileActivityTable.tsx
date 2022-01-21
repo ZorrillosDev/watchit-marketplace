@@ -21,7 +21,7 @@ export interface ActivityTableRow {
 }
 
 export interface MovieProfileActivityTableProps {
-  rows: ActivityTableRow[]
+  rows?: ActivityTableRow[]
 }
 
 const MovieProfileActivityTable: FC<MovieProfileActivityTableProps> = ({ rows }): JSX.Element => {
@@ -37,9 +37,9 @@ const MovieProfileActivityTable: FC<MovieProfileActivityTableProps> = ({ rows })
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, index) => {
+          {rows !== undefined ? rows.map((row, index) => {
             return <MovieProfileActivityTableRow {...row} key={index} />
-          })}
+          }) : <></>}
         </TableBody>
       </MovieProfileActivityTableWrapper>
     </TableContainer>

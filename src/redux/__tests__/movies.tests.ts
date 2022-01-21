@@ -1,4 +1,4 @@
-import reducer, { addMovie, initialState, setMovies } from '@state/movies/reducer'
+import reducer, { addMovie, initialState, setMovies, setMovie } from '@state/movies/reducer'
 import { ThunkDispatcher, ThunkAction } from '@state/types'
 import { Movie } from '@state/movies/types/movies'
 import { fetchRecentMovies } from '@state/movies/actions'
@@ -35,6 +35,16 @@ describe('Movies store', () => {
     expect(reducer(current, addMovie(movies[0]))).toEqual({
       ...initialState,
       collection: [movies[0], movies[0]]
+    })
+  })
+
+  it('should handle set movie', () => {
+    const current = reducer(initialState, setMovie(movies[0]))
+
+    expect(current).toEqual({ ...initialState, ...{ collection: movies[0] } })
+    expect(reducer(current, setMovie(movies[0]))).toEqual({
+      ...initialState,
+      movie: movies[0]
     })
   })
 

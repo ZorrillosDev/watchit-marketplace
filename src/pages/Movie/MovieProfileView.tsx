@@ -16,7 +16,7 @@ import {
 
 // PROJECT IMPORTS
 import MovieProfileSection, { MovieProfileSectionWrapper } from '@pages/Movie/components/MovieProfileSection'
-import MovieProfileActivity from '@pages/Movie/components/MovieProfileActivity'
+import MovieProfileTabsBottom from '@pages/Movie/components/MovieProfileTabsBottom'
 import MovieProfileHeader from '@pages/Movie/components/MovieProfileHeader'
 import MovieProfilePrice from '@pages/Movie/components/MovieProfilePrice'
 import MovieProfileUser from '@pages/Movie/components/MovieProfileUser'
@@ -26,6 +26,7 @@ import TruncatedTypography from '@components/TruncatedTypography'
 import Footer from '@components/Footer'
 import { Translation } from '@src/i18n'
 import { Movie } from '@state/movies/types'
+import MovieProfileDetail from '@pages/Movie/components/MovieProfileDetail'
 
 // ===========================|| MOVIE - PROFILE - VIEW ||=========================== //
 
@@ -46,11 +47,6 @@ export const MovieProfileView: FC<Movie> = (props): JSX.Element => {
                   </Grid>
                   <Grid item xs={12}>
                     <Typography variant='h2' color='primary'>{props.title}</Typography>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TruncatedTypography variant='h4' color='primary' fontWeight={400} lines={5} sx={{ m: 0 }}>
-                      {props.description}
-                    </TruncatedTypography>
                   </Grid>
                 </Grid>
               </Grid>
@@ -87,7 +83,26 @@ export const MovieProfileView: FC<Movie> = (props): JSX.Element => {
               </Grid>
             </Grid>
           </Grid>
-          <MovieProfileActivity />
+          <Grid item xs={12}>
+            <TruncatedTypography
+              variant='h4' color='primary'
+              fontWeight={400} lines={5}
+              sx={{ m: 0 }}
+            >
+              {props.synopsis}
+            </TruncatedTypography>
+          </Grid>
+          <MovieProfileTabsBottom>
+            <Grid container spacing={2}>
+              {/* Todo add details here, these are for example */}
+              <MovieProfileDetail text={`Genres: ${props.genres.toString()}`} />
+              <MovieProfileDetail text={`IMDB: ${props.imdb_code.toUpperCase()}`} />
+              <MovieProfileDetail text={`Lang: ${props.language.toUpperCase()}`} />
+              <MovieProfileDetail text={`Rating: ${props.rating.toFixed(2)}`} />
+              <MovieProfileDetail text={`Runtime: ${props.runtime.toString()} minutes`} />
+              <MovieProfileDetail text={`Year: ${props.year.toString()}`} />
+            </Grid>
+          </MovieProfileTabsBottom>
         </Grid>
       </Container>
       <Footer />

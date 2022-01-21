@@ -2,12 +2,12 @@
 import React, { FC } from 'react'
 
 // PROJECT IMPORTS
-import { MovieProfileActivityView } from '@pages/Movie/components/MovieProfileActivity/MovieProfileActivityView'
+import { MovieProfileTabsBottomView } from '@pages/Movie/components/MovieProfileTabsBottom/MovieProfileTabsBottomView'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 
 // ===========================|| MOVIE - PROFILE - ACTIVITY - CONTAINER ||=========================== //
 
-export const MovieProfileActivityContainer: FC = (): JSX.Element => {
-  return <MovieProfileActivityView rows={[]} />
+export const MovieProfileTabsBottomContainer: FC = (props): JSX.Element => {
+  return <MovieProfileTabsBottomView {...props} />
 }

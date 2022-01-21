@@ -1,13 +1,13 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import MovieProfileActivityTable from '@pages/Movie/components/MovieProfileActivityTable'
+import MovieProfileTabsBottom from '@pages/Movie/components/MovieProfileTabsBottom'
 import i18n from '@src/i18n'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 
-describe('<MovieProfileActivityTable />', () => {
+describe('<MovieProfileTabsBottom />', () => {
   it('should render', () => {
-    const component = shallow(<MovieProfileActivityTable rows={[]} />)
+    const component = shallow(<MovieProfileTabsBottom />)
 
     expect(component).toMatchSnapshot()
   })
@@ -17,7 +17,7 @@ describe('<MovieProfileActivityTable />', () => {
     const translate2 = i18n.t('MOVIE_PROFILE_OWNER')
     const translate3 = i18n.t('MOVIE_PROFILE_ACTIVITY_EDITION')
     const translate4 = i18n.t('MOVIE_PROFILE_ACTIVITY_DETAILS')
-    const component = mount(<MovieProfileActivityTable rows={[]} />)
+    const component = mount(<MovieProfileTabsBottom />)
     const tableHeader1 = component.find('th').at(0)
     const tableHeader2 = component.find('th').at(1)
     const tableHeader3 = component.find('th').at(2)
