@@ -15,7 +15,7 @@
     "lint:js:fix": "standard --fix && ts-standard --fix",
     "lint:solidity": "solhint 'contracts/**/*.sol'",
     "test": "make test",
-    "test:ui": "jest --verbose --runInBand --detectOpenHandles --forceExit --coverage",
+    "test:ui": "jest -u --verbose --runInBand --detectOpenHandles --forceExit --coverage",
     "test:coverage": "nyc hardhat coverage",
     "test:goerli": "npx hardhat test --network goerli",
     "test:kovan": "npx hardhat test --network kovan",
