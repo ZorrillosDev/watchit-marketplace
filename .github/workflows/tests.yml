@@ -38,8 +38,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
-      - run: npm install yarn -g
-      - run: yarn install && npm ci
+      - run: npm ci
       - run: npm run test:${{ matrix.network }}
         env:
           GOERLI_ALCHEMY_API_KEY: ${{ secrets.GOERLI_ALCHEMY_API_KEY }}
