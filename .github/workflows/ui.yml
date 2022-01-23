@@ -12,8 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: npm install yarn -g
       - name: Install
-        run: npm install yarn -g && yarn install && npm ci
+        run: yarn install && npm ci
       - name: Check
         run: npm run check:js
       - name: Build
