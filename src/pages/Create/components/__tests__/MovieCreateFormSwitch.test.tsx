@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import MovieCreateFormSwitch from '@pages/Movie/Create/components/MovieCreateFormSwitch'
+import MovieCreateFormSwitch from '@pages/Create/components/MovieCreateFormSwitch'
 import { Typography } from '@mui/material'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */

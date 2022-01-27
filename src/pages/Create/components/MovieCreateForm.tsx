@@ -12,9 +12,9 @@ import {
 } from '@mui/material'
 
 // PROJECT IMPORTS
-import MovieCreateFormProperties, { MovieCreateTextField } from '@pages/Movie/Create/components/MovieCreateFormProperties'
-import MovieCreateFormSwitch from '@pages/Movie/Create/components/MovieCreateFormSwitch'
-import MovieCreateFormFile from '@pages/Movie/Create/components/MovieCreateFormFile'
+import MovieCreateFormProperties, { MovieCreateTextField } from '@pages/Create/components/MovieCreateFormProperties'
+import MovieCreateFormSwitch from '@pages/Create/components/MovieCreateFormSwitch'
+import MovieCreateFormFile from '@pages/Create/components/MovieCreateFormFile'
 import { Translation } from '@src/i18n'
 import { File } from '@src/utils'
 

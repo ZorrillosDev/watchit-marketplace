@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import MovieCreateFormFile, { MovieCreateFileIcon } from '@pages/Movie/Create/components/MovieCreateFormFile'
+import MovieCreateFormFile, { MovieCreateFileIcon } from '@pages/Create/components/MovieCreateFormFile'
 import Poster from '@components/Poster'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */

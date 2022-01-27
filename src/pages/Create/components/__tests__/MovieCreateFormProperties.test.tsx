@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import MovieCreateFormProperties from '@pages/Movie/Create/components/MovieCreateFormProperties'
+import MovieCreateFormProperties from '@pages/Create/components/MovieCreateFormProperties'
 import { Typography } from '@mui/material'
 import i18n from '@src/i18n'
 

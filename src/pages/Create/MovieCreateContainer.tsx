@@ -2,7 +2,7 @@
 import React, { FC, useState } from 'react'
 
 // project imports
-import { MovieCreateView } from '@pages/Movie/Create/MovieCreateView'
+import { MovieCreateView } from '@pages/Create/MovieCreateView'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 

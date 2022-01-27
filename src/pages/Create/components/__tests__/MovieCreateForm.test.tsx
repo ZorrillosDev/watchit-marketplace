@@ -1,4 +1,4 @@
-import MovieCreateForm from '@pages/Movie/Create/components/MovieCreateForm'
+import MovieCreateForm from '@pages/Create/components/MovieCreateForm'
 import { mount } from 'enzyme'
 import React from 'react'
 import i18n from '@src/i18n'

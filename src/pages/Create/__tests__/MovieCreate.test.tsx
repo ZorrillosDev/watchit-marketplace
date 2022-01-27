@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import MovieCreate from '@pages/Movie/Create'
-import { MovieCreateView } from '@pages/Movie/Create/MovieCreateView'
+import MovieCreate from '@pages/Create'
+import { MovieCreateView } from '@pages/Create/MovieCreateView'
 import i18n from '@src/i18n'
 import { Typography } from '@mui/material'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import MovieCreatePoster, { MovieCreatePosterIcon } from '@pages/Movie/Create/components/MovieCreatePoster'
+import MovieCreatePoster, { MovieCreatePosterIcon } from '@pages/Create/components/MovieCreatePoster'
 import { PosterMedia } from '@components/Poster'
 import i18n from '@src/i18n'
 import { Typography } from '@mui/material'

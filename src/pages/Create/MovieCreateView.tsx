@@ -5,8 +5,8 @@ import React, { FC } from 'react'
 import { Container, Grid, styled, Typography, GridProps, useMediaQuery } from '@mui/material'
 
 // PROJECT IMPORTS
-import MovieCreateForm, { ModalBalanceFormProps } from '@pages/Movie/Create/components/MovieCreateForm'
-import MovieCreatePoster from '@pages/Movie/Create/components/MovieCreatePoster'
+import MovieCreateForm, { ModalBalanceFormProps } from '@pages/Create/components/MovieCreateForm'
+import MovieCreatePoster from '@pages/Create/components/MovieCreatePoster'
 import { useTheme } from '@mui/material/styles'
 import Footer from '@components/Footer'
 import { Translation } from '@src/i18n'
