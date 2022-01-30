@@ -6,7 +6,7 @@ import Festival from '@pages/Festival'
 import Sell from '@pages/Sell'
 import Work from '@pages/Work'
 import MovieProfile from '@pages/Movie'
-import MovieCreate from '@pages/./Create'
+import MovieCreate from '@pages/Create'
 import { DefaultLayout } from '@layouts/default'
 import { ROOT, EXPLORE, FESTIVAL, SELL, WORK, MOVIE, MOVIE_CREATE } from '@navigation/CONSTANTS'
 

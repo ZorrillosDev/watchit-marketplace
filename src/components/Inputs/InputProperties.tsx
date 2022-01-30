@@ -2,17 +2,18 @@
 import React, { FC, useState } from 'react'
 
 // MUI IMPORTS
-import { TextField, Grid, styled, Typography, TextFieldProps } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 
 // PROJECT IMPORTS
 import { Translation } from '@src/i18n'
 import { MOVIE_EXTRA_FIELDS_LIMIT } from '@src/config/movies'
+import { InputTextField } from "@components/Inputs/InputTextField";
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 /* eslint-disable  @typescript-eslint/no-dynamic-delete */
 
-// ===========================|| MOVIE - CREATE - FROM - PROPERTIES ||=========================== //
+// ===========================|| INPUT - PROPERTIES ||=========================== //
 
 interface Property {
   key: string
@@ -23,7 +24,7 @@ interface Properties {
   [key: string]: Property
 }
 
-const MovieCreateFormProperties: FC = (): JSX.Element => {
+export const InputProperties: FC = (): JSX.Element => {
   const emptyProperty: Property = { key: '', value: '' }
   const [properties, setProperties] = useState({ p_0: emptyProperty } as Properties)
 
@@ -63,14 +64,14 @@ const MovieCreateFormProperties: FC = (): JSX.Element => {
           return (
             <React.Fragment key={index}>
               <Grid item xs={6}>
-                <MovieCreateTextField
+                <InputTextField
                   id={`movie_property_key_${index}`} variant='standard' name={`movie_property_key_${index}`}
                   value={properties[propertyKey].key} onChange={(e: any) => handleKeyChange(e, index)}
                   {...(isLast && { helperText: <Translation target='MOVIE_CREATE_KEY_HELP' /> })} label={<Translation target='MOVIE_CREATE_KEY' />}
                 />
               </Grid>
               <Grid item xs={6}>
-                <MovieCreateTextField
+                <InputTextField
                   id={`movie_property_value_${index}`} variant='standard' name={`movie_property_value_${index}`}
                   value={properties[propertyKey].value} onChange={(e: any) => handleValueChange(e, index)}
                   {...(isLast && { helperText: <Translation target='MOVIE_CREATE_VALUE_HELP' /> })} label={<Translation target='MOVIE_CREATE_VALUE' />}
@@ -83,13 +84,3 @@ const MovieCreateFormProperties: FC = (): JSX.Element => {
     </>
   )
 }
-
-export const MovieCreateTextField = styled(TextField)<TextFieldProps>(({ theme }) => ({
-  width: '100%',
-  'label, input, textarea': {
-    color: theme.palette.text.primary,
-    fontWeight: 600
-  }
-}))
-
-export default MovieCreateFormProperties

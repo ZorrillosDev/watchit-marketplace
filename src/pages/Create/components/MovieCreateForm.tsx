@@ -12,11 +12,10 @@ import {
 } from '@mui/material'
 
 // PROJECT IMPORTS
-import MovieCreateFormProperties, { MovieCreateTextField } from '@pages/Create/components/MovieCreateFormProperties'
-import MovieCreateFormSwitch from '@pages/Create/components/MovieCreateFormSwitch'
-import MovieCreateFormFile from '@pages/Create/components/MovieCreateFormFile'
+import { InputProperties, InputSwitch, InputFile }  from '@components/Inputs'
 import { Translation } from '@src/i18n'
 import { File } from '@src/utils'
+import { InputTextField } from "@components/Inputs/InputTextField";
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
@@ -89,28 +88,28 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
     <Box component='form' onSubmit={formik.handleSubmit} method='post' sx={{ mb: { xs: 0, sm: 8 } }}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <MovieCreateFormFile
+          <InputFile
             error={Boolean(formik.errors.Film)} id='movie_film' title={<Translation target='MOVIE_CREATE_FILM_TITLE' />}
             image={props.film} accept='video/webm, video/mp4' isImageFullWidth name='Film'
             helpText={<Translation target='MOVIE_CREATE_FILM_HELP_TEXT' />} handleChange={handleFilmChange}
           />
         </Grid>
         <Grid item xs={12}>
-          <MovieCreateFormFile
+          <InputFile
             error={Boolean(formik.errors.Poster)} id='movie_poster' title={<Translation target='MOVIE_CREATE_POSTER_TITLE' />}
             image={props.poster} accept='image/jpeg, image/png, image/jpg, image/gif' name='Poster'
             helpText={<Translation target='MOVIE_CREATE_POSTER_HELP_TEXT' />} handleChange={handlePosterChange}
           />
         </Grid>
         <Grid item xs={12}>
-          <MovieCreateTextField
+          <InputTextField
             id='movie_name' label={<Translation target='MOVIE_CREATE_NAME' />} variant='standard' name='Name'
             helperText={<Translation target='MOVIE_CREATE_NAME_HELP_TEXT' />}
             error={Boolean(formik.errors.Name)} onChange={handleNameChange}
           />
         </Grid>
         <Grid item xs={12}>
-          <MovieCreateTextField
+          <InputTextField
             id='movie_description' label={<Translation target='MOVIE_CREATE_DESCRIPTION' />} variant='standard' name='Description'
             helperText={<Translation target='MOVIE_CREATE_DESCRIPTION_HELP_TEXT' />}
             error={Boolean(formik.errors.Description)} onChange={formik.handleChange}
@@ -119,7 +118,7 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
         </Grid>
         <Grid item xs={12}>
           <MovieCreateBidWrapper>
-            <MovieCreateTextField
+            <InputTextField
               type='number' name='Bid' helperText={<Translation target='MOVIE_CREATE_BID_HELP_TEXT' />}
               id='movie_minimum_bid' label={<Translation target='MOVIE_CREATE_BID' />} variant='standard'
               error={Boolean(formik.errors.Bid)} onChange={handleBidChange}
@@ -128,25 +127,25 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
           </MovieCreateBidWrapper>
         </Grid>
         <Grid item xs={12}>
-          <MovieCreateTextField
+          <InputTextField
             id='movie_trailer' label={<Translation target='MOVIE_CREATE_TRAILER' />} variant='standard'
             error={Boolean(formik.errors.Trailer)} onChange={formik.handleChange} name='Trailer'
           />
         </Grid>
         <Grid item xs={12}>
-          <MovieCreateTextField
+          <InputTextField
             id='movie_alternative_description' label={<Translation target='MOVIE_CREATE_NFT_DESC' />}
             helperText={<Translation target='MOVIE_CREATE_NFT_DESC_HELP_TEXT' />} variant='standard'
             error={Boolean(formik.errors.NftDescription)} onChange={formik.handleChange}
             multiline rows={2} name='NftDescription'
           />
         </Grid>
-        <MovieCreateFormProperties />
+        <InputProperties />
         <Grid item xs={12}>
-          <MovieCreateFormSwitch
+          <InputSwitch
             title={<Translation target='MOVIE_CREATE_UNLOCK' />} subtitle={<Translation target='MOVIE_CREATE_UNLOCK_HELP_TEXT' />}
             content={(
-              <MovieCreateTextField
+              <InputTextField
                 id='unlocked_digital_key' label={<Translation target='MOVIE_CREATE_UNLOCK_KEY' />} variant='standard' name='unlockKey'
                 helperText={<Translation target='MOVIE_CREATE_UNLOCK_KEY_HELP_TEXT' />}
               />
@@ -154,7 +153,7 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
           />
         </Grid>
         <Grid item xs={12}>
-          <MovieCreateFormSwitch
+          <InputSwitch
             title={<Translation target='MOVIE_CREATE_FREE_MINTING' />} defaultChecked
             subtitle={<Translation target='MOVIE_CREATE_FREE_MINTING_HELP_TEXT' />}
           />

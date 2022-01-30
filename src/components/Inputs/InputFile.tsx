@@ -16,9 +16,9 @@ import Poster from '@components/Poster'
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
-// ===========================|| MOVIE - CREATE - FORM - FILE ||=========================== //
+// ===========================|| INPUT - FILE ||=========================== //
 
-export interface MovieCreateFormFileProps {
+export interface InputFileProps {
   id: string
   name: string
   title: string | JSX.Element
@@ -30,18 +30,18 @@ export interface MovieCreateFormFileProps {
   handleChange: (e: any) => void
 }
 
-const MovieCreateFormFile: FC<MovieCreateFormFileProps> = (props): JSX.Element => {
+export const InputFile: FC<InputFileProps> = (props): JSX.Element => {
   const handleButtonClick = (e: any): void => {
     e.target.parentElement.click()
   }
 
   return (
     <FormControl error={props.error} variant='standard' sx={{ width: 1 }}>
-      <MovieCreateFileLabel htmlFor={props.id} filled={!!props.image} isFull={!!props.isImageFullWidth}>
-        <MovieCreateFileLabelText variant='h5' color='text.primary' fontWeight={600}>
+      <InputFileLabel htmlFor={props.id} filled={!!props.image} isFull={!!props.isImageFullWidth}>
+        <InputFileLabelText variant='h5' color='text.primary' fontWeight={600}>
           {props.title}
-        </MovieCreateFileLabelText>
-        <MovieCreateFileInput
+        </InputFileLabelText>
+        <InputFileElement
           id={props.id}
           name={props.name}
           aria-describedby={props.id}
@@ -55,28 +55,28 @@ const MovieCreateFormFile: FC<MovieCreateFormFileProps> = (props): JSX.Element =
             </>
           ) : (
             <>
-              <MovieCreateFileIcon>
+              <InputFileIcon>
                 <IconUpload stroke={1} />
-              </MovieCreateFileIcon>
+              </InputFileIcon>
               <Typography variant='h5' color='text.secondary' width={1} textAlign='center'>
                 {props.helpText}
               </Typography>
-              <MovieCreateFileButton variant='contained' color='primary' onClick={handleButtonClick}>
+              <InputFileButton variant='contained' color='primary' onClick={handleButtonClick}>
                 <Translation target='MOVIE_CREATE_FILE_BUTTON' />
-              </MovieCreateFileButton>
+              </InputFileButton>
             </>
           )
         }
-      </MovieCreateFileLabel>
+      </InputFileLabel>
     </FormControl>
   )
 }
 
-const MovieCreateFileInput = styled('input')({
+const InputFileElement = styled('input')({
   display: 'none'
 })
 
-export const MovieCreateFileIcon = styled(Box)<BoxProps>(({ theme }) => ({
+export const InputFileIcon = styled(Box)<BoxProps>(({ theme }) => ({
   svg: {
     color: theme.palette.text.secondary,
     width: '2rem',
@@ -84,13 +84,13 @@ export const MovieCreateFileIcon = styled(Box)<BoxProps>(({ theme }) => ({
   }
 }))
 
-const MovieCreateFileLabelText = styled(Typography)<TypographyProps>(({ theme }) => ({
+const InputFileLabelText = styled(Typography)<TypographyProps>(({ theme }) => ({
   position: 'absolute',
   left: 0,
   top: '-2rem'
 }))
 
-const MovieCreateFileLabel = styled(InputLabel, {
+const InputFileLabel = styled(InputLabel, {
   shouldForwardProp: (prop) => prop !== 'isFull'
 })<InputLabelProps & { filled: boolean, isFull: boolean }>(({ theme, filled, isFull }) => ({
   border: `2px dashed ${theme.palette.divider}`,
@@ -124,7 +124,7 @@ const MovieCreateFileLabel = styled(InputLabel, {
   }
 }))
 
-const MovieCreateFileButton = styled(Button)<ButtonProps>(() => ({
+const InputFileButton = styled(Button)<ButtonProps>(() => ({
   marginBottom: '-1.5rem',
   transform: 'translateY(2rem)',
   width: '14rem',
@@ -133,5 +133,3 @@ const MovieCreateFileButton = styled(Button)<ButtonProps>(() => ({
   boxShadow: '0 5px 9px rgb(0 0 0 / 20%)',
   fontWeight: 600
 }))
-
-export default MovieCreateFormFile

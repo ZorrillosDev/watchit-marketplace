@@ -9,16 +9,16 @@ import {
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
-// ===========================|| MOVIE - CREATE - FORM - SWITCH ||=========================== //
+// ===========================|| INPUTS - SWITCH ||=========================== //
 
-export interface MovieCreateFormFileProps {
+export interface InputSwitchProps {
   title: string | JSX.Element
   subtitle: string | JSX.Element
   content?: JSX.Element
   defaultChecked?: boolean
 }
 
-const MovieCreateFormSwitch: FC<MovieCreateFormFileProps> = (props): JSX.Element => {
+export const InputSwitch: FC<InputSwitchProps> = (props): JSX.Element => {
   const [checked, setChecked] = React.useState(props.defaultChecked ?? false)
 
   const handleChange = (event: any): void => {
@@ -26,13 +26,13 @@ const MovieCreateFormSwitch: FC<MovieCreateFormFileProps> = (props): JSX.Element
   }
 
   return (
-    <MovieCreateFormSwitchWrapper>
+    <InputSwitchWrapper>
       <Box display='flex' flexDirection='row' alignItems='center' width={1}>
         <Box display='flex' flexDirection='column' flexGrow={1}>
           <Typography variant='body2' color='primary' fontWeight={600}>{props.title}</Typography>
           <Typography variant='body1' color='primary' sx={{ opacity: 0.8 }}>{props.subtitle}</Typography>
         </Box>
-        <MovieCreateFormSwitchElement
+        <InputSwitchElement
           checked={checked}
           onChange={handleChange}
           inputProps={{ 'aria-label': 'controlled' }}
@@ -44,11 +44,11 @@ const MovieCreateFormSwitch: FC<MovieCreateFormFileProps> = (props): JSX.Element
           {props.content}
         </AccordionDetails>
       </Accordion>
-    </MovieCreateFormSwitchWrapper>
+    </InputSwitchWrapper>
   )
 }
 
-const MovieCreateFormSwitchWrapper = styled(Box)<BoxProps>(() => ({
+const InputSwitchWrapper = styled(Box)<BoxProps>(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -56,7 +56,7 @@ const MovieCreateFormSwitchWrapper = styled(Box)<BoxProps>(() => ({
   width: '100%'
 }))
 
-const MovieCreateFormSwitchElement = styled(Switch)<SwitchProps>(({ theme }) => ({
+const InputSwitchElement = styled(Switch)<SwitchProps>(({ theme }) => ({
   width: 42,
   height: 26,
   padding: 0,
@@ -104,5 +104,3 @@ const MovieCreateFormSwitchElement = styled(Switch)<SwitchProps>(({ theme }) => 
     })
   }
 }))
-
-export default MovieCreateFormSwitch

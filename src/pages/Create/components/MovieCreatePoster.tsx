@@ -9,20 +9,20 @@ import { IconVideoPlus } from '@tabler/icons'
 
 // PROJECT IMPORTS
 import { PosterWrapper, PosterHeader, PosterFooter, PosterMedia } from '@components/Poster'
-import { Movie } from '@state/types/movies'
+import { Movie } from '@state/movies/types'
 import { Translation } from '@src/i18n'
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
 // ===========================|| MOVIE - CREATE - POSTER ||=========================== //
 
-const MovieCreatePoster: FC<Omit<Movie, 'properties'> & { bid: number }> = (props): JSX.Element => {
+const MovieCreatePoster: FC<Partial<Movie> & { bid: number }> = (props): JSX.Element => {
   const {
     creator,
-    image,
-    name,
+    title,
     bid
   } = props
+  const image = props?.posters?.large
 
   return (
     <MovieCreatePosterWrapper>
@@ -30,9 +30,9 @@ const MovieCreatePoster: FC<Omit<Movie, 'properties'> & { bid: number }> = (prop
         {
           image ? (
             <>
-              <PosterHeader creator={creator} />
-              <PosterMedia image={image} name={name} />
-              <PosterFooter price={bid} name={name} isEthPrice />
+              <PosterHeader creator={creator ?? ''} />
+              <PosterMedia image={image} name={title ?? ''} />
+              <PosterFooter price={bid} name={title ?? ''} isEthPrice />
             </>
           ) : (
             <Box width={1} height={1} display='flex' alignItems='center' justifyContent='center' position='absolute'>

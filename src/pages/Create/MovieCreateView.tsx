@@ -43,7 +43,7 @@ export const MovieCreateView: FC<Omit<ModalBalanceFormProps, 'onSubmit'> & Movie
                   </Grid>
                   <Grid item xs={12}>
                     <MovieCreatePoster
-                      image={props.poster} name={props.name} creator='test'
+                      title={props.name} creator='test' posters={{ large: props.poster, medium: props.poster, small: props.poster }}
                       description='test' bid={props.bid}
                     />
                   </Grid>

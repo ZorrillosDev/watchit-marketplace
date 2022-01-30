@@ -1,14 +1,14 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import MovieCreateFormFile, { MovieCreateFileIcon } from '@pages/Create/components/MovieCreateFormFile'
+import { InputFile, InputFileIcon } from '@components/Inputs/InputFile'
 import Poster from '@components/Poster'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 
-describe('<MovieCreatePoster />', () => {
+describe('<InputFile />', () => {
   it('should render', () => {
     const component = shallow(
-      <MovieCreateFormFile
+      <InputFile
         error={false} id='hello' title='hello' handleChange={() => {}}
         accept='' helpText='' name='hello' image='hello'
       />
@@ -19,25 +19,25 @@ describe('<MovieCreatePoster />', () => {
 
   it('should render movie create poster media', () => {
     const component = shallow(
-      <MovieCreateFormFile
+      <InputFile
         error={false} id='world' title='world' handleChange={() => {}}
         accept='' helpText='' name='world' image='world'
       />
     )
 
     expect(component.find(Poster).exists()).toBeTruthy()
-    expect(component.find(MovieCreateFileIcon).exists()).toBeFalsy()
+    expect(component.find(InputFileIcon).exists()).toBeFalsy()
   })
 
   it('should render movie create poster media placeholder', () => {
     const component = shallow(
-      <MovieCreateFormFile
+      <InputFile
         error={false} id='test' title='test' handleChange={() => {}}
         accept='' helpText='' name='test' image=''
       />
     )
 
-    expect(component.find(MovieCreateFileIcon).exists()).toBeTruthy()
+    expect(component.find(InputFileIcon).exists()).toBeTruthy()
     expect(component.find(Poster).exists()).toBeFalsy()
   })
 })
