@@ -29,7 +29,7 @@ describe('<MovieCreate />', () => {
     const previewTranslate = i18n.t('MOVIE_CREATE_PREVIEW')
     const movieCreate = mount(
       <MovieCreateView
-        bid={0} setName={() => {}} setBid={() => {}} film='hello.png' name='hello'
+        bid={0} setName={() => {}} setBid={() => {}} film='hello.png' name='Preview'
         setPoster={() => {}} setFilm={() => {}} poster='hello.png'
       />
     )

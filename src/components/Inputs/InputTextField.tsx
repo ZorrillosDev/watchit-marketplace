@@ -1,6 +1,3 @@
-// REACT IMPORTS
-import React from 'react'
-
 // MUI IMPORTS
 import { TextField, styled, TextFieldProps } from '@mui/material'
 

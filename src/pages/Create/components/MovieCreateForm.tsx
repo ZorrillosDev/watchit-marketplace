@@ -12,10 +12,11 @@ import {
 } from '@mui/material'
 
 // PROJECT IMPORTS
-import { InputProperties, InputSwitch, InputFile }  from '@components/Inputs'
+import { InputSwitch } from '@components/Inputs'
+import ImagePicker from '@components/ImagePicker'
 import { Translation } from '@src/i18n'
 import { File } from '@src/utils'
-import { InputTextField } from "@components/Inputs/InputTextField";
+import { InputTextField } from '@components/Inputs/InputTextField'
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
@@ -88,14 +89,14 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
     <Box component='form' onSubmit={formik.handleSubmit} method='post' sx={{ mb: { xs: 0, sm: 8 } }}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <InputFile
+          <ImagePicker
             error={Boolean(formik.errors.Film)} id='movie_film' title={<Translation target='MOVIE_CREATE_FILM_TITLE' />}
             image={props.film} accept='video/webm, video/mp4' isImageFullWidth name='Film'
             helpText={<Translation target='MOVIE_CREATE_FILM_HELP_TEXT' />} handleChange={handleFilmChange}
           />
         </Grid>
         <Grid item xs={12}>
-          <InputFile
+          <ImagePicker
             error={Boolean(formik.errors.Poster)} id='movie_poster' title={<Translation target='MOVIE_CREATE_POSTER_TITLE' />}
             image={props.poster} accept='image/jpeg, image/png, image/jpg, image/gif' name='Poster'
             helpText={<Translation target='MOVIE_CREATE_POSTER_HELP_TEXT' />} handleChange={handlePosterChange}
@@ -140,7 +141,6 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
             multiline rows={2} name='NftDescription'
           />
         </Grid>
-        <InputProperties />
         <Grid item xs={12}>
           <InputSwitch
             title={<Translation target='MOVIE_CREATE_UNLOCK' />} subtitle={<Translation target='MOVIE_CREATE_UNLOCK_HELP_TEXT' />}

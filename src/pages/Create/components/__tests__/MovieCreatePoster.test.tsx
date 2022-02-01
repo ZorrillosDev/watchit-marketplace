@@ -8,7 +8,7 @@ import { Typography } from '@mui/material'
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 
 describe('<MovieCreatePoster />', () => {
-  const posters = { small:'test', large:'test', medium:'test' }
+  const posters = { small: 'test', large: 'test', medium: 'test' }
 
   it('should render', () => {
     const component = shallow(<MovieCreatePoster bid={3} description='test' creator='test' title='test' posters={posters} />)
@@ -24,7 +24,7 @@ describe('<MovieCreatePoster />', () => {
   })
 
   it('should render movie create poster media placeholder', () => {
-    const component = shallow(<MovieCreatePoster bid={3} description='test' creator='test' title='test' posters={posters} />)
+    const component = shallow(<MovieCreatePoster bid={3} description='test' creator='test' title='test' />)
 
     expect(component.find(MovieCreatePosterIcon).exists()).toBeTruthy()
     expect(component.find(PosterMedia).exists()).toBeFalsy()
@@ -32,7 +32,7 @@ describe('<MovieCreatePoster />', () => {
 
   it('should have movie create poster with valid poster media placeholder translation text', () => {
     const translate = i18n.t('MOVIE_CREATE_PREVIEW_HELP')
-    const component = mount(<MovieCreatePoster bid={3} description='test' creator='test' title='test' posters={posters} />)
+    const component = mount(<MovieCreatePoster bid={3} description={translate} creator='test' title='test' />)
     const typography = component.find(Typography).at(0)
 
     expect(typography.text()).toMatch(translate)
