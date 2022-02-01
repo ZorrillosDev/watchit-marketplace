@@ -17,6 +17,7 @@ interface MovieProfileDetailProps {
   }
 }
 
+
 const MovieProfileDetail: FC<MovieProfileDetailProps> = (props): JSX.Element => {
   return (
     <MovieProfileDetailWrapper item xs={12} display='flex'>
