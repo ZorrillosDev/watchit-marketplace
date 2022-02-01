@@ -12,7 +12,7 @@ import {
 // ===========================|| INPUTS - SWITCH ||=========================== //
 
 export interface InputSwitchProps {
-  title: string | JSX.Element
+  label: string | JSX.Element
   subtitle: string | JSX.Element
   content?: JSX.Element
   defaultChecked?: boolean
@@ -29,7 +29,7 @@ export const InputSwitch: FC<InputSwitchProps> = (props): JSX.Element => {
     <InputSwitchWrapper>
       <Box display='flex' flexDirection='row' alignItems='center' width={1}>
         <Box display='flex' flexDirection='column' flexGrow={1}>
-          <Typography variant='body2' color='primary' fontWeight={600}>{props.title}</Typography>
+          <Typography variant='body2' color='primary' fontWeight={600}>{props.label}</Typography>
           <Typography variant='body1' color='primary' sx={{ opacity: 0.8 }}>{props.subtitle}</Typography>
         </Box>
         <InputSwitchElement
