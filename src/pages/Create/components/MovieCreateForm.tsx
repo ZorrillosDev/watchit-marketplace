@@ -143,7 +143,7 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
         </Grid>
         <Grid item xs={12}>
           <InputSwitch
-            title={<Translation target='MOVIE_CREATE_UNLOCK' />} subtitle={<Translation target='MOVIE_CREATE_UNLOCK_HELP_TEXT' />}
+            label={<Translation target='MOVIE_CREATE_UNLOCK' />} subtitle={<Translation target='MOVIE_CREATE_UNLOCK_HELP_TEXT' />}
             content={(
               <InputTextField
                 id='unlocked_digital_key' label={<Translation target='MOVIE_CREATE_UNLOCK_KEY' />} variant='standard' name='unlockKey'
@@ -154,7 +154,7 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
         </Grid>
         <Grid item xs={12}>
           <InputSwitch
-            title={<Translation target='MOVIE_CREATE_FREE_MINTING' />} defaultChecked
+            label={<Translation target='MOVIE_CREATE_FREE_MINTING' />} defaultChecked
             subtitle={<Translation target='MOVIE_CREATE_FREE_MINTING_HELP_TEXT' />}
           />
         </Grid>

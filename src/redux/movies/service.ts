@@ -1,8 +1,8 @@
 import { API_ENDPOINT } from '@state/CONSTANTS'
 
 export enum Endpoints {
-  recent = '/cache/movie/recent',
-  profile = '/cache/movie/profile'
+  recent = '/movie/recent',
+  profile = '/movie/profile'
 }
 
 export default async (path: Endpoints = Endpoints.recent, args?: any): Promise<any> => {

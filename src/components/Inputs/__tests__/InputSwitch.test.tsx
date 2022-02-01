@@ -7,7 +7,7 @@ import { Typography } from '@mui/material'
 
 describe('<InputSwitch />', () => {
   it('should render', () => {
-    const component = shallow(<InputSwitch title='hello world' subtitle='test hehe' />)
+    const component = shallow(<InputSwitch label='hello world' subtitle='test hehe' />)
 
     expect(component).toMatchSnapshot()
   })
@@ -15,7 +15,7 @@ describe('<InputSwitch />', () => {
   it('should have movie create form switch with valid title and subtitle text', () => {
     const title = 'hello world'
     const subTitle = 'test hehe'
-    const component = shallow(<InputSwitch title={title} subtitle={subTitle} />)
+    const component = shallow(<InputSwitch label={title} subtitle={subTitle} />)
 
     expect(component.find(Typography).at(0).text()).toMatch(title)
     expect(component.find(Typography).at(1).text()).toMatch(subTitle)

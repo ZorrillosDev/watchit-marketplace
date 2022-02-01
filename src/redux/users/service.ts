@@ -1,7 +1,7 @@
 import { API_ENDPOINT } from '@state/CONSTANTS'
 
 export enum Endpoints {
-  recent = '/cache/creator/recent',
+  recent = '/creator/recent',
 }
 
 export default async (path: Endpoints = Endpoints.recent): Promise<any> => (
