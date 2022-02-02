@@ -11,7 +11,7 @@ describe('<ImagePicker />', () => {
     const component = shallow(
       <ImagePicker
         error={false} id='hello' title='hello' handleChange={() => {}}
-        accept='' helpText='' name='hello' image='hello'
+        accept='' helpText='' name='hello' preview='hello'
       />
     )
 
@@ -22,7 +22,7 @@ describe('<ImagePicker />', () => {
     const component = shallow(
       <ImagePicker
         error={false} id='world' title='world' handleChange={() => {}}
-        accept='' helpText='' name='world' image='world'
+        accept='' helpText='' name='world' preview='world'
       />
     )
 
@@ -34,7 +34,7 @@ describe('<ImagePicker />', () => {
     const component = shallow(
       <ImagePicker
         error={false} id='test' title='test' handleChange={() => {}}
-        accept='' helpText='' name='test' image=''
+        accept='' helpText='' name='test' preview=''
       />
     )
 

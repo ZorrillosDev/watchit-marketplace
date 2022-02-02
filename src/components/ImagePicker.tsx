@@ -23,7 +23,7 @@ export interface ImagePickerProps {
   id: string
   name: string
   title: string | JSX.Element
-  image: string
+  preview: string
   error: boolean
   accept: string
   helpText: string | JSX.Element
@@ -38,7 +38,7 @@ const ImagePicker: FC<ImagePickerProps> = (props): JSX.Element => {
 
   return (
     <FormControl error={props.error} variant='standard' sx={{ width: 1 }}>
-      <InputFileLabel htmlFor={props.id} filled={!!props.image} isFull={!!props.isImageFullWidth}>
+      <InputFileLabel htmlFor={props.id} filled={!!props.preview} isFull={!!props.isImageFullWidth}>
         <InputFileLabelText variant='h5' color='text.primary' fontWeight={600}>
           {props.title}
         </InputFileLabelText>
@@ -50,9 +50,9 @@ const ImagePicker: FC<ImagePickerProps> = (props): JSX.Element => {
           type='file' accept={props.accept}
         />
         {
-          props.image ? (
+          props.preview ? (
             <>
-              <Poster image={props.image} name={`${props.id}_image`} />
+              <Poster image={props.preview} name={`${props.id}_image`} />
             </>
           ) : (
             <>

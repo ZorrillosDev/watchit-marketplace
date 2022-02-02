@@ -16,7 +16,7 @@ import { Translation } from '@src/i18n'
 
 // ===========================|| MOVIE - CREATE - POSTER ||=========================== //
 
-const MovieCreatePoster: FC<Partial<Movie> & { bid: number }> = (props): JSX.Element => {
+const MovieCreatePreview: FC<Partial<Movie> & { bid: number }> = (props): JSX.Element => {
   const {
     creator,
     title,
@@ -25,7 +25,7 @@ const MovieCreatePoster: FC<Partial<Movie> & { bid: number }> = (props): JSX.Ele
   const image = props?.posters?.large
 
   return (
-    <MovieCreatePosterWrapper>
+    <MovieCreatePreviewWrapper>
       <PosterWrapper sx={{ minHeight: image ? 'auto' : '30rem', pb: image ? 1 : 0 }}>
         {
           image ? (
@@ -37,9 +37,9 @@ const MovieCreatePoster: FC<Partial<Movie> & { bid: number }> = (props): JSX.Ele
           ) : (
             <Box width={1} height={1} display='flex' alignItems='center' justifyContent='center' position='absolute'>
               <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
-                <MovieCreatePosterIcon>
+                <MovieCreatePreviewIcon>
                   <IconVideoPlus stroke={1} />
-                </MovieCreatePosterIcon>
+                </MovieCreatePreviewIcon>
                 <Typography variant='h5' color='text.secondary' width={1} textAlign='center'>
                   <Translation target='MOVIE_CREATE_PREVIEW_HELP' />
                 </Typography>
@@ -48,13 +48,13 @@ const MovieCreatePoster: FC<Partial<Movie> & { bid: number }> = (props): JSX.Ele
           )
         }
       </PosterWrapper>
-    </MovieCreatePosterWrapper>
+    </MovieCreatePreviewWrapper>
   )
 }
 
-export default MovieCreatePoster
+export default MovieCreatePreview
 
-export const MovieCreatePosterWrapper = styled(Box)<BoxProps>(({ theme }) => ({
+export const MovieCreatePreviewWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   width: '100%',
   minHeight: '42rem',
   height: 'auto',
@@ -67,7 +67,7 @@ export const MovieCreatePosterWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   }
 }))
 
-export const MovieCreatePosterIcon = styled(Box)<BoxProps>(({ theme }) => ({
+export const MovieCreatePreviewIcon = styled(Box)<BoxProps>(({ theme }) => ({
   svg: {
     color: theme.palette.text.secondary,
     width: '3rem',

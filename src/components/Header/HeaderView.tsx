@@ -16,21 +16,22 @@ import {
 
 // ===========================|| HEADER - VIEW ||=========================== //
 
-export interface HeaderProps {
-    isMenuOpen: boolean
-    handleToggleMenu: () => void
-}
 
-const HeaderView: FC<HeaderProps & HeaderSearchProps> = (props): JSX.Element => {
+const HeaderView: FC<HeaderSearchProps> = (props): JSX.Element => {
     const theme = useTheme()
+    const [isMenuOpen, setIsMenuOpen] = React.useState(false)
     const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+
+    const handleToggleMenu = (): void => {
+        setIsMenuOpen(!isMenuOpen)
+    }
 
     return (
         <>
             <AppBar
                 sx={{
-                    transform: !isMobile || (props.isMenuOpen && isMobile) ? 'none !important' : 'auto',
-                    visibility: !isMobile || (props.isMenuOpen && isMobile) ? 'visible' : 'unset',
+                    transform: !isMobile || (isMenuOpen && isMobile) ? 'none !important' : 'auto',
+                    visibility: !isMobile || (isMenuOpen && isMobile) ? 'visible' : 'unset',
                     backgroundColor: (theme) => theme.palette.background.default
                 }}
             >
@@ -43,7 +44,7 @@ const HeaderView: FC<HeaderProps & HeaderSearchProps> = (props): JSX.Element => 
                             />
                         </Link>
                         <HeaderSearch onSearch={props.onSearch}/>
-                        <Menu {...props} />
+                        <Menu {...{isMenuOpen, handleToggleMenu}} />
                     </Toolbar>
                 </Container>
             </AppBar>

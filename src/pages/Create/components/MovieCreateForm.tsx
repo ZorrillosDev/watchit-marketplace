@@ -15,8 +15,8 @@ import {
 import { InputSwitch } from '@components/Inputs'
 import ImagePicker from '@components/ImagePicker'
 import { Translation } from '@src/i18n'
-import { File } from '@src/utils'
 import { InputTextField } from '@components/Inputs/InputTextField'
+import { File } from '@src/utils'
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
@@ -35,7 +35,7 @@ const validationSchema = yup.object({
     ),
   Name: yup.string().required().min(2).trim(),
   Description: yup.string().required().min(4).trim(),
-  Bid: yup.number().positive().min(1).required(),
+  Bid: yup.number().positive().min(0.01).required(),
   Trailer: yup.string().min(4).trim(),
   NftDescription: yup.string().min(4).trim()
 })
@@ -71,7 +71,7 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
 
   const handleFilmChange = async (e: any): Promise<any> => {
     formik.handleChange(e)
-    const cover = await File.getVideoCover(e.target.files[0], 0.1)
+    const cover = await File.getVideoCover(e.target.files[0])
     props.setFilm(URL.createObjectURL(cover))
   }
 
@@ -91,14 +91,14 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
         <Grid item xs={12}>
           <ImagePicker
             error={Boolean(formik.errors.Film)} id='movie_film' title={<Translation target='MOVIE_CREATE_FILM_TITLE' />}
-            image={props.film} accept='video/webm, video/mp4' isImageFullWidth name='Film'
+            preview={props.film} accept='video/webm, video/mp4' isImageFullWidth name='Film'
             helpText={<Translation target='MOVIE_CREATE_FILM_HELP_TEXT' />} handleChange={handleFilmChange}
           />
         </Grid>
         <Grid item xs={12}>
           <ImagePicker
             error={Boolean(formik.errors.Poster)} id='movie_poster' title={<Translation target='MOVIE_CREATE_POSTER_TITLE' />}
-            image={props.poster} accept='image/jpeg, image/png, image/jpg, image/gif' name='Poster'
+            preview={props.poster} accept='image/jpeg, image/png, image/jpg, image/gif' name='Poster'
             helpText={<Translation target='MOVIE_CREATE_POSTER_HELP_TEXT' />} handleChange={handlePosterChange}
           />
         </Grid>

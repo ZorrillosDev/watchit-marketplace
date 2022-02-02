@@ -6,7 +6,7 @@ import { Container, Grid, styled, Typography, GridProps, useMediaQuery } from '@
 
 // PROJECT IMPORTS
 import MovieCreateForm, { ModalBalanceFormProps } from '@pages/Create/components/MovieCreateForm'
-import MovieCreatePoster from '@pages/Create/components/MovieCreatePoster'
+import MovieCreatePreview from '@pages/Create/components/MovieCreatePreview'
 import { useTheme } from '@mui/material/styles'
 import Footer from '@components/Footer'
 import { Translation } from '@src/i18n'
@@ -42,7 +42,7 @@ export const MovieCreateView: FC<Omit<ModalBalanceFormProps, 'onSubmit'> & Movie
                     </Typography>
                   </Grid>
                   <Grid item xs={12}>
-                    <MovieCreatePoster
+                    <MovieCreatePreview
                       title={props.name} creator='test' posters={{ large: props.poster, medium: props.poster, small: props.poster }}
                       description='test' bid={props.bid}
                     />

@@ -27,7 +27,7 @@ const HomeRecentView: FC<Movie> = (props): JSX.Element => {
 
   return (
     <HomeRecentPosterWrapper item>
-      <Link to={path} style={{ textDecoration: 'none' }}>
+      <Link to={`m${path}`} style={{ textDecoration: 'none' }}>
         <PosterWrapper>
           <PosterHeader creator={creator} />
           <PosterMedia image={posters.medium} name={title} />

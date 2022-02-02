@@ -2,7 +2,7 @@
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
 export namespace File {
-  export const getVideoCover = async (file: File, seekTo: number = 0.0): Promise<Blob> => {
+  export const getVideoCover = async (file: File, seekTo: number = 0): Promise<Blob> => {
     /**
          * Get File Thumbnail
          * @param {File} file
@@ -22,7 +22,7 @@ export namespace File {
         }
         // delay seeking or else 'seeked' event won't fire on Safari
         setTimeout(() => {
-          videoPlayer.currentTime = seekTo
+          videoPlayer.currentTime = seekTo || videoPlayer.duration / 4
         }, 200)
         // extract video thumbnail once seeking is complete
         videoPlayer.addEventListener('seeked', () => {
