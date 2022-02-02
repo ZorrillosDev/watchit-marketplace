@@ -24,7 +24,7 @@ interface MovieProfileDetailRowProps {
 export const MovieProfileDetails: FC<Movie> = (props): JSX.Element => {
   return (
     <Grid item xs={12}>
-      <MovieProfileAccordion defaultExpanded>
+      <MovieProfileAccordion>
         <AccordionSummary expandIcon={<IconChevronDown stroke={1.5} />}>
           <Grid container spacing={2}>
             <Grid item alignItems='center' display='flex'>
