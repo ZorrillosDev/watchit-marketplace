@@ -17,6 +17,7 @@ import ImagePicker from '@components/ImagePicker'
 import { Translation } from '@src/i18n'
 import { InputTextField } from '@components/Inputs/InputTextField'
 import { File } from '@src/utils'
+import {MovieCreateViewProps} from "@pages/Create/MovieCreateView";
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
@@ -40,10 +41,10 @@ const validationSchema = yup.object({
   NftDescription: yup.string().min(4).trim()
 })
 
-export interface ModalBalanceFormProps {
+export interface ModalBalanceFormProps extends MovieCreateViewProps {
   poster: string
-  setPoster: (p: string) => void
   film: string
+  setPoster: (p: string) => void
   setFilm: (p: string) => void
   setName: (p: string) => void
   setBid: (p: number) => void
@@ -61,7 +62,7 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
       NftDescription: ''
     } as any,
     validationSchema: validationSchema,
-    onSubmit: () => {}
+    onSubmit: props.onSubmit
   })
 
   const handlePosterChange = (e: any): void => {

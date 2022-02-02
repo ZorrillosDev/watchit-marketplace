@@ -13,7 +13,11 @@ import { Translation } from '@src/i18n'
 
 // ===========================|| MOVIE - CREATE - VIEW ||=========================== //
 
-export const MovieCreateView: FC = (props): JSX.Element => {
+export interface MovieCreateViewProps  {
+  onSubmit: (e: any)=> void
+}
+
+export const MovieCreateView: FC<MovieCreateViewProps> = (props): JSX.Element => {
   const theme = useTheme()
   const [name, setName] = useState('')
   const [bid, setBid] = useState(0)
@@ -39,7 +43,8 @@ export const MovieCreateView: FC = (props): JSX.Element => {
                   film,
                   setFilm,
                   name,
-                  setName
+                  setName,
+                  ...props
                 }}
                 />
               </Grid>
@@ -55,9 +60,9 @@ export const MovieCreateView: FC = (props): JSX.Element => {
                   </Grid>
                   <Grid item xs={12}>
                     <MovieCreatePreview
-                      title={name} creator='test'
+                      title={name}
                       posters={{ large: poster, medium: poster, small: poster }}
-                      description='test' bid={bid}
+                      bid={bid}
                     />
                   </Grid>
                 </MovieCreateStickyElement>

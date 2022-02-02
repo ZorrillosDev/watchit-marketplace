@@ -15,7 +15,7 @@ describe('<MovieCreate />', () => {
   it('should have movie create with valid movie create translation text', () => {
     const translate = i18n.t('MOVIE_CREATE_MINT')
     const component = mount(
-      <MovieCreateView />
+      <MovieCreateView  onSubmit={()=> {}} />
     )
 
     const section = component.find(Typography).at(0)
@@ -25,7 +25,7 @@ describe('<MovieCreate />', () => {
   it('should have movie create with valid movie preview translation text', () => {
     const previewTranslate = i18n.t('MOVIE_CREATE_PREVIEW')
     const movieCreate = mount(
-      <MovieCreateView />
+      <MovieCreateView  onSubmit={()=> {}}  />
     )
 
     const section = movieCreate.find(Typography).at(9)

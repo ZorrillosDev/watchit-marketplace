@@ -2,5 +2,6 @@ import { Movie } from './movies'
 
 export interface MoviesState {
   movie: Movie
-  collection: Movie[]
+  collection: Movie[],
+  progress: number
 }

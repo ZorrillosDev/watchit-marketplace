@@ -1,1 +1,1 @@
-export { MovieCreateContainer as default } from '@pages/Create/MovieCreateContainer'
+export { MovieCreate as default } from '@pages/Create/MovieCreateContainer'
