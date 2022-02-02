@@ -15,26 +15,20 @@ describe('<MovieCreate />', () => {
   it('should have movie create with valid movie create translation text', () => {
     const translate = i18n.t('MOVIE_CREATE_MINT')
     const component = mount(
-      <MovieCreateView
-        bid={0} poster='test.png' setBid={() => {}} name='test'
-        setFilm={() => {}} setName={() => {}} setPoster={() => {}} film='test.png'
-      />
+      <MovieCreateView />
     )
-    const section = component.find(Typography).at(0)
 
+    const section = component.find(Typography).at(0)
     expect(section.text()).toMatch(translate)
   })
 
   it('should have movie create with valid movie preview translation text', () => {
     const previewTranslate = i18n.t('MOVIE_CREATE_PREVIEW')
     const movieCreate = mount(
-      <MovieCreateView
-        bid={0} setName={() => {}} setBid={() => {}} film='hello.png' name='Preview'
-        setPoster={() => {}} setFilm={() => {}} poster='hello.png'
-      />
+      <MovieCreateView />
     )
-    const section = movieCreate.find(Typography).at(9)
 
+    const section = movieCreate.find(Typography).at(9)
     expect(section.text()).toMatch(previewTranslate)
   })
 })

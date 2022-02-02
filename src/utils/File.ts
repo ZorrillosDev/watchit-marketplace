@@ -2,6 +2,7 @@
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
 export namespace File {
+  // TODO write tests
   export const getVideoCover = async (file: File, seekTo: number = 0): Promise<Blob> => {
     /**
          * Get File Thumbnail

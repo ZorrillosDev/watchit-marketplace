@@ -1,5 +1,5 @@
 // react imports
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 
 // project imports
 import { MovieCreateView } from '@pages/Create/MovieCreateView'
@@ -9,22 +9,5 @@ import { MovieCreateView } from '@pages/Create/MovieCreateView'
 // ===========================|| MOVIE - CREATE - CONTAINER ||=========================== //
 
 export const MovieCreateContainer: FC = (): JSX.Element => {
-  const [name, setName] = useState('')
-  const [bid, setBid] = useState(0)
-  const [poster, setPoster] = useState('')
-  const [film, setFilm] = useState('')
-
-  return (
-    <MovieCreateView {...{
-      poster,
-      setPoster,
-      film,
-      setFilm,
-      name,
-      setName,
-      bid,
-      setBid
-    }}
-    />
-  )
+  return <MovieCreateView />
 }
