@@ -24,21 +24,20 @@ import {MovieCreateViewProps} from "@pages/Create/MovieCreateView";
 // ===========================|| MOVIE - CREATE - FORM ||=========================== //
 
 const validationSchema = yup.object({
-  Film: yup.mixed()
+  film: yup.mixed()
     .required()
     .test('fileType', 'Supported Video Formats', (value) =>
       value && ['webm', 'mp4'].includes(value.split('.').pop())
     ),
-  Poster: yup.mixed()
+  poster: yup.mixed()
     .required()
     .test('fileType', 'Supported Image Format', (value) =>
       value && ['jpeg', 'png', 'jpg', 'gif'].includes(value.split('.').pop())
     ),
-  Name: yup.string().required().min(2).trim(),
-  Description: yup.string().required().min(4).trim(),
-  Bid: yup.number().positive().min(0.01).required(),
-  Trailer: yup.string().min(4).trim(),
-  NftDescription: yup.string().min(4).trim()
+  name: yup.string().required().min(2).trim(),
+  description: yup.string().required().min(4).trim(),
+  bid: yup.number().positive().min(0.01).required(),
+  trailer: yup.string().min(4).trim(),
 })
 
 export interface ModalBalanceFormProps extends MovieCreateViewProps {
@@ -53,13 +52,12 @@ export interface ModalBalanceFormProps extends MovieCreateViewProps {
 const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
   const formik = useFormik({
     initialValues: {
-      Film: undefined,
-      Poster: undefined,
-      Name: '',
-      Description: '',
-      Bid: 0,
-      Trailer: '',
-      NftDescription: ''
+      film: undefined,
+      poster: undefined,
+      name: '',
+      description: '',
+      bid: 0,
+      trailer: '',
     } as any,
     validationSchema: validationSchema,
     onSubmit: props.onSubmit
@@ -91,39 +89,39 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <ImagePicker
-            error={Boolean(formik.errors.Film)} id='movie_film' title={<Translation target='MOVIE_CREATE_FILM_TITLE' />}
-            preview={props.film} accept='video/webm, video/mp4' isImageFullWidth name='Film'
+            error={Boolean(formik.errors.film)} id='movie_film' title={<Translation target='MOVIE_CREATE_FILM_TITLE' />}
+            preview={props.film} accept='video/webm, video/mp4' isImageFullWidth name='film'
             helpText={<Translation target='MOVIE_CREATE_FILM_HELP_TEXT' />} handleChange={handleFilmChange}
           />
         </Grid>
         <Grid item xs={12}>
           <ImagePicker
-            error={Boolean(formik.errors.Poster)} id='movie_poster' title={<Translation target='MOVIE_CREATE_POSTER_TITLE' />}
-            preview={props.poster} accept='image/jpeg, image/png, image/jpg, image/gif' name='Poster'
+            error={Boolean(formik.errors.poster)} id='movie_poster' title={<Translation target='MOVIE_CREATE_POSTER_TITLE' />}
+            preview={props.poster} accept='image/jpeg, image/png, image/jpg, image/gif' name='poster'
             helpText={<Translation target='MOVIE_CREATE_POSTER_HELP_TEXT' />} handleChange={handlePosterChange}
           />
         </Grid>
         <Grid item xs={12}>
           <InputTextField
-            id='movie_name' label={<Translation target='MOVIE_CREATE_NAME' />} variant='standard' name='Name'
+            id='movie_name' label={<Translation target='MOVIE_CREATE_NAME' />} variant='standard' name='name'
             helperText={<Translation target='MOVIE_CREATE_NAME_HELP_TEXT' />}
-            error={Boolean(formik.errors.Name)} onChange={handleNameChange}
+            error={Boolean(formik.errors.name)} onChange={handleNameChange}
           />
         </Grid>
         <Grid item xs={12}>
           <InputTextField
-            id='movie_description' label={<Translation target='MOVIE_CREATE_DESCRIPTION' />} variant='standard' name='Description'
+            id='movie_description' label={<Translation target='MOVIE_CREATE_DESCRIPTION' />} variant='standard' name='description'
             helperText={<Translation target='MOVIE_CREATE_DESCRIPTION_HELP_TEXT' />}
-            error={Boolean(formik.errors.Description)} onChange={formik.handleChange}
+            error={Boolean(formik.errors.description)} onChange={formik.handleChange}
             multiline rows={2}
           />
         </Grid>
         <Grid item xs={12}>
           <MovieCreateBidWrapper>
             <InputTextField
-              type='number' name='Bid' helperText={<Translation target='MOVIE_CREATE_BID_HELP_TEXT' />}
+              type='number' name='bid' helperText={<Translation target='MOVIE_CREATE_BID_HELP_TEXT' />}
               id='movie_minimum_bid' label={<Translation target='MOVIE_CREATE_BID' />} variant='standard'
-              error={Boolean(formik.errors.Bid)} onChange={handleBidChange}
+              error={Boolean(formik.errors.bid)} onChange={handleBidChange}
             />
             <MovieCreateBidText variant='body2'>ETH</MovieCreateBidText>
           </MovieCreateBidWrapper>
@@ -131,15 +129,7 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
         <Grid item xs={12}>
           <InputTextField
             id='movie_trailer' label={<Translation target='MOVIE_CREATE_TRAILER' />} variant='standard'
-            error={Boolean(formik.errors.Trailer)} onChange={formik.handleChange} name='Trailer'
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <InputTextField
-            id='movie_alternative_description' label={<Translation target='MOVIE_CREATE_NFT_DESC' />}
-            helperText={<Translation target='MOVIE_CREATE_NFT_DESC_HELP_TEXT' />} variant='standard'
-            error={Boolean(formik.errors.NftDescription)} onChange={formik.handleChange}
-            multiline rows={2} name='NftDescription'
+            error={Boolean(formik.errors.trailer)} onChange={formik.handleChange} name='trailer'
           />
         </Grid>
         <Grid item xs={12}>
