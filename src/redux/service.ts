@@ -1,7 +1,7 @@
 import axios from "axios";
 import {API_ENDPOINT} from "@state/CONSTANTS";
 
-export const fetch = async (path: string, args?: object): Promise<any> => {
+export const request = async (path: string, args?: object): Promise<any> => {
     const res = await axios.request( {
         url: path,
         baseURL: API_ENDPOINT,

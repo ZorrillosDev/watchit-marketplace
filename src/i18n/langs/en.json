@@ -65,6 +65,6 @@
   "MOVIE_CREATE_UNLOCK_KEY_HELP_TEXT": "Digital key, code to redeem or link to a file",
   "MOVIE_CREATE_FREE_MINTING": "Free minting",
   "MOVIE_CREATE_FREE_MINTING_HELP_TEXT": "Buyer will pay gas fees for minting",
-  "MOVIE_CREATE_ADD_BUTTON": "Add Item"
+  "MOVIE_CREATE_ADD_BUTTON": "Mint Movie"
 
 }

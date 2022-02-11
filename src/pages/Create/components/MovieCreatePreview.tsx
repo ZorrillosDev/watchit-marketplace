@@ -16,22 +16,24 @@ import {Translation} from '@src/i18n'
 
 // ===========================|| MOVIE - CREATE - POSTER ||=========================== //
 
-type MovieCreatePreviewProps = Omit<Partial<Movie>, 'description' | 'creator'> & { bid: number }
+type MovieCreatePreviewProps =
+    Omit<Partial<Movie>, 'description' | 'creator' | 'posters'>
+    & { bid: number, poster?: string }
+
 const MovieCreatePreview: FC<MovieCreatePreviewProps> = (props): JSX.Element => {
     const {
         title,
         bid
     } = props
-    const image = props?.posters?.large
 
     return (
         <MovieCreatePreviewWrapper>
-            <PosterWrapper sx={{minHeight: image ? 'auto' : '30rem', pb: image ? 1 : 0}}>
+            <PosterWrapper sx={{minHeight: props.poster ? 'auto' : '30rem', pb: props.poster ? 1 : 0}}>
                 {
-                    image ? (
+                    props?.poster ? (
                         <>
                             <PosterHeader creator={''}/>
-                            <PosterMedia image={image} name={title ?? ''}/>
+                            <PosterMedia image={props.poster} name={title ?? ''}/>
                             <PosterFooter price={bid} name={title ?? ''} isEthPrice/>
                         </>
                     ) : (

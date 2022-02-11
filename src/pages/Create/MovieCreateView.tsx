@@ -14,7 +14,8 @@ import { Translation } from '@src/i18n'
 // ===========================|| MOVIE - CREATE - VIEW ||=========================== //
 
 export interface MovieCreateViewProps  {
-  onSubmit: (e: any)=> void
+  onSubmit: (e: any)=> void,
+  progress?: number
 }
 
 export const MovieCreateView: FC<MovieCreateViewProps> = (props): JSX.Element => {
@@ -32,6 +33,7 @@ export const MovieCreateView: FC<MovieCreateViewProps> = (props): JSX.Element =>
           <Grid item xs={12}>
             <Typography variant='h3' color='primary'><Translation target='MOVIE_CREATE_MINT' /></Typography>
           </Grid>
+
           <Grid item xs={12}>
             <Grid container spacing={isMobile ? 2 : 6}>
               <Grid item xs={12} sm={7}>
@@ -61,7 +63,7 @@ export const MovieCreateView: FC<MovieCreateViewProps> = (props): JSX.Element =>
                   <Grid item xs={12}>
                     <MovieCreatePreview
                       title={name}
-                      posters={{ large: poster, medium: poster, small: poster }}
+                      poster={poster}
                       bid={bid}
                     />
                   </Grid>

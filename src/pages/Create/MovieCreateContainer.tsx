@@ -17,13 +17,16 @@ export const MovieCreateContainer: FC<MoviesState & MoviesActions> = ({commitUpl
 
     const onSubmit = (values: any) => {
         const formData = new FormData()
-        for (const value in values)
-            formData.append(value, values)
+
+        for (const [idx, value] of Object.entries(values)){
+            formData.append(idx, value as any)
+        }
         // Here call the api
+        commitUploadMovie(formData)
 
     }
 
-    return <MovieCreateView {...{onSubmit}} />
+    return <MovieCreateView {...{onSubmit, progress}} />
 }
 
 const mapDispatchToProps: Partial<MoviesActions> = {commitUploadMovie}
