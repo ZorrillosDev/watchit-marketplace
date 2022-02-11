@@ -15,17 +15,21 @@ import {selectUploadProgress} from "@state/movies/selector";
 
 export const MovieCreateContainer: FC<MoviesState & MoviesActions> = ({commitUploadMovie, progress}): JSX.Element => {
 
-    const onSubmit = (e: any) => {
-        console.log(e);
+    const onSubmit = (values: any) => {
+        const formData = new FormData()
+        for (const value in values)
+            formData.append(value, values)
+        // Here call the api
+
     }
 
     return <MovieCreateView {...{onSubmit}} />
 }
 
-const mapDispatchToProps: Partial<MoviesActions> = { commitUploadMovie }
+const mapDispatchToProps: Partial<MoviesActions> = {commitUploadMovie}
 const mapStateToProps = (state: RootStateOrAny): Partial<MoviesState> => {
     const progress = selectUploadProgress(state)
-    return { progress }
+    return {progress}
 }
 
 export const MovieCreate = connect(
