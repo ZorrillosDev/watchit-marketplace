@@ -3,4 +3,3 @@ export enum Endpoints {
   profile = '/movie/profile',
   create = '/movie/create'
 }
-

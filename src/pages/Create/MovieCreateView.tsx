@@ -13,8 +13,8 @@ import { Translation } from '@src/i18n'
 
 // ===========================|| MOVIE - CREATE - VIEW ||=========================== //
 
-export interface MovieCreateViewProps  {
-  onSubmit: (e: any)=> void,
+export interface MovieCreateViewProps {
+  onSubmit: (e: any) => void
   progress?: number
 }
 

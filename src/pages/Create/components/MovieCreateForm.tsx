@@ -16,33 +16,16 @@ import ImagePicker from '@components/ImagePicker'
 import {Translation} from '@src/i18n'
 import {InputTextField} from '@components/Inputs/InputTextField'
 import {File} from '@src/utils'
-import {Formik} from "formik";
-import {MovieCreateViewProps} from "@pages/Create/MovieCreateView";
+import {Formik} from 'formik'
+import {MovieCreateViewProps} from '@pages/Create/MovieCreateView'
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
 // ===========================|| MOVIE - CREATE - FORM ||=========================== //
 
-const validationSchema = yup.object({
-    film: yup.mixed()
-        .required()
-        .test('fileType', 'Supported Video Formats', (value: any) =>
-            value?.name && ['webm', 'mp4'].includes(value.name.split('.').pop())
-        ),
-    poster: yup.mixed()
-        .required()
-        .test('fileType', 'Supported Image Format', (value) =>
-            value?.name && ['jpeg', 'png', 'jpg', 'gif'].includes(value.name.split('.').pop())
-        ),
-    name: yup.string().required().min(2).trim(),
-    description: yup.string().required().min(4).trim(),
-    bid: yup.number().positive().min(0.01).required(),
-    trailer: yup.string().min(4).trim(),
-})
-
 export interface ModalBalanceFormProps extends MovieCreateViewProps {
     poster: string
-    progress?: number,
+    progress?: number
     film: string
     setPoster: (p: string) => void
     setFilm: (p: string) => void
@@ -51,27 +34,51 @@ export interface ModalBalanceFormProps extends MovieCreateViewProps {
 }
 
 const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
+    const validationSchema = yup.object({
+        film: yup.mixed()
+            .required()
+            .test('fileType', 'Supported Video Formats', (value: any) =>
+                value?.name && ['webm', 'mp4'].includes(value.name.split('.').pop())
+            ),
+        poster: yup.mixed()
+            .required()
+            .test('fileType', 'Supported Image Format', (value) =>
+                value?.name && ['jpeg', 'png', 'jpg', 'gif'].includes(value.name.split('.').pop())
+            ),
+        name: yup.string().required().min(2).trim(),
+        description: yup.string().required().min(4).trim(),
+        bid: yup.number().positive().min(0.01).required(),
+        trailer: yup.string().min(4).trim()
+    })
+
+    const initialValues = {
+        film: undefined,
+        poster: undefined,
+        name: '',
+        description: '',
+        bid: 0,
+        trailer: ''
+    }
+
     return (
         <Formik
             onSubmit={props.onSubmit}
             validationSchema={validationSchema}
-            initialValues={{
-                film: undefined,
-                poster: undefined,
-                name: '',
-                description: '',
-                bid: 0,
-                trailer: '',
-            }}
-
-            render={({errors, handleSubmit, handleChange, setFieldValue}) => {
+            initialValues={initialValues}
+            render={({
+                         errors,
+                         handleSubmit,
+                         handleChange,
+                         setFieldValue
+                     }) => {
                 return (
                     <Box
                         component='form'
                         onSubmit={handleSubmit}
                         method='post'
                         encType='multipart/form-data'
-                        sx={{mb: {xs: 0, sm: 8}}}>
+                        sx={{mb: {xs: 0, sm: 8}}}
+                    >
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
                                 <ImagePicker
@@ -144,8 +151,8 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
                             <Grid item xs={12}>
                                 <InputTextField
                                     id='movie_trailer' label={<Translation target='MOVIE_CREATE_TRAILER'/>}
-                                    variant='standard'
-                                    error={Boolean(errors.trailer)} onChange={handleChange} name='trailer'
+                                    variant='standard' error={Boolean(errors.trailer)}
+                                    onChange={handleChange} name='trailer'
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -156,12 +163,12 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
                             </Grid>
 
                             {
-                                props.progress ?
-                                    <Grid item xs={12}>
-                                        <LinearProgress variant="determinate" value={50}/>
+                                props.progress
+                                    ? <Grid item xs={12}>
+                                        <LinearProgress variant='determinate' value={50}/>
                                         <small>Uploading...</small>
-                                    </Grid> :
-                                    <></>
+                                    </Grid>
+                                    : <></>
                             }
 
                             <Grid item xs={6}>

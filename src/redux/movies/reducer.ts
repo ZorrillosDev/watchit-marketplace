@@ -17,7 +17,7 @@ const recentReducer = createSlice({
     setMovies (state: MoviesState, action: PayloadAction<Movie[]>) {
       state.collection = action.payload
     },
-    setUploadProgress(state: MoviesState, action: PayloadAction<number>) {
+    setUploadProgress (state: MoviesState, action: PayloadAction<number>) {
       state.progress = action.payload
     },
     addMovie (state: MoviesState, action: PayloadAction<Movie>) {
