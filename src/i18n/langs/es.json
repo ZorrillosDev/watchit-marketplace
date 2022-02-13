@@ -48,7 +48,7 @@
   "MOVIE_CREATE_FILE_BUTTON": "Seleccione el archivo",
   "MOVIE_CREATE_FILM_TITLE": "Subir película",
   "MOVIE_CREATE_FILM_HELP_TEXT": "WEBP o MP4",
-  "MOVIE_CREATE_POSTER_TITLE": "Subir póster de película",
+  "MOVIE_CREATE_POSTER_TITLE": "Subir póster",
   "MOVIE_CREATE_POSTER_HELP_TEXT": "PNG, GIF o JEPG. Max 100mb.",
   "MOVIE_CREATE_NAME": "Título",
   "MOVIE_CREATE_NAME_HELP_TEXT": "ej. “Transferencia: una historia de amor bipolar”",

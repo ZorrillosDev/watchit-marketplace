@@ -48,7 +48,7 @@
   "MOVIE_CREATE_FILE_BUTTON": "Choose file",
   "MOVIE_CREATE_FILM_TITLE": "Upload film",
   "MOVIE_CREATE_FILM_HELP_TEXT": "WEBP o MP4",
-  "MOVIE_CREATE_POSTER_TITLE": "Upload film poster",
+  "MOVIE_CREATE_POSTER_TITLE": "Upload poster",
   "MOVIE_CREATE_POSTER_HELP_TEXT": "PNG, GIF o JEPG. Max 100mb.",
   "MOVIE_CREATE_NAME": "Title",
   "MOVIE_CREATE_NAME_HELP_TEXT": "i.e. “Transference: A Bipolar Love Story”",
