@@ -5,22 +5,21 @@ import i18n from '@src/i18n'
 import { Button } from '@mui/material'
 
 describe('<MovieCreateForm />', () => {
-  const setBid = jest.fn()
+  const setPrice = jest.fn()
   const setPoster = jest.fn()
-  const setName = jest.fn()
+  const setTitle = jest.fn()
   const setFilm = jest.fn()
   const functions = {
-    setBid,
+    setPrice,
     setPoster,
-    setName,
+    setTitle,
     setFilm
   }
 
   it('should render', () => {
-    const component = mount(<MovieCreateForm
-      onSubmit={() => {
-      }} film='1' poster='1' {...functions}
-                            />)
+    const component = mount(
+      <MovieCreateForm onSubmit={() => {}} film='1' poster='1' {...functions} />
+    )
 
     expect(component).toMatchSnapshot()
   })

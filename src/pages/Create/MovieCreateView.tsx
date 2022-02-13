@@ -20,11 +20,24 @@ export interface MovieCreateViewProps {
 
 export const MovieCreateView: FC<MovieCreateViewProps> = (props): JSX.Element => {
   const theme = useTheme()
-  const [name, setName] = useState('')
-  const [bid, setBid] = useState(0)
+  const [title, setTitle] = useState('')
+  const [price, setPrice] = useState(0)
   const [poster, setPoster] = useState('')
   const [film, setFilm] = useState('')
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
+  // Allow set a "bridge" between sibling components
+  const createFormProps = {
+    price,
+    setPrice,
+    poster,
+    setPoster,
+    film,
+    setFilm,
+    title,
+    setTitle,
+    ...props
+  }
 
   return (
     <>
@@ -33,22 +46,10 @@ export const MovieCreateView: FC<MovieCreateViewProps> = (props): JSX.Element =>
           <Grid item xs={12}>
             <Typography variant='h3' color='primary'><Translation target='MOVIE_CREATE_MINT' /></Typography>
           </Grid>
-
           <Grid item xs={12}>
             <Grid container spacing={isMobile ? 2 : 6}>
               <Grid item xs={12} sm={7}>
-                <MovieCreateForm {...{
-                  bid,
-                  setBid,
-                  poster,
-                  setPoster,
-                  film,
-                  setFilm,
-                  name,
-                  setName,
-                  ...props
-                }}
-                />
+                <MovieCreateForm {...createFormProps} />
               </Grid>
               <Grid item xs={12} sm={5}>
                 <MovieCreateStickyElement container spacing={3}>
@@ -62,9 +63,9 @@ export const MovieCreateView: FC<MovieCreateViewProps> = (props): JSX.Element =>
                   </Grid>
                   <Grid item xs={12}>
                     <MovieCreatePreview
-                      title={name}
+                      title={title}
                       poster={poster}
-                      bid={bid}
+                      bid={price}
                     />
                   </Grid>
                 </MovieCreateStickyElement>

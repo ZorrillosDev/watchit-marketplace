@@ -29,8 +29,8 @@ export interface ModalBalanceFormProps extends MovieCreateViewProps {
     film: string
     setPoster: (p: string) => void
     setFilm: (p: string) => void
-    setName: (p: string) => void
-    setBid: (p: number) => void
+    setTitle: (p: string) => void
+    setPrice: (p: number) => void
 }
 
 const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
@@ -45,19 +45,19 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
             .test('fileType', 'Supported Image Format', (value) =>
                 value?.name && ['jpeg', 'png', 'jpg', 'gif'].includes(value.name.split('.').pop())
             ),
-        name: yup.string().required().min(2).trim(),
-        description: yup.string().required().min(4).trim(),
-        bid: yup.number().positive().min(0.01).required(),
-        trailer: yup.string().min(4).trim()
+        title: yup.string().required().min(2).trim(),
+        synopsis: yup.string().required().min(4).trim(),
+        price: yup.number().positive().min(0.01).required(),
+        trailer_code: yup.string().min(4).trim()
     })
 
     const initialValues = {
         film: undefined,
         poster: undefined,
-        name: '',
-        description: '',
-        bid: 0,
-        trailer: ''
+        title: '',
+        synopsis: '',
+        price: 0,
+        trailer_code: ''
     }
 
     return (
@@ -112,37 +112,37 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
                             </Grid>
                             <Grid item xs={12}>
                                 <InputTextField
-                                    id='movie_name' label={<Translation target='MOVIE_CREATE_NAME'/>} variant='standard'
-                                    name='name'
+                                    id='movie_title' label={<Translation target='MOVIE_CREATE_NAME'/>}
+                                    variant='standard' name='title'
                                     helperText={<Translation target='MOVIE_CREATE_NAME_HELP_TEXT'/>}
-                                    error={Boolean(errors.name)}
+                                    error={Boolean(errors.title)}
                                     onChange={(e) => {
-                                        props.setName(e.target.value)
-                                        setFieldValue('name', e.target.value)
+                                        props.setTitle(e.target.value)
+                                        setFieldValue('title', e.target.value)
                                     }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <InputTextField
-                                    id='movie_description' label={<Translation target='MOVIE_CREATE_DESCRIPTION'/>}
-                                    variant='standard' name='description'
+                                    id='movie_synopsis' label={<Translation target='MOVIE_CREATE_DESCRIPTION'/>}
+                                    variant='standard' name='synopsis'
                                     helperText={<Translation target='MOVIE_CREATE_DESCRIPTION_HELP_TEXT'/>}
-                                    error={Boolean(errors.description)} onChange={handleChange}
+                                    error={Boolean(errors.synopsis)} onChange={handleChange}
                                     multiline rows={2}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <MovieCreateBidWrapper>
                                     <InputTextField
-                                        type='number' name='bid'
+                                        type='number' name='price'
                                         helperText={<Translation target='MOVIE_CREATE_BID_HELP_TEXT'/>}
-                                        id='movie_minimum_bid' label={<Translation target='MOVIE_CREATE_BID'/>}
+                                        id='movie_minimum_price' label={<Translation target='MOVIE_CREATE_BID'/>}
                                         variant='standard'
-                                        error={Boolean(errors.bid)}
+                                        error={Boolean(errors.price)}
                                         onChange={(e: any) => {
                                             handleChange(e)
-                                            props.setBid(e.target.value)
-                                            setFieldValue('bid', e.target.value)
+                                            props.setPrice(e.target.value)
+                                            setFieldValue('price', e.target.value)
                                         }}
                                     />
                                     <MovieCreateBidText variant='body2'>ETH</MovieCreateBidText>
@@ -150,9 +150,9 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
                             </Grid>
                             <Grid item xs={12}>
                                 <InputTextField
-                                    id='movie_trailer' label={<Translation target='MOVIE_CREATE_TRAILER'/>}
-                                    variant='standard' error={Boolean(errors.trailer)}
-                                    onChange={handleChange} name='trailer'
+                                    id='movie_trailer_code' label={<Translation target='MOVIE_CREATE_TRAILER'/>}
+                                    variant='standard' error={Boolean(errors.trailer_code)}
+                                    onChange={handleChange} name='trailer_code'
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -163,12 +163,12 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
                             </Grid>
 
                             {
-                                props.progress
-                                    ? <Grid item xs={12}>
+                                props.progress ?
+                                    <Grid item xs={12}>
                                         <LinearProgress variant='determinate' value={50}/>
                                         <small>Uploading...</small>
-                                    </Grid>
-                                    : <></>
+                                    </Grid> :
+                                    <></>
                             }
 
                             <Grid item xs={6}>

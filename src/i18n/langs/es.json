@@ -50,7 +50,7 @@
   "MOVIE_CREATE_FILM_HELP_TEXT": "WEBP o MP4",
   "MOVIE_CREATE_POSTER_TITLE": "Subir póster de película",
   "MOVIE_CREATE_POSTER_HELP_TEXT": "PNG, GIF o JEPG. Max 100mb.",
-  "MOVIE_CREATE_NAME": "Nombre",
+  "MOVIE_CREATE_NAME": "Título",
   "MOVIE_CREATE_NAME_HELP_TEXT": "ej. “Transferencia: una historia de amor bipolar”",
   "MOVIE_CREATE_DESCRIPTION": "Descripción",
   "MOVIE_CREATE_DESCRIPTION_HELP_TEXT": "ej. “Una enfermera se embarca en un apasionado romance con …”",
