@@ -19,7 +19,7 @@ export const fetchMovieProfile = <P extends MovieArgs>(params: P): ThunkAction<P
 export const commitUploadMovie = <P extends FormData>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      const movie: Movie = await request(Endpoints.create, {
+      await request(Endpoints.create, {
         method: 'post',
         data: params,
         headers: {
