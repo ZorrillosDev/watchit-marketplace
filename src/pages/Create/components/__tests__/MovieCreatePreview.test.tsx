@@ -1,9 +1,7 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { shallow } from 'enzyme'
 import MovieCreatePreview, { MovieCreatePreviewIcon } from '@pages/Create/components/MovieCreatePreview'
 import { PosterMedia } from '@components/Poster'
-import i18n from '@src/i18n'
-import { Typography } from '@mui/material'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 

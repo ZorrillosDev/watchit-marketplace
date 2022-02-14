@@ -9,6 +9,6 @@ export const request = async (path: string, args?: object): Promise<any> => {
   })
 
   return res.statusText === 'OK'
-    ? await res.data
+    ? await Promise.resolve(res.data)
     : await Promise.reject(res)
 }

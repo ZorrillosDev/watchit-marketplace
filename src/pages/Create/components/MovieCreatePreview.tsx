@@ -34,7 +34,7 @@ const MovieCreatePreview: FC<MovieCreatePreviewProps> = (props): JSX.Element => 
             <>
               <PosterHeader creator='' />
               <PosterMedia image={props.poster} name={title ?? ''} />
-              <PosterFooter price={bid} name={title ?? ''} isEthPrice />
+              <PosterFooter price={bid} name={title ?? ''} />
             </>
           ) : (
             <Box
