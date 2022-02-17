@@ -7,13 +7,15 @@ import { Box, Grid, styled, Typography, CardContent, CardContentProps } from '@m
 // PROJECT IMPORTS
 import HeartCounter from '@components/HeartCounter'
 import TruncatedTypography from '@components/TruncatedTypography'
-import { Ethers } from '@src/utils'
+
+/* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
 // ===========================|| POSTER - FOOTER ||=========================== //
 
 export interface PosterFooterProps {
   name: string
   price: number
+  isEthPrice?: boolean
   rating?: number
 }
 
@@ -39,7 +41,7 @@ export const PosterFooter: FC<PosterFooterProps> = (props): JSX.Element => {
               color='text.primary'
               fontWeight='bold'
             >
-              {Ethers.getWeiToETH(props.price)} ETH
+              {props.price} ETH
             </Typography>
           </Box>
         </Grid>

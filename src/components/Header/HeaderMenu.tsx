@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 // project imports
-import { EXPLORE, FESTIVAL, SELL, WORK } from '@navigation/CONSTANTS'
+import { EXPLORE, FESTIVAL, SELL, WORK, CREATE } from '@navigation/CONSTANTS'
 import i18n from '@src/i18n'
 import {
   Menu as MenuIcon,
@@ -87,6 +87,13 @@ const HeaderMenuContent: FC = (): JSX.Element => {
         }
       }}
     >
+      <Link to={CREATE}>
+        <Item
+          sx={{ fontWeight: 700, p: 2, px: { xs: 2, xl: 3 } }}
+        >
+          {i18n.t('GLOBAL_CREATE')}
+        </Item>
+      </Link>
       <Link to={EXPLORE}>
         <Item
           sx={{ p: 2, px: { xs: 2, xl: 3 } }}
@@ -131,7 +138,8 @@ export const Item = styled(Box)<{ active?: boolean } & BoxProps>(({ active, them
   justifyContent: 'center',
   fontWeight: 400,
   '&:hover': {
-    color: theme.palette.primary.dark
+    color: theme.palette.primary.dark,
+    textDecoration: 'underline'
   },
   ...(
     (active ?? false)

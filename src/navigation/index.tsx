@@ -6,8 +6,9 @@ import Festival from '@pages/Festival'
 import Sell from '@pages/Sell'
 import Work from '@pages/Work'
 import MovieProfile from '@pages/Movie'
+import MovieCreate from '@pages/Create'
 import { DefaultLayout } from '@layouts/default'
-import { ROOT, EXPLORE, FESTIVAL, SELL, WORK, MOVIE } from '@navigation/CONSTANTS'
+import { ROOT, EXPLORE, FESTIVAL, SELL, WORK, MOVIE, CREATE } from '@navigation/CONSTANTS'
 
 export const Routing: FC = (): JSX.Element => {
   return (
@@ -47,6 +48,11 @@ export const Routing: FC = (): JSX.Element => {
           )
         }
       />
+      <Route exact path={CREATE}>
+        <DefaultLayout>
+          <MovieCreate />
+        </DefaultLayout>
+      </Route>
     </Switch>
   )
 }

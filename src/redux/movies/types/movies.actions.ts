@@ -9,4 +9,5 @@ export interface MoviesArgs {
 export interface MoviesActions {
   fetchRecentMovies: <P extends MoviesArgs>(args?: P) => void
   fetchMovieProfile: <P extends MovieArgs>(args: P) => void
+  commitUploadMovie: <P extends FormData>(args: P) => void
 }
