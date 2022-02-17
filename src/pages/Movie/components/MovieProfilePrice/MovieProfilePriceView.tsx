@@ -9,8 +9,10 @@ import {
 
 // PROJECT IMPORTS
 import MovieProfileUser from '@pages/Movie/components/MovieProfileUser'
+import ModalBid from '@components/ModalBid'
 import { IconEth } from '@components/Icons'
 import { Translation } from '@src/i18n'
+import {SxProps, Theme} from "@mui/system";
 
 // ===========================|| MOVIE - PROFILE - PRICE - VIEW ||=========================== //
 
@@ -61,9 +63,7 @@ export const MovieProfilePriceView: FC<MovieProfilePriceProps> = (props): JSX.El
             </Grid>
           </Grid>
         </Grid>
-        <MovieProfileOfferButton variant='contained' color='primary' size='large'>
-          <Translation target='MOVIE_PROFILE_PRICE_MAKE_OFFER' />
-        </MovieProfileOfferButton>
+        <ModalBid buttonSx={MovieProfileOfferButtonSx} />
       </MovieProfilePriceSectionWrapper>
     </Grid>
   )
@@ -90,7 +90,7 @@ export const MovieProfilePriceSection = styled(Grid)<GridProps>(({ theme }) => (
   }
 }))
 
-const MovieProfileOfferButton = styled(Button)<ButtonProps>(() => ({
+const MovieProfileOfferButtonSx: SxProps<Theme> = {
   position: 'absolute',
   bottom: '-20px',
   width: '15rem',
@@ -98,4 +98,4 @@ const MovieProfileOfferButton = styled(Button)<ButtonProps>(() => ({
   borderRadius: '12px !important',
   boxShadow: '0 5px 9px rgb(0 0 0 / 20%)',
   fontWeight: 600
-}))
+}
