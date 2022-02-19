@@ -7,7 +7,9 @@ const { BigNumber } = require('ethers')
 const {
   bs58toHex,
   hexToBs58,
-  randomCID
+  randomCID,
+  getNetworkSettings,
+  getNetworkNameByChainId
 } = require('./utils')
 
 const txOptions = { gasLimit: 800000 }
@@ -17,8 +19,8 @@ const value = BigNumber.from('10000000000000000')
 describe('WatchIt NFTs (WNFT)', function () {
   this.timeout(0)
 
-  let wnft
-  let deployer, client
+  let wnft, chainId, chainName, chainSettings
+  let deployer, client, contract
   // Example token uri. CID is not valid one.
   // TODO: ERC1155 Metadata
   // see: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md#erc-1155-metadata-uri-json-schema
@@ -33,9 +35,14 @@ describe('WatchIt NFTs (WNFT)', function () {
   }
 
   before(async function () {
+
     const accounts = await getNamedAccounts()
     deployer = await ethers.getSigner(accounts.deployer)
     client = await ethers.getSigner(accounts.client)
+    chainId = await getChainId()
+    chainName = getNetworkNameByChainId(chainId)
+    chainSettings = getNetworkSettings(chainName)
+    contract = await ethers.getSigner(chainSettings.NFT)
 
     txOptions.gasPrice = await ethers.provider.getGasPrice()
     const NFToken = await deployments.get('WNFT')
@@ -157,6 +164,29 @@ describe('WatchIt NFTs (WNFT)', function () {
       const tokenIdA = await nftMinter((await randomCID()).toString())
       const transfer = await wnft.connect(client).transfer(deployer.address, client.address, bs58toHex(tokenIdA), txOptions)
       expect(transfer.wait()).to.be.reverted // eslint-disable-line
+    })
+
+    it('should allow transfer using contract address as custodial account', async function () {
+      // Could this be used for temporary contract take control from seller account?
+      const tokenIdA = await nftMinter((await randomCID()).toString())
+      await (await wnft.connect(deployer).setApprovalForAll(contract.address, true)).wait()
+      const approved = await wnft.isApprovedForAll(deployer.address, contract.address)
+      expect(approved).to.equal(true) // Should has approved
+
+      await (
+        await wnft.connect(contract).safeTransferFrom(
+          deployer.address, // Seller
+          client.address, // Buyer
+          bs58toHex(tokenIdA), 1, '0x0'
+        )
+      ).wait()
+
+      const sellerSupply = await wnft.balanceOf(deployer.address, bs58toHex(tokenIdA))
+      const buyerSupply = await wnft.balanceOf(deployer.address, bs58toHex(tokenIdA))
+
+      expect(sellerSupply).to.equal(0)
+      expect(buyerSupply).to.equal(1)
+
     })
   })
 
