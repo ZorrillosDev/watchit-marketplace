@@ -298,7 +298,7 @@ describe('WatchIt NFTs (WNFT)', function () {
       // Check new balance after purchase
       await conciliation(async () => {
         // Integration tests
-        const cidWaitingFormMint = (await randomCID())
+        const cidWaitingFormMint = bs58toHex((await randomCID()).toString())
         // Request purchase from acct1 address for token
         await (
           await wnft.connect(client).setApprovalFor(
