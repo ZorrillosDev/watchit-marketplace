@@ -43,7 +43,6 @@ describe('WatchIt NFTs (WNFT)', function () {
     chainName = getNetworkNameByChainId(chainId)
     chainSettings = getNetworkSettings(chainName)
 
-
     txOptions.gasPrice = await ethers.provider.getGasPrice()
     const NFToken = await deployments.get('WNFT')
     wnft = await ethers.getContractAt('WNFT', NFToken.address)
@@ -178,7 +177,8 @@ describe('WatchIt NFTs (WNFT)', function () {
         await wnft.safeTransferFrom(
           deployer.address, // Seller
           client.address, // Buyer
-          bs58toHex(tokenIdA), 1, []
+          bs58toHex(tokenIdA), 1, [],
+          {...txOptions }
         )
       ).wait()
 
@@ -187,6 +187,26 @@ describe('WatchIt NFTs (WNFT)', function () {
 
       expect(sellerSupply).to.equal(0)
       expect(buyerSupply).to.equal(1)
+
+    })
+
+    it('should fail transfer without approval for custodial account', async function () {
+      const tokenIdA = await nftMinter((await randomCID()).toString())
+      // Approved for contract temporary custodial
+      await (await wnft.connect(deployer).setApprovalForAll(contract.address, true)).wait()
+      const approved = await wnft.isApprovedForAll(deployer.address, contract.address)
+      expect(approved).to.equal(true) // Should has approved
+
+      const safeBadTransfer = await wnft.connect(
+        client // Not approved for client
+      ).safeTransferFrom(
+        deployer.address, // Seller
+        client.address, // Buyer
+        bs58toHex(tokenIdA), 1, [],
+        {...txOptions }
+      )
+
+      expect(safeBadTransfer.wait()).to.reverted
 
     })
   })
