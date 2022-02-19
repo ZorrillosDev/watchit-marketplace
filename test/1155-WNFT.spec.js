@@ -35,17 +35,17 @@ describe('WatchIt NFTs (WNFT)', function () {
   }
 
   const conciliation = async (callee) => {
-      // Check new balance after purchase
-      // Before call
-      const initialSellerETHBalance = await ethers.provider.getBalance(client.address)
-      const initialBuyerETHBalance = await ethers.provider.getBalance(deployer.address)
-      // Middleware call
-      await callee()
-      // After call
-      const newSellerBalance = await ethers.provider.getBalance(client.address)
-      expect(newSellerBalance.gte(initialSellerETHBalance)).to.equal(true)
-      const newBuyerBalance = await ethers.provider.getBalance(deployer.address)
-      expect(newBuyerBalance.lte(initialBuyerETHBalance.sub(value))).to.equal(true)
+    // Check new balance after purchase
+    // Before call
+    const initialSellerETHBalance = await ethers.provider.getBalance(client.address)
+    const initialBuyerETHBalance = await ethers.provider.getBalance(deployer.address)
+    // Middleware call
+    await callee()
+    // After call
+    const newSellerBalance = await ethers.provider.getBalance(client.address)
+    expect(newSellerBalance.gte(initialSellerETHBalance)).to.equal(true)
+    const newBuyerBalance = await ethers.provider.getBalance(deployer.address)
+    expect(newBuyerBalance.lte(initialBuyerETHBalance.sub(value))).to.equal(true)
   }
 
   before(async function () {
@@ -300,7 +300,13 @@ describe('WatchIt NFTs (WNFT)', function () {
         // Integration tests
         const cidWaitingFormMint = (await randomCID())
         // Request purchase from acct1 address for token
-        await (await wnft.connect(client).setApprovalFor(deployer.address, cidWaitingFormMint, value)).wait()
+        await (
+          await wnft.connect(client).setApprovalFor(
+            deployer.address,
+            cidWaitingFormMint,
+            value
+          )
+        ).wait()
 
         // Cid not minted and current "purported vendor"
         await (
