@@ -34,6 +34,20 @@ describe('WatchIt NFTs (WNFT)', function () {
     return CID
   }
 
+  const conciliation = async (callee) => {
+      // Check new balance after purchase
+      // Before call
+      const initialSellerETHBalance = await ethers.provider.getBalance(client.address)
+      const initialBuyerETHBalance = await ethers.provider.getBalance(deployer.address)
+      // Middleware call
+      await callee()
+      // After call
+      const newSellerBalance = await ethers.provider.getBalance(client.address)
+      expect(newSellerBalance.gte(initialSellerETHBalance)).to.equal(true)
+      const newBuyerBalance = await ethers.provider.getBalance(deployer.address)
+      expect(newBuyerBalance.lte(initialBuyerETHBalance.sub(value))).to.equal(true)
+  }
+
   before(async function () {
 
     const accounts = await getNamedAccounts()
@@ -178,7 +192,7 @@ describe('WatchIt NFTs (WNFT)', function () {
           deployer.address, // Seller
           client.address, // Buyer
           bs58toHex(tokenIdA), 1, [],
-          {...txOptions }
+          { ...txOptions }
         )
       ).wait()
 
@@ -203,7 +217,7 @@ describe('WatchIt NFTs (WNFT)', function () {
         deployer.address, // Seller
         client.address, // Buyer
         bs58toHex(tokenIdA), 1, [],
-        {...txOptions }
+        { ...txOptions }
       )
 
       expect(safeBadTransfer.wait()).to.reverted
@@ -247,23 +261,14 @@ describe('WatchIt NFTs (WNFT)', function () {
 
     it('should subtract => add balance from buyer to seller', async () => {
       // Integration tests
-      const token = bs58toHex((await randomCID()).toString())
-      const tokenTx = await wnft.mint(client.address, token, txOptions)
-      await tokenTx.wait()
-
-      // Request purchase from acct1 address for token
-      const initialSellerETHBalance = await ethers.provider.getBalance(client.address)
-      const initialBuyerETHBalance = await ethers.provider.getBalance(deployer.address)
-
-      // Request purchase CID token NFT with caller address to delegate back call
-      await (await wnft.connect(client).setApprovalFor(deployer.address, token, value)).wait()
-      await (await wnft.connect(deployer).safePurchase(token, { value })).wait()
-
-      // Check new balance after purchase
-      const newSellerBalance = await ethers.provider.getBalance(client.address)
-      expect(newSellerBalance.gte(initialSellerETHBalance)).to.equal(true)
-      const newBuyerBalance = await ethers.provider.getBalance(deployer.address)
-      expect(newBuyerBalance.lte(initialBuyerETHBalance.sub(value))).to.equal(true)
+      await conciliation(async () => {
+        const token = bs58toHex((await randomCID()).toString())
+        const tokenTx = await wnft.mint(client.address, token, txOptions)
+        await tokenTx.wait()
+        // Request purchase CID token NFT with caller address to delegate back call
+        await (await wnft.connect(client).setApprovalFor(deployer.address, token, value)).wait()
+        await (await wnft.connect(deployer).safePurchase(token, { value })).wait()
+      })
     })
 
     it('should fail without approval price', async () => {
@@ -287,6 +292,32 @@ describe('WatchIt NFTs (WNFT)', function () {
       await (await wnft.connect(client).setApprovalFor(deployer.address, token, value)).wait()
       const purchase = await wnft.connect(deployer).safePurchase(token, { value: BigNumber.from('1000'), ...txOptions })
       expect(purchase.wait()).to.be.reverted // eslint-disable-line
+    })
+
+    it('should allow lazy mint purchase with valid approval', async () => {
+      // Check new balance after purchase
+      await conciliation(async () => {
+        // Integration tests
+        const cidWaitingFormMint = (await randomCID())
+        // Request purchase from acct1 address for token
+        await (await wnft.connect(client).setApprovalFor(deployer.address, cidWaitingFormMint, value)).wait()
+
+        // Cid not minted and current "purported vendor"
+        await (
+          await wnft.connect(deployer)
+            .lazyMintPurchase(
+              cidWaitingFormMint,
+              client.address,
+              { value }
+            )
+        ).wait()
+
+        const owned = wnft.balanceOf(cidWaitingFormMint)
+        expect(owned).to.equal(1)
+        const holder = wnft.holderOf(cidWaitingFormMint)
+        expect(holder).to.equal(deployer.address)
+      })
+
     })
   })
 })

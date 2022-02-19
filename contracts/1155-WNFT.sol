@@ -74,6 +74,25 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
         return _nftApprovals[cid][operator] != 0;
     }
 
+    /** @notice Mint token for buyer and transfer payment for seller
+      * @param cid IPFS content unique identifier.
+      * @param owner current owner for token
+      */
+    function lazyMintPurchase(uint256 cid, address owner) public payable {
+        require(holders[cid] == address(0x0), "CID already minted");
+        require(isApprovedFor(msg.sender, cid), "Caller is not owner nor approved");
+        require(msg.value == _nftApprovals[cid][msg.sender], "Invalid amount for approved bid");
+
+        address payable seller = payable(owner);
+        (bool successPay,) = seller.call{value : msg.value}("");
+        require(successPay, "Failed to transfer payment to seller");
+
+        _mint(msg.sender, cid, NFT_SUPPLY, "0x0");
+        delete _nftApprovals[cid][msg.sender];   /// gc
+        holders[cid] = msg.sender;
+
+    }
+
     /** @notice Check for safe transfer using custom approval
       * @param cid IPFS content unique identifier.
       * @dev emit PurchaseResponseReceived on purchase ready to get done
@@ -89,7 +108,7 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
         require(successPay, "Failed to transfer payment to seller");
 
         _safeTransferFrom(holders[cid], msg.sender, cid, NFT_SUPPLY, "0x0");
-        delete _nftApprovals[cid][msg.sender]; /// gc
+        delete _nftApprovals[cid][msg.sender];   /// gc
         holders[cid] = msg.sender;
     }
 
