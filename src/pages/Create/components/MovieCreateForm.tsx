@@ -17,21 +17,21 @@ import { Translation } from '@src/i18n'
 import { InputSwitch } from '@components/Inputs'
 import ImagePicker from '@components/ImagePicker'
 import { InputTextField } from '@components/Inputs/InputTextField'
-import { MovieCreateViewProps } from '@pages/Create/MovieCreateView'
 import { useEthers } from '@usedapp/core'
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
 // ===========================|| MOVIE - CREATE - FORM ||=========================== //
 
-export interface ModalBalanceFormProps extends MovieCreateViewProps {
+export interface ModalBalanceFormProps {
   poster: string
-  progress?: number
   film: string
   setPoster: (p: string) => void
   setFilm: (p: string) => void
   setTitle: (p: string) => void
   setPrice: (p: number) => void
+  onSubmit: (e: any) => void
+  progress?: number
 }
 
 const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
