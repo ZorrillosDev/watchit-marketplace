@@ -7,6 +7,7 @@ coverage
 #Hardhat files
 cache
 artifacts
+deployments
 .openzeppelin/unknown-*
 
 .env
