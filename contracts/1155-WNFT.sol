@@ -61,7 +61,10 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
      */
     function setApprovalFor(address operator, uint256 cid, uint256 approved) public virtual {
         require(_msgSender() != operator, "ERC1155: setting approval status for self");
-        require(_msgSender() == holders[cid], "Only owner can set approval for CID");
+        require(
+            _msgSender() == holders[cid] || holders[cid] == address(0x0),
+            "Only owner can set approval for CID"
+        );
 
         _nftApprovals[cid][operator] = approved;
         emit ApprovalForCID(operator, cid, approved);
@@ -88,7 +91,8 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
         require(successPay, "Failed to transfer payment to seller");
 
         _mint(msg.sender, cid, NFT_SUPPLY, "0x0");
-        delete _nftApprovals[cid][msg.sender];   /// gc
+        delete _nftApprovals[cid][msg.sender];
+        /// gc
         holders[cid] = msg.sender;
 
     }
@@ -108,7 +112,8 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
         require(successPay, "Failed to transfer payment to seller");
 
         _safeTransferFrom(holders[cid], msg.sender, cid, NFT_SUPPLY, "0x0");
-        delete _nftApprovals[cid][msg.sender];   /// gc
+        delete _nftApprovals[cid][msg.sender];
+        /// gc
         holders[cid] = msg.sender;
     }
 
