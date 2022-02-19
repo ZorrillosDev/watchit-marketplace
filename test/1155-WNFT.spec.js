@@ -42,11 +42,12 @@ describe('WatchIt NFTs (WNFT)', function () {
     chainId = await getChainId()
     chainName = getNetworkNameByChainId(chainId)
     chainSettings = getNetworkSettings(chainName)
-    contract = await ethers.getSigner(chainSettings.NFT)
+
 
     txOptions.gasPrice = await ethers.provider.getGasPrice()
     const NFToken = await deployments.get('WNFT')
     wnft = await ethers.getContractAt('WNFT', NFToken.address)
+    contract = await ethers.getSigner(NFToken.address)
 
   })
 
@@ -174,15 +175,15 @@ describe('WatchIt NFTs (WNFT)', function () {
       expect(approved).to.equal(true) // Should has approved
 
       await (
-        await wnft.connect(contract).safeTransferFrom(
+        await wnft.safeTransferFrom(
           deployer.address, // Seller
           client.address, // Buyer
-          bs58toHex(tokenIdA), 1, '0x0'
+          bs58toHex(tokenIdA), 1, []
         )
       ).wait()
 
       const sellerSupply = await wnft.balanceOf(deployer.address, bs58toHex(tokenIdA))
-      const buyerSupply = await wnft.balanceOf(deployer.address, bs58toHex(tokenIdA))
+      const buyerSupply = await wnft.balanceOf(client.address, bs58toHex(tokenIdA))
 
       expect(sellerSupply).to.equal(0)
       expect(buyerSupply).to.equal(1)
