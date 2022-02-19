@@ -318,9 +318,9 @@ describe('WatchIt NFTs (WNFT)', function () {
             )
         ).wait()
 
-        const owned = wnft.balanceOf(deployer.address, cidWaitingFormMint, txOptions)
+        const owned = await wnft.balanceOf(deployer.address, cidWaitingFormMint, txOptions)
         expect(owned).to.equal(1)
-        const holder = wnft.holderOf(cidWaitingFormMint)
+        const holder = await wnft.holderOf(cidWaitingFormMint)
         expect(holder).to.equal(deployer.address)
       })
 

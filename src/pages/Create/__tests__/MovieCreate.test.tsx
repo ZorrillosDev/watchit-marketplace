@@ -28,7 +28,7 @@ describe('<MovieCreate />', () => {
       <MovieCreateView onSubmit={() => {}} />
     )
 
-    const section = movieCreate.find(Typography).at(9)
+    const section = movieCreate.find(Typography).at(10)
     expect(section.text()).toMatch(previewTranslate)
   })
 })
