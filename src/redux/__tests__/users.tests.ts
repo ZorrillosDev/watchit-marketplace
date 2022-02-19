@@ -3,13 +3,9 @@ import { ThunkDispatcher, ThunkAction } from '@state/types'
 import { User } from '@state/users/types/user'
 import { fetchCreators } from '@state/users/actions'
 import { FAKE_CREATORS } from '@src/config'
+import { request } from '@state/service'
 
-// @ts-expect-error
-window.fetch = jest.fn(async () =>
-  await Promise.resolve({
-    json: async () => await Promise.resolve(FAKE_CREATORS[0])
-  })
-)
+jest.mock('@state/service')
 
 describe('Users store', () => {
   let users: User[]
@@ -48,7 +44,7 @@ describe('Users store', () => {
 
     it('should call recent action with valid args ', async () => {
       await actionForFetchCreators(dispatch, getState, undefined)
-      expect(fetch).toHaveBeenCalledWith('http://localhost:5000/cache/creator/recent')
+      expect(request).toHaveBeenCalledWith('http://localhost:5000/cache/creator/recent')
     })
   })
 })
