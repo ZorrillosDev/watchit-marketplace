@@ -44,7 +44,7 @@ describe('Users store', () => {
 
     it('should call recent action with valid args ', async () => {
       await actionForFetchCreators(dispatch, getState, undefined)
-      expect(request).toHaveBeenCalledWith('http://localhost:5000/cache/creator/recent')
+      expect(request).toHaveBeenCalledWith('/creator/recent', {params: undefined})
     })
   })
 })
