@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 
 // MUI IMPORTS
 import {
-  Box, BoxProps, Button, ButtonProps,
+  Box, BoxProps,
   Divider, Grid, GridProps, styled, Typography
 } from '@mui/material'
 
@@ -12,7 +12,7 @@ import MovieProfileUser from '@pages/Movie/components/MovieProfileUser'
 import ModalBid from '@components/ModalBid'
 import { IconEth } from '@components/Icons'
 import { Translation } from '@src/i18n'
-import {SxProps, Theme} from "@mui/system";
+import { SxProps, Theme } from '@mui/system'
 
 // ===========================|| MOVIE - PROFILE - PRICE - VIEW ||=========================== //
 
