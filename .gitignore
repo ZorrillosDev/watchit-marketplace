@@ -8,6 +8,6 @@ coverage
 cache
 artifacts
 .openzeppelin/unknown-*
-
+false
 .env
 .ipfs
