@@ -82,9 +82,11 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
       * @param owner current owner for token
       */
     function lazyMintPurchase(uint256 cid, address owner) public payable {
+        require(owner != msg.sender, "Buyer cannot be seller");
         require(holders[cid] == address(0x0), "CID already minted");
         require(isApprovedFor(msg.sender, cid), "Caller is not owner nor approved");
         require(msg.value == _nftApprovals[cid][msg.sender], "Invalid amount for approved bid");
+
 
         address payable seller = payable(owner);
         (bool successPay,) = seller.call{value : msg.value}("");
