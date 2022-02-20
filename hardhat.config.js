@@ -72,7 +72,7 @@ module.exports = {
   networks: {
     hardhat: {
       mining: {
-        auto: false,
+        auto: (HARDHAT_AUTOMINE === 'true'),
         interval: (HARDHAT_AUTOMINE === 'true') ? 100 : [500, 2000]
       },
       // forking: {
