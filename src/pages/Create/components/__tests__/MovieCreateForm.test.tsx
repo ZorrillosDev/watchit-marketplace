@@ -88,12 +88,6 @@ describe('<MovieCreateForm />', () => {
     expect(label.text()).toMatch(translate)
   })
 
-  it('should have movie create form "nft desc" with valid label text', () => {
-    const translate = i18n.t('MOVIE_CREATE_NFT_DESC')
-    const component = mount(<MovieCreateForm onSubmit={onSubmit} film='dfv' poster='vdf' {...functions} />)
-    const label = component.find('label').at(6)
-    expect(label.text()).toMatch(translate)
-  })
 
   it('should have movie create form "nft desc" with valid helper text', () => {
     const translate = i18n.t('MOVIE_CREATE_NFT_DESC_HELP_TEXT')
