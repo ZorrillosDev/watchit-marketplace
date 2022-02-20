@@ -88,7 +88,6 @@ describe('<MovieCreateForm />', () => {
     expect(label.text()).toMatch(translate)
   })
 
-
   it('should have movie create form "button" with valid text', () => {
     const translate = i18n.t('MOVIE_CREATE_ADD_BUTTON')
     const component = mount(<MovieCreateForm onSubmit={onSubmit} poster='' film='' {...functions} />)

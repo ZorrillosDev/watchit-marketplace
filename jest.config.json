@@ -46,7 +46,8 @@
     "^@pages(.*)$": "<rootDir>/src/pages$1",
     "^@state(.*)$": "<rootDir>/src/redux$1",
     "^@i18n(.*)$": "<rootDir>/src/i18n$1",
-    "\\.(scss|sass|css)$": "identity-obj-proxy"
+    "\\.(scss|sass|css)$": "identity-obj-proxy",
+    "\\.svg": "<rootDir>/.jest/svgrMock.js"
   },
   "verbose": true,
   "resetMocks": true,

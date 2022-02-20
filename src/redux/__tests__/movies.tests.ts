@@ -7,7 +7,6 @@ import { request } from '@state/service'
 
 jest.mock('@state/service')
 
-
 describe('Movies store', () => {
   let movies: Movie[]
   let dispatch: ThunkDispatcher
@@ -65,7 +64,7 @@ describe('Movies store', () => {
 
     it('should call recent action with valid args ', async () => {
       await actionForFetchRecent(dispatch, getState, undefined)
-      expect(request).toHaveBeenCalledWith('/movie/recent', {params: undefined})
+      expect(request).toHaveBeenCalledWith('/movie/recent', { params: undefined })
     })
   })
 })
