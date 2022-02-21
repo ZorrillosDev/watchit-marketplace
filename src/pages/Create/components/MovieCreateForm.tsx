@@ -6,8 +6,8 @@ import * as yup from 'yup'
 
 // MUI IMPORTS
 import {
-  Box, BoxProps, Button, Grid, GridProps, LinearProgress,
-  LinearProgressProps, styled, Typography, TypographyProps, Zoom
+  Box, BoxProps, Button, Grid, styled,
+  Typography, TypographyProps, Zoom
 } from '@mui/material'
 
 // PROJECT IMPORTS
@@ -18,8 +18,8 @@ import { InputSwitch } from '@components/Inputs'
 import ImagePicker from '@components/ImagePicker'
 import { InputTextField } from '@components/Inputs/InputTextField'
 import { useEthers } from '@usedapp/core'
-import {LightTooltip} from "@components/Tooltip";
-import MovieCreateModalProgress from "@pages/Create/components/MovieCreateModalProgress";
+import { LightTooltip } from '@components/Tooltip'
+import MovieCreateModalProgress from '@pages/Create/components/MovieCreateModalProgress'
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
@@ -37,9 +37,9 @@ export interface ModalBalanceFormProps {
 }
 
 const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [open, setOpen] = React.useState(false)
+  const handleOpen = (): void => { setOpen(true) }
+  const handleClose = (): void => { setOpen(false) }
   const { account } = useEthers()
   const validationSchema = yup.object({
     film: yup.mixed()
@@ -176,7 +176,7 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
                 </Box>
               </LightTooltip>
             </Grid>
-            <MovieCreateModalProgress open={open} progress={props.progress} handleClose={handleClose} />
+            <MovieCreateModalProgress open={open} progress={props.progress ?? 0} handleClose={handleClose} />
           </Grid>
         </Box>
       )}
