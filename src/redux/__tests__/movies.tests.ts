@@ -3,13 +3,9 @@ import { ThunkDispatcher, ThunkAction } from '@state/types'
 import { Movie } from '@state/movies/types/movies'
 import { fetchRecentMovies } from '@state/movies/actions'
 import { FAKE_MOVIES } from '@src/config'
+import { request } from '@state/service'
 
-// @ts-expect-error
-window.fetch = jest.fn(async () =>
-  await Promise.resolve({
-    json: async () => await Promise.resolve(FAKE_MOVIES[0])
-  })
-)
+jest.mock('@state/service')
 
 describe('Movies store', () => {
   let movies: Movie[]
@@ -68,7 +64,7 @@ describe('Movies store', () => {
 
     it('should call recent action with valid args ', async () => {
       await actionForFetchRecent(dispatch, getState, undefined)
-      expect(fetch).toHaveBeenCalledWith('http://localhost:5000/cache/movie/recent')
+      expect(request).toHaveBeenCalledWith('/movie/recent', { params: undefined })
     })
   })
 })

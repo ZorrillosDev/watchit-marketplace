@@ -44,7 +44,9 @@ export const MovieCreateView: FC<MovieCreateViewProps> = (props): JSX.Element =>
       <Container sx={{ maxWidth: '1000px !important', mt: 4 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography variant='h3' color='primary'><Translation target='MOVIE_CREATE_MINT' /></Typography>
+            <Typography variant='h3' color='primary'>
+              <Translation target='MOVIE_CREATE_MINT' />
+            </Typography>
           </Grid>
           <Grid item xs={12}>
             <Grid container spacing={isMobile ? 2 : 6}>

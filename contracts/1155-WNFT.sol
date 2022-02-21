@@ -61,7 +61,10 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
      */
     function setApprovalFor(address operator, uint256 cid, uint256 approved) public virtual {
         require(_msgSender() != operator, "ERC1155: setting approval status for self");
-        require(_msgSender() == holders[cid], "Only owner can set approval for CID");
+        require(
+            _msgSender() == holders[cid] || holders[cid] == address(0x0),
+            "Only owner can set approval for CID"
+        );
 
         _nftApprovals[cid][operator] = approved;
         emit ApprovalForCID(operator, cid, approved);
@@ -72,6 +75,28 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
      */
     function isApprovedFor(address operator, uint256 cid) public view virtual returns (bool) {
         return _nftApprovals[cid][operator] != 0;
+    }
+
+    /** @notice Mint token for buyer and transfer payment for seller
+      * @param cid IPFS content unique identifier.
+      * @param owner current owner for token
+      */
+    function lazyMintPurchase(uint256 cid, address owner) public payable {
+        require(owner != msg.sender, "Buyer cannot be seller");
+        require(holders[cid] == address(0x0), "CID already minted");
+        require(isApprovedFor(msg.sender, cid), "Caller is not owner nor approved");
+        require(msg.value == _nftApprovals[cid][msg.sender], "Invalid amount for approved bid");
+
+
+        address payable seller = payable(owner);
+        (bool successPay,) = seller.call{value : msg.value}("");
+        require(successPay, "Failed to transfer payment to seller");
+
+        _mint(msg.sender, cid, NFT_SUPPLY, "0x0");
+        delete _nftApprovals[cid][msg.sender]; /// gc
+        emit TransferSingle(msg.sender, address(0), msg.sender, cid, NFT_SUPPLY);
+        holders[cid] = msg.sender;
+
     }
 
     /** @notice Check for safe transfer using custom approval
@@ -89,7 +114,8 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
         require(successPay, "Failed to transfer payment to seller");
 
         _safeTransferFrom(holders[cid], msg.sender, cid, NFT_SUPPLY, "0x0");
-        delete _nftApprovals[cid][msg.sender]; /// gc
+        delete _nftApprovals[cid][msg.sender];
+        /// gc
         holders[cid] = msg.sender;
     }
 
