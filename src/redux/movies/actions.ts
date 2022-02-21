@@ -26,7 +26,7 @@ export const commitUploadMovie = <P extends FormData>(params: P): ThunkAction<Pr
           'Content-Type': 'multipart/form-data'
         },
         onUploadProgress: (p: ProgressEvent) => {
-          setUploadProgress((p.loaded / p.total) * 100)
+          dispatch(setUploadProgress((p.loaded / p.total) * 100))
         }
       })
     } catch (e) {

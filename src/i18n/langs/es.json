@@ -65,6 +65,10 @@
   "MOVIE_CREATE_UNLOCK_KEY_HELP_TEXT": "Clave digital, código para canjear o vincular a un archivo",
   "MOVIE_CREATE_FREE_MINTING": "Acuñación gratis",
   "MOVIE_CREATE_FREE_MINTING_HELP_TEXT": "El comprador pagará las tarifas de gas por acuñar",
-  "MOVIE_CREATE_ADD_BUTTON": "Añadir película"
-
+  "MOVIE_CREATE_ADD_BUTTON": "Añadir película",
+  "MOVIE_CREATE_ADD_BUTTON_TOOLTIP": "Profavor conecte su billetera",
+  "MOVIE_CREATE_SUCCESS_UPLOADED": "Película cargada con éxito!",
+  "MOVIE_CREATE_SUCCESS_UPLOADED_MESSAGE": "Le enviaremos una notificación cuando termine el proceso de ingesta/transcodificación",
+  "MOVIE_CREATE_SUCCESS_UPLOADING": "Subiendo tu película",
+  "MOVIE_CREATE_SUCCESS_UPLOADING_MESSAGE": "Esto puede tomar algo de tiempo, dependiendo el tamaño de tu archivo y velocidad de internet"
 }
