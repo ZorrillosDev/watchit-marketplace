@@ -10,17 +10,17 @@ import Big from 'big.js'
 // PROJECT IMPORTS
 import { SummarySeparator, SummaryWrapper, SummaryRow } from '@components/Summary'
 
-// ===========================|| CASH OUT MODAL - SUMMARY ||=========================== //
+// ===========================|| BID - SUMMARY ||=========================== //
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
-export interface ModalBidSummaryProps {
+export interface BidSummaryProps {
   amount: number
   balance: number
   fee: number
 }
 
-const ModalBidSummary: FC<ModalBidSummaryProps> = (props) => {
+const BidSummary: FC<BidSummaryProps> = (props) => {
   return (
     <SummaryWrapper>
       <SummaryRow>
@@ -54,4 +54,4 @@ const ModalBidSummary: FC<ModalBidSummaryProps> = (props) => {
   )
 }
 
-export default ModalBidSummary
+export default BidSummary

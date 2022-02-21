@@ -9,7 +9,7 @@ import {
 
 // PROJECT IMPORTS
 import MovieProfileUser from '@pages/Movie/components/MovieProfileUser'
-import ModalBid from '@components/ModalBid'
+import ModalBid from '@components/Bid'
 import { IconEth } from '@components/Icons'
 import { Translation } from '@src/i18n'
 import { SxProps, Theme } from '@mui/system'

@@ -9,9 +9,9 @@ import { LoadingButton } from '@mui/lab'
 import Modal from '@components/Modal'
 import { Translation } from '@src/i18n'
 import { SxProps } from '@mui/system'
-import ModalBidSummary from '@components/ModalBid/ModalBidSummary'
+import BidSummary from '@components/Bid/BidSummary'
 
-// ===========================|| MODAL BID - VIEW ||=========================== //
+// ===========================|| BID - VIEW ||=========================== //
 
 export interface ModalBidViewProps {
   isOpen: boolean
@@ -23,7 +23,7 @@ export interface ModalBidViewProps {
   buttonSx?: SxProps<Theme>
 }
 
-const ModalBidView: FC<ModalBidViewProps> = (props): JSX.Element => {
+const BidView: FC<ModalBidViewProps> = (props): JSX.Element => {
   const [bidAmount, setBidAmount] = useState(0)
 
   return (
@@ -57,7 +57,7 @@ const ModalBidView: FC<ModalBidViewProps> = (props): JSX.Element => {
               />
             </Grid>
             <Grid item xs={12}>
-              <ModalBidSummary balance={10} amount={bidAmount} fee={0.025} />
+              <BidSummary balance={10} amount={bidAmount} fee={0.025} />
             </Grid>
             <Grid item xs={12}>
               <LoadingButton variant='contained' color='primary' size='large' loading={props.isLoading} onClick={props.handleSetBid} fullWidth>
@@ -71,7 +71,7 @@ const ModalBidView: FC<ModalBidViewProps> = (props): JSX.Element => {
   )
 }
 
-export default ModalBidView
+export default BidView
 
 const ModalBidContent = styled(Box)<BoxProps>(({ theme }) => ({
   width: '100%',
