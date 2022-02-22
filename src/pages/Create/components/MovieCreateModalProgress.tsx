@@ -10,7 +10,7 @@ import {
 
 // PROJECT IMPORTS
 import { Translation } from '@src/i18n'
-import LogoPng from "@assets/icons/icon.png";
+import LogoPng from '@assets/icons/icon.png'
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
@@ -30,6 +30,7 @@ interface MovieCreateUploadModalLogoProps {
 }
 
 const MovieCreateModalProgress: FC<MovieCreateModalProgressProps> = (props): JSX.Element => {
+  const loaded = ((props?.progress ?? 0) === 100)
 
   return (
     <Modal
@@ -44,44 +45,43 @@ const MovieCreateModalProgress: FC<MovieCreateModalProgressProps> = (props): JSX
       }}
     >
       <Fade in={props.open}>
-        {
-          ((props?.progress ?? 0) === 100) ? (
-            <MovieCreateUploadModalContent spacing={3} container>
-              <Grid item xs={12} display='flex' alignItems='center' justifyContent='center'>
-                <MovieCreateUploadModalLogo component='img' alt='Logo Image' src={LogoPng}/>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="h3" textAlign='center' sx={{ width: 1, color: (theme) => theme.palette.success.dark }}>
-                  <Translation target='MOVIE_CREATE_SUCCESS_UPLOADED' />
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant='body1' color='primary' textAlign='center'  sx={{ width: 1 }}>
-                  <Translation target='MOVIE_CREATE_SUCCESS_UPLOADED_MESSAGE' />
-                </Typography>
-              </Grid>
-            </MovieCreateUploadModalContent>
-          ) : (
-            <MovieCreateUploadModalContent spacing={3} container>
-              <Grid item xs={12} display='flex' alignItems='center' justifyContent='center'>
-                <MovieCreateUploadModalLogo component='img' alt='Logo Image' src={LogoPng} animated={true}/>
-              </Grid>
-              <Grid item xs={12}>
-                <MovieCreateUploadModalProgress variant='determinate' value={props?.progress} />
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="h3" color='primary' textAlign='center' sx={{ width: 1 }}>
-                  <Translation target='MOVIE_CREATE_SUCCESS_UPLOADING' />
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant='body1' color='primary' textAlign='center'  sx={{ width: 1 }}>
-                  <Translation target='MOVIE_CREATE_SUCCESS_UPLOADING_MESSAGE' />
-                </Typography>
-              </Grid>
-            </MovieCreateUploadModalContent>
-          )
-        }
+        <MovieCreateUploadModalContent spacing={3} container>
+          <Grid item xs={12} display='flex' alignItems='center' justifyContent='center'>
+            <MovieCreateUploadModalLogo component='img' alt='Logo Image' src={LogoPng} animated={!loaded} />
+          </Grid>
+          {
+            loaded ? (
+              <>
+                <Grid item xs={12}>
+                  <Typography variant='h3' textAlign='center' sx={{ width: 1, color: (theme) => theme.palette.success.dark }}>
+                    <Translation target='MOVIE_CREATE_SUCCESS_UPLOADED' />
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography variant='body1' color='primary' textAlign='center' sx={{ width: 1 }}>
+                    <Translation target='MOVIE_CREATE_SUCCESS_UPLOADED_MESSAGE' />
+                  </Typography>
+                </Grid>
+              </>
+            ) : (
+              <>
+                <Grid item xs={12}>
+                  <MovieCreateUploadModalProgress variant='determinate' value={props?.progress} />
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography variant='h3' color='primary' textAlign='center' sx={{ width: 1 }}>
+                    <Translation target='MOVIE_CREATE_SUCCESS_UPLOADING' />
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography variant='body1' color='primary' textAlign='center' sx={{ width: 1 }}>
+                    <Translation target='MOVIE_CREATE_SUCCESS_UPLOADING_MESSAGE' />
+                  </Typography>
+                </Grid>
+              </>
+            )
+          }
+        </MovieCreateUploadModalContent>
       </Fade>
     </Modal>
   )
