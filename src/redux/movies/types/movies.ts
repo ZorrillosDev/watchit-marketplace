@@ -36,6 +36,13 @@ export interface Images {
   large: string
 }
 
+export interface MovieBid {
+  id: string
+  account: string
+  created: string
+  bid: number
+}
+
 export interface Movie {
   creator: string
   description: string

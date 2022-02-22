@@ -16,9 +16,7 @@ import { Translation } from '@src/i18n'
 export interface OffersTableRow {
   buyer: string
   price: string
-  fiatPrice: string
   date: string
-  expiration: string
 }
 
 export interface MovieProfileOffersTableProps {
@@ -58,13 +56,7 @@ const MovieProfileOffersTableRow: FC<OffersTableRow> = (props): JSX.Element => {
         {props.price} ETH
       </TableCell>
       <TableCell sx={{ opacity: 0.8 }}>
-        $ {props.fiatPrice}
-      </TableCell>
-      <TableCell sx={{ opacity: 0.8 }}>
         {props.date}
-      </TableCell>
-      <TableCell sx={{ opacity: 0.8 }}>
-        {props.expiration}
       </TableCell>
     </TableRow>
   )

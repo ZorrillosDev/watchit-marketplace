@@ -164,7 +164,10 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
               />
             </Grid>
             <Grid item xs={6}>
-              <LightTooltip TransitionComponent={Zoom} title={(account === null) ? <Translation target='MOVIE_CREATE_ADD_BUTTON_TOOLTIP' /> : ''}>
+              <LightTooltip TransitionComponent={Zoom} title={(account === null)
+                  ? <Translation target='MOVIE_CREATE_ADD_BUTTON_TOOLTIP' />
+                  : ''}
+              >
                 <Box>
                   <Button
                     type='submit' variant='contained' color='primary' fullWidth
@@ -176,7 +179,10 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
                 </Box>
               </LightTooltip>
             </Grid>
-            <MovieCreateModalProgress open={open} progress={props.progress} handleClose={handleClose} />
+            <MovieCreateModalProgress
+                open={open}
+                progress={props.progress ?? 0}
+                handleClose={handleClose} />
           </Grid>
         </Box>
       )}
