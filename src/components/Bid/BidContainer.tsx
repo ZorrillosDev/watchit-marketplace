@@ -2,17 +2,17 @@
 import React, { FC, useState } from 'react'
 
 // PROJECT IMPORTS
-import ModalBidView from '@components/ModalBid/ModalBidView'
+import BidView from '@components/Bid/BidView'
 import { SxProps } from '@mui/system'
 import { Theme } from '@mui/material'
 
-// ===========================|| MODAL BID - CONTAINER ||=========================== //
+// ===========================|| BID - CONTAINER ||=========================== //
 
-interface ModalBidContainerProps {
+interface BidContainerProps {
   buttonSx?: SxProps<Theme>
 }
 
-export const ModalBidContainer: FC<ModalBidContainerProps> = ({ buttonSx }): JSX.Element => {
+export const BidContainer: FC<BidContainerProps> = ({ buttonSx }): JSX.Element => {
   const [isOpen, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const onClose = (): void => setOpen(false)
@@ -26,5 +26,5 @@ export const ModalBidContainer: FC<ModalBidContainerProps> = ({ buttonSx }): JSX
     }, 1000)
   }
 
-  return <ModalBidView {...{ isOpen, onOpen, onClose, buttonSx, isLoading, handleSetBid }} title='Jackass Forever' />
+  return <BidView {...{ isOpen, onOpen, onClose, buttonSx, isLoading, handleSetBid }} title='Jackass Forever' />
 }
