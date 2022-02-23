@@ -3,22 +3,21 @@ import { getNetworkSettings } from '@src/w3'
 import { WNFTAbi } from '@w3/CONSTANTS'
 import { Ethers } from '@src/utils'
 import { BigNumber } from 'ethers'
-import { Falsy } from '@usedapp/core/dist/cjs/src/model/types'
 import { Contract } from '@ethersproject/contracts'
 import { useEffect, useState } from 'react'
 
-export function useNFTBalanceOf (account: string | Falsy, cid: string): BigNumber {
+export function useNFTHolderOf (cid: string): BigNumber {
   const { chainId } = useEthers()
   const networkSettings = getNetworkSettings(chainId)
 
-  const [tokenBalance] = useContractCall({
+  const [currentHolder] = useContractCall({
     abi: WNFTAbi,
     address: networkSettings.NFT,
-    method: 'balanceOf',
-    args: [account, Ethers.cidToUint256(cid)]
+    method: 'holderOf',
+    args: [Ethers.cidToUint256(cid)]
   }) ?? []
 
-  return tokenBalance
+  return currentHolder
 }
 
 export function useNFTContract (): Contract {

@@ -44,7 +44,7 @@ export const commitBidMovie = <P extends MovieBidArgs>(params: P): ThunkAction<P
     return async (dispatch: ThunkDispatcher) => {
         try {
             const bid: MovieBid = await request(
-                `${Endpoints.bid}/?id=${params.id}`,
+                `${Endpoints.bid}?id=${params.id}`,
                 {
                     method: 'post',
                     data: params,

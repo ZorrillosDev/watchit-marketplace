@@ -62,7 +62,7 @@ export const MovieProfileView: FC<Movie> = (props): JSX.Element => {
               <Grid item xs={12} sm={7}>
                 <Grid container spacing={3}>
                   <MovieProfileHeader sx={{ display: { xs: 'none', md: 'flex' } }} />
-                  <MovieProfilePrice />
+                  <MovieProfilePrice {...props} />
                   <Grid item xs={12} sx={{ pt: '3rem !important' }}>
                     <MovieProfileSectionWrapper>
                       <MovieProfileUser address={props.creator} />

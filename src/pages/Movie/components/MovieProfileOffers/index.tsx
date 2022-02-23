@@ -1,1 +1,1 @@
-export { MovieProfileOffersContainer as default } from '@pages/Movie/components/MovieProfileOffers/MovieProfileOffersContainer'
+export { MovieProfileOffers as default } from '@pages/Movie/components/MovieProfileOffers/MovieProfileOffersContainer'

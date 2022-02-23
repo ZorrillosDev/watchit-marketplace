@@ -39,7 +39,7 @@ export interface Images {
 export interface MovieBid {
   id: string
   account: string
-  created: string
+  created_at: string
   bid: number
 }
 

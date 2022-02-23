@@ -10,31 +10,32 @@ import Modal from '@components/Modal'
 import { Translation } from '@src/i18n'
 import { SxProps } from '@mui/system'
 import BidSummary from '@components/Bid/BidSummary'
+import {useBalance} from "@hooks/useBalance";
 
 // ===========================|| BID - VIEW ||=========================== //
 
 export interface ModalBidViewProps {
-  isOpen: boolean
   isLoading: boolean
-  title: string
-  onClose: () => void
-  onOpen: () => void
-  handleSetBid: () => void
+  handleSetBid: (bid: number) => void
   buttonSx?: SxProps<Theme>
 }
 
 const BidView: FC<ModalBidViewProps> = (props): JSX.Element => {
   const [bidAmount, setBidAmount] = useState(0)
+  const balance: number = useBalance()
+  const [isOpen, setOpen] = useState(false)
+  const onClose = (): void => setOpen(false)
+  const onOpen = (): void => setOpen(true)
 
   return (
     <>
-      <Button variant='contained' color='primary' size='large' onClick={() => props.onOpen()} sx={props.buttonSx}>
+      <Button variant='contained' color='primary' size='large' onClick={() => onOpen()} sx={props.buttonSx}>
         <Translation target='MOVIE_PROFILE_PRICE_MAKE_OFFER' />
       </Button>
 
       <Modal
-        isOpen={props.isOpen}
-        onClose={() => props.onClose()}
+        isOpen={isOpen}
+        onClose={() => onClose()}
       >
         <ModalBidContent>
           <Grid container spacing={2}>
@@ -46,21 +47,23 @@ const BidView: FC<ModalBidViewProps> = (props): JSX.Element => {
               </header>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant='body2'>
-                You are about to place a bid for <strong>{props.title}</strong>.
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
               <TextField
                 id='bidAmount' name='bidAmount' label='Your bid' variant='outlined' fullWidth
                 onChange={(e) => setBidAmount(+e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
-              <BidSummary balance={10} amount={bidAmount} fee={0.025} />
+              <BidSummary balance={balance} amount={bidAmount} fee={0.03} />
             </Grid>
             <Grid item xs={12}>
-              <LoadingButton variant='contained' color='primary' size='large' loading={props.isLoading} onClick={props.handleSetBid} fullWidth>
+              <LoadingButton
+                  variant='contained'
+                  color='primary'
+                  size='large'
+                  loading={props.isLoading}
+                  onClick={()=> props.handleSetBid(bidAmount)}
+                  fullWidth
+              >
                 Place a bid
               </LoadingButton>
             </Grid>
