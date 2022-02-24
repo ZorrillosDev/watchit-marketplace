@@ -10,5 +10,5 @@ import { Movie } from '@state/movies/types'
 // ===========================|| MOVIE - PROFILE - PRICE - CONTAINER ||=========================== //
 
 export const MovieProfilePriceContainer: FC<Movie> = (props): JSX.Element => {
-  return <MovieProfilePriceView price={props.price} owner={props.creator} fiatPrice={0} />
+  return <MovieProfilePriceView {...props} />
 }

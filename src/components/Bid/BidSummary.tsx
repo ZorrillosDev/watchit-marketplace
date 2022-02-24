@@ -16,7 +16,7 @@ import { SummarySeparator, SummaryWrapper, SummaryRow } from '@components/Summar
 
 export interface BidSummaryProps {
   amount: number
-  balance: number
+  balance: string
   fee: number
 }
 
