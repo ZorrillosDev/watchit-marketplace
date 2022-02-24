@@ -8,10 +8,11 @@ import { Movie } from '@state/movies/types'
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 
 describe('<MovieProfilePrice />', () => {
-  const movie = {} as Movie
+  const movie = {
+    token: "651268735865169554630764440897259763067310892845464250243992889613221274545"
+  } as Movie
   it('should render', () => {
     const component = shallow(<MovieProfilePrice {...movie} />)
-
     expect(component).toMatchSnapshot()
   })
 
