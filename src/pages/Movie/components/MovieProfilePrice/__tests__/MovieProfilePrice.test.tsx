@@ -9,6 +9,7 @@ import { Movie } from '@state/movies/types'
 
 describe('<MovieProfilePrice />', () => {
   const movie = {
+    creator: "0xEe99CeFF640d37Edd9cac8c7cfF4Ed4cD609f435",
     token: "651268735865169554630764440897259763067310892845464250243992889613221274545"
   } as Movie
   it('should render', () => {
