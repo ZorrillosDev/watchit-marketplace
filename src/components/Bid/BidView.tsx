@@ -10,9 +10,9 @@ import Modal from '@components/Modal'
 import { Translation } from '@src/i18n'
 import { SxProps } from '@mui/system'
 import BidSummary from '@components/Bid/BidSummary'
-import {useEtherBalance, useEthers} from "@usedapp/core";
-import {BigNumber} from "ethers";
-import {Ethers} from "@src/utils";
+import { useEtherBalance, useEthers } from '@usedapp/core'
+import { BigNumber } from 'ethers'
+import { Ethers } from '@src/utils'
 
 // ===========================|| BID - VIEW ||=========================== //
 
@@ -23,7 +23,7 @@ export interface ModalBidViewProps {
 }
 
 const BidView: FC<ModalBidViewProps> = (props): JSX.Element => {
-  const {account} = useEthers()
+  const { account } = useEthers()
   const balance: BigNumber | undefined = useEtherBalance(account)
   const [bidAmount, setBidAmount] = useState(0)
   const [isOpen, setOpen] = useState(false)
@@ -57,8 +57,8 @@ const BidView: FC<ModalBidViewProps> = (props): JSX.Element => {
             </Grid>
             <Grid item xs={12}>
               <BidSummary
-                  balance={Ethers.getWeiToETH(balance ?? 0)}
-                  amount={bidAmount} fee={0.03}
+                balance={Ethers.getWeiToETH(balance ?? 0)}
+                amount={bidAmount} fee={0.03}
               />
             </Grid>
             <Grid item xs={12}>

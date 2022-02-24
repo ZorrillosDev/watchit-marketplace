@@ -5,9 +5,7 @@ import { BigNumber } from 'ethers'
 import { Contract } from '@ethersproject/contracts'
 import { useEffect, useState } from 'react'
 
-
 export function useNFTHolderOf (tokenId: string | undefined): string | undefined {
-
   const { chainId } = useEthers()
   const networkSettings = getNetworkSettings(chainId)
 
