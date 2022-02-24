@@ -1,5 +1,5 @@
 // REACT IMPORTS
-import React, {FC, memo} from 'react'
+import React, {FC} from 'react'
 
 // MUI IMPORTS
 import {
@@ -67,7 +67,7 @@ export const MovieProfilePriceView: FC<Movie> = (props): JSX.Element => {
                 </Grid>
 
                 {
-                    account === null || account !== props.creator
+                    account !== null && account !== props.creator
                         ? <ModalBid buttonSx={MovieProfileOfferButtonSx}/>
                         : <></>
                 }
