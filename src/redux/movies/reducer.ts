@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import {Movie, MovieBid, MoviesState} from '@state/movies/types'
+import { Movie, MovieBid, MoviesState } from '@state/movies/types'
 
 export const initialState: MoviesState = {
   progress: 0,
@@ -21,10 +21,10 @@ const recentReducer = createSlice({
     setUploadProgress (state: MoviesState, action: PayloadAction<number>) {
       state.progress = action.payload
     },
-    setBidsToMovie(state: MoviesState, action: PayloadAction<MovieBid[]>){
+    setBidsToMovie (state: MoviesState, action: PayloadAction<MovieBid[]>) {
       state.bidCollection = action.payload
     },
-    addBidToMovie(state: MoviesState, action: PayloadAction<MovieBid>){
+    addBidToMovie (state: MoviesState, action: PayloadAction<MovieBid>) {
       state.bidCollection.push(action.payload)
     },
     addMovie (state: MoviesState, action: PayloadAction<Movie>) {

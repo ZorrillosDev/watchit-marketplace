@@ -1,5 +1,5 @@
 import { RootStateOrAny } from 'react-redux'
-import {Movie, MovieBid} from '@state/movies/types'
+import { Movie, MovieBid } from '@state/movies/types'
 
 export const selectBidCollection = (state: RootStateOrAny): MovieBid[] => state.movies.bidCollection
 export const selectUploadProgress = (state: RootStateOrAny): number => state.movies.progress

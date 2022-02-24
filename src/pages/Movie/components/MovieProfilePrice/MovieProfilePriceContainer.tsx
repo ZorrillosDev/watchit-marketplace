@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 
 // PROJECT IMPORTS
 import { MovieProfilePriceView } from '@pages/Movie/components/MovieProfilePrice/MovieProfilePriceView'
-import {Movie} from "@state/movies/types";
+import { Movie } from '@state/movies/types'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 

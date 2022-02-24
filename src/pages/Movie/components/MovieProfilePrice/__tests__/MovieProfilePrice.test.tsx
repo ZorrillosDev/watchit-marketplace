@@ -3,12 +3,11 @@ import { mount, shallow } from 'enzyme'
 import MovieProfilePrice from '@pages/Movie/components/MovieProfilePrice'
 import i18n from '@src/i18n'
 import { Typography } from '@mui/material'
-import {Movie} from "@state/movies/types";
+import { Movie } from '@state/movies/types'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 
 describe('<MovieProfilePrice />', () => {
-
   const movie = {} as Movie
   it('should render', () => {
     const component = shallow(<MovieProfilePrice {...movie} />)

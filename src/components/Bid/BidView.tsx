@@ -10,7 +10,7 @@ import Modal from '@components/Modal'
 import { Translation } from '@src/i18n'
 import { SxProps } from '@mui/system'
 import BidSummary from '@components/Bid/BidSummary'
-import {useBalance} from "@hooks/useBalance";
+import { useBalance } from '@hooks/useBalance'
 
 // ===========================|| BID - VIEW ||=========================== //
 
@@ -57,12 +57,12 @@ const BidView: FC<ModalBidViewProps> = (props): JSX.Element => {
             </Grid>
             <Grid item xs={12}>
               <LoadingButton
-                  variant='contained'
-                  color='primary'
-                  size='large'
-                  loading={props.isLoading}
-                  onClick={()=> props.handleSetBid(bidAmount)}
-                  fullWidth
+                variant='contained'
+                color='primary'
+                size='large'
+                loading={props.isLoading}
+                onClick={() => props.handleSetBid(bidAmount)}
+                fullWidth
               >
                 Place a bid
               </LoadingButton>

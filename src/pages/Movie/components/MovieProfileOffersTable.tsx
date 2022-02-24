@@ -10,10 +10,9 @@ import {
 // PROJECT IMPORTS
 import { String } from '@src/utils'
 import { Translation } from '@src/i18n'
-import {MovieBid} from "@state/movies/types";
+import { MovieBid } from '@state/movies/types'
 
 // ===========================|| MOVIE - PROFILE - OFFERS - TABLE ||=========================== //
-
 
 export interface MovieProfileOffersTableProps {
   rows: MovieBid[]

@@ -9,7 +9,7 @@ import {
 
 // PROJECT IMPORTS
 import { PixelArtIdenticon } from '@components/Identicon'
-import {String} from "@src/utils";
+import { String } from '@src/utils'
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 

@@ -16,9 +16,8 @@ describe('String util', () => {
     expect(minifiedHash).toBe('0xEe...435')
   })
 
-  it('should return always same hash color from string', ()=>{
-
-    const hash ='0xEe99CeFF640d37Edd9cac8c7cfF4Ed4cD609f435'
+  it('should return always same hash color from string', () => {
+    const hash = '0xEe99CeFF640d37Edd9cac8c7cfF4Ed4cD609f435'
     const colorFromHash = String.toHex(hash)
     expect(colorFromHash).toBe('#5677fc')
   })

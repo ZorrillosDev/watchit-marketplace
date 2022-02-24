@@ -1,10 +1,10 @@
-import reducer, {addMovie, initialState, setMovies, setMovie, setUploadProgress} from '@state/movies/reducer'
 import { ThunkDispatcher, ThunkAction } from '@state/types'
 import { Movie } from '@state/movies/types/movies'
-import { fetchRecentMovies, fetchRecentMovieBids, commitBidMovie, commitUploadMovie } from '@state/movies/actions'
 import { FAKE_MOVIES } from '@src/config'
 import { request } from '@state/service'
-import { MovieBidArgs } from "@state/movies/types";
+import { MovieBidArgs } from '@state/movies/types'
+import { fetchRecentMovies, fetchRecentMovieBids, commitBidMovie, commitUploadMovie } from '@state/movies/actions'
+import reducer, { addMovie, initialState, setMovies, setMovie } from '@state/movies/reducer'
 
 jest.mock('@state/service')
 
@@ -68,7 +68,7 @@ describe('Movies store', () => {
       actionForFetchRecent = fetchRecentMovies()
       actionForFetchRecentBids = fetchRecentMovieBids()
       actionForCommitBidMovie = commitBidMovie(bidMovieArgs)
-      actionForCommitUploadMovie = commitUploadMovie({} as FormData)
+      actionForCommitUploadMovie = commitUploadMovie({} as any)
     })
 
     it('should call recent action with valid args ', async () => {
@@ -83,7 +83,7 @@ describe('Movies store', () => {
 
     it('should call commit bid movie action with valid args ', async () => {
       await actionForCommitBidMovie(dispatch, getState, undefined)
-      expect(request).toHaveBeenCalledWith('/movie/bid?id=1', { data: bidMovieArgs, method: "post" })
+      expect(request).toHaveBeenCalledWith('/movie/bid?id=1', { data: bidMovieArgs, method: 'post' })
     })
 
     it('should call commit upload movie action with valid args ', async () => {
