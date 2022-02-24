@@ -1,23 +1,24 @@
 import { useContractCall, useEthers } from '@usedapp/core'
 import { getNetworkSettings } from '@src/w3'
 import { WNFTAbi } from '@w3/CONSTANTS'
-import { Ethers } from '@src/utils'
 import { BigNumber } from 'ethers'
 import { Contract } from '@ethersproject/contracts'
 import { useEffect, useState } from 'react'
 
-export function useNFTHolderOf (cid: string): BigNumber {
+
+export function useNFTHolderOf (tokenId: string | undefined): string | undefined {
+
   const { chainId } = useEthers()
   const networkSettings = getNetworkSettings(chainId)
 
-  const [currentHolder] = useContractCall({
+  const [holder] = useContractCall({
     abi: WNFTAbi,
     address: networkSettings.NFT,
     method: 'holderOf',
-    args: [Ethers.cidToUint256(cid)]
+    args: [BigNumber.from(tokenId)]
   }) ?? []
 
-  return currentHolder
+  return holder
 }
 
 export function useNFTContract (): Contract {

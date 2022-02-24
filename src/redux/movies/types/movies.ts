@@ -59,6 +59,7 @@ export interface Movie {
   synopsis: string
   trailer_code: string
   year: number
+  token: string
   genres: Genres
   posters: Images
 }
