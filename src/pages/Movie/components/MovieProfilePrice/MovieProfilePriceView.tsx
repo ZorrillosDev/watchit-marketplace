@@ -62,7 +62,7 @@ export const MovieProfilePriceView: FC<MovieProfilePriceProps> = (props): JSX.El
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} display='flex'>
-                                <MovieProfileUser address={props.owner}/>
+                                <MovieProfileUser address={props.owner ?? ''}/>
                             </Grid>
                         </Grid>
                     </Grid>

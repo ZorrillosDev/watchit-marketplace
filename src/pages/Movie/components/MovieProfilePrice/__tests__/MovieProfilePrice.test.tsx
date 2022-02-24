@@ -26,7 +26,7 @@ describe('<MovieProfilePrice />', () => {
 
   it('should have movie profile price valid price text', () => {
     const price = 0
-    const component = mount(<MovieProfilePrice {...movie} />)
+    const component = mount(<MovieProfilePrice {...movie} price={price} />)
     const typography = component.find(Typography).at(1)
 
     expect(typography.text()).toContain(`${price} ETH`)

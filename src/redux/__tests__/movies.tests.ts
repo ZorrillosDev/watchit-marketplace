@@ -1,9 +1,10 @@
-import reducer, { addMovie, initialState, setMovies, setMovie } from '@state/movies/reducer'
+import reducer, {addMovie, initialState, setMovies, setMovie, setUploadProgress} from '@state/movies/reducer'
 import { ThunkDispatcher, ThunkAction } from '@state/types'
 import { Movie } from '@state/movies/types/movies'
-import { fetchRecentMovies } from '@state/movies/actions'
+import { fetchRecentMovies, fetchRecentMovieBids, commitBidMovie, commitUploadMovie } from '@state/movies/actions'
 import { FAKE_MOVIES } from '@src/config'
 import { request } from '@state/service'
+import { MovieBidArgs } from "@state/movies/types";
 
 jest.mock('@state/service')
 
@@ -12,6 +13,10 @@ describe('Movies store', () => {
   let dispatch: ThunkDispatcher
   let getState: () => unknown
   let actionForFetchRecent: ThunkAction<void>
+  let actionForFetchRecentBids: ThunkAction<void>
+  let actionForCommitBidMovie: ThunkAction<void>
+  let actionForCommitUploadMovie: ThunkAction<void>
+  let bidMovieArgs: MovieBidArgs
 
   beforeAll(() => {
     // @typescript-eslint/consistent-type-assertions
@@ -59,12 +64,31 @@ describe('Movies store', () => {
       // initialize new spies
       dispatch = jest.fn()
       getState = jest.fn()
+      bidMovieArgs = { bid: 2, account: 'test', id: '1' }
       actionForFetchRecent = fetchRecentMovies()
+      actionForFetchRecentBids = fetchRecentMovieBids()
+      actionForCommitBidMovie = commitBidMovie(bidMovieArgs)
+      actionForCommitUploadMovie = commitUploadMovie({} as FormData)
     })
 
     it('should call recent action with valid args ', async () => {
       await actionForFetchRecent(dispatch, getState, undefined)
       expect(request).toHaveBeenCalledWith('/movie/recent', { params: undefined })
+    })
+
+    it('should call recent bids action with valid args ', async () => {
+      await actionForFetchRecentBids(dispatch, getState, undefined)
+      expect(request).toHaveBeenCalledWith('/movie/bid', { params: undefined })
+    })
+
+    it('should call commit bid movie action with valid args ', async () => {
+      await actionForCommitBidMovie(dispatch, getState, undefined)
+      expect(request).toHaveBeenCalledWith('/movie/bid?id=1', { data: bidMovieArgs, method: "post" })
+    })
+
+    it('should call commit upload movie action with valid args ', async () => {
+      await actionForCommitUploadMovie(dispatch, getState, undefined)
+      expect(request).toBeCalled()
     })
   })
 })
