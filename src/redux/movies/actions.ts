@@ -41,7 +41,8 @@ export const fetchRecentMovieBids = <P extends MoviesArgs>(params?: P): ThunkAct
 export const commitBidMovie = <P extends MovieBidArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      const bid: MovieBid = await request(`${Endpoints.bid}?id=${params.id ?? ''}`, {
+      const endpoint = `${Endpoints.bid}?id=${params.id ?? ''}`
+      const bid: MovieBid = await request(endpoint, {
         method: 'post',
         data: params
       })
