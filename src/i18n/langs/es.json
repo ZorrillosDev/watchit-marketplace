@@ -7,7 +7,7 @@
   "GLOBAL_SELL": "Vende tus creaciones",
   "GLOBAL_SEARCH": "Buscar en watchit",
 
-  "MOVIE_PROFILE_OWNER": "Dueño",
+  "MOVIE_PROFILE_OWNER": "Custodio",
   "MOVIE_PROFILE_CREATOR": "Creador",
   "MOVIE_PROFILE_OFFERS": "Ofertas",
   "MOVIE_PROFILE_ACTIVITY_DATE": "Fecha",
@@ -16,7 +16,7 @@
   "MOVIE_PROFILE_HEADER_FINGERPRINT": "Esta es una creación digital firmada y limitada.",
   "MOVIE_PROFILE_HEADER_SHARE": "Compartir",
   "MOVIE_PROFILE_OFFERS_TABLE_FROM": "De",
-  "MOVIE_PROFILE_OFFERS_TABLE_PRICE": "Precio",
+  "MOVIE_PROFILE_OFFERS_TABLE_PRICE": "Oferta",
   "MOVIE_PROFILE_OFFERS_TABLE_USD_PRICE": "Precio en USD",
   "MOVIE_PROFILE_OFFERS_TABLE_DATE": "Fecha",
   "MOVIE_PROFILE_OFFERS_TABLE_EXPIRATION": "Expiración",
@@ -65,6 +65,10 @@
   "MOVIE_CREATE_UNLOCK_KEY_HELP_TEXT": "Clave digital, código para canjear o vincular a un archivo",
   "MOVIE_CREATE_FREE_MINTING": "Acuñación gratis",
   "MOVIE_CREATE_FREE_MINTING_HELP_TEXT": "El comprador pagará las tarifas de gas por acuñar",
-  "MOVIE_CREATE_ADD_BUTTON": "Añadir película"
-
+  "MOVIE_CREATE_ADD_BUTTON": "Añadir película",
+  "MOVIE_CREATE_ADD_BUTTON_TOOLTIP": "Profavor conecte su billetera",
+  "MOVIE_CREATE_SUCCESS_UPLOADED": "Película cargada con éxito!",
+  "MOVIE_CREATE_SUCCESS_UPLOADED_MESSAGE": "Le enviaremos una notificación cuando termine el proceso de ingesta/transcodificación",
+  "MOVIE_CREATE_SUCCESS_UPLOADING": "Subiendo tu película",
+  "MOVIE_CREATE_SUCCESS_UPLOADING_MESSAGE": "Esto puede tomar algo de tiempo, dependiendo el tamaño de tu archivo y velocidad de internet"
 }

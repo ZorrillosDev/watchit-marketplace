@@ -6,8 +6,8 @@ import * as yup from 'yup'
 
 // MUI IMPORTS
 import {
-  Box, BoxProps, Button, Grid, LinearProgress, styled,
-  Typography, TypographyProps
+  Box, BoxProps, Button, Grid, styled,
+  Typography, TypographyProps, Zoom
 } from '@mui/material'
 
 // PROJECT IMPORTS
@@ -18,6 +18,8 @@ import { InputSwitch } from '@components/Inputs'
 import ImagePicker from '@components/ImagePicker'
 import { InputTextField } from '@components/Inputs/InputTextField'
 import { useEthers } from '@usedapp/core'
+import { LightTooltip } from '@components/Tooltip'
+import MovieCreateModalProgress from '@pages/Create/components/MovieCreateModalProgress'
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
@@ -35,6 +37,9 @@ export interface ModalBalanceFormProps {
 }
 
 const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
+  const [open, setOpen] = React.useState(false)
+  const handleOpen = (): void => { setOpen(true) }
+  const handleClose = (): void => { setOpen(false) }
   const { account } = useEthers()
   const validationSchema = yup.object({
     film: yup.mixed()
@@ -158,31 +163,28 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
                 subtitle={<Translation target='MOVIE_CREATE_FREE_MINTING_HELP_TEXT' />}
               />
             </Grid>
-            {
-              props?.progress
-                ? (
-                  <Grid item xs={12}>
-                    <LinearProgress variant='determinate' value={50} />
-                    <small>Uploading...</small>
-                  </Grid>
-                )
-                : (<></>)
-            }
-            {
-              account !== null
-                ? (
-                  <Grid item xs={6}>
-                    <Button
-                      type='submit' variant='contained' color='primary' fullWidth
-                      disableElevation size='large' sx={{ mt: 3 }}
-                    >
-                      <Translation target='MOVIE_CREATE_ADD_BUTTON' />
-                    </Button>
-                  </Grid>
-                )
-                : (<></>)
-            }
-
+            <Grid item xs={6}>
+              <LightTooltip
+                TransitionComponent={Zoom} title={(account === null)
+                  ? <Translation target='MOVIE_CREATE_ADD_BUTTON_TOOLTIP' />
+                  : ''}
+              >
+                <Box>
+                  <Button
+                    type='submit' variant='contained' color='primary' fullWidth
+                    onClick={handleOpen} disableElevation size='large' sx={{ mt: 3 }}
+                    disabled={formik.isSubmitting || account === null}
+                  >
+                    <Translation target='MOVIE_CREATE_ADD_BUTTON' />
+                  </Button>
+                </Box>
+              </LightTooltip>
+            </Grid>
+            <MovieCreateModalProgress
+              open={open}
+              progress={props.progress ?? 0}
+              handleClose={handleClose}
+            />
           </Grid>
         </Box>
       )}

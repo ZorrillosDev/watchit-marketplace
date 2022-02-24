@@ -9,6 +9,7 @@ import {
 
 // PROJECT IMPORTS
 import { PixelArtIdenticon } from '@components/Identicon'
+import { String } from '@src/utils'
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
@@ -21,7 +22,7 @@ const MovieProfileUser: FC<{ address: string }> = (props): JSX.Element => {
       label={(
         <Box display='flex' flexDirection='column' paddingRight={1}>
           <MovieProfileAddressTypography variant='body1'>
-            {props?.address}
+            {String.minifyHash(props?.address ?? '')}
           </MovieProfileAddressTypography>
         </Box>
       )}

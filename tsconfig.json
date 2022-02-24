@@ -57,7 +57,7 @@
         "src/w3/*"
       ],
       "@abi/*": [
-        "abi/*"
+        "artifacts/contracts/*"
       ],
       "@i18n/*": [
         "src/i18n/*"

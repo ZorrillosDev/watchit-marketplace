@@ -7,7 +7,7 @@
   "GLOBAL_SELL": "Sell your creations",
   "GLOBAL_SEARCH": "Search on watchit",
 
-  "MOVIE_PROFILE_OWNER": "Owner",
+  "MOVIE_PROFILE_OWNER": "Holder",
   "MOVIE_PROFILE_CREATOR": "Creator",
   "MOVIE_PROFILE_OFFERS": "Offers",
   "MOVIE_PROFILE_ACTIVITY_DATE": "Date",
@@ -16,7 +16,7 @@
   "MOVIE_PROFILE_HEADER_FINGERPRINT": "This is a signed and limited digital creation",
   "MOVIE_PROFILE_HEADER_SHARE": "Share",
   "MOVIE_PROFILE_OFFERS_TABLE_FROM": "From",
-  "MOVIE_PROFILE_OFFERS_TABLE_PRICE": "Price",
+  "MOVIE_PROFILE_OFFERS_TABLE_PRICE": "Offer",
   "MOVIE_PROFILE_OFFERS_TABLE_USD_PRICE": "USD Price",
   "MOVIE_PROFILE_OFFERS_TABLE_DATE": "Date",
   "MOVIE_PROFILE_OFFERS_TABLE_EXPIRATION": "Expiration",
@@ -65,6 +65,10 @@
   "MOVIE_CREATE_UNLOCK_KEY_HELP_TEXT": "Digital key, code to redeem or link to a file",
   "MOVIE_CREATE_FREE_MINTING": "Free minting",
   "MOVIE_CREATE_FREE_MINTING_HELP_TEXT": "Buyer will pay gas fees for minting",
-  "MOVIE_CREATE_ADD_BUTTON": "Mint Movie"
-
+  "MOVIE_CREATE_ADD_BUTTON": "Mint Movie",
+  "MOVIE_CREATE_ADD_BUTTON_TOOLTIP": "Please connect your wallet",
+  "MOVIE_CREATE_SUCCESS_UPLOADED": "Successfully uploaded movie!",
+  "MOVIE_CREATE_SUCCESS_UPLOADED_MESSAGE": "We will send you a notification when the ingest/transcoding process is complete",
+  "MOVIE_CREATE_SUCCESS_UPLOADING": "Uploading your movie",
+  "MOVIE_CREATE_SUCCESS_UPLOADING_MESSAGE": "This may take some time, depending on your file size and internet speed"
 }

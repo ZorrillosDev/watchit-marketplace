@@ -36,6 +36,13 @@ export interface Images {
   large: string
 }
 
+export interface MovieBid {
+  id: string
+  account: string
+  created_at: string
+  bid: number
+}
+
 export interface Movie {
   creator: string
   description: string
@@ -52,6 +59,7 @@ export interface Movie {
   synopsis: string
   trailer_code: string
   year: number
+  token: string
   genres: Genres
   posters: Images
 }

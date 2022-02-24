@@ -10,19 +10,12 @@ import {
 // PROJECT IMPORTS
 import { String } from '@src/utils'
 import { Translation } from '@src/i18n'
+import { MovieBid } from '@state/movies/types'
 
 // ===========================|| MOVIE - PROFILE - OFFERS - TABLE ||=========================== //
 
-export interface OffersTableRow {
-  buyer: string
-  price: string
-  fiatPrice: string
-  date: string
-  expiration: string
-}
-
 export interface MovieProfileOffersTableProps {
-  rows: OffersTableRow[]
+  rows: MovieBid[]
 }
 
 const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({ rows }): JSX.Element => {
@@ -33,9 +26,7 @@ const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({ rows }): JS
           <TableRow>
             <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_FROM' /></TableCell>
             <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_PRICE' /></TableCell>
-            <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_USD_PRICE' /></TableCell>
             <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_DATE' /></TableCell>
-            <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_EXPIRATION' /></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -48,23 +39,17 @@ const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({ rows }): JS
   )
 }
 
-const MovieProfileOffersTableRow: FC<OffersTableRow> = (props): JSX.Element => {
+const MovieProfileOffersTableRow: FC<MovieBid> = (props): JSX.Element => {
   return (
     <TableRow>
       <TableCell sx={{ opacity: 0.8 }}>
-        {String.minifyHash(props.buyer)}
+        {String.minifyHash(props.account)}
       </TableCell>
       <TableCell sx={{ fontWeight: 600 }}>
-        {props.price} ETH
+        {props.bid} ETH
       </TableCell>
       <TableCell sx={{ opacity: 0.8 }}>
-        $ {props.fiatPrice}
-      </TableCell>
-      <TableCell sx={{ opacity: 0.8 }}>
-        {props.date}
-      </TableCell>
-      <TableCell sx={{ opacity: 0.8 }}>
-        {props.expiration}
+        {props.created_at}
       </TableCell>
     </TableRow>
   )

@@ -10,17 +10,17 @@ import Big from 'big.js'
 // PROJECT IMPORTS
 import { SummarySeparator, SummaryWrapper, SummaryRow } from '@components/Summary'
 
-// ===========================|| CASH OUT MODAL - SUMMARY ||=========================== //
+// ===========================|| BID - SUMMARY ||=========================== //
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
-export interface ModalBidSummaryProps {
+export interface BidSummaryProps {
   amount: number
-  balance: number
+  balance: string
   fee: number
 }
 
-const ModalBidSummary: FC<ModalBidSummaryProps> = (props) => {
+const BidSummary: FC<BidSummaryProps> = (props) => {
   return (
     <SummaryWrapper>
       <SummaryRow>
@@ -33,7 +33,11 @@ const ModalBidSummary: FC<ModalBidSummaryProps> = (props) => {
       </SummaryRow>
       <SummaryRow>
         <Typography variant='body1' color='textSecondary'>Service fee</Typography>
-        <Typography variant='body1' color='textPrimary'>{Big(props.amount * props.fee).toFixed(5)} ETH</Typography>
+        <Typography
+          variant='body1'
+          color='textPrimary'
+        >{Big(props.amount * props.fee).toFixed(5)} ETH
+        </Typography>
       </SummaryRow>
       <SummaryRow>
         <SummarySeparator />
@@ -42,16 +46,12 @@ const ModalBidSummary: FC<ModalBidSummaryProps> = (props) => {
         <Typography variant='body1' color='textSecondary'>
           You will pay
         </Typography>
-        <Typography variant='h4' color='inherit'>{Big(props.amount + (props.amount * props.fee)).toFixed(5)} ETH</Typography>
-      </SummaryRow>
-      <SummaryRow>
-        <Typography variant='body1' color='textSecondary'>
-          Your balance will be
+        <Typography variant='h4' color='inherit'>
+          {Big(props.amount + (props.amount * props.fee)).toFixed(5)} ETH
         </Typography>
-        <Typography variant='body1' color='inherit'>{Big(props.amount ? props.balance - (props.amount + props.fee) : props.balance).toFixed(5)} ETH</Typography>
       </SummaryRow>
     </SummaryWrapper>
   )
 }
 
-export default ModalBidSummary
+export default BidSummary
