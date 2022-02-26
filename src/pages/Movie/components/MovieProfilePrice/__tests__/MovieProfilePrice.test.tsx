@@ -4,8 +4,17 @@ import MovieProfilePrice from '@pages/Movie/components/MovieProfilePrice'
 import i18n from '@src/i18n'
 import { Typography } from '@mui/material'
 import { Movie } from '@state/movies/types'
+import {Provider} from "react-redux";
+import {store} from "@state/store";
+import MovieProfile from "@pages/Movie";
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
+
+jest.mock('react-router', () => ({
+  useParams: () => {
+    return { id: '123' }
+  }
+}))
 
 describe('<MovieProfilePrice />', () => {
   const movie = {
@@ -19,7 +28,11 @@ describe('<MovieProfilePrice />', () => {
 
   it('should have movie profile price valid higher price text', () => {
     const translate = i18n.t('MOVIE_PROFILE_PRICE_HIGHER')
-    const component = mount(<MovieProfilePrice {...movie} />)
+    const component = mount(
+      <Provider store={store}>
+        <MovieProfilePrice {...movie} />
+      </Provider>
+    )
     const typography = component.find(Typography).at(0)
 
     expect(typography.text()).toContain(translate)
@@ -27,7 +40,11 @@ describe('<MovieProfilePrice />', () => {
 
   it('should have movie profile price valid price text', () => {
     const price = 0
-    const component = mount(<MovieProfilePrice {...movie} price={price} />)
+    const component = mount(
+      <Provider store={store}>
+        <MovieProfilePrice {...movie} price={price} />
+      </Provider>
+    )
     const typography = component.find(Typography).at(1)
 
     expect(typography.text()).toContain(`${price} ETH`)
@@ -35,8 +52,12 @@ describe('<MovieProfilePrice />', () => {
 
   it('should have movie profile price valid owner text', () => {
     const translate = i18n.t('MOVIE_PROFILE_OWNER')
-    const component = mount(<MovieProfilePrice {...movie} />)
-    const typography = component.find(Typography).at(3)
+    const component = mount(
+      <Provider store={store}>
+        <MovieProfilePrice {...movie} />
+      </Provider>
+    )
+    const typography = component.find(Typography).at(2)
 
     expect(typography.text()).toContain(translate)
   })
