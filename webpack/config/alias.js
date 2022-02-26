@@ -12,7 +12,7 @@ export const aliasItems = {
   '@assets': join(rootDir, '/src/assets'),
   '@styles': join(rootDir, '/src/styles'),
   '@helpers': join(rootDir, '/src/helpers'),
-  '@abi': join(rootDir, '/artifacts/contracts'),
+  '@abi': join(rootDir, '/abi'),
   '@services': join(rootDir, '/src/services'),
   '@navigation': join(rootDir, '/src/navigation'),
   '@components': join(rootDir, '/src/components'),

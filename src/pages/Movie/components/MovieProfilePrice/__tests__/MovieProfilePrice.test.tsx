@@ -1,9 +1,9 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import {mount, shallow} from 'enzyme'
 import MovieProfilePrice from '@pages/Movie/components/MovieProfilePrice'
 import i18n from '@src/i18n'
-import { Typography } from '@mui/material'
-import { Movie } from '@state/movies/types'
+import {Typography} from '@mui/material'
+import {Movie} from '@state/movies/types'
 import {Provider} from 'react-redux'
 import {store} from '@state/store'
 import * as web3Core from '@usedapp/core'
@@ -54,14 +54,14 @@ describe('<MovieProfilePrice />', () => {
         expect(component).toMatchSnapshot()
     })
 
-  it('should have movie profile price valid higher price text', () => {
-    const translate = i18n.t('MOVIE_PROFILE_PRICE_HIGHER')
-    const component = mount(
-      <Provider store={store}>
-        <MovieProfilePrice {...movie} />
-      </Provider>
-    )
-    const typography = component.find(Typography).at(0)
+    it('should have movie profile price valid higher price text', () => {
+        const translate = i18n.t('MOVIE_PROFILE_PRICE_HIGHER')
+        const component = mount(
+            <Provider store={store}>
+                <MovieProfilePrice {...movie} />
+            </Provider>
+        )
+        const typography = component.find(Typography).at(0)
 
     expect(typography.text()).toContain(translate)
   })
