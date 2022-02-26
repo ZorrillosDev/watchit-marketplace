@@ -82,11 +82,11 @@ describe('<MovieProfilePrice />', () => {
         const translate = i18n.t('MOVIE_PROFILE_OWNER')
         const component = mount(
             <Provider store={store}>
-        <MovieProfilePrice {...movie} />
-      </Provider>
-    )
-    const typography = component.find(Typography).at(2)
+                <MovieProfilePrice {...movie} />
+            </Provider>
+        )
+        const typography = component.find(Typography).at(2)
 
-    expect(typography.text()).toContain(translate)
-  })
+        expect(typography.text()).toContain(translate)
+    })
 })
