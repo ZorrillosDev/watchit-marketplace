@@ -4,9 +4,8 @@ import MovieProfilePrice from '@pages/Movie/components/MovieProfilePrice'
 import i18n from '@src/i18n'
 import { Typography } from '@mui/material'
 import { Movie } from '@state/movies/types'
-import {Provider} from "react-redux";
-import {store} from "@state/store";
-import MovieProfile from "@pages/Movie";
+import { Provider } from 'react-redux'
+import { store } from '@state/store'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 
@@ -18,8 +17,8 @@ jest.mock('react-router', () => ({
 
 describe('<MovieProfilePrice />', () => {
   const movie = {
-    creator: "0xEe99CeFF640d37Edd9cac8c7cfF4Ed4cD609f435",
-    token: "651268735865169554630764440897259763067310892845464250243992889613221274545"
+    creator: '0xEe99CeFF640d37Edd9cac8c7cfF4Ed4cD609f435',
+    token: '651268735865169554630764440897259763067310892845464250243992889613221274545'
   } as Movie
 
   it('should render', () => {
