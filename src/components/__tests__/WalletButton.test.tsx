@@ -21,7 +21,7 @@ describe('<WalletButton/>', () => {
                     error: undefined,
                     library: undefined,
                     chainId: undefined,
-                    account: null,
+                    account: undefined,
                     setError: jest.fn(),
                     deactivate: jest.fn(),
                     activateBrowserWallet: jest.fn(),
