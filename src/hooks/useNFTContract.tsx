@@ -1,39 +1,40 @@
-import { useContractCall, useEthers } from '@usedapp/core'
-import { getNetworkSettings } from '@src/w3'
-import { WNFTAbi } from '@w3/CONSTANTS'
-import { BigNumber } from 'ethers'
-import { Contract } from '@ethersproject/contracts'
-import { useEffect, useState } from 'react'
+import {useEthers, useCall} from '@usedapp/core'
+import {getNetworkSettings} from '@src/w3'
+import {WNFTAbi} from '@w3/CONSTANTS'
+import {BigNumber} from 'ethers'
+import {Contract} from '@ethersproject/contracts'
+import {useEffect, useState} from 'react'
 
-export function useNFTHolderOf (tokenId: string | undefined): string | undefined {
-  const { chainId } = useEthers()
-  const networkSettings = getNetworkSettings(chainId)
+export function useNFTHolderOf(tokenId: string | undefined): string | undefined {
+    const {chainId} = useEthers()
+    const networkSettings = getNetworkSettings(chainId)
 
-  const [holder] = useContractCall({
-    abi: WNFTAbi,
-    address: networkSettings.NFT,
-    method: 'holderOf',
-    args: [BigNumber.from(tokenId)]
-  }) ?? []
+    const {value, error} = useCall({
+        contract: new Contract(networkSettings.NFT, WNFTAbi),
+        method: 'holderOf',
+        args: [BigNumber.from(tokenId)]
+    }) ?? {}
 
-  return holder
+    return !error
+        ? value?.[0]
+        : undefined
 }
 
-export function useNFTContract (): Contract {
-  const { chainId } = useEthers()
-  const networkSettings = getNetworkSettings(chainId)
-  return new Contract(networkSettings.NFT, WNFTAbi)
+export function useNFTContract(): Contract {
+    const {chainId} = useEthers()
+    const networkSettings = getNetworkSettings(chainId)
+    return new Contract(networkSettings.NFT, WNFTAbi)
 }
 
-export function useListenForEvent (contract: Contract, event: string): object | undefined {
-  const [events, setEvent] = useState()
+export function useListenForEvent(contract: Contract, event: string): object | undefined {
+    const [events, setEvent] = useState()
 
-  useEffect(() => {
-    contract.on(event, (...params: any): void => setEvent(params))
-    return () => {
-      contract.removeAllListeners(event)
-    }
-  }, [event])
+    useEffect(() => {
+        contract.on(event, (...params: any): void => setEvent(params))
+        return () => {
+            contract.removeAllListeners(event)
+        }
+    }, [event])
 
-  return events
+    return events
 }

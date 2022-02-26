@@ -161,7 +161,7 @@
     "@types/redux-saga": "^0.10.5",
     "@types/styled-components": "^5.1.11",
     "@types/swiper": "^5.4.3",
-    "@usedapp/core": "^0.5.4",
+    "@usedapp/core": "^0.11.0",
     "acorn-import-assertions": "^1.7.6",
     "axios": "^0.25.0",
     "big.js": "^6.1.1",

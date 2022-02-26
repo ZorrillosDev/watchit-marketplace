@@ -22,6 +22,7 @@ export const MovieProfilePriceContainer: FC<MovieProfilePrice> = (props): JSX.El
   const highestBid = bid.shift() // Get first from sorted bids
   const price = highestBid?.bid ?? props.price
 
+
   return <MovieProfilePriceView {...{...props, ...{price}}} />
 }
 
