@@ -8,8 +8,6 @@ import {DAppProvider} from '@usedapp/core'
 import {AccountBalanceWallet} from '@mui/icons-material'
 import {PixelArtIdenticon} from '@components/Identicon'
 import {config} from '@src/w3/'
-import {ChainId} from "@usedapp/core/src/constants";
-import {JsonRpcProvider} from "@ethersproject/providers";
 
 jest.mock('@usedapp/core')
 

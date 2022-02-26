@@ -15,7 +15,7 @@ export function useNFTHolderOf(tokenId: string | undefined): string | undefined 
         args: [BigNumber.from(tokenId)]
     }) ?? {}
 
-    return !error
+    return (error == null)
         ? value?.[0]
         : undefined
 }
