@@ -1,34 +1,37 @@
 import React from 'react'
-import {mount, shallow} from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import MovieProfilePrice from '@pages/Movie/components/MovieProfilePrice'
 import i18n from '@src/i18n'
-import {Typography} from '@mui/material'
-import {Movie} from '@state/movies/types'
-import {store} from '@state/store'
-import {Provider} from 'react-redux'
+import { Typography } from '@mui/material'
+import { Movie } from '@state/movies/types'
+import { Provider } from 'react-redux'
+import { store } from '@state/store'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
+
+jest.mock('react-router', () => ({
+  useParams: () => {
+    return { id: '123' }
+  }
+}))
 
 describe('<MovieProfilePrice />', () => {
   const movie = {
     creator: '0xEe99CeFF640d37Edd9cac8c7cfF4Ed4cD609f435',
     token: '651268735865169554630764440897259763067310892845464250243992889613221274545'
   } as Movie
+
   it('should render', () => {
-    const component = shallow(
-        <Provider store={store}>
-          <MovieProfilePrice {...movie} />
-        </Provider>
-    )
+    const component = shallow(<MovieProfilePrice {...movie} />)
     expect(component).toMatchSnapshot()
   })
 
   it('should have movie profile price valid higher price text', () => {
     const translate = i18n.t('MOVIE_PROFILE_PRICE_HIGHER')
     const component = mount(
-        <Provider store={store}>
-          <MovieProfilePrice {...movie} />
-        </Provider>
+      <Provider store={store}>
+        <MovieProfilePrice {...movie} />
+      </Provider>
     )
     const typography = component.find(Typography).at(0)
 
@@ -38,9 +41,9 @@ describe('<MovieProfilePrice />', () => {
   it('should have movie profile price valid price text', () => {
     const price = 0
     const component = mount(
-        <Provider store={store}>
-          <MovieProfilePrice {...movie} price={price}/>
-        </Provider>
+      <Provider store={store}>
+        <MovieProfilePrice {...movie} price={price} />
+      </Provider>
     )
     const typography = component.find(Typography).at(1)
 
@@ -50,11 +53,11 @@ describe('<MovieProfilePrice />', () => {
   it('should have movie profile price valid owner text', () => {
     const translate = i18n.t('MOVIE_PROFILE_OWNER')
     const component = mount(
-        <Provider store={store}>
-          <MovieProfilePrice {...movie} />
-        </Provider>
+      <Provider store={store}>
+        <MovieProfilePrice {...movie} />
+      </Provider>
     )
-    const typography = component.find(Typography).at(3)
+    const typography = component.find(Typography).at(2)
 
     expect(typography.text()).toContain(translate)
   })
