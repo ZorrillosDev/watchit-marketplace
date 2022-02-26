@@ -72,16 +72,16 @@ describe('<MovieProfilePrice />', () => {
             <Provider store={store}>
                 <MovieProfilePrice {...movie} price={price}/>
             </Provider>
-    )
-    const typography = component.find(Typography).at(1)
+        )
+        const typography = component.find(Typography).at(1)
 
-    expect(typography.text()).toContain(`${price} ETH`)
-  })
+        expect(typography.text()).toContain(`${price} ETH`)
+    })
 
-  it('should have movie profile price valid owner text', () => {
-    const translate = i18n.t('MOVIE_PROFILE_OWNER')
-    const component = mount(
-      <Provider store={store}>
+    it('should have movie profile price valid owner text', () => {
+        const translate = i18n.t('MOVIE_PROFILE_OWNER')
+        const component = mount(
+            <Provider store={store}>
         <MovieProfilePrice {...movie} />
       </Provider>
     )
