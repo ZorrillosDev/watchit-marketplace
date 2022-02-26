@@ -33,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        network: [rinkeby]
+        network: [ rinkeby,kovan ]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
