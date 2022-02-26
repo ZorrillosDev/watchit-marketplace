@@ -32,7 +32,7 @@
   "moduleNameMapper": {
     "^@src(.*)$": "<rootDir>/src$1",
     "^@w3(.*)$": "<rootDir>/src/w3$1",
-    "^@abi(.*)$": "<rootDir>/abi/",
+    "^@abi(.*)$": "<rootDir>/abi$1",
     "^@hooks(.*)$": "<rootDir>/src/hooks$1",
     "^@assets(.*)$": "<rootDir>/src/assets$1",
     "^@styles(.*)$": "<rootDir>/src/styles$1",

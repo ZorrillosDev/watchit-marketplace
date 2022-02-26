@@ -63,15 +63,15 @@ describe('<MovieProfilePrice />', () => {
         )
         const typography = component.find(Typography).at(0)
 
-    expect(typography.text()).toContain(translate)
-  })
+        expect(typography.text()).toContain(translate)
+    })
 
-  it('should have movie profile price valid price text', () => {
-    const price = 0
-    const component = mount(
-      <Provider store={store}>
-        <MovieProfilePrice {...movie} price={price} />
-      </Provider>
+    it('should have movie profile price valid price text', () => {
+        const price = 0
+        const component = mount(
+            <Provider store={store}>
+                <MovieProfilePrice {...movie} price={price}/>
+            </Provider>
     )
     const typography = component.find(Typography).at(1)
 
