@@ -144,17 +144,17 @@ export const Item = styled(Box)<{ active?: boolean } & BoxProps>(({ active, them
   ...(
     (active ?? false)
       ? {
-        '&:after': {
-          content: '',
-          position: 'absolute',
-          width: '100%',
-          height: '1px',
-          background: theme.palette.primary.main,
-          bottom: '4px',
-          left: 0,
-          zIndex: 1
+            '&:after': {
+                content: '',
+                position: 'absolute',
+                width: '100%',
+                height: '1px',
+                background: theme.palette.primary.main,
+                bottom: '4px',
+                left: 0,
+                zIndex: 1
+            }
         }
-      }
       : {}
   )
 }))
