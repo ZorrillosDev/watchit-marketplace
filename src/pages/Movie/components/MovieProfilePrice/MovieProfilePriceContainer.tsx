@@ -1,11 +1,11 @@
 // REACT IMPORTS
-import React, {FC} from 'react'
+import React, { FC } from 'react'
 
 // PROJECT IMPORTS
-import {MovieProfilePriceView} from '@pages/Movie/components/MovieProfilePrice/MovieProfilePriceView'
-import {Movie, MoviesState} from '@state/movies/types'
-import {connect, RootStateOrAny} from 'react-redux'
-import {selectBidCollection} from '@state/movies/selector'
+import { MovieProfilePriceView } from '@pages/Movie/components/MovieProfilePrice/MovieProfilePriceView'
+import { Movie, MoviesState } from '@state/movies/types'
+import { connect, RootStateOrAny } from 'react-redux'
+import { selectBidCollection } from '@state/movies/selector'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 
@@ -22,14 +22,14 @@ export const MovieProfilePriceContainer: FC<MovieProfilePriceProps> = (props): J
   const highestBid = bid.shift() // Get first from sorted bids
   const price = highestBid?.bid ?? props.price
 
-  return <MovieProfilePriceView {...{...props, ...{price}}} />
+  return <MovieProfilePriceView {...{ ...props, ...{ price } }} />
 }
 
 const mapStateToProps = (state: RootStateOrAny): Partial<MoviesState> => {
   const bidCollection = selectBidCollection(state)
-  return {bidCollection}
+  return { bidCollection }
 }
 
 export const MovieProfilePrice = connect(
-    mapStateToProps
+  mapStateToProps
 )(MovieProfilePriceContainer)

@@ -64,17 +64,17 @@ const Modal: FC<ModalProps> = ({ Icon, ...props }): JSX.Element => {
       >
         {
             props.isOpen
-                ? (
-                    <ModalContent borderRadius={1} zIndex={1}>
-                        <ModalClose onClick={() => props.onClose()}>
-                            <IconX stroke={1}/>
-                        </ModalClose>
-                        <ModalScroller>
-                            {props.children}
-                        </ModalScroller>
-                    </ModalContent>
+              ? (
+                <ModalContent borderRadius={1} zIndex={1}>
+                  <ModalClose onClick={() => props.onClose()}>
+                    <IconX stroke={1} />
+                  </ModalClose>
+                  <ModalScroller>
+                    {props.children}
+                  </ModalScroller>
+                </ModalContent>
                 )
-                : <></>
+              : <></>
         }
       </ModalMui>
     </LoadingContext.Provider>

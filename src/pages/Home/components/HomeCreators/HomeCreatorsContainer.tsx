@@ -35,10 +35,10 @@ const HomeCreatorsContainer: FC<UserState & UsersActions> = ({ creators, fetchCr
           <Grid container spacing={3} display='flex' flexWrap='wrap' justifyContent='space-between'>
             {
                 creators !== undefined
-                    ? creators.map((user: User, i: number) => {
-                        return <HomeCreatorsView user={user} key={i}/>
-                    })
-                    : <></>
+                  ? creators.map((user: User, i: number) => {
+                    return <HomeCreatorsView user={user} key={i} />
+                  })
+                  : <></>
             }
           </Grid>
         </Grid>

@@ -51,39 +51,39 @@ const MovieCreateModalProgress: FC<MovieCreateModalProgressProps> = (props): JSX
           </Grid>
           {
               loaded
-                  ? (
-                      <>
-                          <Grid item xs={12}>
-                              <Typography
-                                  variant='h3' textAlign='center'
-                                  sx={{width: 1, color: (theme) => theme.palette.success.dark}}
-                              >
-                                  <Translation target='MOVIE_CREATE_SUCCESS_UPLOADED'/>
-                              </Typography>
-                          </Grid>
-                          <Grid item xs={12}>
-                              <Typography variant='body1' color='primary' textAlign='center' sx={{width: 1}}>
-                                  <Translation target='MOVIE_CREATE_SUCCESS_UPLOADED_MESSAGE'/>
-                              </Typography>
-                          </Grid>
-                      </>
+                ? (
+                  <>
+                    <Grid item xs={12}>
+                      <Typography
+                        variant='h3' textAlign='center'
+                        sx={{ width: 1, color: (theme) => theme.palette.success.dark }}
+                      >
+                        <Translation target='MOVIE_CREATE_SUCCESS_UPLOADED' />
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant='body1' color='primary' textAlign='center' sx={{ width: 1 }}>
+                        <Translation target='MOVIE_CREATE_SUCCESS_UPLOADED_MESSAGE' />
+                      </Typography>
+                    </Grid>
+                  </>
                   )
-                  : (
-                      <>
-                          <Grid item xs={12}>
-                              <MovieCreateUploadModalProgress variant='determinate' value={props?.progress}/>
-                          </Grid>
-                          <Grid item xs={12}>
-                              <Typography variant='h3' color='primary' textAlign='center' sx={{width: 1}}>
-                                  <Translation target='MOVIE_CREATE_SUCCESS_UPLOADING'/>
-                              </Typography>
-                          </Grid>
-                          <Grid item xs={12}>
-                              <Typography variant='body1' color='primary' textAlign='center' sx={{width: 1}}>
-                                  <Translation target='MOVIE_CREATE_SUCCESS_UPLOADING_MESSAGE'/>
-                              </Typography>
-                          </Grid>
-                      </>
+                : (
+                  <>
+                    <Grid item xs={12}>
+                      <MovieCreateUploadModalProgress variant='determinate' value={props?.progress} />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant='h3' color='primary' textAlign='center' sx={{ width: 1 }}>
+                        <Translation target='MOVIE_CREATE_SUCCESS_UPLOADING' />
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant='body1' color='primary' textAlign='center' sx={{ width: 1 }}>
+                        <Translation target='MOVIE_CREATE_SUCCESS_UPLOADING_MESSAGE' />
+                      </Typography>
+                    </Grid>
+                  </>
                   )
           }
         </MovieCreateUploadModalContent>

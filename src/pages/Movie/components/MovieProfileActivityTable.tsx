@@ -28,21 +28,21 @@ const MovieProfileActivityTable: FC<MovieProfileActivityTableProps> = ({ rows })
   return (
     <TableContainer component={Paper}>
       <MovieProfileActivityTableWrapper size='small'>
-          <TableHead>
-              <TableRow>
-                  <TableCell><Translation target='MOVIE_PROFILE_ACTIVITY_DATE'/></TableCell>
-                  <TableCell><Translation target='MOVIE_PROFILE_OWNER'/></TableCell>
-                  <TableCell><Translation target='MOVIE_PROFILE_ACTIVITY_EDITION'/></TableCell>
-                  <TableCell><Translation target='MOVIE_PROFILE_ACTIVITY_DETAILS'/></TableCell>
-              </TableRow>
-          </TableHead>
-          <TableBody>
-              {rows !== undefined
-                  ? rows.map((row, index) => {
-                      return <MovieProfileActivityTableRow {...row} key={index}/>
-                  })
-                  : <></>}
-          </TableBody>
+        <TableHead>
+          <TableRow>
+            <TableCell><Translation target='MOVIE_PROFILE_ACTIVITY_DATE' /></TableCell>
+            <TableCell><Translation target='MOVIE_PROFILE_OWNER' /></TableCell>
+            <TableCell><Translation target='MOVIE_PROFILE_ACTIVITY_EDITION' /></TableCell>
+            <TableCell><Translation target='MOVIE_PROFILE_ACTIVITY_DETAILS' /></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows !== undefined
+            ? rows.map((row, index) => {
+              return <MovieProfileActivityTableRow {...row} key={index} />
+            })
+            : <></>}
+        </TableBody>
       </MovieProfileActivityTableWrapper>
     </TableContainer>
   )

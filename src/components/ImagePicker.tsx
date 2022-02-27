@@ -51,23 +51,23 @@ const ImagePicker: FC<ImagePickerProps> = (props): JSX.Element => {
         />
         {
             props.preview
-                ? (
-                    <>
-                        <Poster image={props.preview} name={`${props.id}_image`}/>
-                    </>
+              ? (
+                <>
+                  <Poster image={props.preview} name={`${props.id}_image`} />
+                </>
                 )
-                : (
-                    <>
-                        <InputFileIcon>
-                            <IconUpload stroke={1}/>
-                        </InputFileIcon>
-                        <Typography variant='h5' color='text.secondary' width={1} textAlign='center'>
-                            {props.helpText}
-                        </Typography>
-                        <InputFileButton variant='contained' color='primary' onClick={handleButtonClick}>
-                            <Translation target='MOVIE_CREATE_FILE_BUTTON'/>
-                        </InputFileButton>
-                    </>
+              : (
+                <>
+                  <InputFileIcon>
+                    <IconUpload stroke={1} />
+                  </InputFileIcon>
+                  <Typography variant='h5' color='text.secondary' width={1} textAlign='center'>
+                    {props.helpText}
+                  </Typography>
+                  <InputFileButton variant='contained' color='primary' onClick={handleButtonClick}>
+                    <Translation target='MOVIE_CREATE_FILE_BUTTON' />
+                  </InputFileButton>
+                </>
                 )
         }
       </InputFileLabel>
