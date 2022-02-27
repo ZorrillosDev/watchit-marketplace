@@ -251,7 +251,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run hook"
+      "pre-commit": ""
     }
   }
 }
