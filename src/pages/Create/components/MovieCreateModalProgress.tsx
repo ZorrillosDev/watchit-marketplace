@@ -54,8 +54,10 @@ const MovieCreateModalProgress: FC<MovieCreateModalProgressProps> = (props): JSX
                   ? (
                       <>
                           <Grid item xs={12}>
-                              <Typography variant='h3' textAlign='center'
-                                          sx={{width: 1, color: (theme) => theme.palette.success.dark}}>
+                              <Typography
+                                  variant='h3' textAlign='center'
+                                  sx={{width: 1, color: (theme) => theme.palette.success.dark}}
+                              >
                                   <Translation target='MOVIE_CREATE_SUCCESS_UPLOADED'/>
                               </Typography>
                           </Grid>
