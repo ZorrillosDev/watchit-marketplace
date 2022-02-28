@@ -17,11 +17,13 @@ export function getNetworkSettings (networkName: ChainId | undefined): NetworkSe
 
   const contractAddressCollection: { [key: number]: NetworkSetting } = {
     [ChainId.Kovan]: {
+      CHAIN_NAME: "KOVAN",
       PURCHASE_GATEWAY: process.env.KOVAN_CONTRACT_PURCHASE_GATEWAY ?? '',
       NFT: process.env.KOVAN_CONTRACT_NFT ?? '',
       WVC: process.env.KOVAN_CONTRACT_FT ?? ''
     },
     [ChainId.Rinkeby]: {
+      CHAIN_NAME: "RINKEBY",
       PURCHASE_GATEWAY: process.env.RINKEBY_CONTRACT_PURCHASE_GATEWAY ?? '',
       NFT: process.env.RINKEBY_CONTRACT_NFT ?? '',
       WVC: process.env.RINKEBY_CONTRACT_FT ?? ''
