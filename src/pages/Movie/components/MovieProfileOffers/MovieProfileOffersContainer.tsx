@@ -24,7 +24,7 @@ const MovieProfileOffersContainer: FC<MovieProfileOffersProps> = (props): JSX.El
 
     useEffect(() => {
         fetchRecentMovieBids({id})
-    }, [bidCollection.length])
+    }, [])
 
     return <MovieProfileOffersView rows={bidCollection}/>
 }
