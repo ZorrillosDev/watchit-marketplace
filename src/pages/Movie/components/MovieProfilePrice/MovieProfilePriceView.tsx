@@ -76,11 +76,6 @@ export const MovieProfilePriceView: FC<Movie> = (props): JSX.Element => {
   )
 }
 
-export const MovieProfilePriceViewMemoized = React.memo(
-  MovieProfilePriceView, (prev: Movie, next: Movie) => {
-    return prev.token === next.token
-  }
-)
 
 export const MovieProfilePriceSectionWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   width: '100%',
