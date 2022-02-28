@@ -10,7 +10,7 @@ const WalletButton: FC = React.memo((): JSX.Element => {
   const { activateBrowserWallet, deactivate, account } = useEthers()
   const etherBalance = useEtherBalance(account)
 
-  const icon: JSX.Element = account !== null
+  const icon: JSX.Element = account !== undefined
     ? <PixelArtIdenticon seed={account ?? ''} />
     : <AccountBalanceWallet fontSize='inherit' />
 
@@ -25,16 +25,16 @@ const WalletButton: FC = React.memo((): JSX.Element => {
       color='primary'
       startIcon={icon}
       onClick={
-        () => account === null
-          ? activateBrowserWallet()
-          : deactivate()
-      }
+                () => account === undefined
+                  ? activateBrowserWallet()
+                  : deactivate()
+            }
     >
       {
-        account !== null
-          ? `${(etherBalance != null) ? Ethers.getWeiToETH(etherBalance) : 0} ETH`
-          : i18n.t('GLOBAL_WALLET')
-      }
+                account !== undefined
+                  ? `${(etherBalance != null) ? Ethers.getWeiToETH(etherBalance) : 0} ETH`
+                  : i18n.t('GLOBAL_WALLET')
+            }
     </Button>
   )
 })

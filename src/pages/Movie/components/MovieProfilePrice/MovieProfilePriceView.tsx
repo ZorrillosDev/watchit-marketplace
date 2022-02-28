@@ -67,14 +67,20 @@ export const MovieProfilePriceView: FC<Movie> = (props): JSX.Element => {
         </Grid>
 
         {
-          account !== null && account !== props.creator
-            ? <ModalBid buttonSx={MovieProfileOfferButtonSx} />
-            : <></>
-        }
+            account !== undefined && account !== props.creator
+              ? <ModalBid buttonSx={MovieProfileOfferButtonSx} />
+              : <></>
+          }
       </MovieProfilePriceSectionWrapper>
     </Grid>
   )
 }
+
+export const MovieProfilePriceViewMemoized = React.memo(
+  MovieProfilePriceView, (prev: Movie, next: Movie) => {
+    return prev.token === next.token
+  }
+)
 
 export const MovieProfilePriceSectionWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   width: '100%',

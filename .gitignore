@@ -11,3 +11,4 @@ artifacts
 false
 .env
 .ipfs
+jscpd

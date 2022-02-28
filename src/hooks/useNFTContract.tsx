@@ -1,28 +1,26 @@
-import { useContractCall, useEthers } from '@usedapp/core'
+import { useEthers, useCall } from '@usedapp/core'
 import { getNetworkSettings } from '@src/w3'
-import { WNFTAbi } from '@w3/CONSTANTS'
+import { WNFT } from '@w3/CONSTANTS'
 import { BigNumber } from 'ethers'
 import { Contract } from '@ethersproject/contracts'
 import { useEffect, useState } from 'react'
 
 export function useNFTHolderOf (tokenId: string | undefined): string | undefined {
-  const { chainId } = useEthers()
-  const networkSettings = getNetworkSettings(chainId)
-
-  const [holder] = useContractCall({
-    abi: WNFTAbi,
-    address: networkSettings.NFT,
+  const { value, error } = useCall({
+    contract: useNFTContract(),
     method: 'holderOf',
     args: [BigNumber.from(tokenId)]
-  }) ?? []
+  }) ?? {}
 
-  return holder
+  return (error == null)
+    ? value?.[0]
+    : undefined
 }
 
 export function useNFTContract (): Contract {
   const { chainId } = useEthers()
   const networkSettings = getNetworkSettings(chainId)
-  return new Contract(networkSettings.NFT, WNFTAbi)
+  return new Contract(networkSettings.NFT, WNFT)
 }
 
 export function useListenForEvent (contract: Contract, event: string): object | undefined {

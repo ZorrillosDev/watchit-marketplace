@@ -37,9 +37,11 @@ const MovieProfileActivityTable: FC<MovieProfileActivityTableProps> = ({ rows })
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows !== undefined ? rows.map((row, index) => {
-            return <MovieProfileActivityTableRow {...row} key={index} />
-          }) : <></>}
+          {rows !== undefined
+            ? rows.map((row, index) => {
+              return <MovieProfileActivityTableRow {...row} key={index} />
+            })
+            : <></>}
         </TableBody>
       </MovieProfileActivityTableWrapper>
     </TableContainer>

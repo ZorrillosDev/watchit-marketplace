@@ -51,12 +51,14 @@ const HomeRecentContainer: FC<MoviesState & MoviesActions> = ({ collection, fetc
         <Grid item xs={12} display='flex' alignItems='center' justifyContent='center'>
           <Grid container spacing={3}>
             {
-              collection !== undefined ? collection.map((movie: Movie, i: number) => {
-                const moviesMax = moviesColumns * MOVIES_ROWS
-                return (i < moviesMax)
-                  ? <HomeRecentView {...movie} key={i} />
-                  : <React.Fragment key={i} />
-              }) : <></>
+              collection !== undefined
+                ? collection.map((movie: Movie, i: number) => {
+                  const moviesMax = moviesColumns * MOVIES_ROWS
+                  return (i < moviesMax)
+                    ? <HomeRecentView {...movie} key={i} />
+                    : <React.Fragment key={i} />
+                })
+                : <></>
             }
           </Grid>
         </Grid>
