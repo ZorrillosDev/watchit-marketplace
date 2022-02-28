@@ -78,7 +78,7 @@ describe('Movies store', () => {
 
     it('should call recent bids action with valid args ', async () => {
       await actionForFetchRecentBids(dispatch, getState, undefined)
-      expect(request).toHaveBeenCalledWith('/movie/bid', {params: {id: 1}})
+      expect(request).toHaveBeenCalledWith('/movie/bid', {params: {id: "1"}})
     })
 
     it('should call commit bid movie action with valid args ', async () => {
