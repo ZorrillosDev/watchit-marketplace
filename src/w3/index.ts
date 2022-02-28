@@ -1,9 +1,10 @@
-import { ChainId, Config } from '@usedapp/core'
-import { NetworkSetting } from '@w3/types'
+import {ChainId, Config, Kovan, Rinkeby} from '@usedapp/core'
+import {NetworkSetting} from '@w3/types'
 import { RINKEBY_ALCHEMY_API_KEY } from '@w3/CONSTANTS'
 
 export const config: Config = {
-  readOnlyChainId: ChainId.Rinkeby,
+  networks: [Rinkeby, Kovan],
+  readOnlyChainId: ChainId.Mainnet,
   readOnlyUrls: {
     [ChainId.Rinkeby]: `https://eth-rinkeby.alchemyapi.io/v2/${RINKEBY_ALCHEMY_API_KEY}`
   }
