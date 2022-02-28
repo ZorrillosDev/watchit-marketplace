@@ -19,6 +19,7 @@ export function useNFTHolderOf (tokenId: string | undefined): string | undefined
 
 export function useNFTContract (): Contract {
   const { chainId } = useEthers()
+
   const networkSettings = getNetworkSettings(chainId)
   return new Contract(networkSettings.NFT, WNFT)
 }

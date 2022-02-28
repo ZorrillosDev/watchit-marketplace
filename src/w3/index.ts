@@ -28,6 +28,10 @@ export function getNetworkSettings (networkName: ChainId | undefined): NetworkSe
 
     }
   }
-  if (networkName === undefined) { return contractAddressCollection[ChainId.Rinkeby] }
+
+  // return default rikeby if not supported chain
+  if (networkName === undefined || !(networkName in contractAddressCollection))
+    return contractAddressCollection[ChainId.Rinkeby]
+
   return contractAddressCollection[networkName]
 }
