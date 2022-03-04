@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 
 // MUI IMPORTS
 import {
-  Container, Grid, styled, Typography, TypographyProps
+  Container, Grid, Link, styled, Typography, TypographyProps
 } from '@mui/material'
 
 // PROJECT IMPORTS
@@ -57,7 +57,9 @@ export const MovieProfileView: FC<Movie> = (props): JSX.Element => {
                   <MovieProfilePrice {...props} />
                   <Grid item xs={12} sx={{pt: '3rem !important'}}>
                     <MovieProfileSectionWrapper>
-                      <MovieProfileUser address={props.creator}/>
+                      <Link href={`https://rinkeby.etherscan.io/address/${props.creator}`} target={'__blank'}>
+                        <MovieProfileUser address={props.creator}/>
+                      </Link>
                       <MovieProfileCreatorTypography variant='body1' color='primary'>
                         <Translation target='MOVIE_PROFILE_CREATOR'/>
                       </MovieProfileCreatorTypography>
@@ -71,14 +73,16 @@ export const MovieProfileView: FC<Movie> = (props): JSX.Element => {
                   {/*    iconStart={<IconMovie stroke={1} />} */}
                   {/*  /> */}
                   {/* </Grid> */}
-                  {/* <Grid item xs={12}> */}
-                  {/*  <MovieProfileSection */}
-                  {/*    component={Button} */}
-                  {/*    text={<Translation target='MOVIE_PROFILE_VIEW_ETHERSCAN' />} */}
-                  {/*    iconStart={<IconEye stroke={1} />} */}
-                  {/*    iconEnd={<IconExternalLink stroke={1} />} */}
-                  {/*  /> */}
-                  {/* </Grid> */}
+                  {/* <Grid item xs={12}>*/}
+                  {/*   <Link href={`https://rinkeby.etherscan.io/address/${props.token}`} target={'__blank'}>*/}
+                  {/*    <MovieProfileSection*/}
+                  {/*      component={Button}*/}
+                  {/*      text={<Translation target='MOVIE_PROFILE_VIEW_ETHERSCAN' />}*/}
+                  {/*      iconStart={<IconEye stroke={1} />}*/}
+                  {/*      iconEnd={<IconExternalLink stroke={1} />}*/}
+                  {/*    />*/}
+                  {/*   </Link>*/}
+                  {/* </Grid>*/}
                   <MovieProfileDetails {...props} />
                   <MovieProfileOffers/>
                 </Grid>
