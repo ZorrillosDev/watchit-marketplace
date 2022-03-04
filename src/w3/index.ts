@@ -3,14 +3,14 @@ import {NetworkSetting} from '@w3/types'
 import {RINKEBY_ALCHEMY_API_KEY} from '@w3/CONSTANTS'
 
 export const config: Config = {
-  networks: [Rinkeby, Kovan],
-  readOnlyChainId: ChainId.Mainnet,
-  readOnlyUrls: {
-    [ChainId.Rinkeby]: `https://eth-rinkeby.alchemyapi.io/v2/${RINKEBY_ALCHEMY_API_KEY}`
-  }
+    networks: [Rinkeby, Kovan],
+    readOnlyChainId: ChainId.Mainnet,
+    readOnlyUrls: {
+        [ChainId.Rinkeby]: `https://eth-rinkeby.alchemyapi.io/v2/${RINKEBY_ALCHEMY_API_KEY}`
+    }
 }
 
-export function getNetworkSettings (networkName: ChainId | undefined): NetworkSetting {
+export function getNetworkSettings(networkName: ChainId | undefined): NetworkSetting {
   /**
      * @param {ChainId} networkName network to retrieve contract
      * @return {NetworkSetting}

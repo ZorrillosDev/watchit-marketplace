@@ -15,23 +15,23 @@ import {useParams} from 'react-router'
 
 type MovieProfileOffersProps = MoviesActions & MoviesState
 const MovieProfileOffersContainer: FC<MovieProfileOffersProps> = (props): JSX.Element => {
-    const {id} = useParams<MovieArgs>()
-    const {
-        fetchRecentMovieBids,
-        bidCollection
-    } = props
+  const {id} = useParams<MovieArgs>()
+  const {
+    fetchRecentMovieBids,
+    bidCollection
+  } = props
 
-    useEffect(() => {
-        fetchRecentMovieBids({id})
-    }, [])
+  useEffect(() => {
+    fetchRecentMovieBids({id})
+  }, [])
 
-    return <MovieProfileOffersView rows={bidCollection}/>
+  return <MovieProfileOffersView rows={bidCollection}/>
 }
 
 const mapDispatchToProps: Partial<MoviesActions> = {fetchRecentMovieBids}
 const mapStateToProps = (state: RootStateOrAny): Partial<MoviesState> => {
-    const bidCollection = selectBidCollection(state)
-    return {bidCollection}
+  const bidCollection = selectBidCollection(state)
+  return {bidCollection}
 }
 
 export const MovieProfileOffers = connect(
