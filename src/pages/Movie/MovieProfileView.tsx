@@ -3,19 +3,11 @@ import React, { FC } from 'react'
 
 // MUI IMPORTS
 import {
-  Button, Container, Grid, styled, Typography, TypographyProps
+  Container, Grid, styled, Typography, TypographyProps
 } from '@mui/material'
 
-// THIRD PARTY IMPORTS
-import {
-  IconMovie,
-  IconPlayerPlay,
-  IconEye,
-  IconExternalLink
-} from '@tabler/icons'
-
 // PROJECT IMPORTS
-import MovieProfileSection, { MovieProfileSectionWrapper } from '@pages/Movie/components/MovieProfileSection'
+import {MovieProfileSectionWrapper} from '@pages/Movie/components/MovieProfileSection'
 import MovieProfileHeader from '@pages/Movie/components/MovieProfileHeader'
 import MovieProfilePrice from '@pages/Movie/components/MovieProfilePrice'
 import MovieProfileUser from '@pages/Movie/components/MovieProfileUser'
@@ -61,7 +53,7 @@ export const MovieProfileView: FC<Movie> = (props): JSX.Element => {
               </Grid>
               <Grid item xs={12} sm={7}>
                 <Grid container spacing={3}>
-                  {/*<MovieProfileHeader sx={{ display: { xs: 'none', md: 'flex' } }} />*/}
+                  {/* <MovieProfileHeader sx={{ display: { xs: 'none', md: 'flex' } }} /> */}
                   <MovieProfilePrice {...props} />
                   <Grid item xs={12} sx={{pt: '3rem !important'}}>
                     <MovieProfileSectionWrapper>
@@ -71,22 +63,22 @@ export const MovieProfileView: FC<Movie> = (props): JSX.Element => {
                       </MovieProfileCreatorTypography>
                     </MovieProfileSectionWrapper>
                   </Grid>
-                  {/*<Grid item xs={12}>*/}
-                  {/*  <MovieProfileSection*/}
-                  {/*    component={Button}*/}
-                  {/*    text={<Translation target='MOVIE_PROFILE_VIEW_WATCHIT' />}*/}
-                  {/*    iconEnd={<IconPlayerPlay stroke={1} />}*/}
-                  {/*    iconStart={<IconMovie stroke={1} />}*/}
-                  {/*  />*/}
-                  {/*</Grid>*/}
-                  {/*<Grid item xs={12}>*/}
-                  {/*  <MovieProfileSection*/}
-                  {/*    component={Button}*/}
-                  {/*    text={<Translation target='MOVIE_PROFILE_VIEW_ETHERSCAN' />}*/}
-                  {/*    iconStart={<IconEye stroke={1} />}*/}
-                  {/*    iconEnd={<IconExternalLink stroke={1} />}*/}
-                  {/*  />*/}
-                  {/*</Grid>*/}
+                  {/* <Grid item xs={12}> */}
+                  {/*  <MovieProfileSection */}
+                  {/*    component={Button} */}
+                  {/*    text={<Translation target='MOVIE_PROFILE_VIEW_WATCHIT' />} */}
+                  {/*    iconEnd={<IconPlayerPlay stroke={1} />} */}
+                  {/*    iconStart={<IconMovie stroke={1} />} */}
+                  {/*  /> */}
+                  {/* </Grid> */}
+                  {/* <Grid item xs={12}> */}
+                  {/*  <MovieProfileSection */}
+                  {/*    component={Button} */}
+                  {/*    text={<Translation target='MOVIE_PROFILE_VIEW_ETHERSCAN' />} */}
+                  {/*    iconStart={<IconEye stroke={1} />} */}
+                  {/*    iconEnd={<IconExternalLink stroke={1} />} */}
+                  {/*  /> */}
+                  {/* </Grid> */}
                   <MovieProfileDetails {...props} />
                   <MovieProfileOffers/>
                 </Grid>

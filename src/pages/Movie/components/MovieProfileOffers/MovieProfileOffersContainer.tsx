@@ -7,7 +7,7 @@ import {MovieArgs, MoviesActions, MoviesState} from '@state/movies/types'
 import {connect, RootStateOrAny} from 'react-redux'
 import {fetchRecentMovieBids} from '@state/movies/actions'
 import {selectBidCollection} from '@state/movies/selector'
-import {useParams} from "react-router";
+import {useParams} from 'react-router'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 
@@ -20,7 +20,6 @@ const MovieProfileOffersContainer: FC<MovieProfileOffersProps> = (props): JSX.El
         fetchRecentMovieBids,
         bidCollection
     } = props
-
 
     useEffect(() => {
         fetchRecentMovieBids({id})
