@@ -73,8 +73,8 @@ export const MovieProfilePriceView: FC<Movie> = (props): JSX.Element => {
           <ModalBid buttonSx={MovieProfileOfferButtonSx} />
         }
         {
-          account !== undefined && account === props.creator &&
-          <AcceptOffer buttonSx={MovieProfileOfferButtonSx} price={props.price} />
+          account !== undefined && account === currentHolder &&
+            <AcceptOffer buttonSx={MovieProfileOfferButtonSx} price={props.price}/>
         }
         {/*{*/}
         {/*  account !== undefined && account === props.creator &&*/}
