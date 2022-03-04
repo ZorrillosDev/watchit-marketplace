@@ -10,6 +10,8 @@ import {
 // PROJECT IMPORTS
 import MovieProfileUser from '@pages/Movie/components/MovieProfileUser'
 import ModalBid from '@components/Bid'
+import AcceptOffer from '@pages/Movie/components/MovieProfileAcceptOffer'
+import PayOffer from '@pages/Movie/components/MovieProfilePay'
 import { IconEth } from '@components/Icons'
 import { Translation } from '@src/i18n'
 import { SxProps, Theme } from '@mui/system'
@@ -67,10 +69,17 @@ export const MovieProfilePriceView: FC<Movie> = (props): JSX.Element => {
         </Grid>
 
         {
-            account !== undefined && account !== props.creator
-              ? <ModalBid buttonSx={MovieProfileOfferButtonSx} />
-              : <></>
-          }
+          account !== undefined && account !== props.creator &&
+          <ModalBid buttonSx={MovieProfileOfferButtonSx} />
+        }
+        {
+          account !== undefined && account === props.creator &&
+          <AcceptOffer buttonSx={MovieProfileOfferButtonSx} price={props.price} />
+        }
+        {/*{*/}
+        {/*  account !== undefined && account === props.creator &&*/}
+        {/*  <PayOffer buttonSx={MovieProfileOfferButtonSx} price={props.price} title={props.title} />*/}
+        {/*}*/}
       </MovieProfilePriceSectionWrapper>
     </Grid>
   )

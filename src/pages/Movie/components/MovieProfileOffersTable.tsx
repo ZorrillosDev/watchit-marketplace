@@ -10,15 +10,25 @@ import {
 // PROJECT IMPORTS
 import { String } from '@src/utils'
 import { Translation } from '@src/i18n'
-import { MovieBid } from '@state/movies/types'
+import {Movie, MovieBid} from '@state/movies/types'
+import {useEthers} from "@usedapp/core";
+import {useNFTHolderOf} from "@hooks/useNFTContract";
+import {BLACK_HOLE} from "@w3/CONSTANTS";
+import AcceptOffer from "@pages/Movie/components/MovieProfileAcceptOffer";
 
 // ===========================|| MOVIE - PROFILE - OFFERS - TABLE ||=========================== //
 
 export interface MovieProfileOffersTableProps {
   rows: MovieBid[]
+  movie: Movie
 }
 
-const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({ rows }): JSX.Element => {
+const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({ rows , ...props}): JSX.Element => {
+  const { account } = useEthers()
+  const holder = useNFTHolderOf(props.movie.token)
+  const currentHolder = holder !== undefined && holder !== BLACK_HOLE ? holder : props.movie.creator
+  const isOwner = !!account && Object.is(account, currentHolder)
+
   return (
     <TableContainer component={Paper}>
       <MovieProfileOffersTableWrapper size='small' aria-label='purchases'>
@@ -27,11 +37,14 @@ const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({ rows }): JS
             <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_FROM' /></TableCell>
             <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_PRICE' /></TableCell>
             <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_DATE' /></TableCell>
+            { isOwner &&
+              <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_ACTION' /></TableCell>
+            }
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row, index) => {
-            return <MovieProfileOffersTableRow {...row} key={index} />
+            return <MovieProfileOffersTableRow {...row} key={index} isOwner={isOwner} />
           })}
         </TableBody>
       </MovieProfileOffersTableWrapper>
@@ -39,7 +52,7 @@ const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({ rows }): JS
   )
 }
 
-const MovieProfileOffersTableRow: FC<MovieBid> = (props): JSX.Element => {
+const MovieProfileOffersTableRow: FC<MovieBid & { isOwner : boolean }> = (props): JSX.Element => {
   return (
     <TableRow>
       <TableCell sx={{ opacity: 0.8 }}>
@@ -51,6 +64,11 @@ const MovieProfileOffersTableRow: FC<MovieBid> = (props): JSX.Element => {
       <TableCell sx={{ opacity: 0.8 }}>
         {props.created_at}
       </TableCell>
+      { props.isOwner &&
+        <TableCell>
+          <AcceptOffer buttonSx={{padding: '6px 16px'}} price={props.bid} />
+        </TableCell>
+      }
     </TableRow>
   )
 }
