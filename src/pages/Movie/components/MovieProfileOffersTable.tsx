@@ -37,7 +37,6 @@ const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({ rows , ...p
             <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_FROM' /></TableCell>
             <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_PRICE' /></TableCell>
             <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_DATE' /></TableCell>
-            <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_ACTION' /></TableCell>
             { isOwner &&
               <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_ACTION' /></TableCell>
             }
@@ -47,10 +46,6 @@ const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({ rows , ...p
           {rows.map((row, index) => {
             return <MovieProfileOffersTableRow {...row} key={index} isOwner={isOwner} />
           })}
-          <MovieProfileOffersTableRow isOwner={true} bid={10} id='0XOO' account='0X001' created_at={'01/02/03'} />
-          <MovieProfileOffersTableRow isOwner={true} bid={11} id='0XO1' account='0X002' created_at={'01/02/03'} />
-          <MovieProfileOffersTableRow isOwner={true} bid={12} id='0XO2' account='0X003' created_at={'01/02/03'} />
-          <MovieProfileOffersTableRow isOwner={true} bid={13} id='0XO3' account='0X004' created_at={'01/02/03'} />
         </TableBody>
       </MovieProfileOffersTableWrapper>
     </TableContainer>
