@@ -66,9 +66,12 @@ const Modal: FC<ModalProps> = ({ Icon, ...props }): JSX.Element => {
             props.isOpen
               ? (
                 <ModalContent borderRadius={1} zIndex={1}>
-                  <ModalClose onClick={() => props.onClose()}>
-                    <IconX stroke={1} />
-                  </ModalClose>
+                  {
+                    props.canClose &&
+                    <ModalClose onClick={() => props.onClose()}>
+                      <IconX stroke={1} />
+                    </ModalClose>
+                  }
                   <ModalScroller>
                     {props.children}
                   </ModalScroller>
