@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 
 // MUI IMPORTS
 import {
-  Container, Grid, Link, styled, Typography, TypographyProps
+  Container, Grid, Link, styled, Typography, TypographyProps, Zoom
 } from '@mui/material'
 
 // PROJECT IMPORTS
@@ -19,6 +19,7 @@ import { Translation } from '@src/i18n'
 import { Movie } from '@state/movies/types'
 import MovieProfileDetails from '@pages/Movie/components/MovieProfileDetails'
 import MovieProfileActivityTable from '@pages/Movie/components/MovieProfileActivityTable'
+import {LightTooltip} from "@components/Tooltip";
 
 // ===========================|| MOVIE - PROFILE - VIEW ||=========================== //
 
@@ -41,13 +42,15 @@ export const MovieProfileView: FC<Movie> = (props): JSX.Element => {
                     <Typography variant='h2' color='primary'>{props.title}</Typography>
                   </Grid>
                   <Grid item xs={12}>
-                    <TruncatedTypography
-                      variant='h4' color='primary'
-                      fontWeight={400} lines={7}
-                      sx={{ m: 0 }}
-                    >
-                      {props.synopsis}
-                    </TruncatedTypography>
+                    <LightTooltip TransitionComponent={Zoom} title={props.synopsis}>
+                      <TruncatedTypography
+                        variant='h4' color='primary'
+                        fontWeight={400} lines={7}
+                        sx={{ m: 0 }}
+                      >
+                        {props.synopsis}
+                      </TruncatedTypography>
+                    </LightTooltip>
                   </Grid>
                 </Grid>
               </Grid>
