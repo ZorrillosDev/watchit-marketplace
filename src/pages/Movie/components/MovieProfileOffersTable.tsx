@@ -4,11 +4,12 @@ import React, { FC } from 'react'
 // MUI IMPORTS
 import {
   styled, Table, TableHead, TableCell,
-  TableBody, TableRow, TableProps, Paper, TableContainer
+  TableBody, TableRow, TableProps, Paper, TableContainer, Box, Typography
 } from '@mui/material'
 
 // PROJECT IMPORTS
 import { String } from '@src/utils'
+import { Bolt } from '@components/Icons'
 import { Translation } from '@src/i18n'
 import {Movie, MovieBid} from '@state/movies/types'
 import {useEthers} from "@usedapp/core";
@@ -31,23 +32,34 @@ const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({ rows , ...p
 
   return (
     <TableContainer component={Paper}>
-      <MovieProfileOffersTableWrapper size='small' aria-label='purchases'>
-        <TableHead>
-          <TableRow>
-            <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_FROM' /></TableCell>
-            <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_PRICE' /></TableCell>
-            <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_DATE' /></TableCell>
-            { isOwner &&
-              <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_ACTION' /></TableCell>
-            }
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row, index) => {
-            return <MovieProfileOffersTableRow {...row} key={index} isOwner={isOwner} />
-          })}
-        </TableBody>
-      </MovieProfileOffersTableWrapper>
+      {
+        rows.length ? (
+          <MovieProfileOffersTableWrapper size='small' aria-label='purchases'>
+            <TableHead>
+              <TableRow>
+                <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_FROM' /></TableCell>
+                <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_PRICE' /></TableCell>
+                <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_DATE' /></TableCell>
+                { isOwner &&
+                <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_ACTION' /></TableCell>
+                }
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row, index) => {
+                return <MovieProfileOffersTableRow {...row} key={index} isOwner={isOwner} />
+              })}
+            </TableBody>
+          </MovieProfileOffersTableWrapper>
+        ) : (
+          <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' sx={{ p: 4 }}>
+            <Bolt sx={{ pb: 2, fontSize: '3.3rem'}} />
+            <Typography>
+              <Translation target={isOwner ? 'MOVIE_PROFILE_OFFERS_TABLE_EMPTY_OWNER' : 'MOVIE_PROFILE_OFFERS_TABLE_EMPTY'} />
+            </Typography>
+          </Box>
+        )
+      }
     </TableContainer>
   )
 }
