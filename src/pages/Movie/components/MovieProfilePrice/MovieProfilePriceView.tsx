@@ -85,7 +85,6 @@ export const MovieProfilePriceView: FC<Movie> = (props): JSX.Element => {
   )
 }
 
-
 export const MovieProfilePriceSectionWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   width: '100%',
   border: '1px solid',
