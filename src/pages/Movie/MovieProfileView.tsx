@@ -41,13 +41,13 @@ export const MovieProfileView: FC<Movie> = (props): JSX.Element => {
                     <Typography variant='h2' color='primary'>{props.title}</Typography>
                   </Grid>
                   <Grid item xs={12}>
-                      <TruncatedTypography
+                    <TruncatedTypography
                         variant='h4' color='primary'
                         fontWeight={400} lines={7}
-                        sx={{ m: 0 }}
-                      >
-                        {props.synopsis}
-                      </TruncatedTypography>
+                        sx={{m: 0}}
+                    >
+                      {props.synopsis}
+                    </TruncatedTypography>
                   </Grid>
                 </Grid>
               </Grid>
@@ -57,7 +57,7 @@ export const MovieProfileView: FC<Movie> = (props): JSX.Element => {
                   <MovieProfilePrice {...props} />
                   <Grid item xs={12} sx={{pt: '3rem !important'}}>
                     <MovieProfileSectionWrapper>
-                      <Link href={`https://rinkeby.etherscan.io/address/${props.creator}`} target={'__blank'}>
+                      <Link href={`https://rinkeby.etherscan.io/address/${props.creator}`} target='__blank'>
                         <MovieProfileUser address={props.creator} full/>
                       </Link>
                       <MovieProfileCreatorTypography variant='body1' color='primary'>
@@ -73,16 +73,16 @@ export const MovieProfileView: FC<Movie> = (props): JSX.Element => {
                   {/*    iconStart={<IconMovie stroke={1} />} */}
                   {/*  /> */}
                   {/* </Grid> */}
-                  {/* <Grid item xs={12}>*/}
-                  {/*   <Link href={`https://rinkeby.etherscan.io/address/${props.token}`} target={'__blank'}>*/}
-                  {/*    <MovieProfileSection*/}
-                  {/*      component={Button}*/}
-                  {/*      text={<Translation target='MOVIE_PROFILE_VIEW_ETHERSCAN' />}*/}
-                  {/*      iconStart={<IconEye stroke={1} />}*/}
-                  {/*      iconEnd={<IconExternalLink stroke={1} />}*/}
-                  {/*    />*/}
-                  {/*   </Link>*/}
-                  {/* </Grid>*/}
+                  {/* <Grid item xs={12}> */}
+                  {/*   <Link href={`https://rinkeby.etherscan.io/address/${props.token}`} target={'__blank'}> */}
+                  {/*    <MovieProfileSection */}
+                  {/*      component={Button} */}
+                  {/*      text={<Translation target='MOVIE_PROFILE_VIEW_ETHERSCAN' />} */}
+                  {/*      iconStart={<IconEye stroke={1} />} */}
+                  {/*      iconEnd={<IconExternalLink stroke={1} />} */}
+                  {/*    /> */}
+                  {/*   </Link> */}
+                  {/* </Grid> */}
                   <MovieProfileDetails {...props} />
                   <MovieProfileOffers/>
                 </Grid>

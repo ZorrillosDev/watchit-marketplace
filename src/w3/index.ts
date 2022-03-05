@@ -11,16 +11,16 @@ export const config: Config = {
 }
 
 export function getNetworkSettings(networkName: ChainId | undefined): NetworkSetting {
-  /**
+    /**
      * @param {ChainId} networkName network to retrieve contract
      * @return {NetworkSetting}
      */
 
-  const contractAddressCollection: { [key: number]: NetworkSetting } = {
-    [ChainId.Kovan]: {
-      CHAIN_NAME: 'KOVAN',
-      PURCHASE_GATEWAY: process.env.KOVAN_CONTRACT_PURCHASE_GATEWAY ?? '',
-      NFT: process.env.KOVAN_CONTRACT_NFT ?? '',
+    const contractAddressCollection: { [key: number]: NetworkSetting } = {
+        [ChainId.Kovan]: {
+            CHAIN_NAME: 'KOVAN',
+            PURCHASE_GATEWAY: process.env.KOVAN_CONTRACT_PURCHASE_GATEWAY ?? '',
+            NFT: process.env.KOVAN_CONTRACT_NFT ?? '',
       WVC: process.env.KOVAN_CONTRACT_FT ?? ''
     },
     [ChainId.Rinkeby]: {

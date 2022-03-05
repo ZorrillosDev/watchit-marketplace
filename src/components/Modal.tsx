@@ -69,7 +69,7 @@ const Modal: FC<ModalProps> = ({ Icon, ...props }): JSX.Element => {
                   {
                     props.canClose &&
                     <ModalClose onClick={() => props.onClose()}>
-                      <IconX stroke={1} />
+                      <IconX stroke={1}/>
                     </ModalClose>
                   }
                   <ModalScroller>

@@ -12,9 +12,9 @@ export function useNFTHolderOf (tokenId: string | undefined): string | undefined
     args: [BigNumber.from(tokenId)]
   }) ?? {}
 
-  return (error == null)
-    ? value?.[0]
-    : undefined
+  return (error === null)
+      ? value?.[0]
+      : undefined
 }
 
 export function useNFTContract (): Contract {

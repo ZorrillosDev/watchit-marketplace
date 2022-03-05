@@ -24,16 +24,17 @@ const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props
   const [isOpen, setOpen] = useState(false)
   const onClose = (): void => setOpen(false)
   const onOpen = (): void => setOpen(true)
+    const isCompact = props.compact === true ? 'small' : 'large'
 
   return (
     <>
-      <Button variant='contained' color='primary' size={props.compact ? 'small' : 'large'} onClick={() => onOpen()} sx={props.buttonSx}>
-        {
-          props.compact ?
-            <Translation target='MOVIE_PROFILE_PRICE_ACCEPT' /> :
-            <Translation target='MOVIE_PROFILE_PRICE_ACCEPT_OFFER' />
-        }
-      </Button>
+        <Button variant='contained' color='primary' size={isCompact} onClick={() => onOpen()} sx={props.buttonSx}>
+            {
+                props.compact === true
+                    ? <Translation target='MOVIE_PROFILE_PRICE_ACCEPT'/>
+                    : <Translation target='MOVIE_PROFILE_PRICE_ACCEPT_OFFER'/>
+            }
+        </Button>
 
       <Modal
         isOpen={isOpen}

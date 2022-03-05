@@ -12,18 +12,18 @@ interface IdenticonProps {
 }
 
 export const PixelArtIdenticon: FC<IdenticonProps> = (props): JSX.Element => {
-  const randomHex = useMemo(() => String.toHex(props.seed), [props.seed])
-  const {seed = '', size = 25, radius = 30, backgroundColor = `${randomHex}`} = props
+    const randomHex = useMemo(() => String.toHex(props.seed), [props.seed])
+    const {seed = '', size = 25, radius = 30, backgroundColor = `${randomHex}`} = props
     const standardSeed = seed.toLowerCase()
 
-  return (
-    <div
-      style={{ width: size, height: size }}
-      dangerouslySetInnerHTML={{
-        __html: createAvatar(style, {
-            seed: standardSeed, size, radius, backgroundColor
-        })
-      }}
-    />
+    return (
+        <div
+            style={{width: size, height: size}}
+            dangerouslySetInnerHTML={{
+                __html: createAvatar(style, {
+                    seed: standardSeed, size, radius, backgroundColor
+                })
+            }}
+        />
   )
 }
