@@ -22,7 +22,7 @@ export const MovieProfilePriceContainer: FC<MovieProfilePriceProps> = (props): J
   const highestBid = bid.shift() // Get first from sorted bids
   const price = highestBid?.bid ?? props.price
 
-  return <MovieProfilePriceView {...{ ...props, ...{ price } }} />
+  return <MovieProfilePriceView {...{...props, ...highestBid, ...{price}}} />
 }
 
 const mapStateToProps = (state: RootStateOrAny): Partial<MoviesState> => {

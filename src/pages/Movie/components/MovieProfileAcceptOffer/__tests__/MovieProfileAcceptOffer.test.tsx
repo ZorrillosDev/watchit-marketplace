@@ -16,7 +16,7 @@ describe('<MovieProfileAcceptOffer />', () => {
   it('should render', () => {
     const component = mount(
       <Provider store={store}>
-        <MovieProfileAcceptOffer price={1} />
+        <MovieProfileAcceptOffer price={1} candidate={'0x0'}/>
       </Provider>
     )
 

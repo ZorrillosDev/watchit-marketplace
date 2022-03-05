@@ -1,5 +1,5 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, {FC} from 'react'
 
 // MUI IMPORTS
 import {
@@ -25,11 +25,6 @@ export interface MovieProfileOffersTableProps {
 }
 
 const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({rows, ...props}): JSX.Element => {
-    const {account} = useEthers()
-    const holder = useNFTHolderOf(props.movie.token)
-    const currentHolder = holder !== undefined && holder !== BLACK_HOLE ? holder : props.movie.creator
-    const isOwner = !!account && Object.is(account, currentHolder)
-
     return (
         <TableContainer component={Paper}>
             {
@@ -41,13 +36,11 @@ const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({rows, ...pro
                                     <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_FROM'/></TableCell>
                                     <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_PRICE'/></TableCell>
                                     <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_DATE'/></TableCell>
-                                    {isOwner &&
-                                      <TableCell><Translation target='MOVIE_PROFILE_OFFERS_TABLE_ACTION'/></TableCell>}
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {rows.map((row, index) => {
-                                    return <MovieProfileOffersTableRow {...row} key={index} isOwner={isOwner}/>
+                                    return <MovieProfileOffersTableRow {...row} key={index}/>
                                 })}
                             </TableBody>
                         </MovieProfileOffersTableWrapper>
@@ -57,16 +50,16 @@ const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({rows, ...pro
                             <Bolt sx={{pb: 2, fontSize: '3.3rem'}}/>
                             <Typography>
                                 <Translation
-                                    target={isOwner ? 'MOVIE_PROFILE_OFFERS_TABLE_EMPTY_OWNER' : 'MOVIE_PROFILE_OFFERS_TABLE_EMPTY'}/>
+                                    target={'MOVIE_PROFILE_OFFERS_TABLE_EMPTY'}/>
                             </Typography>
                         </Box>
                     )
             }
-    </TableContainer>
-  )
+        </TableContainer>
+    )
 }
 
-const MovieProfileOffersTableRow: FC<MovieBid & { isOwner: boolean }> = (props): JSX.Element => {
+const MovieProfileOffersTableRow: FC<MovieBid> = (props): JSX.Element => {
     return (
         <TableRow>
             <TableCell sx={{opacity: 0.8}}>
@@ -77,25 +70,21 @@ const MovieProfileOffersTableRow: FC<MovieBid & { isOwner: boolean }> = (props):
             </TableCell>
             <TableCell sx={{opacity: 0.8}}>
                 {props.created_at}
-      </TableCell>
-            {props.isOwner &&
-              <TableCell>
-                <AcceptOffer buttonSx={{padding: '6px 16px'}} price={props.bid}/>
-              </TableCell>}
-    </TableRow>
-  )
+            </TableCell>
+        </TableRow>
+    )
 }
 
 export default MovieProfileOffersTable
 
-const MovieProfileOffersTableWrapper = styled(Table)<TableProps>(({ theme }) => ({
-  'th,td': {
-    color: theme.palette.primary.main,
-    fontSize: '0.85rem',
-    whiteSpace: 'nowrap'
-  },
-  th: {
-    borderColor: `${theme.palette.divider} !important`,
-    fontWeight: 600
-  }
+const MovieProfileOffersTableWrapper = styled(Table)<TableProps>(({theme}) => ({
+    'th,td': {
+        color: theme.palette.primary.main,
+        fontSize: '0.85rem',
+        whiteSpace: 'nowrap'
+    },
+    th: {
+        borderColor: `${theme.palette.divider} !important`,
+        fontWeight: 600
+    }
 }))

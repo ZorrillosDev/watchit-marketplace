@@ -1,5 +1,5 @@
 // REACT IMPORTS
-import React, { FC, useState } from 'react'
+import React, {FC, useCallback, useState} from 'react'
 
 // PROJECT IMPORTS
 import BidView from '@components/Bid/BidView'
@@ -25,8 +25,10 @@ const BidContainer: FC<BidContainerProps> = (props): JSX.Element => {
     commitBidMovie
   } = props
 
-  const handleSetBid = (bid: number): void => {
-    if (account === undefined) { return }
+  const handleSetBid = useCallback((bid: number): void => {
+    if (account === undefined) {
+      return
+    }
 
     setIsLoading(true)
     commitBidMovie({
@@ -37,7 +39,7 @@ const BidContainer: FC<BidContainerProps> = (props): JSX.Element => {
     setTimeout(() => {
       setIsLoading(false)
     }, 1000)
-  }
+  }, [account])
 
   return <BidView {...{ buttonSx, isLoading, handleSetBid }} />
 }

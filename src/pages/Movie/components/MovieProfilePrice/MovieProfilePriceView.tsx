@@ -4,7 +4,7 @@ import React, {FC} from 'react'
 // MUI IMPORTS
 import {
     Box, BoxProps,
-    Divider, Grid, GridProps, styled, Typography
+    Divider, Grid, GridProps, Link, styled, Typography
 } from '@mui/material'
 
 // PROJECT IMPORTS
@@ -15,19 +15,21 @@ import {IconEth} from '@components/Icons'
 import {Translation} from '@src/i18n'
 import {SxProps, Theme} from '@mui/system'
 import {useNFTHolderOf} from '@hooks/useNFTContract'
-import {Movie} from '@state/movies/types'
+import {Movie, MovieBid} from '@state/movies/types'
 import {BLACK_HOLE} from '@w3/CONSTANTS'
 import {useEthers} from '@usedapp/core'
 
 // ===========================|| MOVIE - PROFILE - PRICE - VIEW ||=========================== //
 
-export const MovieProfilePriceView: FC<Movie> = (props): JSX.Element => {
+export type MovieProfilePriceViewProps = Movie & Partial<MovieBid>
+
+export const MovieProfilePriceView: FC<MovieProfilePriceViewProps> = (props): JSX.Element => {
     const {account} = useEthers()
     const holder = useNFTHolderOf(props.token)
 
     const currentHolder = holder !== undefined && holder !== BLACK_HOLE ? holder : props.creator
     const iamCurrentHolder = account?.toLowerCase() === currentHolder.toLowerCase()
-
+    const availableToAcceptOffer = props.price > 0 && props.account !== undefined // Has bid available?
 
     return (
         <Grid item xs={12}>
@@ -64,7 +66,9 @@ export const MovieProfilePriceView: FC<Movie> = (props): JSX.Element => {
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} display='flex'>
-                                <MovieProfileUser address={currentHolder}/>
+                                <Link href={`https://rinkeby.etherscan.io/address/${currentHolder}`} target='__blank'>
+                                    <MovieProfileUser address={currentHolder}/>
+                                </Link>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -76,8 +80,12 @@ export const MovieProfilePriceView: FC<Movie> = (props): JSX.Element => {
                         : <></>
                 }
                 {
-                    account !== undefined && iamCurrentHolder && props.price > 0
-                        ? <AcceptOffer buttonSx={MovieProfileOfferButtonSx} price={props.price}/>
+                    account !== undefined && iamCurrentHolder && availableToAcceptOffer
+                        ? <AcceptOffer
+                            candidate={props.account ?? ""}
+                            buttonSx={MovieProfileOfferButtonSx}
+                            price={props.price}
+                        />
                         : <></>
                 }
                 {/* { */}
