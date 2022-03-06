@@ -82,5 +82,7 @@
   "MOVIE_CREATE_SUCCESS_UPLOADED": "Película cargada con éxito!",
   "MOVIE_CREATE_SUCCESS_UPLOADED_MESSAGE": "Le enviaremos una notificación cuando termine el proceso de ingesta/transcodificación",
   "MOVIE_CREATE_SUCCESS_UPLOADING": "Subiendo tu película",
-  "MOVIE_CREATE_SUCCESS_UPLOADING_MESSAGE": "Esto puede tomar algo de tiempo, dependiendo el tamaño de tu archivo y velocidad de internet"
+  "MOVIE_CREATE_SUCCESS_UPLOADING_MESSAGE": "Esto puede tomar algo de tiempo, dependiendo el tamaño de tu archivo y velocidad de internet",
+  "MOVIE_ACCEPT_OFFER_SUCCESS": "Oferta aceptada",
+  "MOVIE_ACCEPT_OFFER_ERROR": "Error aceptando oferta "
 }

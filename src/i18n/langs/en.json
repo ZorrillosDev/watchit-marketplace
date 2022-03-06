@@ -31,7 +31,7 @@
   "MOVIE_PROFILE_PRICE_BUY": "Confirm payment",
   "MOVIE_PROFILE_PRICE_PAY": "Pay",
   "MOVIE_PROFILE_PRICE_CONFIRMATION": "Confirmation",
-  "MOVIE_PROFILE_PRICE_CONFIRMATION_ACCEPT": "You are about to accept an offer of",
+  "MOVIE_PROFILE_PRICE_CONFIRMATION_ACCEPT": "You are about to accept an offer from",
   "MOVIE_PROFILE_PRICE_CONFIRMATION_PAY": "You are about to pay",
   "MOVIE_PROFILE_PRICE_CONFIRMATION_FOR": "for",
   "MOVIE_PROFILE_VIEW_WATCHIT": "View on watchit",
@@ -82,5 +82,7 @@
   "MOVIE_CREATE_SUCCESS_UPLOADED": "Successfully uploaded movie!",
   "MOVIE_CREATE_SUCCESS_UPLOADED_MESSAGE": "We will send you a notification when the ingest/transcoding process is complete",
   "MOVIE_CREATE_SUCCESS_UPLOADING": "Uploading your movie",
-  "MOVIE_CREATE_SUCCESS_UPLOADING_MESSAGE": "This may take some time, depending on your file size and internet speed"
+  "MOVIE_CREATE_SUCCESS_UPLOADING_MESSAGE": "This may take some time, depending on your file size and internet speed",
+  "MOVIE_ACCEPT_OFFER_SUCCESS": "Offer Accepted",
+  "MOVIE_ACCEPT_OFFER_ERROR": "Error trying to Accepted for "
 }

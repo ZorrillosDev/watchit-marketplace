@@ -21,7 +21,7 @@ import {useEthers} from '@usedapp/core'
 
 // ===========================|| MOVIE - PROFILE - PRICE - VIEW ||=========================== //
 
-export type MovieProfilePriceViewProps = Movie & Partial<MovieBid>
+export type MovieProfilePriceViewProps = Movie & MovieBid
 
 export const MovieProfilePriceView: FC<MovieProfilePriceViewProps> = (props): JSX.Element => {
     const {account} = useEthers()
@@ -82,9 +82,8 @@ export const MovieProfilePriceView: FC<MovieProfilePriceViewProps> = (props): JS
                 {
                     account !== undefined && iamCurrentHolder && availableToAcceptOffer
                         ? <AcceptOffer
-                            candidate={props.account ?? ""}
                             buttonSx={MovieProfileOfferButtonSx}
-                            price={props.price}
+                            {...props}
                         />
                         : <></>
                 }
