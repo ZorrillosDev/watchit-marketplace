@@ -19,7 +19,6 @@ export const setApprovalFor = <P extends Web3SetApprovalForArgs>(params: P): Thu
   }
 }
 
-
 export const safePurchase = <P extends Web3SafePurchaseArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
@@ -27,7 +26,7 @@ export const safePurchase = <P extends Web3SafePurchaseArgs>(params: P): ThunkAc
       dispatch(setCallResult(result))
     } catch (e) {
       // If any issue we check if response is received if not just send empty object
-      dispatch(setCallResult({status: 0} as Web3CallResult))
+      dispatch(setCallResult({ status: 0 } as Web3CallResult))
     }
   }
 }
