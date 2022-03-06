@@ -24,6 +24,7 @@
   "MOVIE_PROFILE_OFFERS_TABLE_ACTION": "Action",
   "MOVIE_PROFILE_OFFERS_TABLE_EMPTY": "No active bids yet. Be the first to make a bid!",
   "MOVIE_PROFILE_OFFERS_TABLE_EMPTY_OWNER": "You will receive notifications about new bids as they will appear",
+  "MOVIE_PROFILE_OFFERS_SUCCESS": "Your offer was successfully created",
   "MOVIE_PROFILE_PRICE_HIGHER": "Highest Offer",
   "MOVIE_PROFILE_PRICE_MAKE_OFFER": "Make Offer",
   "MOVIE_PROFILE_PRICE_ACCEPT_OFFER": "Accept Offer",

@@ -1,7 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Movie, MovieBid, MoviesState } from '@state/movies/types'
 
-export const initialState: MoviesState = {
+export interface MoviesResultState {
+  response?: {
+    success: boolean
+    message: string | undefined
+  }
+}
+
+export const initialState: MoviesState & MoviesResultState = {
   progress: 0,
   movie: {} as any,
   collection: [] as any,
@@ -29,10 +36,13 @@ const recentReducer = createSlice({
     },
     addMovie (state: MoviesState, action: PayloadAction<Movie>) {
       state.collection.push(action.payload)
+    },
+    setMovieResult: (state: MoviesResultState, action: PayloadAction<MoviesResultState>) => {
+      state.response = action.payload.response
     }
   }
 })
 
 const { actions, reducer } = recentReducer
-export const { setMovies, setMovie, setBidsToMovie, addMovie, setUploadProgress, addBidToMovie } = actions
+export const { setMovies, setMovie, setBidsToMovie, addMovie, setUploadProgress, addBidToMovie, setMovieResult } = actions
 export default reducer

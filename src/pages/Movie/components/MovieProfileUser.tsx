@@ -17,19 +17,19 @@ import { String } from '@src/utils'
 
 const MovieProfileUser: FC<{ address: string, full?: boolean }> = (props): JSX.Element => {
   return (
-      <MovieProfileUserChip
-          icon={<PixelArtIdenticon seed={props.address} size={35}/>}
-          label={(
-              <Box display='flex' flexDirection='column' paddingRight={1}>
-                  <MovieProfileAddressTypography variant='body1'>
-                      {props.full ? props.address : String.minifyHash(props.address)}
-                  </MovieProfileAddressTypography>
-              </Box>
+    <MovieProfileUserChip
+      icon={<PixelArtIdenticon seed={props.address} size={35} />}
+      label={(
+        <Box display='flex' flexDirection='column' paddingRight={1}>
+          <MovieProfileAddressTypography variant='body1'>
+            {props.full ? props.address : String.minifyHash(props.address)}
+          </MovieProfileAddressTypography>
+        </Box>
           )}
-          variant='outlined'
-          aria-haspopup='true'
-          color='primary'
-      />
+      variant='outlined'
+      aria-haspopup='true'
+      color='primary'
+    />
   )
 }
 

@@ -4,7 +4,7 @@ import React, { FC, useState } from 'react'
 // PROJECT IMPORTS
 import { SxProps } from '@mui/system'
 import { Theme } from '@mui/material'
-import {useEthers} from '@usedapp/core'
+import { useEthers } from '@usedapp/core'
 import MovieProfilePayView from '@pages/Movie/components/MovieProfilePay/MovieProfilePayView'
 
 // ===========================|| MOVIE PROFILE PAY - CONTAINER ||=========================== //

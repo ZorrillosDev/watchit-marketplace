@@ -1,13 +1,13 @@
 // REACT IMPORTS
-import React, {FC, useEffect} from 'react'
+import React, { FC, useEffect } from 'react'
 
 // PROJECT IMPORTS
-import {MovieProfileOffersView} from '@pages/Movie/components/MovieProfileOffers/MovieProfileOffersView'
-import {MovieArgs, MoviesActions, MoviesState} from '@state/movies/types'
-import {connect, RootStateOrAny} from 'react-redux'
-import {fetchRecentMovieBids} from '@state/movies/actions'
-import {selectBidCollection, selectMovie} from '@state/movies/selector'
-import {useParams} from 'react-router'
+import { MovieProfileOffersView } from '@pages/Movie/components/MovieProfileOffers/MovieProfileOffersView'
+import { MovieArgs, MoviesActions, MoviesState } from '@state/movies/types'
+import { connect, RootStateOrAny } from 'react-redux'
+import { fetchRecentMovieBids } from '@state/movies/actions'
+import { selectBidCollection, selectMovie } from '@state/movies/selector'
+import { useParams } from 'react-router'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 
@@ -15,7 +15,7 @@ import {useParams} from 'react-router'
 
 type MovieProfileOffersProps = MoviesActions & MoviesState
 const MovieProfileOffersContainer: FC<MovieProfileOffersProps> = (props): JSX.Element => {
-  const {id} = useParams<MovieArgs>()
+  const { id } = useParams<MovieArgs>()
   const {
     fetchRecentMovieBids,
     bidCollection,
@@ -23,20 +23,20 @@ const MovieProfileOffersContainer: FC<MovieProfileOffersProps> = (props): JSX.El
   } = props
 
   useEffect(() => {
-    fetchRecentMovieBids({id})
+    fetchRecentMovieBids({ id })
   }, [])
 
-  return <MovieProfileOffersView rows={bidCollection} movie={movie}/>
+  return <MovieProfileOffersView rows={bidCollection} movie={movie} />
 }
 
-const mapDispatchToProps: Partial<MoviesActions> = {fetchRecentMovieBids}
+const mapDispatchToProps: Partial<MoviesActions> = { fetchRecentMovieBids }
 const mapStateToProps = (state: RootStateOrAny): Partial<MoviesState> => {
   const bidCollection = selectBidCollection(state)
   const movie = selectMovie(state)
-  return {bidCollection, movie}
+  return { bidCollection, movie }
 }
 
 export const MovieProfileOffers = connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(MovieProfileOffersContainer)

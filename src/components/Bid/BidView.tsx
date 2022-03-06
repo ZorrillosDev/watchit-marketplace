@@ -13,22 +13,29 @@ import BidSummary from '@components/Bid/BidSummary'
 import { useEtherBalance, useEthers } from '@usedapp/core'
 import { BigNumber } from 'ethers'
 import { Ethers } from '@src/utils'
+import { MoviesResultState } from '@state/movies/reducer'
+import AlertState from '@components/AlertState'
 
 // ===========================|| BID - VIEW ||=========================== //
 
 export interface ModalBidViewProps {
   isLoading: boolean
   handleSetBid: (bid: number) => void
+  clickHandler: () => void
   buttonSx?: SxProps<Theme>
 }
 
-const BidView: FC<ModalBidViewProps> = (props): JSX.Element => {
+const BidView: FC<ModalBidViewProps & MoviesResultState> = (props): JSX.Element => {
   const { account } = useEthers()
   const balance: BigNumber | undefined = useEtherBalance(account)
   const [bidAmount, setBidAmount] = useState(0)
   const [isOpen, setOpen] = useState(false)
   const onClose = (): void => setOpen(false)
   const onOpen = (): void => setOpen(true)
+  const onClick = (): void => {
+    props.handleSetBid(bidAmount)
+    props.clickHandler()
+  }
 
   return (
     <>
@@ -61,18 +68,23 @@ const BidView: FC<ModalBidViewProps> = (props): JSX.Element => {
                 amount={bidAmount} fee={0.03}
               />
             </Grid>
-            <Grid item xs={12}>
-              <LoadingButton
-                variant='contained'
-                color='primary'
-                size='large'
-                loading={props.isLoading}
-                onClick={() => props.handleSetBid(bidAmount)}
-                fullWidth
-              >
-                Place a bid
-              </LoadingButton>
-            </Grid>
+            <AlertState response={props.response} />
+            {
+              (!Object.is(props?.response?.success, true)) && (
+                <Grid item xs={12}>
+                  <LoadingButton
+                    variant='contained'
+                    color='primary'
+                    size='large'
+                    loading={props.isLoading}
+                    onClick={onClick}
+                    fullWidth
+                  >
+                    Place a bid
+                  </LoadingButton>
+                </Grid>
+              )
+            }
           </Grid>
         </ModalBidContent>
       </Modal>
