@@ -7,7 +7,6 @@ export {setCallResult} from '@state/web3/reducer'
 export const setApprovalFor = <P extends Web3SetApprovalForArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      // const signer = new ethers.providers.Web3Provider(window.ethereum)
       const result: Web3CallResult = await callSetApprovalFor(params)
       dispatch(setCallResult(result))
     } catch (e) {
