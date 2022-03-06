@@ -14,7 +14,7 @@ import AcceptOffer from '@pages/Movie/components/MovieProfileAcceptOffer'
 import {IconEth} from '@components/Icons'
 import {Translation} from '@src/i18n'
 import {SxProps, Theme} from '@mui/system'
-import {useNFTHolderOf} from '@hooks/useNFTContract'
+import {useNFTHolderOf, useNFTIsApprovedFor} from '@hooks/useNFTContract'
 import {Movie, MovieBid} from '@state/movies/types'
 import {BLACK_HOLE} from '@w3/CONSTANTS'
 import {useEthers} from '@usedapp/core'
@@ -26,10 +26,13 @@ export type MovieProfilePriceViewProps = Movie & MovieBid
 export const MovieProfilePriceView: FC<MovieProfilePriceViewProps> = (props): JSX.Element => {
     const {account} = useEthers()
     const holder = useNFTHolderOf(props.token)
+    const approvedBid = useNFTIsApprovedFor(props.account, props.token)
 
     const currentHolder = holder !== undefined && holder !== BLACK_HOLE ? holder : props.creator
     const iamCurrentHolder = account?.toLowerCase() === currentHolder.toLowerCase()
-    const availableToAcceptOffer = props.price > 0 && props.account !== undefined // Has bid available?
+    // Has bid available and is not approved?
+    const availableToAcceptOffer = props.price > 0 && props.account !== undefined && approvedBid === undefined
+
 
     return (
         <Grid item xs={12}>
@@ -81,16 +84,13 @@ export const MovieProfilePriceView: FC<MovieProfilePriceViewProps> = (props): JS
                 }
                 {
                     account !== undefined && iamCurrentHolder && availableToAcceptOffer
-                        ? <AcceptOffer
-                            buttonSx={MovieProfileOfferButtonSx}
-                            {...props}
-                        />
+                        ? <AcceptOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
                         : <></>
                 }
-                {/* { */}
-                {/*  account !== undefined && account === props.creator && */}
-                {/*  <PayOffer buttonSx={MovieProfileOfferButtonSx} price={props.price} title={props.title} /> */}
-                {/* } */}
+                {/*{*/}
+                {/*    account !== undefined && approvedBid !== undefined && account === props.account &&*/}
+                {/*  <PayOffer buttonSx={MovieProfileOfferButtonSx} price={props.price} title={props.title}/>*/}
+                {/*}*/}
             </MovieProfilePriceSectionWrapper>
         </Grid>
     )

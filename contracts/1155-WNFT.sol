@@ -82,7 +82,6 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
         return _nftApprovals[cid][operator] != 0;
     }
 
-
     /** @notice Check for safe transfer using custom approval
       * @param cid IPFS content unique identifier.
       * @dev emit PurchaseResponseReceived on purchase ready to get done

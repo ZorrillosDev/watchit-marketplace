@@ -19,6 +19,23 @@ export function useNFTHolderOf(tokenId: string | undefined): string | undefined 
         : undefined
 }
 
+export function useNFTIsApprovedFor(operator: string | undefined, tokenId: string | undefined): boolean {
+    const networkSettings = getNetworkSettings()
+
+    if (operator === undefined)
+        return false
+
+    const {value, error} = useCall({
+        contract: new Contract(networkSettings.NFT, WNFT),
+        method: 'isApprovedFor',
+        args: [operator, BigNumber.from(tokenId)]
+    }) ?? {}
+
+    return (error === null)
+        ? value?.[0]
+        : false
+}
+
 
 export function useListenForEvent(contract: Contract, event: string): object | undefined {
     const [events, setEvent] = useState()
