@@ -11,6 +11,7 @@ import {
 import MovieProfileUser from '@pages/Movie/components/MovieProfileUser'
 import ModalBid from '@components/Bid'
 import AcceptOffer from '@pages/Movie/components/MovieProfileAcceptOffer'
+import PayOffer from '@pages/Movie/components/MovieProfilePay'
 import {IconEth} from '@components/Icons'
 import {Translation} from '@src/i18n'
 import {SxProps, Theme} from '@mui/system'
@@ -31,8 +32,8 @@ export const MovieProfilePriceView: FC<MovieProfilePriceViewProps> = (props): JS
     const currentHolder = holder !== undefined && holder !== BLACK_HOLE ? holder : props.creator
     const iamCurrentHolder = account?.toLowerCase() === currentHolder.toLowerCase()
     // Has bid available and is not approved?
-    const availableToAcceptOffer = props.price > 0 && props.account !== undefined && approvedBid === undefined
-
+    const availableToAcceptOffer = props.price > 0 && props.account !== undefined && !approvedBid
+    const iamCurrentApprovedBidder = props.account !== undefined && account?.toLowerCase() == props.account.toLowerCase()
 
     return (
         <Grid item xs={12}>
@@ -77,8 +78,9 @@ export const MovieProfilePriceView: FC<MovieProfilePriceViewProps> = (props): JS
                     </Grid>
                 </Grid>
 
+
                 {
-                    account !== undefined && !iamCurrentHolder
+                    account !== undefined && !iamCurrentHolder && !approvedBid
                         ? <ModalBid buttonSx={MovieProfileOfferButtonSx}/>
                         : <></>
                 }
@@ -87,10 +89,11 @@ export const MovieProfilePriceView: FC<MovieProfilePriceViewProps> = (props): JS
                         ? <AcceptOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
                         : <></>
                 }
-                {/*{*/}
-                {/*    account !== undefined && approvedBid !== undefined && account === props.account &&*/}
-                {/*  <PayOffer buttonSx={MovieProfileOfferButtonSx} price={props.price} title={props.title}/>*/}
-                {/*}*/}
+                {
+                    account !== undefined && approvedBid && iamCurrentApprovedBidder
+                        ? <PayOffer buttonSx={MovieProfileOfferButtonSx} {...props}/>
+                        : <></>
+                }
             </MovieProfilePriceSectionWrapper>
         </Grid>
     )
