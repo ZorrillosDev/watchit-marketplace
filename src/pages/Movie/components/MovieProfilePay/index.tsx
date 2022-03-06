@@ -1,3 +1,3 @@
 // ===========================|| MOVIE PROFILE PAY EXPORTS ||=========================== //
 
-export { MovieProfilePayContainer as default } from '@pages/Movie/components/MovieProfilePay/MovieProfilePayContainer'
+export {MovieProfilePay as default} from '@pages/Movie/components/MovieProfilePay/MovieProfilePayContainer'

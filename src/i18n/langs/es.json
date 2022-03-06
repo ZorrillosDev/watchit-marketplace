@@ -85,5 +85,7 @@
   "MOVIE_CREATE_SUCCESS_UPLOADING": "Subiendo tu película",
   "MOVIE_CREATE_SUCCESS_UPLOADING_MESSAGE": "Esto puede tomar algo de tiempo, dependiendo el tamaño de tu archivo y velocidad de internet",
   "MOVIE_ACCEPT_OFFER_SUCCESS": "Oferta aceptada",
-  "MOVIE_ACCEPT_OFFER_ERROR": "Error aceptando oferta "
+  "MOVIE_ACCEPT_OFFER_ERROR": "Error aceptando oferta",
+  "MOVIE_PAY_OFFER_SUCCESS": "NFT adquirido",
+  "MOVIE_PAY_OFFER_ERROR": "Error pagando oferta"
 }
