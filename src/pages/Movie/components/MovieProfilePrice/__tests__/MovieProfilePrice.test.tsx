@@ -19,6 +19,9 @@ jest.mock('@usedapp/core')
 jest.mock('@hooks/useNFTContract', () => ({
   useNFTHolderOf: () => {
     return '0x0'
+  },
+  useNFTIsApprovedFor: () => {
+    return true
   }
 }))
 

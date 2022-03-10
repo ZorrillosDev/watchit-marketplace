@@ -6,6 +6,7 @@ import MovieProfilePay from '@pages/Movie/components/MovieProfilePay'
 import { MovieProfilePayContainerProps } from '@pages/Movie/components/MovieProfilePay/MovieProfilePayContainer'
 
 /* eslint-disable no-undef */
+/* eslint-disable  @typescript-eslint/consistent-type-assertions */
 
 jest.mock('react-router', () => ({
   useParams: () => {

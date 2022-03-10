@@ -11,7 +11,6 @@ import Modal from '@components/Modal'
 import { Translation } from '@src/i18n'
 import { Web3State } from '@state/web3/types'
 import { Movie } from '@state/movies/types'
-import { String } from '@src/utils'
 
 // ===========================|| MOVIE PROFILE PAY - VIEW ||=========================== //
 
@@ -55,27 +54,32 @@ const MovieProfilePayView: FC<MovieProfilePayViewProps> = (props): JSX.Element =
             </Grid>
             <Grid item xs={12}>
               {
-                                props.result.status > 0
-                                  ? <Alert severity='success'>
-                                    <strong> {props.title} </strong>
-                                    <Translation target='MOVIE_PAY_OFFER_SUCCESS' />
-
-                                  </Alert>
-                                  : props.result.status == 0
-                                    ? <Alert severity='error'>
-                                      <Translation target='MOVIE_PAY_OFFER_ERROR' />
-                                    </Alert>
-                                    : <LoadingButton
-                                        variant='contained'
-                                        color='primary'
-                                        size='large'
-                                        loading={props.isLoading}
-                                        onClick={() => props.handlePay()}
-                                        fullWidth
-                                      >
-                                      <Translation target='MOVIE_PROFILE_PRICE_PAY' />
-                                    </LoadingButton>
-                            }
+                props.result.status > 0
+                  ? (
+                    <Alert severity='success'>
+                      <strong> {props.title} </strong>
+                      <Translation target='MOVIE_PAY_OFFER_SUCCESS' />
+                    </Alert>
+                    )
+                  : props.result.status === 0
+                    ? (
+                      <Alert severity='error'>
+                        <Translation target='MOVIE_PAY_OFFER_ERROR' />
+                      </Alert>
+                      )
+                    : (
+                      <LoadingButton
+                        variant='contained'
+                        color='primary'
+                        size='large'
+                        loading={props.isLoading}
+                        onClick={() => props.handlePay()}
+                        fullWidth
+                      >
+                        <Translation target='MOVIE_PROFILE_PRICE_PAY' />
+                      </LoadingButton>
+                      )
+              }
             </Grid>
           </Grid>
         </MovieProfilePayContent>

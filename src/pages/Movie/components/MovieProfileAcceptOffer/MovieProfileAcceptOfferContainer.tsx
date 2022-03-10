@@ -2,7 +2,6 @@
 import React, { FC, useCallback, useState } from 'react'
 
 // PROJECT IMPORTS
-import MovieProfileAcceptOfferView from '@pages/Movie/components/MovieProfileAcceptOffer/MovieProfileAcceptOfferView'
 import { SxProps } from '@mui/system'
 import { Theme } from '@mui/material'
 import { useEthers } from '@usedapp/core'
@@ -11,13 +10,11 @@ import { connect, RootStateOrAny } from 'react-redux'
 import { Web3Actions, Web3State } from '@state/web3/types'
 import { setApprovalFor } from '@state/web3/actions'
 import { selectWeb3Result } from '@state/web3/selector'
+import MovieProfileAcceptOfferView, { MovieProfileAcceptOfferViewProps } from '@pages/Movie/components/MovieProfileAcceptOffer/MovieProfileAcceptOfferView'
 
 // ===========================|| ACCEPT OFFER - CONTAINER ||=========================== //
 
-export type MovieProfileAcceptOfferContainerProps = {
-  compact?: boolean
-  buttonSx?: SxProps<Theme>
-} & Web3Actions & Movie & MovieBid & Web3State
+export type MovieProfileAcceptOfferContainerProps = Web3Actions & Omit<MovieProfileAcceptOfferViewProps, 'isLoading' | 'handleAcceptOffer'>
 
 const MovieProfileAcceptOfferContainer: FC<MovieProfileAcceptOfferContainerProps> = (props): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false)

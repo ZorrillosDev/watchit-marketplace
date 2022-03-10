@@ -1,5 +1,5 @@
 // REACT IMPORTS
-import React, { FC, useCallback, useState } from 'react'
+import React, { FC, useCallback, useEffect, useState } from 'react'
 
 // PROJECT IMPORTS
 import BidView from '@components/Bid/BidView'
@@ -7,23 +7,30 @@ import { SxProps } from '@mui/system'
 import { Theme } from '@mui/material'
 import { MovieArgs, MoviesActions } from '@state/movies/types'
 import { commitBidMovie } from '@state/movies/actions'
-import { connect } from 'react-redux'
+import { connect, RootStateOrAny } from 'react-redux'
 import { useEthers } from '@usedapp/core'
 import { useParams } from 'react-router'
+import { MoviesResultState } from '@state/movies/reducer'
 
 // ===========================|| BID - CONTAINER ||=========================== //
 
-type BidContainerProps = { buttonSx?: SxProps<Theme> } & MoviesActions
+type BidContainerProps = { buttonSx?: SxProps<Theme> } & MoviesActions & MoviesResultState
 
 const BidContainer: FC<BidContainerProps> = (props): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false)
   const { id } = useParams<MovieArgs>()
   const { account } = useEthers()
-
   const {
     buttonSx,
     commitBidMovie
   } = props
+
+  useEffect(() => {
+    if (Object.is(props.response, undefined)) {
+      return
+    }
+    setIsLoading(false)
+  }, [props.response])
 
   const handleSetBid = useCallback((bid: number): void => {
     if (account === undefined) {
@@ -36,16 +43,23 @@ const BidContainer: FC<BidContainerProps> = (props): JSX.Element => {
       id,
       bid
     })
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 1000)
   }, [account])
 
-  return <BidView {...{ buttonSx, isLoading, handleSetBid }} />
+  const clickHandler = (): void => {
+    setIsLoading(true)
+  }
+
+  return <BidView {...{ buttonSx, isLoading, handleSetBid, clickHandler }} />
 }
 
 const mapDispatchToProps: Partial<MoviesActions> = { commitBidMovie }
+const mapStateToProps = (state: RootStateOrAny): MoviesResultState => {
+  return {
+    response: state.movies.response
+  }
+}
+
 export const Bid = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(BidContainer)

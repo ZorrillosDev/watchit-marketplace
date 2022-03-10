@@ -1,8 +1,17 @@
 import { ThunkAction, ThunkDispatcher } from '@state/types'
 import { Movie, MoviesArgs, MovieBidArgs, MovieArgs, MovieBid } from '@state/movies/types'
-import { setMovies, setMovie, setUploadProgress, addBidToMovie, setBidsToMovie } from '@state/movies/reducer'
+import {
+  setMovies,
+  setMovie,
+  setUploadProgress,
+  addBidToMovie,
+  setBidsToMovie,
+  setMovieResult,
+  MoviesResultState
+} from '@state/movies/reducer'
 import { request } from '@state/service'
 import { Endpoints } from './service'
+import i18n from '@src/i18n'
 
 export { setMovies, setMovie, setBidsToMovie, addMovie, setUploadProgress, addBidToMovie } from '@state/movies/reducer'
 export const fetchMovieProfile = <P extends MovieArgs>(params: P): ThunkAction<Promise<void>> => {
@@ -41,6 +50,8 @@ export const fetchRecentMovieBids = <P extends MovieArgs>(params: P): ThunkActio
 export const commitBidMovie = <P extends MovieBidArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
+      const i18SuccessState: string = i18n.t('MOVIE_PROFILE_OFFERS_SUCCESS')
+      const resultState: MoviesResultState = { response: { success: true, message: i18SuccessState } }
       const endpoint = `${Endpoints.bid}?id=${params.id ?? ''}`
       const bid: MovieBid = await request(endpoint, {
         method: 'post',
@@ -48,8 +59,10 @@ export const commitBidMovie = <P extends MovieBidArgs>(params: P): ThunkAction<P
       })
 
       dispatch(addBidToMovie(bid))
+      dispatch(setMovieResult(resultState))
     } catch (e) {
-      // TODO handle error here
+      const failResultState: MoviesResultState = { response: { success: false, message: e.message } }
+      dispatch(setMovieResult(failResultState))
     }
   }
 }
