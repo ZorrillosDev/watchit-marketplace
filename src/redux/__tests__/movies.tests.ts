@@ -66,7 +66,7 @@ describe('Movies store', () => {
       getState = jest.fn()
       bidMovieArgs = { bid: 2, account: 'test', id: '1' }
       actionForFetchRecent = fetchRecentMovies()
-      actionForFetchRecentBids = fetchRecentMovieBids()
+      actionForFetchRecentBids = fetchRecentMovieBids({ id: '1' })
       actionForCommitBidMovie = commitBidMovie(bidMovieArgs)
       actionForCommitUploadMovie = commitUploadMovie({} as any)
     })
@@ -78,7 +78,7 @@ describe('Movies store', () => {
 
     it('should call recent bids action with valid args ', async () => {
       await actionForFetchRecentBids(dispatch, getState, undefined)
-      expect(request).toHaveBeenCalledWith('/movie/bid', { params: undefined })
+      expect(request).toHaveBeenCalledWith('/movie/bid', { params: { id: '1' } })
     })
 
     it('should call commit bid movie action with valid args ', async () => {

@@ -4,26 +4,36 @@ import React, { FC } from 'react'
 // MUI IMPORTS
 import {
   Box, BoxProps,
-  Divider, Grid, GridProps, styled, Typography
+  Divider, Grid, GridProps, Link, styled, Typography
 } from '@mui/material'
 
 // PROJECT IMPORTS
 import MovieProfileUser from '@pages/Movie/components/MovieProfileUser'
 import ModalBid from '@components/Bid'
+import AcceptOffer from '@pages/Movie/components/MovieProfileAcceptOffer'
+import PayOffer from '@pages/Movie/components/MovieProfilePay'
 import { IconEth } from '@components/Icons'
 import { Translation } from '@src/i18n'
 import { SxProps, Theme } from '@mui/system'
-import { useNFTHolderOf } from '@hooks/useNFTContract'
-import { Movie } from '@state/movies/types'
+import { useNFTHolderOf, useNFTIsApprovedFor } from '@hooks/useNFTContract'
+import { Movie, MovieBid } from '@state/movies/types'
 import { BLACK_HOLE } from '@w3/CONSTANTS'
 import { useEthers } from '@usedapp/core'
 
 // ===========================|| MOVIE - PROFILE - PRICE - VIEW ||=========================== //
 
-export const MovieProfilePriceView: FC<Movie> = (props): JSX.Element => {
+export type MovieProfilePriceViewProps = Movie & MovieBid
+
+export const MovieProfilePriceView: FC<MovieProfilePriceViewProps> = (props): JSX.Element => {
   const { account } = useEthers()
   const holder = useNFTHolderOf(props.token)
+  const approvedBid = useNFTIsApprovedFor(props.account, props.token)
+
   const currentHolder = holder !== undefined && holder !== BLACK_HOLE ? holder : props.creator
+  const iamCurrentHolder = account?.toLowerCase() === currentHolder.toLowerCase()
+  // Has bid available and is not approved?
+  const availableToAcceptOffer = props.price > 0 && props.account !== undefined && !approvedBid
+  const iamCurrentApprovedBidder = props.account !== undefined && account?.toLowerCase() == props.account.toLowerCase()
 
   return (
     <Grid item xs={12}>
@@ -60,27 +70,27 @@ export const MovieProfilePriceView: FC<Movie> = (props): JSX.Element => {
                 </Typography>
               </Grid>
               <Grid item xs={12} display='flex'>
-                <MovieProfileUser address={currentHolder ?? props.creator} />
+                <Link href={`https://rinkeby.etherscan.io/address/${currentHolder}`} target='__blank'>
+                  <MovieProfileUser address={currentHolder} />
+                </Link>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
 
         {
-            account !== undefined && account !== props.creator
-              ? <ModalBid buttonSx={MovieProfileOfferButtonSx} />
-              : <></>
-          }
+                    account !== undefined && !iamCurrentHolder && !approvedBid
+                      ? <ModalBid buttonSx={MovieProfileOfferButtonSx} />
+                      : account !== undefined && iamCurrentHolder && availableToAcceptOffer
+                        ? <AcceptOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
+                        : account !== undefined && approvedBid && iamCurrentApprovedBidder
+                          ? <PayOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
+                          : <></>
+                }
       </MovieProfilePriceSectionWrapper>
     </Grid>
   )
 }
-
-export const MovieProfilePriceViewMemoized = React.memo(
-  MovieProfilePriceView, (prev: Movie, next: Movie) => {
-    return prev.token === next.token
-  }
-)
 
 export const MovieProfilePriceSectionWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   width: '100%',
