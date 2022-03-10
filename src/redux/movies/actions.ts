@@ -30,7 +30,7 @@ export const fetchRecentMovies = <P extends MoviesArgs>(params?: P): ThunkAction
 export const fetchRecentMovieBids = <P extends MovieArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      const moviesBids: MovieBid[] = await request(Endpoints.bid, {params})
+      const moviesBids: MovieBid[] = await request(Endpoints.bid, { params })
       dispatch(setBidsToMovie(moviesBids))
     } catch (e) {
       // TODO handle error here

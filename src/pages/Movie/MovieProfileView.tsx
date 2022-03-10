@@ -7,7 +7,7 @@ import {
 } from '@mui/material'
 
 // PROJECT IMPORTS
-import {MovieProfileSectionWrapper} from '@pages/Movie/components/MovieProfileSection'
+import { MovieProfileSectionWrapper } from '@pages/Movie/components/MovieProfileSection'
 import MovieProfileHeader from '@pages/Movie/components/MovieProfileHeader'
 import MovieProfilePrice from '@pages/Movie/components/MovieProfilePrice'
 import MovieProfileUser from '@pages/Movie/components/MovieProfileUser'
@@ -42,9 +42,9 @@ export const MovieProfileView: FC<Movie> = (props): JSX.Element => {
                   </Grid>
                   <Grid item xs={12}>
                     <TruncatedTypography
-                        variant='h4' color='primary'
-                        fontWeight={400} lines={7}
-                        sx={{m: 0}}
+                      variant='h4' color='primary'
+                      fontWeight={400} lines={7}
+                      sx={{ m: 0 }}
                     >
                       {props.synopsis}
                     </TruncatedTypography>
@@ -55,13 +55,13 @@ export const MovieProfileView: FC<Movie> = (props): JSX.Element => {
                 <Grid container spacing={3}>
                   {/* <MovieProfileHeader sx={{ display: { xs: 'none', md: 'flex' } }} /> */}
                   <MovieProfilePrice {...props} />
-                  <Grid item xs={12} sx={{pt: '3rem !important'}}>
+                  <Grid item xs={12} sx={{ pt: '3rem !important' }}>
                     <MovieProfileSectionWrapper>
                       <Link href={`https://rinkeby.etherscan.io/address/${props.creator}`} target='__blank'>
-                        <MovieProfileUser address={props.creator} full/>
+                        <MovieProfileUser address={props.creator} full />
                       </Link>
                       <MovieProfileCreatorTypography variant='body1' color='primary'>
-                        <Translation target='MOVIE_PROFILE_CREATOR'/>
+                        <Translation target='MOVIE_PROFILE_CREATOR' />
                       </MovieProfileCreatorTypography>
                     </MovieProfileSectionWrapper>
                   </Grid>
@@ -84,7 +84,7 @@ export const MovieProfileView: FC<Movie> = (props): JSX.Element => {
                   {/*   </Link> */}
                   {/* </Grid> */}
                   <MovieProfileDetails {...props} />
-                  <MovieProfileOffers/>
+                  <MovieProfileOffers />
                 </Grid>
               </Grid>
             </Grid>

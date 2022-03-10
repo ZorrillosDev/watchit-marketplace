@@ -7,10 +7,10 @@ import Web3Reducers from '@state/web3/reducer'
 
 const createRootReducer = (history: History): Reducer => {
   return combineReducers({
-      users: UsersReducers,
-      movies: MoviesReducers,
-      web3: Web3Reducers,
-      router: connectRouter(history)
+    users: UsersReducers,
+    movies: MoviesReducers,
+    web3: Web3Reducers,
+    router: connectRouter(history)
   })
 }
 

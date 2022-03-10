@@ -55,7 +55,7 @@ const ImagePicker: FC<ImagePickerProps> = (props): JSX.Element => {
               <>
                 <Poster image={props.preview} name={`${props.id}_image`} />
               </>
-            )
+              )
             : (
               <>
                 <InputFileIcon>
@@ -68,7 +68,7 @@ const ImagePicker: FC<ImagePickerProps> = (props): JSX.Element => {
                   <Translation target='MOVIE_CREATE_FILE_BUTTON' />
                 </InputFileButton>
               </>
-            )
+              )
         }
       </InputFileLabel>
     </FormControl>

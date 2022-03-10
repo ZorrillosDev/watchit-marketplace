@@ -1,5 +1,5 @@
 // REACT IMPORTS
-import React, {FC, useCallback, useState} from 'react'
+import React, { FC, useCallback, useState } from 'react'
 
 // PROJECT IMPORTS
 import BidView from '@components/Bid/BidView'
