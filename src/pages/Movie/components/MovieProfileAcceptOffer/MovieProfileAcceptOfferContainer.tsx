@@ -2,12 +2,24 @@
 import React, { FC, useCallback, useState } from 'react'
 
 // PROJECT IMPORTS
+<<<<<<< HEAD
 import MovieProfileAcceptOfferView, { MovieProfileAcceptOfferViewProps } from '@pages/Movie/components/MovieProfileAcceptOffer/MovieProfileAcceptOfferView'
 import { Web3Actions, Web3State } from '@state/web3/types'
 import { selectWeb3Result } from '@state/web3/selector'
 import { connect, RootStateOrAny } from 'react-redux'
 import { setApprovalFor } from '@state/web3/actions'
 import { useEthers } from '@usedapp/core'
+=======
+import MovieProfileAcceptOfferView from '@pages/Movie/components/MovieProfileAcceptOffer/MovieProfileAcceptOfferView'
+import { SxProps } from '@mui/system'
+import { Theme } from '@mui/material'
+import { useEthers } from '@usedapp/core'
+import { Movie, MovieBid } from '@state/movies/types'
+import { connect, RootStateOrAny } from 'react-redux'
+import { Web3Actions, Web3State } from '@state/web3/types'
+import { setApprovalFor } from '@state/web3/actions'
+import { selectWeb3Result } from '@state/web3/selector'
+>>>>>>> main
 
 // ===========================|| ACCEPT OFFER - CONTAINER ||=========================== //
 

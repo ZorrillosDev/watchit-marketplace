@@ -1,5 +1,9 @@
 // REACT IMPORTS
+<<<<<<< HEAD
 import React, { FC, useCallback, useEffect, useState } from 'react'
+=======
+import React, { FC, useCallback, useState } from 'react'
+>>>>>>> main
 
 // PROJECT IMPORTS
 import BidView from '@components/Bid/BidView'

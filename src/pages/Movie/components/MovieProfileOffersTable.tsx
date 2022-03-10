@@ -12,6 +12,13 @@ import { String } from '@src/utils'
 import { Bolt } from '@components/Icons'
 import { Translation } from '@src/i18n'
 import { Movie, MovieBid } from '@state/movies/types'
+<<<<<<< HEAD
+=======
+import { useEthers } from '@usedapp/core'
+import { useNFTHolderOf } from '@hooks/useNFTContract'
+import { BLACK_HOLE } from '@w3/CONSTANTS'
+import AcceptOffer from '@pages/Movie/components/MovieProfileAcceptOffer'
+>>>>>>> main
 
 // ===========================|| MOVIE - PROFILE - OFFERS - TABLE ||=========================== //
 

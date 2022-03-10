@@ -33,7 +33,11 @@ export const MovieProfilePriceView: FC<MovieProfilePriceViewProps> = (props): JS
   const iamCurrentHolder = account?.toLowerCase() === currentHolder.toLowerCase()
   // Has bid available and is not approved?
   const availableToAcceptOffer = props.price > 0 && props.account !== undefined && !approvedBid
+<<<<<<< HEAD
   const iamCurrentApprovedBidder = props.account !== undefined && account?.toLowerCase() === props.account.toLowerCase()
+=======
+  const iamCurrentApprovedBidder = props.account !== undefined && account?.toLowerCase() == props.account.toLowerCase()
+>>>>>>> main
 
   return (
     <Grid item xs={12}>
