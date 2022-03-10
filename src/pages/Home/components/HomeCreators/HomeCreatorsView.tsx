@@ -8,7 +8,6 @@ import {
 } from '@mui/material'
 
 // PROJECT IMPORTS
-// TODO delete this when data comes from backend
 import TruncatedTypography from '@components/TruncatedTypography'
 import { User } from '@state/users/types'
 import { PixelArtIdenticon } from '@components/Identicon'

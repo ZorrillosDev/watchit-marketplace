@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 // project imports
-import { EXPLORE, FESTIVAL, SELL, WORK, CREATE } from '@navigation/CONSTANTS'
+import { WORK, CREATE } from '@navigation/CONSTANTS'
 import i18n from '@src/i18n'
 import {
   Menu as MenuIcon,
@@ -94,27 +94,27 @@ const HeaderMenuContent: FC = (): JSX.Element => {
           {i18n.t('GLOBAL_CREATE')}
         </Item>
       </Link>
-      <Link to={EXPLORE}>
-        <Item
-          sx={{ p: 2, px: { xs: 2, xl: 3 } }}
-        >
-          {i18n.t('GLOBAL_EXPLORE')}
-        </Item>
-      </Link>
-      <Link to={FESTIVAL}>
-        <Item
-          sx={{ p: 2, px: { xs: 2, xl: 3 } }}
-        >
-          {i18n.t('GLOBAL_FESTIVAL')}
-        </Item>
-      </Link>
-      <Link to={SELL}>
-        <Item
-          sx={{ p: 2, px: { xs: 2, xl: 3 } }}
-        >
-          {i18n.t('GLOBAL_SELL')}
-        </Item>
-      </Link>
+      {/* <Link to={EXPLORE}> */}
+      {/*  <Item */}
+      {/*    sx={{ p: 2, px: { xs: 2, xl: 3 } }} */}
+      {/*  > */}
+      {/*    {i18n.t('GLOBAL_EXPLORE')} */}
+      {/*  </Item> */}
+      {/* </Link> */}
+      {/* <Link to={FESTIVAL}> */}
+      {/*  <Item */}
+      {/*    sx={{ p: 2, px: { xs: 2, xl: 3 } }} */}
+      {/*  > */}
+      {/*    {i18n.t('GLOBAL_FESTIVAL')} */}
+      {/*  </Item> */}
+      {/* </Link> */}
+      {/* <Link to={SELL}> */}
+      {/*  <Item */}
+      {/*    sx={{ p: 2, px: { xs: 2, xl: 3 } }} */}
+      {/*  > */}
+      {/*    {i18n.t('GLOBAL_SELL')} */}
+      {/*  </Item> */}
+      {/* </Link> */}
       <Link to={WORK}>
         <Item
           sx={{ p: 2, px: { xs: 2, xl: 3 } }}

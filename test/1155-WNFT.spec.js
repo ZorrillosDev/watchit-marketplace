@@ -109,6 +109,13 @@ describe('WatchIt NFTs (WNFT)', function () {
         const burn = await wnft.connect(client).burn(deployer.address, bs58toHex(tokenCID), txOptions)
         await expect(burn.wait()).to.be.reverted
       })
+
+      it('only admin can set initial holder', async function () {
+        const tokenCID = (await randomCID()).toString()
+        await nftMinter(tokenCID)
+        const setHolder = await wnft.connect(client).setHolder(bs58toHex(tokenCID), client.address, txOptions)
+        await expect(setHolder.wait()).to.be.reverted
+      })
     })
   })
 
@@ -294,36 +301,5 @@ describe('WatchIt NFTs (WNFT)', function () {
       expect(purchase.wait()).to.be.reverted // eslint-disable-line
     })
 
-    it('should allow lazy mint purchase with valid approval', async () => {
-      // Check new balance after purchase
-      await conciliation(async () => {
-        // Integration tests
-        const cidWaitingFormMint = bs58toHex((await randomCID()).toString())
-        // Request purchase from acct1 address for token
-        await (
-          await wnft.connect(client).setApprovalFor(
-            deployer.address,
-            cidWaitingFormMint,
-            value
-          )
-        ).wait()
-
-        // Cid not minted and current "purported vendor"
-        await (
-          await wnft.connect(deployer)
-            .lazyMintPurchase(
-              cidWaitingFormMint,
-              client.address,
-              { value }
-            )
-        ).wait()
-
-        const owned = await wnft.balanceOf(deployer.address, cidWaitingFormMint, txOptions)
-        expect(owned).to.equal(1)
-        const holder = await wnft.holderOf(cidWaitingFormMint)
-        expect(holder).to.equal(deployer.address)
-      })
-
-    })
   })
 })

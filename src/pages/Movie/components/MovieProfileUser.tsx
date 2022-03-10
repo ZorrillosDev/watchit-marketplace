@@ -15,17 +15,17 @@ import { String } from '@src/utils'
 
 // ===========================|| MOVIE - PROFILE - USER ||=========================== //
 
-const MovieProfileUser: FC<{ address: string }> = (props): JSX.Element => {
+const MovieProfileUser: FC<{ address: string, full?: boolean }> = (props): JSX.Element => {
   return (
     <MovieProfileUserChip
-      icon={<PixelArtIdenticon seed={props?.address} size={35} />}
+      icon={<PixelArtIdenticon seed={props.address} size={35} />}
       label={(
         <Box display='flex' flexDirection='column' paddingRight={1}>
           <MovieProfileAddressTypography variant='body1'>
-            {String.minifyHash(props?.address ?? '')}
+            {props.full ? props.address : String.minifyHash(props.address)}
           </MovieProfileAddressTypography>
         </Box>
-      )}
+          )}
       variant='outlined'
       aria-haspopup='true'
       color='primary'

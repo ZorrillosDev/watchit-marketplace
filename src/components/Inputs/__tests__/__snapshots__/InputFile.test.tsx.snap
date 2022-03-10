@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<InputFile /> should render input file button 1`] = `ShallowWrapper {}`;
+
+exports[`<InputFile /> should render input file element 1`] = `ShallowWrapper {}`;
+
+exports[`<InputFile /> should render input file icon 1`] = `ShallowWrapper {}`;
+
+exports[`<InputFile /> should render input file label 1`] = `ShallowWrapper {}`;
+
+exports[`<InputFile /> should render input file label text 1`] = `ShallowWrapper {}`;
