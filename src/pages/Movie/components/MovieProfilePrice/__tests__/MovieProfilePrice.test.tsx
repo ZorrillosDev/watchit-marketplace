@@ -4,10 +4,6 @@ import MovieProfilePrice from '@pages/Movie/components/MovieProfilePrice'
 import i18n from '@src/i18n'
 import { Typography } from '@mui/material'
 import { Movie } from '@state/movies/types'
-import {Provider} from "react-redux";
-import {store} from "@state/store";
-import MovieProfile from "@pages/Movie";
-
 import { Provider } from 'react-redux'
 import { store } from '@state/store'
 import * as web3Core from '@usedapp/core'
@@ -23,6 +19,9 @@ jest.mock('@usedapp/core')
 jest.mock('@hooks/useNFTContract', () => ({
   useNFTHolderOf: () => {
     return '0x0'
+  },
+  useNFTIsApprovedFor: () => {
+    return true
   }
 }))
 
@@ -30,16 +29,16 @@ describe('<MovieProfilePrice />', () => {
   beforeEach(() => {
     jest.spyOn(web3Core, 'useEthers')
       .mockImplementation(() => ({
-        active: false,
         connector: undefined,
-        error: undefined,
         library: undefined,
+        error: undefined,
+        active: false,
         chainId: undefined,
-        account: undefined,
-        setError: jest.fn(),
         deactivate: jest.fn(),
-        activateBrowserWallet: jest.fn(),
-        activate: jest.fn()
+        account: undefined,
+        activate: jest.fn(),
+        setError: jest.fn(),
+        activateBrowserWallet: jest.fn()
       })
       )
   })
@@ -60,7 +59,11 @@ describe('<MovieProfilePrice />', () => {
 
   it('should have movie profile price valid higher price text', () => {
     const translate = i18n.t('MOVIE_PROFILE_PRICE_HIGHER')
-    const component = mount(<MovieProfilePrice {...movie} />)
+    const component = mount(
+      <Provider store={store}>
+        <MovieProfilePrice {...movie} />
+      </Provider>
+    )
     const typography = component.find(Typography).at(0)
 
     expect(typography.text()).toContain(translate)

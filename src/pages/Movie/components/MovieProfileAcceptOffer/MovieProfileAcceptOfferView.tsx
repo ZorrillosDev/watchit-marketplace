@@ -9,19 +9,18 @@ import { SxProps } from '@mui/system'
 // PROJECT IMPORTS
 import Modal from '@components/Modal'
 import { Translation } from '@src/i18n'
-import {
-  MovieProfileAcceptOfferContainerProps
-} from '@pages/Movie/components/MovieProfileAcceptOffer/MovieProfileAcceptOfferContainer'
 import { String } from '@src/utils'
-import { Web3State } from '@state/web3/types'
+import { Web3Actions, Web3State } from '@state/web3/types'
+import { Movie, MovieBid } from '@state/movies/types'
 
 // ===========================|| ACCEPT OFFER - VIEW ||=========================== //
 
-export type MovieProfileAcceptOfferViewProps = MovieProfileAcceptOfferContainerProps & {
+export type MovieProfileAcceptOfferViewProps = {
   isLoading: boolean
   handleAcceptOffer: () => void
   buttonSx?: SxProps<Theme>
-} & Web3State
+  compact?: boolean
+} & Web3State & Web3Actions & Movie & MovieBid
 
 const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props): JSX.Element => {
   const [isOpen, setOpen] = useState(false)
@@ -32,8 +31,8 @@ const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props
   return (
     <>
       <Button
-        variant='contained' color='primary' size={isCompact} onClick={() => onOpen()}
-        sx={props.buttonSx}
+        variant='contained' onClick={() => onOpen()} sx={props.buttonSx}
+        color='primary' size={isCompact}
       >
         {
                     props.compact === true
@@ -47,16 +46,16 @@ const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props
         onClose={() => onClose()}
       >
         <AcceptOfferContent>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
+          <Grid spacing={3} container>
+            <Grid xs={12} item>
               <header>
-                <Typography variant='h3' color='primary'>
+                <Typography color='primary' variant='h3'>
                   <Translation target='MOVIE_PROFILE_PRICE_CONFIRMATION' />
                 </Typography>
               </header>
             </Grid>
-            <Grid item xs={12}>
-              <Typography variant='body2' color='text.primary'>
+            <Grid xs={12} item>
+              <Typography color='text.primary' variant='body2'>
                 <Translation target='MOVIE_PROFILE_PRICE_CONFIRMATION_ACCEPT' />
                 <strong> {String.minifyHash(props.account)} </strong>
                 <Translation target='MOVIE_PROFILE_PRICE_CONFIRMATION_FOR' />
@@ -65,26 +64,32 @@ const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props
             </Grid>
             <Grid item xs={12}>
               {
-                                props.result.status > 0
-                                  ? <Alert severity='success'>
-                                    <Translation target='MOVIE_ACCEPT_OFFER_SUCCESS' />
-                                    <strong> Tx: {String.minifyHash(props.result.transactionHash)} </strong>
-                                  </Alert>
-                                  : props.result.status == 0
-                                    ? <Alert severity='error'>
-                                      <Translation target='MOVIE_ACCEPT_OFFER_ERROR' />
-                                    </Alert>
-                                    : <LoadingButton
-                                        variant='contained'
-                                        color='primary'
-                                        size='large'
-                                        loading={props.isLoading}
-                                        onClick={() => props.handleAcceptOffer()}
-                                        fullWidth
-                                      >
-                                      <Translation target='MOVIE_PROFILE_PRICE_ACCEPT_OFFER' />
-                                      </LoadingButton>
-                            }
+                props.result.status > 0
+                  ? (
+                    <Alert severity='success'>
+                      <Translation target='MOVIE_ACCEPT_OFFER_SUCCESS' />
+                      <strong> Tx: {String.minifyHash(props.result.transactionHash)} </strong>
+                    </Alert>
+                    )
+                  : props.result.status === 0
+                    ? (
+                      <Alert severity='error'>
+                        <Translation target='MOVIE_ACCEPT_OFFER_ERROR' />
+                      </Alert>
+                      )
+                    : (
+                      <LoadingButton
+                        variant='contained'
+                        color='primary'
+                        size='large'
+                        loading={props.isLoading}
+                        onClick={() => props.handleAcceptOffer()}
+                        fullWidth
+                      >
+                        <Translation target='MOVIE_PROFILE_PRICE_ACCEPT_OFFER' />
+                      </LoadingButton>
+                      )
+              }
 
             </Grid>
           </Grid>
