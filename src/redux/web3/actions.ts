@@ -2,16 +2,11 @@ import { ThunkAction, ThunkDispatcher } from '@state/types'
 import { Web3CallResult, Web3SafePurchaseArgs, Web3SetApprovalForArgs } from '@state/web3/types'
 import { setCallResult } from '@state/web3/reducer'
 import { callSafePurchase, callSetApprovalFor } from '@w3/calls/nft'
-<<<<<<< HEAD
 
 export { setCallResult } from '@state/web3/reducer'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 
-=======
-
-export { setCallResult } from '@state/web3/reducer'
->>>>>>> main
 export const setApprovalFor = <P extends Web3SetApprovalForArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {

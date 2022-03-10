@@ -11,7 +11,6 @@ import { Movie, MovieBid } from '@state/movies/types'
 import { Web3State } from '@state/web3/types'
 import { Translation } from '@src/i18n'
 import Modal from '@components/Modal'
-<<<<<<< HEAD
 import { String } from '@src/utils'
 
 // ===========================|| ACCEPT OFFER - VIEW ||=========================== //
@@ -22,22 +21,6 @@ export type MovieProfileAcceptOfferViewProps = {
   buttonSx?: SxProps<Theme>
   compact?: boolean
 } & Web3State & Movie & MovieBid
-=======
-import { Translation } from '@src/i18n'
-import {
-  MovieProfileAcceptOfferContainerProps
-} from '@pages/Movie/components/MovieProfileAcceptOffer/MovieProfileAcceptOfferContainer'
-import { String } from '@src/utils'
-import { Web3State } from '@state/web3/types'
-
-// ===========================|| ACCEPT OFFER - VIEW ||=========================== //
-
-export type MovieProfileAcceptOfferViewProps = MovieProfileAcceptOfferContainerProps & {
-  isLoading: boolean
-  handleAcceptOffer: () => void
-  buttonSx?: SxProps<Theme>
-} & Web3State
->>>>>>> main
 
 const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props): JSX.Element => {
   const [isOpen, setOpen] = useState(false)
@@ -52,17 +35,10 @@ const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props
         sx={props.buttonSx}
       >
         {
-<<<<<<< HEAD
           props.compact === true
             ? <Translation target='MOVIE_PROFILE_PRICE_ACCEPT' />
             : <Translation target='MOVIE_PROFILE_PRICE_ACCEPT_OFFER' />
         }
-=======
-                    props.compact === true
-                      ? <Translation target='MOVIE_PROFILE_PRICE_ACCEPT' />
-                      : <Translation target='MOVIE_PROFILE_PRICE_ACCEPT_OFFER' />
-                }
->>>>>>> main
       </Button>
 
       <Modal
@@ -88,7 +64,6 @@ const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props
             </Grid>
             <Grid item xs={12}>
               {
-<<<<<<< HEAD
                   props.result.status > 0
                     ? (
                       <Alert severity='success'>
@@ -115,28 +90,6 @@ const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props
                         </LoadingButton>
                         )
               }
-=======
-                                props.result.status > 0
-                                  ? <Alert severity='success'>
-                                    <Translation target='MOVIE_ACCEPT_OFFER_SUCCESS' />
-                                    <strong> Tx: {String.minifyHash(props.result.transactionHash)} </strong>
-                                  </Alert>
-                                  : props.result.status == 0
-                                    ? <Alert severity='error'>
-                                      <Translation target='MOVIE_ACCEPT_OFFER_ERROR' />
-                                    </Alert>
-                                    : <LoadingButton
-                                        variant='contained'
-                                        color='primary'
-                                        size='large'
-                                        loading={props.isLoading}
-                                        onClick={() => props.handleAcceptOffer()}
-                                        fullWidth
-                                      >
-                                      <Translation target='MOVIE_PROFILE_PRICE_ACCEPT_OFFER' />
-                                      </LoadingButton>
-                            }
->>>>>>> main
 
             </Grid>
           </Grid>
