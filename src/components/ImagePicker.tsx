@@ -50,25 +50,25 @@ const ImagePicker: FC<ImagePickerProps> = (props): JSX.Element => {
           type='file' accept={props.accept}
         />
         {
-            props.preview
-              ? (
-                <>
-                  <Poster image={props.preview} name={`${props.id}_image`} />
-                </>
-                )
-              : (
-                <>
-                  <InputFileIcon>
-                    <IconUpload stroke={1} />
-                  </InputFileIcon>
-                  <Typography variant='h5' color='text.secondary' width={1} textAlign='center'>
-                    {props.helpText}
-                  </Typography>
-                  <InputFileButton variant='contained' color='primary' onClick={handleButtonClick}>
-                    <Translation target='MOVIE_CREATE_FILE_BUTTON' />
-                  </InputFileButton>
-                </>
-                )
+          props.preview
+            ? (
+              <>
+                <Poster image={props.preview} name={`${props.id}_image`} />
+              </>
+            )
+            : (
+              <>
+                <InputFileIcon>
+                  <IconUpload stroke={1} />
+                </InputFileIcon>
+                <Typography variant='h5' color='text.secondary' width={1} textAlign='center'>
+                  {props.helpText}
+                </Typography>
+                <InputFileButton variant='contained' color='primary' onClick={handleButtonClick}>
+                  <Translation target='MOVIE_CREATE_FILE_BUTTON' />
+                </InputFileButton>
+              </>
+            )
         }
       </InputFileLabel>
     </FormControl>
