@@ -7,7 +7,6 @@ export interface MovieBidArgs extends MovieArgs {
   bid: number
 }
 
-
 export interface MoviesArgs {
   limit?: number
 }

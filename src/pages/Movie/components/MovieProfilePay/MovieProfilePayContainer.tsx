@@ -41,7 +41,6 @@ const MovieProfilePayContainer: FC<MovieProfilePayContainerProps> = (props): JSX
       account: account ?? '',
       id
     })
-
   }, [account])
 
   return <MovieProfilePayView {...{ isLoading, handlePay, ...props }} />

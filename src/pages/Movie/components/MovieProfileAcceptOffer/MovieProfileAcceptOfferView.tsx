@@ -70,13 +70,13 @@ const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props
                       <Translation target='MOVIE_ACCEPT_OFFER_SUCCESS' />
                       <strong> Tx: {String.minifyHash(props.result.transactionHash)} </strong>
                     </Alert>
-                  )
+                    )
                   : props.result.status === 0
                     ? (
                       <Alert severity='error'>
                         <Translation target='MOVIE_ACCEPT_OFFER_ERROR' />
                       </Alert>
-                    )
+                      )
                     : (
                       <LoadingButton
                         variant='contained'
@@ -88,7 +88,7 @@ const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props
                       >
                         <Translation target='MOVIE_PROFILE_PRICE_ACCEPT_OFFER' />
                       </LoadingButton>
-                    )
+                      )
               }
 
             </Grid>

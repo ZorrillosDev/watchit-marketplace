@@ -35,7 +35,6 @@ export const MovieProfilePriceView: FC<MovieProfilePriceViewProps> = (props): JS
   const availableToAcceptOffer = props.price > 0 && props.account !== undefined && !approvedBid
   const iamCurrentApprovedBidder = props.account !== undefined && account?.toLowerCase() === props.account.toLowerCase()
 
-  
   return (
     <Grid item xs={12}>
       <MovieProfilePriceSectionWrapper>
