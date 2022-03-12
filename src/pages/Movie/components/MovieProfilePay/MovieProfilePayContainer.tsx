@@ -10,39 +10,44 @@ import { Web3Actions, Web3State } from '@state/web3/types'
 import { safePurchase } from '@state/web3/actions'
 import { connect, RootStateOrAny } from 'react-redux'
 import { selectWeb3Result } from '@state/web3/selector'
-import { Movie, MovieBid } from '@state/movies/types'
+import { Movie, MovieBid, MoviesActions, MovieArgs } from '@state/movies/types'
+import { flushBidsForMovie } from '@src/redux/movies/actions'
+import { useParams } from 'react-router'
 
 // ===========================|| MOVIE PROFILE PAY - CONTAINER ||=========================== //
 
 export type MovieProfilePayContainerProps = {
   buttonSx?: SxProps<Theme>
-} & Web3Actions & Movie & MovieBid & Web3State
+} & Web3Actions & Movie & MoviesActions & MovieBid & Web3State
 
 const MovieProfilePayContainer: FC<MovieProfilePayContainerProps> = (props): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false)
   const { account } = useEthers()
-  const {
-    safePurchase,
-    result
-  } = props
+  const { id } = useParams<MovieArgs>()
+  const { safePurchase, flushBidsForMovie } = props
 
   const handlePay = useCallback((): void => {
     if (account === undefined) {
       return
     }
+
     setIsLoading(true)
     safePurchase({
       tokenId: props.token,
       value: props.price.toString()
     })
 
-    if (result?.status !== undefined) { setIsLoading(false) }
+    flushBidsForMovie({
+      account: account ?? '',
+      id
+    })
+
   }, [account])
 
   return <MovieProfilePayView {...{ isLoading, handlePay, ...props }} />
 }
 
-const mapDispatchToProps: Partial<Web3Actions> = { safePurchase }
+const mapDispatchToProps: Partial<Web3Actions & MoviesActions> = { safePurchase, flushBidsForMovie }
 const mapStateToProps = (state: RootStateOrAny): Partial<Web3State> => {
   const result = selectWeb3Result(state)
   return { result }

@@ -16,11 +16,7 @@ export type MovieProfileAcceptOfferContainerProps = Omit<MovieProfileAcceptOffer
 const MovieProfileAcceptOfferContainer: FC<MovieProfileAcceptOfferContainerProps> = (props): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false)
   const { account } = useEthers()
-
-  const {
-    setApprovalFor,
-    result
-  } = props
+  const { setApprovalFor } = props
 
   const handleAcceptOffer = useCallback((): void => {
     if (account === undefined) return
@@ -31,8 +27,6 @@ const MovieProfileAcceptOfferContainer: FC<MovieProfileAcceptOfferContainerProps
       tokenId: props.token,
       approved: props.price.toString()
     })
-
-    if (result?.status !== undefined) { setIsLoading(false) }
   }, [account])
 
   return (

@@ -7,6 +7,7 @@ export interface MovieBidArgs extends MovieArgs {
   bid: number
 }
 
+
 export interface MoviesArgs {
   limit?: number
 }
@@ -17,4 +18,5 @@ export interface MoviesActions {
   fetchRecentMovieBids: <P extends MovieArgs>(args: P) => void
   commitUploadMovie: <P extends FormData>(args: P) => void
   commitBidMovie: <P extends MovieBidArgs>(args: P) => void
+  flushBidsForMovie: <P extends Omit<MovieBidArgs, 'bid'>>(args: P) => void
 }
