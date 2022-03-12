@@ -54,6 +54,23 @@ export const commitBidMovie = <P extends MovieBidArgs>(params: P): ThunkAction<P
   }
 }
 
+export const flushBidsForMovie = <P extends Omit<MovieBidArgs, 'bid'>>(params: P): ThunkAction<Promise<void>> => {
+  return async (dispatch: ThunkDispatcher) => {
+    try {
+      const endpoint = `${Endpoints.bidsFlush}?id=${params.id ?? ''}`
+      await request(endpoint, {
+        method: 'post',
+        data: params
+      })
+
+  
+      dispatch(setBidsToMovie([] as MovieBid[]))
+    } catch (e) {
+      // TODO handle error here
+    }
+  }
+}
+
 export const commitUploadMovie = <P extends FormData>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
