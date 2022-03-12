@@ -63,7 +63,6 @@ export const flushBidsForMovie = <P extends Omit<MovieBidArgs, 'bid'>>(params: P
         data: params
       })
 
-  
       dispatch(setBidsToMovie([] as MovieBid[]))
     } catch (e) {
       // TODO handle error here

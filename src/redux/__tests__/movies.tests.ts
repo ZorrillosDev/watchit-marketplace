@@ -10,7 +10,7 @@ jest.mock('@state/service')
 
 describe('Movies store', () => {
   let movies: Movie[]
-  let movieBid: MovieBid 
+  let movieBid: MovieBid
   let movieBids: MovieBid[]
   let dispatch: ThunkDispatcher
   let getState: () => unknown
@@ -27,13 +27,12 @@ describe('Movies store', () => {
     movies = FAKE_MOVIES as unknown as Movie[]
     movieBids = [{
       id: 'tt00',
-      account: "0x0",
+      account: '0x0',
       created_at: '00/00/00',
       bid: 10000
     }] as unknown as MovieBid[]
 
     movieBid = movieBids[0]
-
   })
 
   it('should return tracking initial state', () => {
@@ -73,7 +72,7 @@ describe('Movies store', () => {
   })
 
   it('should handle set for bid collection', () => {
-    const current = reducer(initialState, setBidsToMovie(movieBids));
+    const current = reducer(initialState, setBidsToMovie(movieBids))
     expect(current).toEqual({ ...initialState, ...{ bidCollection: movieBids } })
     expect(reducer(current, setBidsToMovie(movieBids))).toEqual({
       ...initialState,
@@ -82,7 +81,7 @@ describe('Movies store', () => {
   })
 
   it('should handle add to bid collection', () => {
-    const current = reducer(initialState, addBidToMovie(movieBid));
+    const current = reducer(initialState, addBidToMovie(movieBid))
     expect(current).toEqual({ ...initialState, ...{ bidCollection: [movieBid] } })
     expect(reducer(current, addBidToMovie(movieBid))).toEqual({
       ...initialState,
@@ -100,14 +99,13 @@ describe('Movies store', () => {
     })
   })
 
-
   describe('thunk', () => {
     beforeEach(() => {
       // initialize new spies
       dispatch = jest.fn()
       getState = jest.fn()
       bidMovieArgs = { bid: 2, account: 'test', id: '1' }
-      bidFlushMovieArgs = { id: '1', 'account': '0x0' }
+      bidFlushMovieArgs = { id: '1', account: '0x0' }
 
       actionForFetchRecent = fetchRecentMovies()
       actionForFetchRecentBids = fetchRecentMovieBids({ id: '1' })
@@ -142,5 +140,3 @@ describe('Movies store', () => {
     })
   })
 })
-
-
