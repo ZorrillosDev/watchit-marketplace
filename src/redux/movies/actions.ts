@@ -7,6 +7,12 @@ import { request } from '@state/service'
 import { Endpoints } from './service'
 
 export { setMovies, setMovie, setBidsToMovie, addMovie, setUploadProgress, addBidToMovie } from '@state/movies/reducer'
+
+/**
+ * Fetch movie profile`
+ * @param {MovieArgs} params 
+ * @returns {Promise}
+ */
 export const fetchMovieProfile = <P extends MovieArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
@@ -18,6 +24,11 @@ export const fetchMovieProfile = <P extends MovieArgs>(params: P): ThunkAction<P
   }
 }
 
+/**
+ * Fetch recent movies
+ * @param {MovieArgs} params 
+ * @returns {Promise}
+ */
 export const fetchRecentMovies = <P extends MoviesArgs>(params?: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
@@ -29,6 +40,11 @@ export const fetchRecentMovies = <P extends MoviesArgs>(params?: P): ThunkAction
   }
 }
 
+/**
+ * Fetch recent bids for movie
+ * @param {MovieArgs} params 
+ * @returns {Promise}
+ */
 export const fetchRecentMovieBids = <P extends MovieArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
@@ -42,8 +58,8 @@ export const fetchRecentMovieBids = <P extends MovieArgs>(params: P): ThunkActio
 
 /**
  * Add bid for movie
- * @param params 
- * @returns 
+ * @param {MovieBidArgs} params 
+ * @returns {Promise}
  */
 export const commitBidMovie = <P extends MovieBidArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
