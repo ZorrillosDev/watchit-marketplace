@@ -78,15 +78,15 @@ export const MovieProfilePriceView: FC<MovieProfilePriceViewProps> = (props): JS
           </Grid>
         </Grid>
 
-        {account === undefined ? <></> :
-          !iamCurrentHolder && !approvedBid
-            ? <ModalBid buttonSx={MovieProfileOfferButtonSx} />
-            : iamCurrentHolder && availableToAcceptOffer
-              ? <AcceptOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
-              : approvedBid && iamCurrentApprovedBidder
-                ? <PayOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
-                : <></>
-        }
+        {account === undefined
+          ? <></>
+          : !iamCurrentHolder && !approvedBid
+              ? <ModalBid buttonSx={MovieProfileOfferButtonSx} />
+              : iamCurrentHolder && availableToAcceptOffer
+                ? <AcceptOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
+                : approvedBid && iamCurrentApprovedBidder
+                  ? <PayOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
+                  : <></>}
       </MovieProfilePriceSectionWrapper>
     </Grid>
   )
