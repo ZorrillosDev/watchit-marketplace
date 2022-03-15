@@ -107,6 +107,7 @@ export const safePurchaseMovie = <P extends MovieArgs & Web3SafePurchaseArgs>(pa
     try {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       await callSafePurchase(params)
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       dispatch(flushBidsForMovie(params))
     } catch (e) {
       // TODO handle error here
