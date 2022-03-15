@@ -10,7 +10,7 @@ export { setMovies, setMovie, setBidsToMovie, addMovie, setUploadProgress, addBi
 
 /**
  * Fetch movie profile`
- * @param {MovieArgs} params 
+ * @param {MovieArgs} params
  * @returns {Promise}
  */
 export const fetchMovieProfile = <P extends MovieArgs>(params: P): ThunkAction<Promise<void>> => {
@@ -26,7 +26,7 @@ export const fetchMovieProfile = <P extends MovieArgs>(params: P): ThunkAction<P
 
 /**
  * Fetch recent movies
- * @param {MovieArgs} params 
+ * @param {MovieArgs} params
  * @returns {Promise}
  */
 export const fetchRecentMovies = <P extends MoviesArgs>(params?: P): ThunkAction<Promise<void>> => {
@@ -42,7 +42,7 @@ export const fetchRecentMovies = <P extends MoviesArgs>(params?: P): ThunkAction
 
 /**
  * Fetch recent bids for movie
- * @param {MovieArgs} params 
+ * @param {MovieArgs} params
  * @returns {Promise}
  */
 export const fetchRecentMovieBids = <P extends MovieArgs>(params: P): ThunkAction<Promise<void>> => {
@@ -58,7 +58,7 @@ export const fetchRecentMovieBids = <P extends MovieArgs>(params: P): ThunkActio
 
 /**
  * Add bid for movie
- * @param {MovieBidArgs} params 
+ * @param {MovieBidArgs} params
  * @returns {Promise}
  */
 export const commitBidMovie = <P extends MovieBidArgs>(params: P): ThunkAction<Promise<void>> => {
@@ -79,7 +79,7 @@ export const commitBidMovie = <P extends MovieBidArgs>(params: P): ThunkAction<P
 
 /**
  * Flush all bids for movie
- * @param {MovieArgs} params 
+ * @param {MovieArgs} params
  * @returns {Promise}
  */
 export const flushBidsForMovie = <P extends MovieArgs>(params: P): ThunkAction<Promise<void>> => {
@@ -105,6 +105,7 @@ export const flushBidsForMovie = <P extends MovieArgs>(params: P): ThunkAction<P
 export const safePurchaseMovie = <P extends MovieArgs & Web3SafePurchaseArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       await callSafePurchase(params)
       dispatch(flushBidsForMovie(params))
     } catch (e) {
@@ -115,7 +116,7 @@ export const safePurchaseMovie = <P extends MovieArgs & Web3SafePurchaseArgs>(pa
 
 /**
  * Start movie upload
- * @param {FormData} params 
+ * @param {FormData} params
  * @returns {Promise}
  */
 export const commitUploadMovie = <P extends FormData>(params: P): ThunkAction<Promise<void>> => {

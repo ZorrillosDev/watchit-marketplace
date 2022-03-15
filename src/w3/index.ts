@@ -11,7 +11,7 @@ export const config: Config = {
   }
 }
 
-export function getDefaultProvider(chain: ChainId = ChainId.Rinkeby): ethers.providers.Web3Provider {
+export function getDefaultProvider (chain: ChainId = ChainId.Rinkeby): ethers.providers.Web3Provider {
   const network = ethers.providers.getNetwork(chain)
   return new ethers.providers.Web3Provider((window as any).ethereum, network)
 }
@@ -21,8 +21,7 @@ export function getDefaultProvider(chain: ChainId = ChainId.Rinkeby): ethers.pro
  * @param {ChainId} networkName network to retrieve contract
  * @return {NetworkSetting}
  */
-export function getNetworkSettings(networkName: ChainId = ChainId.Rinkeby): NetworkSetting {
-
+export function getNetworkSettings (networkName: ChainId = ChainId.Rinkeby): NetworkSetting {
   const contractAddressCollection: { [key: number]: NetworkSetting } = {
     [ChainId.Kovan]: {
       CHAIN_NAME: 'KOVAN',

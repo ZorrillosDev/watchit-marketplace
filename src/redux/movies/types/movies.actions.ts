@@ -1,4 +1,4 @@
-import { Web3SafePurchaseArgs } from "@state/web3/types"
+import { Web3SafePurchaseArgs } from '@state/web3/types'
 
 export interface MovieArgs {
   id?: string
@@ -21,5 +21,5 @@ export interface MoviesActions {
   commitBidMovie: <P extends MovieBidArgs>(args: P) => void
   flushBidsForMovie: <P extends MovieArgs>(args: P) => void
   safePurchaseMovie: <P extends MovieArgs & Web3SafePurchaseArgs>(args: P) => void
-  
+
 }

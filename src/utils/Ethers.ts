@@ -12,7 +12,6 @@ export namespace Ethers {
    * @return {string} ETH
    */
   export function getWeiToETH (wei: BigNumber | number, decimals: number = 2): string {
-
     const eth = ethers.utils.formatEther(wei.toString())
     return (+eth).toFixed(decimals)
   }

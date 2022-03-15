@@ -36,8 +36,6 @@ const MovieProfilePayContainer: FC<MovieProfilePayContainerProps> = (props): JSX
       tokenId: props.token,
       value: props.price.toString()
     })
-
-
   }, [account, id])
 
   return <MovieProfilePayView {...{ isLoading, handlePay, ...props }} />
