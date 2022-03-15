@@ -2,7 +2,7 @@ import { ThunkDispatcher, ThunkAction } from '@state/types'
 import { Movie, MovieBid } from '@state/movies/types/movies'
 import { FAKE_MOVIES } from '@src/config'
 import { request } from '@state/service'
-import { MovieBidArgs } from '@state/movies/types'
+import { MovieArgs, MovieBidArgs } from '@state/movies/types'
 import { fetchRecentMovies, fetchRecentMovieBids, commitBidMovie, commitUploadMovie, flushBidsForMovie } from '@state/movies/actions'
 import reducer, { addMovie, initialState, setMovies, setMovie, setUploadProgress, setBidsToMovie, addBidToMovie } from '@state/movies/reducer'
 
@@ -20,7 +20,7 @@ describe('Movies store', () => {
   let actionForCommitUploadMovie: ThunkAction<void>
   let actionForFlushBidsForMovie: ThunkAction<void>
   let bidMovieArgs: MovieBidArgs
-  let bidFlushMovieArgs: Omit<MovieBidArgs, 'bid'>
+  let bidFlushMovieArgs: MovieArgs
 
   beforeAll(() => {
     // @typescript-eslint/consistent-type-assertions
@@ -105,7 +105,7 @@ describe('Movies store', () => {
       dispatch = jest.fn()
       getState = jest.fn()
       bidMovieArgs = { bid: 2, account: 'test', id: '1' }
-      bidFlushMovieArgs = { id: '1', account: '0x0' }
+      bidFlushMovieArgs = { id: '1' }
 
       actionForFetchRecent = fetchRecentMovies()
       actionForFetchRecentBids = fetchRecentMovieBids({ id: '1' })
@@ -131,7 +131,7 @@ describe('Movies store', () => {
 
     it('should call flush bids for movie action with valid args ', async () => {
       await actionForFlushBidsForMovie(dispatch, getState, undefined)
-      expect(request).toHaveBeenCalledWith('/movie/bid/flush?id=1', { data: bidFlushMovieArgs, method: 'post' })
+      expect(request).toHaveBeenCalledWith('/movie/bid/flush', { data: bidFlushMovieArgs, method: 'post' })
     })
 
     it('should call commit upload movie action with valid args ', async () => {

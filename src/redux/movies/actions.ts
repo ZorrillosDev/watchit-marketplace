@@ -1,6 +1,8 @@
 import { ThunkAction, ThunkDispatcher } from '@state/types'
 import { Movie, MoviesArgs, MovieBidArgs, MovieArgs, MovieBid } from '@state/movies/types'
 import { setMovies, setMovie, setUploadProgress, addBidToMovie, setBidsToMovie } from '@state/movies/reducer'
+import { Web3SafePurchaseArgs } from '@state/web3/types'
+import { callSafePurchase } from '@w3/calls/nft'
 import { request } from '@state/service'
 import { Endpoints } from './service'
 
@@ -38,6 +40,11 @@ export const fetchRecentMovieBids = <P extends MovieArgs>(params: P): ThunkActio
   }
 }
 
+/**
+ * Add bid for movie
+ * @param params 
+ * @returns 
+ */
 export const commitBidMovie = <P extends MovieBidArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
@@ -54,11 +61,15 @@ export const commitBidMovie = <P extends MovieBidArgs>(params: P): ThunkAction<P
   }
 }
 
-export const flushBidsForMovie = <P extends Omit<MovieBidArgs, 'bid'>>(params: P): ThunkAction<Promise<void>> => {
+/**
+ * Flush all bids for movie
+ * @param {MovieArgs} params 
+ * @returns {Promise}
+ */
+export const flushBidsForMovie = <P extends MovieArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      const endpoint = `${Endpoints.bidsFlush}?id=${params.id ?? ''}`
-      await request(endpoint, {
+      await request(Endpoints.bidsFlush, {
         method: 'post',
         data: params
       })
@@ -70,6 +81,27 @@ export const flushBidsForMovie = <P extends Omit<MovieBidArgs, 'bid'>>(params: P
   }
 }
 
+/**
+ * Call safePurchase contract method and flush old bids
+ * @param {MovieArgs & Web3SafePurchaseArgs} params
+ * @returns {Promise}
+ */
+export const safePurchaseMovie = <P extends MovieArgs & Web3SafePurchaseArgs>(params: P): ThunkAction<Promise<void>> => {
+  return async (dispatch: ThunkDispatcher) => {
+    try {
+      await callSafePurchase(params)
+      dispatch(flushBidsForMovie(params))
+    } catch (e) {
+      // TODO handle error here
+    }
+  }
+}
+
+/**
+ * Start movie upload
+ * @param {FormData} params 
+ * @returns {Promise}
+ */
 export const commitUploadMovie = <P extends FormData>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
