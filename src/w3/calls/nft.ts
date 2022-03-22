@@ -4,6 +4,8 @@ import { BigNumber, ethers } from 'ethers'
 import { getDefaultProvider, getNetworkSettings } from '@src/w3'
 import { Web3SafePurchaseArgs, Web3SetApprovalForArgs } from '@state/web3/types'
 
+/* eslint-disable  @typescript-eslint/return-await */
+
 export async function callSetApprovalFor (params: Web3SetApprovalForArgs): Promise<any> {
   const networkSettings = getNetworkSettings()
   const signer = getDefaultProvider().getSigner()

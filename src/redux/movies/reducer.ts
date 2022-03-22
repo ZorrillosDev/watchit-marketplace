@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Movie, MovieBid, MoviesState } from '@state/movies/types'
 
 export interface MoviesResultState {
-  response?: {
+  result?: {
     success: boolean
     message: string | undefined
   }
@@ -38,7 +38,7 @@ const recentReducer = createSlice({
       state.collection.push(action.payload)
     },
     setMovieResult: (state: MoviesResultState, action: PayloadAction<MoviesResultState>) => {
-      state.response = action.payload.response
+      state.result = action.payload.result
     }
   }
 })

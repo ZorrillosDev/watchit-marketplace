@@ -1,16 +1,15 @@
 // REACT IMPORTS
-import React, { FC, useCallback, useState } from 'react'
+import React, { FC, useCallback, useEffect, useState } from 'react'
 
 // PROJECT IMPORTS
-import { SxProps } from '@mui/system'
-import { Theme } from '@mui/material'
 import { useEthers } from '@usedapp/core'
-import { Movie, MovieBid } from '@state/movies/types'
 import { connect, RootStateOrAny } from 'react-redux'
 import { Web3Actions, Web3State } from '@state/web3/types'
 import { setApprovalFor } from '@state/web3/actions'
 import { selectWeb3Result } from '@state/web3/selector'
 import MovieProfileAcceptOfferView, { MovieProfileAcceptOfferViewProps } from '@pages/Movie/components/MovieProfileAcceptOffer/MovieProfileAcceptOfferView'
+import { MoviesResultState } from '@state/movies/reducer'
+import { selectMovieResult } from '@state/movies/selector'
 
 // ===========================|| ACCEPT OFFER - CONTAINER ||=========================== //
 
@@ -25,6 +24,13 @@ const MovieProfileAcceptOfferContainer: FC<MovieProfileAcceptOfferContainerProps
     result
   } = props
 
+  useEffect(() => {
+    if (result === undefined) {
+      return
+    }
+    setIsLoading(false)
+  }, [result])
+
   const handleAcceptOffer = useCallback((): void => {
     if (account === undefined) return
 
@@ -34,8 +40,6 @@ const MovieProfileAcceptOfferContainer: FC<MovieProfileAcceptOfferContainerProps
       tokenId: props.token,
       approved: props.price.toString()
     })
-
-    if (result?.status !== undefined) { setIsLoading(false) }
   }, [account])
 
   return (
@@ -47,9 +51,11 @@ const MovieProfileAcceptOfferContainer: FC<MovieProfileAcceptOfferContainerProps
 }
 
 const mapDispatchToProps: Partial<Web3Actions> = { setApprovalFor }
-const mapStateToProps = (state: RootStateOrAny): Partial<Web3State> => {
-  const result = selectWeb3Result(state)
-  return { result }
+const mapStateToProps = (state: RootStateOrAny): Partial<Web3State> & MoviesResultState => {
+  const callResult = selectWeb3Result(state)
+  const result = selectMovieResult(state)?.result
+
+  return { callResult, result }
 }
 
 export const MovieProfileAcceptOffers = connect(

@@ -1,16 +1,24 @@
 // REACT IMPORTS
 import React, { FC, useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 // MUI IMPORTS
-import { Alert, Box, BoxProps, Button, Grid, styled, Theme, Typography } from '@mui/material'
-import { LoadingButton } from '@mui/lab'
+import {
+  Box, BoxProps, Button, Grid,
+  styled, Theme, Typography
+} from '@mui/material'
 import { SxProps } from '@mui/system'
+import { LoadingButton } from '@mui/lab'
 
 // PROJECT IMPORTS
-import Modal from '@components/Modal'
-import { Translation } from '@src/i18n'
+import { MoviesResultState, setMovieResult } from '@state/movies/reducer'
 import { Web3State } from '@state/web3/types'
 import { Movie } from '@state/movies/types'
+import { Translation } from '@src/i18n'
+import Modal from '@components/Modal'
+import AlertState from '@components/AlertState'
+
+/* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
 // ===========================|| MOVIE PROFILE PAY - VIEW ||=========================== //
 
@@ -18,34 +26,38 @@ export type MovieProfilePayViewProps = {
   isLoading: boolean
   handlePay: () => void
   buttonSx?: SxProps<Theme>
-} & Web3State & Partial<Movie>
+} & Web3State & Partial<Movie> & MoviesResultState
 
 const MovieProfilePayView: FC<MovieProfilePayViewProps> = (props): JSX.Element => {
   const [isOpen, setOpen] = useState(false)
+  const dispatch = useDispatch()
   const onClose = (): void => setOpen(false)
-  const onOpen = (): void => setOpen(true)
+  const onOpen = (): void => {
+    setOpen(true)
+    dispatch(setMovieResult({}))
+  }
 
   return (
     <>
-      <Button variant='contained' color='primary' size='large' onClick={() => onOpen()} sx={props.buttonSx}>
+      <Button sx={props.buttonSx} variant='contained' size='large' color='primary' onClick={() => onOpen()}>
         <Translation target='MOVIE_PROFILE_PRICE_BUY' />
       </Button>
 
       <Modal
-        isOpen={isOpen}
         onClose={() => onClose()}
+        isOpen={isOpen}
       >
         <MovieProfilePayContent>
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <header>
-                <Typography variant='h3' color='primary'>
+                <Typography color='primary' variant='h3'>
                   <Translation target='MOVIE_PROFILE_PRICE_CONFIRMATION' />
                 </Typography>
               </header>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant='body2' color='text.primary'>
+              <Typography color='text.primary' variant='body2'>
                 <Translation target='MOVIE_PROFILE_PRICE_CONFIRMATION_PAY' />
                 <strong> {props.price} ETH </strong>
                 <Translation target='MOVIE_PROFILE_PRICE_CONFIRMATION_FOR' />
@@ -53,32 +65,25 @@ const MovieProfilePayView: FC<MovieProfilePayViewProps> = (props): JSX.Element =
               </Typography>
             </Grid>
             <Grid item xs={12}>
+              <AlertState result={props.result}>
+                {
+                  props?.result?.success &&
+                    <strong> {props.title} </strong>
+                }
+              </AlertState>
               {
-                props.result.status > 0
-                  ? (
-                    <Alert severity='success'>
-                      <strong> {props.title} </strong>
-                      <Translation target='MOVIE_PAY_OFFER_SUCCESS' />
-                    </Alert>
-                    )
-                  : props.result.status === 0
-                    ? (
-                      <Alert severity='error'>
-                        <Translation target='MOVIE_PAY_OFFER_ERROR' />
-                      </Alert>
-                      )
-                    : (
-                      <LoadingButton
-                        variant='contained'
-                        color='primary'
-                        size='large'
-                        loading={props.isLoading}
-                        onClick={() => props.handlePay()}
-                        fullWidth
-                      >
-                        <Translation target='MOVIE_PROFILE_PRICE_PAY' />
-                      </LoadingButton>
-                      )
+                (props.result === undefined) && (
+                  <LoadingButton
+                    color='primary'
+                    fullWidth
+                    variant='contained'
+                    loading={props.isLoading}
+                    size='large'
+                    onClick={() => props.handlePay()}
+                  >
+                    <Translation target='MOVIE_PROFILE_PRICE_PAY' />
+                  </LoadingButton>
+                )
               }
             </Grid>
           </Grid>

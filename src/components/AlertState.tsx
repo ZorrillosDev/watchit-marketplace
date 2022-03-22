@@ -1,5 +1,5 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC, PropsWithChildren } from 'react'
 
 // MUI IMPORTS
 import { Alert } from '@mui/material'
@@ -9,17 +9,19 @@ import { MoviesResultState } from '@state/movies/reducer'
 
 // ===========================|| ALERT STATE FULL ||=========================== //
 
-const AlertState: FC<MoviesResultState> = (props): JSX.Element => {
-  return (props.response !== undefined)
-    ? props.response.success
+const AlertState: FC<PropsWithChildren<MoviesResultState>> = (props): JSX.Element => {
+  return (props.result !== undefined)
+    ? props.result.success
       ? (
         <Alert sx={{ mt: 2, width: 1, '.MuiAlert-message': { display: 'flex', alignItems: 'center' } }} severity='success'>
-          {props.response.message}
+          {props.result.message}
+          {props.children}
         </Alert>
         )
       : (
         <Alert sx={{ mt: 2, width: 1, '.MuiAlert-message': { display: 'flex', alignItems: 'center' } }} severity='error'>
-          {props.response.message}
+          {props.result.message}
+          {props.children}
         </Alert>
         )
     : <></>

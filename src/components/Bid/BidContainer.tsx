@@ -11,6 +11,7 @@ import { connect, RootStateOrAny } from 'react-redux'
 import { useEthers } from '@usedapp/core'
 import { useParams } from 'react-router'
 import { MoviesResultState } from '@state/movies/reducer'
+import { selectMovieResult } from '@state/movies/selector'
 
 // ===========================|| BID - CONTAINER ||=========================== //
 
@@ -22,15 +23,16 @@ const BidContainer: FC<BidContainerProps> = (props): JSX.Element => {
   const { account } = useEthers()
   const {
     buttonSx,
-    commitBidMovie
+    commitBidMovie,
+    result
   } = props
 
   useEffect(() => {
-    if (Object.is(props.response, undefined)) {
+    if (result === undefined) {
       return
     }
     setIsLoading(false)
-  }, [props.response])
+  }, [result])
 
   const handleSetBid = useCallback((bid: number): void => {
     if (account === undefined) {
@@ -45,18 +47,13 @@ const BidContainer: FC<BidContainerProps> = (props): JSX.Element => {
     })
   }, [account])
 
-  const clickHandler = (): void => {
-    setIsLoading(true)
-  }
-
-  return <BidView {...{ buttonSx, isLoading, handleSetBid, clickHandler }} />
+  return <BidView {...{ buttonSx, isLoading, handleSetBid }} />
 }
 
 const mapDispatchToProps: Partial<MoviesActions> = { commitBidMovie }
 const mapStateToProps = (state: RootStateOrAny): MoviesResultState => {
-  return {
-    response: state.movies.response
-  }
+  const result = selectMovieResult(state)?.result
+  return { result }
 }
 
 export const Bid = connect(

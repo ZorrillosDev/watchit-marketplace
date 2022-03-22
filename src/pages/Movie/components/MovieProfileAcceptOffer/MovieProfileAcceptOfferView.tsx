@@ -1,17 +1,25 @@
 // REACT IMPORTS
 import React, { FC, useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 // MUI IMPORTS
-import { Box, BoxProps, Button, Grid, styled, Alert, Theme, Typography } from '@mui/material'
+import {
+  Box, BoxProps, Button, Grid,
+  styled, Theme, Typography
+} from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { SxProps } from '@mui/system'
 
 // PROJECT IMPORTS
+import { MoviesResultState, setMovieResult } from '@state/movies/reducer'
 import { Movie, MovieBid } from '@state/movies/types'
+import AlertState from '@components/AlertState'
 import { Web3State } from '@state/web3/types'
 import { Translation } from '@src/i18n'
 import Modal from '@components/Modal'
 import { String } from '@src/utils'
+
+/* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
 // ===========================|| ACCEPT OFFER - VIEW ||=========================== //
 
@@ -20,13 +28,17 @@ export type MovieProfileAcceptOfferViewProps = {
   handleAcceptOffer: () => void
   buttonSx?: SxProps<Theme>
   compact?: boolean
-} & Web3State & Movie & MovieBid
+} & Web3State & Movie & MovieBid & MoviesResultState
 
 const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props): JSX.Element => {
+  const dispatch = useDispatch()
   const [isOpen, setOpen] = useState(false)
-  const onClose = (): void => setOpen(false)
-  const onOpen = (): void => setOpen(true)
   const isCompact = props.compact === true ? 'small' : 'large'
+  const onClose = (): void => setOpen(false)
+  const onOpen = (): void => {
+    setOpen(true)
+    dispatch(setMovieResult({}))
+  }
 
   return (
     <>
@@ -63,34 +75,26 @@ const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props
               </Typography>
             </Grid>
             <Grid item xs={12}>
+              <AlertState result={props.result}>
+                {
+                  props?.result?.success &&
+                    <strong> Tx: {String.minifyHash(props.callResult.transactionHash)} </strong>
+                }
+              </AlertState>
               {
-                  props.result.status > 0
-                    ? (
-                      <Alert severity='success'>
-                        <Translation target='MOVIE_ACCEPT_OFFER_SUCCESS' />
-                        <strong> Tx: {String.minifyHash(props.result.transactionHash)} </strong>
-                      </Alert>
-                      )
-                    : props.result.status === 0
-                      ? (
-                        <Alert severity='error'>
-                          <Translation target='MOVIE_ACCEPT_OFFER_ERROR' />
-                        </Alert>
-                        )
-                      : (
-                        <LoadingButton
-                          variant='contained'
-                          color='primary'
-                          size='large'
-                          loading={props.isLoading}
-                          onClick={() => props.handleAcceptOffer()}
-                          fullWidth
-                        >
-                          <Translation target='MOVIE_PROFILE_PRICE_ACCEPT_OFFER' />
-                        </LoadingButton>
-                        )
+                (props.result === undefined) && (
+                  <LoadingButton
+                    variant='contained'
+                    color='primary'
+                    size='large'
+                    loading={props.isLoading}
+                    onClick={() => props.handleAcceptOffer()}
+                    fullWidth
+                  >
+                    <Translation target='MOVIE_PROFILE_PRICE_ACCEPT_OFFER' />
+                  </LoadingButton>
+                )
               }
-
             </Grid>
           </Grid>
         </AcceptOfferContent>

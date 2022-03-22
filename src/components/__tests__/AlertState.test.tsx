@@ -10,14 +10,14 @@ describe('<AlertState />', () => {
   })
 
   it('should render corresponding state based on `success=false', () => {
-    const props = { response: { success: false } } as any
+    const props = { result: { success: false } } as any
     const alertStateComponent = mount(<AlertState {...props} />)
     const alertComponent = alertStateComponent.find(Alert)
     expect(alertComponent.props().severity).toBe('error')
   })
 
   it('should render corresponding state based on `success=true', () => {
-    const props = { response: { success: true } } as any
+    const props = { result: { success: true } } as any
     const alertStateComponent = mount(<AlertState {...props} />)
     const alertComponent = alertStateComponent.find(Alert)
     expect(alertComponent.props().severity).toBe('success')

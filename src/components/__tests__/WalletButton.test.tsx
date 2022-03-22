@@ -17,15 +17,15 @@ describe('<WalletButton/>', () => {
     jest.spyOn(web3Core, 'useEthers')
       .mockImplementation(() => ({
         active: false,
-        connector: undefined,
         error: undefined,
         library: undefined,
-        chainId: undefined,
+        connector: undefined,
         account: undefined,
+        activateBrowserWallet: jest.fn(),
         setError: jest.fn(),
         deactivate: jest.fn(),
-        activateBrowserWallet: jest.fn(),
-        activate: jest.fn()
+        activate: jest.fn(),
+        chainId: undefined
       })
       )
   })

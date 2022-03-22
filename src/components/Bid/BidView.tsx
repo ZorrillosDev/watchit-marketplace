@@ -1,40 +1,42 @@
 // REACT IMPORTS
 import React, { FC, useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 // MUI IMPORTS
 import { Box, BoxProps, Button, Grid, styled, TextField, Theme, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 
-// PROJECT IMPORTS
-import Modal from '@components/Modal'
-import { Translation } from '@src/i18n'
-import { SxProps } from '@mui/system'
-import BidSummary from '@components/Bid/BidSummary'
-import { useEtherBalance, useEthers } from '@usedapp/core'
+// THIRD PARTY IMPORTS
 import { BigNumber } from 'ethers'
-import { Ethers } from '@src/utils'
-import { MoviesResultState } from '@state/movies/reducer'
+
+// PROJECT IMPORTS
+import { MoviesResultState, setMovieResult } from '@state/movies/reducer'
+import { useEtherBalance, useEthers } from '@usedapp/core'
+import BidSummary from '@components/Bid/BidSummary'
 import AlertState from '@components/AlertState'
+import { Translation } from '@src/i18n'
+import Modal from '@components/Modal'
+import { SxProps } from '@mui/system'
+import { Ethers } from '@src/utils'
 
 // ===========================|| BID - VIEW ||=========================== //
 
 export interface ModalBidViewProps {
   isLoading: boolean
   handleSetBid: (bid: number) => void
-  clickHandler: () => void
   buttonSx?: SxProps<Theme>
 }
 
 const BidView: FC<ModalBidViewProps & MoviesResultState> = (props): JSX.Element => {
+  const dispatch = useDispatch()
   const { account } = useEthers()
   const balance: BigNumber | undefined = useEtherBalance(account)
   const [bidAmount, setBidAmount] = useState(0)
   const [isOpen, setOpen] = useState(false)
   const onClose = (): void => setOpen(false)
-  const onOpen = (): void => setOpen(true)
-  const onClick = (): void => {
-    props.handleSetBid(bidAmount)
-    props.clickHandler()
+  const onOpen = (): void => {
+    setOpen(true)
+    dispatch(setMovieResult({}))
   }
 
   return (
@@ -68,16 +70,16 @@ const BidView: FC<ModalBidViewProps & MoviesResultState> = (props): JSX.Element 
                 amount={bidAmount} fee={0.03}
               />
             </Grid>
-            <AlertState response={props.response} />
+            <AlertState result={props.result} />
             {
-              (!Object.is(props?.response?.success, true)) && (
+              (!(props?.result?.success === true)) && (
                 <Grid item xs={12}>
                   <LoadingButton
                     variant='contained'
                     color='primary'
                     size='large'
                     loading={props.isLoading}
-                    onClick={onClick}
+                    onClick={() => props.handleSetBid(bidAmount)}
                     fullWidth
                   >
                     Place a bid
