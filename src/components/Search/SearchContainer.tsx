@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 
 // PROJECT IMPORTS
 import SearchView from '@components/Search/SearchView'
-import { Movie } from "@state/movies/types";
+import { Movie } from '@state/movies/types'
 
 // ===========================|| SEARCH - CONTAINER ||=========================== //
 
@@ -14,21 +14,30 @@ export const SearchContainer: FC = (): JSX.Element => {
   const [searching, setSearching] = React.useState(false)
   const [open, setOpen] = React.useState(false)
 
-  const handleOpen = (): void => {
-    setOpen(true)
-  }
-
   const handleClose = (): void => {
     setOpen(false)
   }
 
+  const handleCancel = (): void => {
+    setOpen(false)
+    setSearching(false)
+    setSearchMovies([])
+  }
+
   const onSearch = (text: string): void => {
-    console.log("hello")
-    console.log(text)
+    if (!text) return setOpen(false)
+
+    setSearching(true)
     setOpen(true)
+
+    // TODO add movies here
+    setTimeout(() => {
+      setSearching(false)
+      setSearchMovies([])
+    }, 1000)
   }
 
   return (
-    <SearchView {...{ open, handleClose, onSearch }} movies={searchMovies} />
+    <SearchView {...{ open, handleClose, onSearch, searching, handleCancel }} movies={searchMovies} />
   )
 }
