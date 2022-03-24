@@ -1,3 +1,3 @@
-export * from './movies'
-export * from './movies.actions'
-export * from './movies.state'
+export * from './bids'
+export * from './bids.actions'
+export * from './bids.state'
