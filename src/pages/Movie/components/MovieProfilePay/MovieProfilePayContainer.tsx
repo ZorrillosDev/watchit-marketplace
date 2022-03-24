@@ -9,15 +9,16 @@ import MovieProfilePayView from '@pages/Movie/components/MovieProfilePay/MoviePr
 import { Web3State } from '@state/web3/types'
 import { connect, RootStateOrAny } from 'react-redux'
 import { selectWeb3Result } from '@state/web3/selector'
-import { Movie, MovieBid, MoviesActions, MovieArgs } from '@state/movies/types'
+import { Movie, MoviesActions, MovieArgs } from '@state/movies/types'
 import { safePurchaseMovie } from '@src/redux/movies/actions'
 import { useParams } from 'react-router'
+import { Bid } from '@src/redux/bids/types'
 
 // ===========================|| MOVIE PROFILE PAY - CONTAINER ||=========================== //
 
 export type MovieProfilePayContainerProps = {
   buttonSx?: SxProps<Theme>
-} & Movie & MoviesActions & MovieBid & Web3State
+} & Movie & MoviesActions & Bid & Web3State
 
 const MovieProfilePayContainer: FC<MovieProfilePayContainerProps> = (props): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false)

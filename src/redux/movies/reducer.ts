@@ -7,7 +7,7 @@ export const initialState: MoviesState = {
   collection: [] as any
 }
 
-const recentReducer = createSlice({
+const movieReducer = createSlice({
   name: 'movies',
   initialState,
   reducers: {
@@ -27,6 +27,6 @@ const recentReducer = createSlice({
   }
 })
 
-const { actions, reducer } = recentReducer
+const { actions, reducer } = movieReducer
 export const { setMovies, setMovie, addMovie, setUploadProgress } = actions
 export default reducer

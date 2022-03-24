@@ -16,13 +16,14 @@ import { IconEth } from '@components/Icons'
 import { Translation } from '@src/i18n'
 import { SxProps, Theme } from '@mui/system'
 import { useNFTHolderOf, useNFTIsApprovedFor } from '@hooks/useNFTContract'
-import { Movie, MovieBid } from '@state/movies/types'
+import { Movie } from '@state/movies/types'
+import { Bid } from '@state/bids/types'
 import { BLACK_HOLE } from '@w3/CONSTANTS'
 import { useEthers } from '@usedapp/core'
 
 // ===========================|| MOVIE - PROFILE - PRICE - VIEW ||=========================== //
 
-export type MovieProfilePriceViewProps = Movie & MovieBid
+export type MovieProfilePriceViewProps = Movie & Bid
 
 export const MovieProfilePriceView: FC<MovieProfilePriceViewProps> = (props): JSX.Element => {
   const { account } = useEthers()
@@ -81,12 +82,12 @@ export const MovieProfilePriceView: FC<MovieProfilePriceViewProps> = (props): JS
         {account === undefined
           ? <></>
           : !iamCurrentHolder && !approvedBid
-              ? <ModalBid buttonSx={MovieProfileOfferButtonSx} />
-              : iamCurrentHolder && availableToAcceptOffer
-                ? <AcceptOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
-                : approvedBid && iamCurrentApprovedBidder
-                  ? <PayOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
-                  : <></>}
+            ? <ModalBid buttonSx={MovieProfileOfferButtonSx} />
+            : iamCurrentHolder && availableToAcceptOffer
+              ? <AcceptOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
+              : approvedBid && iamCurrentApprovedBidder
+                ? <PayOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
+                : <></>}
       </MovieProfilePriceSectionWrapper>
     </Grid>
   )

@@ -18,7 +18,12 @@ import { HomeCreatorsView } from './HomeCreatorsView'
 
 // ===========================|| HOME - CREATORS ||=========================== //
 
-const HomeCreatorsContainer: FC<UserState & UsersActions> = ({ creators, fetchCreators }): JSX.Element => {
+const HomeCreatorsContainer: FC<UserState & UsersActions> = (props): JSX.Element => {
+  const {
+    creators,
+    fetchCreators
+  } = props
+
   useEffect(() => {
     fetchCreators()
   }, [])
@@ -34,11 +39,11 @@ const HomeCreatorsContainer: FC<UserState & UsersActions> = ({ creators, fetchCr
         <Grid item xs={12}>
           <Grid container spacing={3} display='flex' flexWrap='wrap' justifyContent='space-between'>
             {
-                creators !== undefined
-                  ? creators.map((user: User, i: number) => {
-                    return <HomeCreatorsView user={user} key={i} />
-                  })
-                  : <></>
+              creators !== undefined
+                ? creators.map((user: User, i: number) => {
+                  return <HomeCreatorsView user={user} key={i} />
+                })
+                : <></>
             }
           </Grid>
         </Grid>
