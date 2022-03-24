@@ -1,44 +1,11 @@
 import { ThunkAction, ThunkDispatcher } from '@state/types'
-import { Movie, MoviesArgs, MovieBidArgs, MovieArgs, MovieBid } from '@state/movies/types'
-import { setMovies, setMovie, setUploadProgress, addBidToMovie, setBidsToMovie } from '@state/movies/reducer'
-import { Web3SafePurchaseArgs } from '@state/web3/types'
-import { callSafePurchase } from '@w3/calls/nft'
+import { addBidToMovie, setBidsToMovie } from '@state/bids/reducer'
+import { Bid, BidArgs } from '@state/bids/types'
+import { MovieArgs } from '@state/movies/types'
 import { request } from '@state/service'
 import { Endpoints } from './service'
 
-export { setMovies, setMovie, setBidsToMovie, addMovie, setUploadProgress, addBidToMovie } from '@state/movies/reducer'
-
-/**
- * Fetch movie profile`
- * @param {MovieArgs} params
- * @returns {Promise}
- */
-export const fetchMovieProfile = <P extends MovieArgs>(params: P): ThunkAction<Promise<void>> => {
-  return async (dispatch: ThunkDispatcher) => {
-    try {
-      const movie: Movie = await request(Endpoints.profile, { params })
-      dispatch(setMovie(movie))
-    } catch (e) {
-      // TODO handle error here
-    }
-  }
-}
-
-/**
- * Fetch recent movies
- * @param {MovieArgs} params
- * @returns {Promise}
- */
-export const fetchRecentMovies = <P extends MoviesArgs>(params?: P): ThunkAction<Promise<void>> => {
-  return async (dispatch: ThunkDispatcher) => {
-    try {
-      const moviesCollection: Movie[] = await request(Endpoints.recent, { params })
-      dispatch(setMovies(moviesCollection))
-    } catch (e) {
-      // TODO handle error here
-    }
-  }
-}
+export { setBidsToMovie, addBidToMovie } from '@state/bids/reducer'
 
 /**
  * Fetch recent bids for movie
@@ -48,7 +15,7 @@ export const fetchRecentMovies = <P extends MoviesArgs>(params?: P): ThunkAction
 export const fetchRecentMovieBids = <P extends MovieArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      const moviesBids: MovieBid[] = await request(Endpoints.bid, { params })
+      const moviesBids: Bid[] = await request(Endpoints.bids, { params })
       dispatch(setBidsToMovie(moviesBids))
     } catch (e) {
       // TODO handle error here
@@ -58,14 +25,14 @@ export const fetchRecentMovieBids = <P extends MovieArgs>(params: P): ThunkActio
 
 /**
  * Add bid for movie
- * @param {MovieBidArgs} params
+ * @param {BidArgs} params
  * @returns {Promise}
  */
-export const commitBidMovie = <P extends MovieBidArgs>(params: P): ThunkAction<Promise<void>> => {
+export const commitBidMovie = <P extends BidArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      const endpoint = `${Endpoints.bid}?id=${params.id ?? ''}`
-      const bid: MovieBid = await request(endpoint, {
+      const endpoint = `${Endpoints.bids}?id=${params.id ?? ''}`
+      const bid: Bid = await request(endpoint, {
         method: 'post',
         data: params
       })
@@ -85,54 +52,12 @@ export const commitBidMovie = <P extends MovieBidArgs>(params: P): ThunkAction<P
 export const flushBidsForMovie = <P extends MovieArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      await request(Endpoints.bidsFlush, {
+      await request(Endpoints.flush, {
         method: 'post',
         data: params
       })
 
-      dispatch(setBidsToMovie([] as MovieBid[]))
-    } catch (e) {
-      // TODO handle error here
-    }
-  }
-}
-
-/**
- * Call safePurchase contract method and flush old bids
- * @param {MovieArgs & Web3SafePurchaseArgs} params
- * @returns {Promise}
- */
-export const safePurchaseMovie = <P extends MovieArgs & Web3SafePurchaseArgs>(params: P): ThunkAction<Promise<void>> => {
-  return async (dispatch: ThunkDispatcher) => {
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      await callSafePurchase(params)
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      dispatch(flushBidsForMovie(params))
-    } catch (e) {
-      // TODO handle error here
-    }
-  }
-}
-
-/**
- * Start movie upload
- * @param {FormData} params
- * @returns {Promise}
- */
-export const commitUploadMovie = <P extends FormData>(params: P): ThunkAction<Promise<void>> => {
-  return async (dispatch: ThunkDispatcher) => {
-    try {
-      await request(Endpoints.create, {
-        method: 'post',
-        data: params,
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        onUploadProgress: (p: ProgressEvent) => {
-          dispatch(setUploadProgress((p.loaded / p.total) * 100))
-        }
-      })
+      dispatch(setBidsToMovie([] as Bid[]))
     } catch (e) {
       // TODO handle error here
     }

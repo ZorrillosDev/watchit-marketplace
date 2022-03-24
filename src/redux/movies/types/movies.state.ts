@@ -1,4 +1,4 @@
-import { Movie, MovieBid } from './movies'
+import { Movie } from './movies'
 
 export interface MoviesState {
   movie: Movie

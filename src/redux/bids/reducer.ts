@@ -1,38 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Movie, MovieBid, MoviesState } from '@state/movies/types'
+import { BidState, Bid } from './types'
 
-export const initialState: MoviesState = {
-  progress: 0,
-  movie: {} as any,
-  collection: [] as any,
-  bidCollection: [] as any
+export const initialState: BidState = {
+  bids: [] as any
 }
 
 const recentReducer = createSlice({
   name: 'movies',
   initialState,
   reducers: {
-    setMovie (state: MoviesState, action: PayloadAction<Movie>) {
-      state.movie = action.payload
+    setBidsToMovie (state: BidState, action: PayloadAction<Bid[]>) {
+      state.bids = action.payload
     },
-    setMovies (state: MoviesState, action: PayloadAction<Movie[]>) {
-      state.collection = action.payload
-    },
-    setUploadProgress (state: MoviesState, action: PayloadAction<number>) {
-      state.progress = action.payload
-    },
-    setBidsToMovie (state: MoviesState, action: PayloadAction<MovieBid[]>) {
-      state.bidCollection = action.payload
-    },
-    addBidToMovie (state: MoviesState, action: PayloadAction<MovieBid>) {
-      state.bidCollection.push(action.payload)
-    },
-    addMovie (state: MoviesState, action: PayloadAction<Movie>) {
-      state.collection.push(action.payload)
+    addBidToMovie (state: BidState, action: PayloadAction<Bid>) {
+      state.bids.push(action.payload)
     }
   }
 })
 
 const { actions, reducer } = recentReducer
-export const { setMovies, setMovie, setBidsToMovie, addMovie, setUploadProgress, addBidToMovie } = actions
+export const {setBidsToMovie, addBidToMovie } = actions
 export default reducer
