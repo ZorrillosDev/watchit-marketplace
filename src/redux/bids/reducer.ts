@@ -5,7 +5,7 @@ export const initialState: BidState = {
   bids: [] as any
 }
 
-const recentReducer = createSlice({
+const bidReducer = createSlice({
   name: 'movies',
   initialState,
   reducers: {
@@ -18,6 +18,6 @@ const recentReducer = createSlice({
   }
 })
 
-const { actions, reducer } = recentReducer
+const { actions, reducer } = bidReducer
 export const {setBidsToMovie, addBidToMovie } = actions
 export default reducer
