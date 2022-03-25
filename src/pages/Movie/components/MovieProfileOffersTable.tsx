@@ -21,7 +21,7 @@ export interface MovieProfileOffersTableProps {
   movie: Movie
 }
 
-const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({ rows, ...props }): JSX.Element => {
+const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({ rows }): JSX.Element => {
   return (
     <TableContainer component={Paper}>
       {

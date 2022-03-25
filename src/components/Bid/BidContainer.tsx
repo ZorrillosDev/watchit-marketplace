@@ -5,15 +5,16 @@ import React, { FC, useCallback, useState } from 'react'
 import BidView from '@components/Bid/BidView'
 import { SxProps } from '@mui/system'
 import { Theme } from '@mui/material'
-import { MovieArgs, MoviesActions } from '@state/movies/types'
-import { commitBidMovie } from '@state/movies/actions'
+import { MovieArgs } from '@state/movies/types'
+import { commitBidMovie } from '@state/bids/actions'
 import { connect } from 'react-redux'
 import { useEthers } from '@usedapp/core'
 import { useParams } from 'react-router'
+import { BidActions } from '@src/redux/bids/types'
 
 // ===========================|| BID - CONTAINER ||=========================== //
 
-type BidContainerProps = { buttonSx?: SxProps<Theme> } & MoviesActions
+type BidContainerProps = { buttonSx?: SxProps<Theme> } & BidActions
 
 const BidContainer: FC<BidContainerProps> = (props): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false)
@@ -44,7 +45,7 @@ const BidContainer: FC<BidContainerProps> = (props): JSX.Element => {
   return <BidView {...{ buttonSx, isLoading, handleSetBid }} />
 }
 
-const mapDispatchToProps: Partial<MoviesActions> = { commitBidMovie }
+const mapDispatchToProps: Partial<BidActions> = { commitBidMovie }
 export const Bid = connect(
   null,
   mapDispatchToProps
