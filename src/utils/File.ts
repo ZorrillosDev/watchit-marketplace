@@ -3,12 +3,16 @@
 
 export namespace File {
   // TODO write tests
+
+  /**
+   * Generate blob image thumbnail for video file
+   *
+   * @param {File} file
+   * @param {number} [seekTo=0]
+   * @return {*}  {Promise<Blob>}
+   */
   export const getVideoCover = async (file: File, seekTo: number = 0): Promise<Blob> => {
-    /**
-         * Get File Thumbnail
-         * @param {File} file
-         * @return {string} file thumb
-         */
+
     return await new Promise((resolve, reject) => {
       // load the file to a video player
       const videoPlayer = document.createElement('video')
