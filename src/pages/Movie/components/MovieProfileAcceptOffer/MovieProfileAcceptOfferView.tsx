@@ -11,7 +11,8 @@ import Modal from '@components/Modal'
 import { Translation } from '@src/i18n'
 import { String } from '@src/utils'
 import { Web3Actions, Web3State } from '@state/web3/types'
-import { Movie, MovieBid } from '@state/movies/types'
+import { Movie} from '@state/movies/types'
+import { Bid } from '@src/redux/bids/types'
 
 // ===========================|| ACCEPT OFFER - VIEW ||=========================== //
 
@@ -20,7 +21,7 @@ export type MovieProfileAcceptOfferViewProps = {
   handleAcceptOffer: () => void
   buttonSx?: SxProps<Theme>
   compact?: boolean
-} & Web3State & Web3Actions & Movie & MovieBid
+} & Web3State & Web3Actions & Movie & Bid
 
 const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props): JSX.Element => {
   const [isOpen, setOpen] = useState(false)

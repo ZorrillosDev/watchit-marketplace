@@ -14,7 +14,8 @@ import { useEthers } from '@usedapp/core'
 
 // ===========================|| MOVIE - CREATE - CONTAINER ||=========================== //
 
-export const MovieCreateContainer: FC<MoviesState & MoviesActions> = ({ commitUploadMovie, progress }): JSX.Element => {
+export const MovieCreateContainer: FC<MoviesState & MoviesActions> = (props): JSX.Element => {
+  const { commitUploadMovie, progress } = props
   const { account } = useEthers()
 
   const onSubmit = (values: any): void => {

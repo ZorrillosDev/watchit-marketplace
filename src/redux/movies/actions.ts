@@ -1,12 +1,13 @@
 import { ThunkAction, ThunkDispatcher } from '@state/types'
-import { Movie, MoviesArgs, MovieBidArgs, MovieArgs, MovieBid } from '@state/movies/types'
-import { setMovies, setMovie, setUploadProgress, addBidToMovie, setBidsToMovie } from '@state/movies/reducer'
+import { Movie, MoviesArgs, MovieArgs } from '@state/movies/types'
+import { setMovies, setMovie, setUploadProgress } from '@state/movies/reducer'
 import { Web3SafePurchaseArgs } from '@state/web3/types'
 import { callSafePurchase } from '@w3/calls/nft'
+import { flushBidsForMovie } from '@state/bids/actions'
 import { request } from '@state/service'
 import { Endpoints } from './service'
 
-export { setMovies, setMovie, setBidsToMovie, addMovie, setUploadProgress, addBidToMovie } from '@state/movies/reducer'
+export { setMovies, setMovie, addMovie, setUploadProgress } from '@state/movies/reducer'
 
 /**
  * Fetch movie profile`
@@ -40,62 +41,6 @@ export const fetchRecentMovies = <P extends MoviesArgs>(params?: P): ThunkAction
   }
 }
 
-/**
- * Fetch recent bids for movie
- * @param {MovieArgs} params
- * @returns {Promise}
- */
-export const fetchRecentMovieBids = <P extends MovieArgs>(params: P): ThunkAction<Promise<void>> => {
-  return async (dispatch: ThunkDispatcher) => {
-    try {
-      const moviesBids: MovieBid[] = await request(Endpoints.bid, { params })
-      dispatch(setBidsToMovie(moviesBids))
-    } catch (e) {
-      // TODO handle error here
-    }
-  }
-}
-
-/**
- * Add bid for movie
- * @param {MovieBidArgs} params
- * @returns {Promise}
- */
-export const commitBidMovie = <P extends MovieBidArgs>(params: P): ThunkAction<Promise<void>> => {
-  return async (dispatch: ThunkDispatcher) => {
-    try {
-      const endpoint = `${Endpoints.bid}?id=${params.id ?? ''}`
-      const bid: MovieBid = await request(endpoint, {
-        method: 'post',
-        data: params
-      })
-
-      dispatch(addBidToMovie(bid))
-    } catch (e) {
-      // TODO handle error here
-    }
-  }
-}
-
-/**
- * Flush all bids for movie
- * @param {MovieArgs} params
- * @returns {Promise}
- */
-export const flushBidsForMovie = <P extends MovieArgs>(params: P): ThunkAction<Promise<void>> => {
-  return async (dispatch: ThunkDispatcher) => {
-    try {
-      await request(Endpoints.bidsFlush, {
-        method: 'post',
-        data: params
-      })
-
-      dispatch(setBidsToMovie([] as MovieBid[]))
-    } catch (e) {
-      // TODO handle error here
-    }
-  }
-}
 
 /**
  * Call safePurchase contract method and flush old bids

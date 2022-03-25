@@ -11,8 +11,8 @@ import {
 // PROJECT IMPORTS
 import { Translation } from '@src/i18n'
 import { IconChevronDown, IconList } from '@tabler/icons'
-import MovieProfileOffersTable, { MovieProfileOffersTableProps } from '@pages/Movie/components/MovieProfileOffersTable'
 import MovieProfileAccordion from '@pages/Movie/components/MovieProfileAccordion'
+import MovieProfileOffersTable, { MovieProfileOffersTableProps } from '@pages/Movie/components/MovieProfileOffersTable'
 
 // ===========================|| MOVIE - PROFILE - OFFERS - VIEW ||=========================== //
 
