@@ -21,6 +21,14 @@ interface DateTimeFormatOptions {
 type DateTimeParams = DateTimeFormatOptions & { lang?: string }
 
 export namespace Dates {
+  /**
+   * Parse input date into local timezone
+   *
+   * @export
+   * @param {string} inputDate
+   * @param {DateTimeParams} [options]
+   * @return {*}  {string}
+   */
   export function getLocaleDateTime (inputDate: string, options?: DateTimeParams): string {
     // Get timezone from nav
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -39,6 +47,12 @@ export namespace Dates {
       }).format(new Date(inputDate))
   }
 
+  /**
+   * Get time elapsed since input until today
+   *
+   * @param {string} date
+   * @return {*} 
+   */
   export const getTimeElapsed = (date: string) => {
     if (!date) return 0
 
