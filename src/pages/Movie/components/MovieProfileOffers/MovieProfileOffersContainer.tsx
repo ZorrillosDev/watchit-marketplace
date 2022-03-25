@@ -8,14 +8,14 @@ import { connect, RootStateOrAny } from 'react-redux'
 import { fetchRecentMovieBids } from '@state/bids/actions'
 import { selectMovie } from '@state/movies/selector'
 import { selectBidCollection } from '@state/bids/selector'
-import { BidActions, BidState } from '@src/redux/bids/types'
+import { BidActions, BidState } from '@state/bids/types'
 import { useParams } from 'react-router'
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 
 // ===========================|| MOVIE - PROFILE - OFFERS - CONTAINER ||=========================== //
 
-type MovieProfileOffersProps = MoviesState & BidState & BidActions
+type MovieProfileOffersProps = BidActions & MoviesState & BidState
 const MovieProfileOffersContainer: FC<MovieProfileOffersProps> = (props): JSX.Element => {
   const { id } = useParams<MovieArgs>()
   const {
@@ -32,7 +32,7 @@ const MovieProfileOffersContainer: FC<MovieProfileOffersProps> = (props): JSX.El
 }
 
 const mapDispatchToProps: Partial<BidActions> = { fetchRecentMovieBids }
-const mapStateToProps = (state: RootStateOrAny): Partial<MoviesState | BidState> => {
+const mapStateToProps = (state: RootStateOrAny): Partial<MoviesState & BidState> => {
   const bids = selectBidCollection(state)
   const movie = selectMovie(state)
   return { bids, movie }
