@@ -29,6 +29,7 @@ export const SearchContainer: FC = (): JSX.Element => {
 
     setSearching(true)
     setOpen(true)
+    setSearchMovies([])
 
     // TODO add movies here
     setTimeout(() => {
