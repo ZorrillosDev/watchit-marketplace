@@ -34,6 +34,7 @@ const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props
   const dispatch = useDispatch()
   const [isOpen, setOpen] = useState(false)
   const isCompact = props.compact === true ? 'small' : 'large'
+  const transactionHash = String.minifyHash(props?.callResult?.transactionHash ?? '')
   const onClose = (): void => setOpen(false)
   const onOpen = (): void => {
     setOpen(true)
@@ -75,12 +76,12 @@ const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <AlertState result={props.result}>
-                {
-                  props?.result?.success &&
-                    <strong> Tx: {String.minifyHash(props.callResult.transactionHash)} </strong>
-                }
-              </AlertState>
+              <AlertState
+                result={props.result}
+                successContent={(
+                  <strong> Tx: { transactionHash } </strong>
+                )}
+              />
               {
                 (props.result === undefined) && (
                   <LoadingButton

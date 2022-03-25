@@ -65,12 +65,12 @@ const MovieProfilePayView: FC<MovieProfilePayViewProps> = (props): JSX.Element =
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <AlertState result={props.result}>
-                {
-                  props?.result?.success &&
-                    <strong> {props.title} </strong>
-                }
-              </AlertState>
+              <AlertState
+                result={props.result}
+                successContent={(
+                  <strong> {props.title} </strong>
+                )}
+              />
               {
                 (props.result === undefined) && (
                   <LoadingButton

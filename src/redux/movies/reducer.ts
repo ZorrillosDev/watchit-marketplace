@@ -1,12 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Movie, MovieBid, MoviesState } from '@state/movies/types'
+import { ResultState } from '@components/AlertState'
 
-export interface MoviesResultState {
-  result?: {
-    success: boolean
-    message: string | undefined
-  }
-}
+export type MoviesResultState = ResultState
 
 export const initialState: MoviesState & MoviesResultState = {
   progress: 0,
