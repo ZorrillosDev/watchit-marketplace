@@ -1,9 +1,8 @@
 import { ThunkDispatcher, ThunkAction } from '@state/types'
 import { fetchRecentMovieBids, commitBidMovie, flushBidsForMovie } from '@state/bids/actions'
 import reducer, { initialState, setBidsToMovie, addBidToMovie } from '@state/bids/reducer'
-import { MovieArgs } from '@state/movies/types'
 import { Bid } from '@state/bids/types/bids'
-import { BidArgs } from '@state/bids/types'
+import { BidArgs, BidsArgs } from '@state/bids/types'
 
 jest.mock('@state/service')
 jest.mock('@w3/calls/nft')
@@ -16,8 +15,8 @@ describe('Movies store', () => {
   let actionForFetchRecentBids: ThunkAction<void>
   let actionForCommitBidMovie: ThunkAction<void>
   let actionForFlushBidsForMovie: ThunkAction<void>
-  let bidMovieArgs: BidArgs
-  let bidFlushMovieArgs: MovieArgs
+  let bidMovieArgs: BidsArgs
+  let bidFlushMovieArgs: BidArgs
 
   beforeAll(() => {
     // @typescript-eslint/consistent-type-assertions

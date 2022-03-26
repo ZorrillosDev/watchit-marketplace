@@ -1,7 +1,6 @@
 import { ThunkAction, ThunkDispatcher } from '@state/types'
 import { addBidToMovie, setBidsToMovie } from '@state/bids/reducer'
-import { Bid, BidArgs } from '@state/bids/types'
-import { MovieArgs } from '@state/movies/types'
+import { Bid, BidArgs, BidsArgs } from '@state/bids/types'
 import { request } from '@state/service'
 import { Endpoints } from './service'
 
@@ -9,10 +8,10 @@ export { setBidsToMovie, addBidToMovie } from '@state/bids/reducer'
 
 /**
  * Fetch recent bids for movie
- * @param {MovieArgs} params
+ * @param {BidArgs} params
  * @returns {Promise}
  */
-export const fetchRecentMovieBids = <P extends MovieArgs>(params: P): ThunkAction<Promise<void>> => {
+export const fetchRecentMovieBids = <P extends BidArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
       const moviesBids: Bid[] = await request(Endpoints.bids, { params })
@@ -25,10 +24,10 @@ export const fetchRecentMovieBids = <P extends MovieArgs>(params: P): ThunkActio
 
 /**
  * Add bid for movie
- * @param {BidArgs} params
+ * @param {BidsArgs} params
  * @returns {Promise}
  */
-export const commitBidMovie = <P extends BidArgs>(params: P): ThunkAction<Promise<void>> => {
+export const commitBidMovie = <P extends BidsArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
       const endpoint = `${Endpoints.bids}?id=${params.id ?? ''}`
@@ -46,10 +45,10 @@ export const commitBidMovie = <P extends BidArgs>(params: P): ThunkAction<Promis
 
 /**
  * Flush all bids for movie
- * @param {MovieArgs} params
+ * @param {BidArgs} params
  * @returns {Promise}
  */
-export const flushBidsForMovie = <P extends MovieArgs>(params: P): ThunkAction<Promise<void>> => {
+export const flushBidsForMovie = <P extends BidArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
       await request(Endpoints.flush, {
