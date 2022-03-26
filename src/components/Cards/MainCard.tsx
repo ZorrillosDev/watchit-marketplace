@@ -42,7 +42,8 @@ const MainCard = React.forwardRef<HTMLDivElement, MainCardProps>((props, ref) =>
         title && <CardHeader
           sx={{ p: 2, '& .MuiCardHeader-action': { mr: 0 } }}
           title={title}
-          action={p.secondary} />
+          action={p.secondary}
+                 />
       }
 
       {/* content & header divider */}

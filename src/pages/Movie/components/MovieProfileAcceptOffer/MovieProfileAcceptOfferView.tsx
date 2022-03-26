@@ -11,7 +11,7 @@ import Modal from '@components/Modal'
 import { Translation } from '@src/i18n'
 import { String } from '@src/utils'
 import { Web3Actions, Web3State } from '@state/web3/types'
-import { Movie} from '@state/movies/types'
+import { Movie } from '@state/movies/types'
 import { Bid } from '@src/redux/bids/types'
 
 // ===========================|| ACCEPT OFFER - VIEW ||=========================== //

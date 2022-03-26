@@ -40,7 +40,6 @@ const SearchItem: FC<{ movie: Movie }> = ({ movie }): JSX.Element => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-
               <Typography variant='h5' color='secondary' textAlign='right'>
                 <IconStar />
                 {movie.rating}

@@ -41,7 +41,7 @@ const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({ rows }): JS
                 })}
               </TableBody>
             </MovieProfileOffersTableWrapper>
-          )
+            )
           : (
             <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' sx={{ p: 4 }}>
               <Bolt sx={{ pb: 2, fontSize: '3.3rem' }} />
@@ -51,7 +51,7 @@ const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({ rows }): JS
                 />
               </Typography>
             </Box>
-          )
+            )
       }
     </TableContainer>
   )

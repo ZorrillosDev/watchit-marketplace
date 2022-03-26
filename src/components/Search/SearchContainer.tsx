@@ -38,6 +38,14 @@ export const SearchContainer: FC = (): JSX.Element => {
   }
 
   return (
-    <SearchView {...{ open, handleClose, onSearch, searching, handleCancel }} movies={searchMovies} />
+    <SearchView
+      {...{
+        open,
+        handleClose,
+        onSearch,
+        searching,
+        handleCancel
+      }} movies={searchMovies}
+    />
   )
 }

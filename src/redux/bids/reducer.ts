@@ -19,5 +19,5 @@ const bidReducer = createSlice({
 })
 
 const { actions, reducer } = bidReducer
-export const {setBidsToMovie, addBidToMovie } = actions
+export const { setBidsToMovie, addBidToMovie } = actions
 export default reducer

@@ -41,7 +41,6 @@ export const fetchRecentMovies = <P extends MoviesArgs>(params?: P): ThunkAction
   }
 }
 
-
 /**
  * Call safePurchase contract method and flush old bids
  * @param {MovieArgs & Web3SafePurchaseArgs} params

@@ -51,7 +51,7 @@ export namespace Dates {
    * Get time elapsed since input until today
    *
    * @param {string} date
-   * @return {*} 
+   * @return {*}
    */
   export const getTimeElapsed = (date: string) => {
     if (!date) return 0

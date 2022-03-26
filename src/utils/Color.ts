@@ -5,7 +5,7 @@ export namespace Color {
 
   /**
   * Add alpha opacity to hex color
-  *  
+  *
   * @param {string} color
   * @param {number} opacity
   * @return {*}  {string}
