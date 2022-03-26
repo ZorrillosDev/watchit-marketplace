@@ -37,7 +37,6 @@ describe('Movies store', () => {
     ).toEqual(initialState)
   })
 
-
   it('should handle set for bid collection', () => {
     const current = reducer(initialState, setBidsToMovie(movieBids))
     expect(current).toEqual({ ...initialState, ...{ bidCollection: movieBids } })

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 // project imports
 import Menu from '@components/Header/HeaderMenu'
 import LogoPng from '@assets/icons/icon.png'
+import Search from '@components/Search'
 
 // mui imports
 import { useTheme } from '@mui/material/styles'
@@ -12,7 +13,6 @@ import {
   Toolbar, AppBar, Box,
   useMediaQuery, Container
 } from '@mui/material'
-import Search from '@components/Search'
 
 // ===========================|| HEADER - VIEW ||=========================== //
 

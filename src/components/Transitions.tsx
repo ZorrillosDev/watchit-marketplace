@@ -13,16 +13,17 @@ import {
 
 // ===========================|| TRANSITIONS ||=========================== //
 
-interface TransitionsProps {
+type MuiTransitions = CollapseProps & FadeProps & GrowProps & SlideProps & ZoomProps
+interface TransitionsProps extends MuiTransitions {
   position?: 'top-left' | 'top-right' | 'top' | 'bottom-left' | 'bottom-right' | 'bottom'
   type?: 'grow' | 'collapse' | 'fade' | 'slide' | 'zoom'
   direction?: 'left' | 'right' | 'up' | 'down'
 }
 
-type MuiTransitions = CollapseProps & FadeProps & GrowProps & SlideProps & ZoomProps
 
-const Transitions: FC<PropsWithChildren<TransitionsProps & MuiTransitions>> = ({ children, position, type, direction, ...others }): JSX.Element => {
-  let positionSX
+const Transitions: FC<PropsWithChildren<TransitionsProps>> = (props): JSX.Element => {
+  const { children, position, type, direction, ...others } = props
+  let positionSX = {} // Handle position based on screen position
 
   switch (position) {
     case 'top-right':

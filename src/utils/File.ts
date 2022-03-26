@@ -12,7 +12,6 @@ export namespace File {
    * @return {*}  {Promise<Blob>}
    */
   export const getVideoCover = async (file: File, seekTo: number = 0): Promise<Blob> => {
-
     return await new Promise((resolve, reject) => {
       // load the file to a video player
       const videoPlayer = document.createElement('video')

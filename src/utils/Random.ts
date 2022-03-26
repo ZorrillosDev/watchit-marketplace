@@ -14,7 +14,6 @@ export namespace Random {
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
-
   /**
    * Get random value from array
    *

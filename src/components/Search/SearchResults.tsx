@@ -62,10 +62,11 @@ const SearchResults: FC<SearchResultsProps> = (props): JSX.Element => {
                   justifyContent: 'center'
                 }}
               >
+
                 {
-                  props.searching &&
-                    <CircularProgress size={30} />
+                  props.searching && <CircularProgress size={30} />
                 }
+
                 {
                   !props.searching
                     ? props.movies.length
@@ -74,8 +75,8 @@ const SearchResults: FC<SearchResultsProps> = (props): JSX.Element => {
                           <SearchContent item xs={12}>
                             <Grid container direction='column' spacing={1}>
                               {
-                              props.movies.map((movie, i) => <SearchItem movie={movie} key={i} />)
-                            }
+                                props.movies.map((movie, i) => <SearchItem movie={movie} key={i} />)
+                              }
                             </Grid>
                           </SearchContent>
                         </Grid>
