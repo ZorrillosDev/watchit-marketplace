@@ -5,7 +5,7 @@ import React, { FC, useCallback, useState } from 'react'
 import BidView from '@components/Bid/BidView'
 import { SxProps } from '@mui/system'
 import { Theme } from '@mui/material'
-import { MovieArgs } from '@state/movies/types'
+import { BidArgs } from '@state/bids/types'
 import { commitBidMovie } from '@state/bids/actions'
 import { connect } from 'react-redux'
 import { useEthers } from '@usedapp/core'
@@ -18,7 +18,7 @@ type BidContainerProps = { buttonSx?: SxProps<Theme> } & BidActions
 
 const BidContainer: FC<BidContainerProps> = (props): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false)
-  const { id } = useParams<MovieArgs>()
+  const { id } = useParams<BidArgs>()
   const { account } = useEthers()
 
   const {

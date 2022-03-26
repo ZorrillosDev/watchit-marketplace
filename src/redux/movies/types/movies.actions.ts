@@ -6,11 +6,15 @@ export interface MovieArgs {
 export interface MoviesArgs {
   limit?: number
 }
+export interface MoviesSearch {
+  term: string
+}
 
 export interface MoviesActions {
+  commitUploadMovie: <P extends FormData>(params: P) => void
   fetchRecentMovies: <P extends MoviesArgs>(args?: P) => void
   fetchMovieProfile: <P extends MovieArgs>(args: P) => void
   safePurchaseMovie: <P extends MovieArgs & Web3SafePurchaseArgs>(args: P) => void
-  commitUploadMovie: <P extends FormData>(params: P) => void
+  searchForMovie: <P extends MoviesSearch>(params: P) => void
 
 }
