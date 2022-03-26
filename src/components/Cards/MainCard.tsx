@@ -20,24 +20,30 @@ export interface MainCardProps extends Omit<CardProps, 'title'> {
   title?: ReactElement | string
 }
 
-const MainCard = React.forwardRef<HTMLDivElement, MainCardProps>(({ border, content, contentSx, boxShadow, title, ...props }, ref) => {
+const MainCard = React.forwardRef<HTMLDivElement, MainCardProps>((props, ref) => {
   const theme = useTheme()
+  const { border, content, contentSx, boxShadow, title, ...p } = props
 
   return (
     <Card
-      {...props}
+      {...p}
       ref={ref}
       sx={{
         border: border ? '1px solid' : 'none',
         borderColor: theme.palette.primary.light,
         ':hover': {
-          boxShadow: boxShadow ? props.shadow ?? '0 2px 14px 0 rgb(32 40 45 / 8%)' : 'inherit'
+          boxShadow: boxShadow ? p.shadow ?? '0 2px 14px 0 rgb(32 40 45 / 8%)' : 'inherit'
         },
-        ...props.sx
+        ...p.sx
       }}
     >
       {/* card header and action */}
-      {title && <CardHeader sx={{ p: 2, '& .MuiCardHeader-action': { mr: 0 } }} title={title} action={props.secondary} />}
+      {
+        title && <CardHeader
+          sx={{ p: 2, '& .MuiCardHeader-action': { mr: 0 } }}
+          title={title}
+          action={p.secondary} />
+      }
 
       {/* content & header divider */}
       {title && <Divider />}
@@ -45,10 +51,10 @@ const MainCard = React.forwardRef<HTMLDivElement, MainCardProps>(({ border, cont
       {/* card content */}
       {content && (
         <CardContent sx={contentSx}>
-          {props.children}
+          {p.children}
         </CardContent>
       )}
-      {!content && props.children}
+      {!content && p.children}
     </Card>
   )
 })
