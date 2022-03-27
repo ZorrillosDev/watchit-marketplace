@@ -39,19 +39,19 @@ describe('Movies store', () => {
 
   it('should handle set for bid collection', () => {
     const current = reducer(initialState, setBidsToMovie(movieBids))
-    expect(current).toEqual({ ...initialState, ...{ bidCollection: movieBids } })
+    expect(current).toEqual({ ...initialState, ...{ bids: movieBids } })
     expect(reducer(current, setBidsToMovie(movieBids))).toEqual({
       ...initialState,
-      bidCollection: movieBids
+      bids: movieBids
     })
   })
 
   it('should handle add to bid collection', () => {
     const current = reducer(initialState, addBidToMovie(movieBid))
-    expect(current).toEqual({ ...initialState, ...{ bidCollection: [movieBid] } })
+    expect(current).toEqual({ ...initialState, ...{ bids: [movieBid] } })
     expect(reducer(current, addBidToMovie(movieBid))).toEqual({
       ...initialState,
-      bidCollection: [movieBid, movieBid]
+      bids: [movieBid, movieBid]
     })
   })
 
@@ -70,17 +70,23 @@ describe('Movies store', () => {
 
     it('should call movie bids with valid args ', async () => {
       await actionForFetchRecentBids(dispatch, getState, undefined)
-      expect(request).toHaveBeenCalledWith('/bids/recent', { params: bidArgs})
+      expect(request).toHaveBeenCalledWith('/bid/recent', { params: bidArgs })
     })
 
     it('should call commit new bid with valid args', async () => {
       await actionForCommitBidMovie(dispatch, getState, undefined)
-      expect(request).toHaveBeenCalledWith('/bids/create', {params: bidsArgs})
+      expect(request).toHaveBeenCalledWith(`/bid/create?id=${bidsArgs.id}`, {
+        method: 'post',
+        data: bidsArgs
+      })
     })
 
     it('should call flush bids action with valid args', async () => {
       await actionForFlushBidsForMovie(dispatch, getState, undefined)
-      expect(request).toHaveBeenCalledWith('/bids/flush', {params: bidArgs})
+      expect(request).toHaveBeenCalledWith('/bid/flush', {
+        method: 'post',
+        data: bidArgs
+      })
     })
   })
 })
