@@ -11,7 +11,7 @@ import { callSafePurchase } from '@src/w3/calls/nft'
 jest.mock('@state/service')
 jest.mock('@w3/calls/nft')
 
-describe('Movies store', () => {
+describe('Bids store', () => {
   let movies: Movie[]
   let dispatch: ThunkDispatcher
   let getState: () => unknown
@@ -79,7 +79,7 @@ describe('Movies store', () => {
     // Initial empty search result
     const current = reducer(initialState, setSearchResult([] as any))
 
-    expect(current).toEqual({ ...initialState, ...{ searchResult: []} })
+    expect(current).toEqual({ ...initialState, ...{ searchResult: [] } })
     expect(reducer(current, setSearchResult(movies))).toEqual({
       ...initialState,
       searchResult: movies
@@ -92,7 +92,7 @@ describe('Movies store', () => {
       // initialize new spies
       dispatch = jest.fn()
       getState = jest.fn()
-      searchMovieParams = {term: "Batman"}
+      searchMovieParams = { term: "Batman" }
       purchaseMovieArgs = { id: '1', tokenId: '0x0', value: '1' }
 
       actionForFetchRecent = fetchRecentMovies()
@@ -113,12 +113,17 @@ describe('Movies store', () => {
 
     it('should call search movie action with valid args', async () => {
       await actionForSearchMovie(dispatch, getState, undefined)
-      expect(request).toHaveBeenCalledWith('/movie/search', {params: searchMovieParams})
+      expect(request).toHaveBeenCalledWith('/movie/search', { params: searchMovieParams })
     })
 
     it('should call commit upload movie action with valid args ', async () => {
       await actionForCommitUploadMovie(dispatch, getState, undefined)
-      expect(request).toBeCalled()
+      expect(request).toHaveBeenCalledWith('/movie/create', {
+        data: {},
+        method: 'post',
+        headers: { 'Content-Type': 'multipart/form-data' },
+        onUploadProgress: jest.fn()
+      })
     })
   })
 })
