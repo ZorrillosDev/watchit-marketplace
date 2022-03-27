@@ -7,9 +7,6 @@ export interface BidsArgs extends MovieArgs {
   bid: number
 }
 
-
-
-
 export interface BidActions {
   commitBidMovie: <P extends BidsArgs>(args: P) => void
   fetchRecentMovieBids: <P extends MovieArgs>(args: P) => void
