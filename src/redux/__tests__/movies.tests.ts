@@ -113,7 +113,7 @@ describe('Movies store', () => {
 
     it('should call search movie action with valid args', async () => {
       await actionForSearchMovie(dispatch, getState, undefined)
-      expect(callSafePurchase).toHaveBeenCalledWith(searchMovieParams)
+      expect(request).toHaveBeenCalledWith('/movie/search', {params: searchMovieParams})
     })
 
     it('should call commit upload movie action with valid args ', async () => {

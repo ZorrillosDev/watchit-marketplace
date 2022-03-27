@@ -14,7 +14,7 @@ export { setBidsToMovie, addBidToMovie } from '@state/bids/reducer'
 export const fetchRecentMovieBids = <P extends BidArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      const moviesBids: Bid[] = await request(Endpoints.bids, { params })
+      const moviesBids: Bid[] = await request(Endpoints.recent, { params })
       dispatch(setBidsToMovie(moviesBids))
     } catch (e) {
       // TODO handle error here
@@ -30,7 +30,7 @@ export const fetchRecentMovieBids = <P extends BidArgs>(params: P): ThunkAction<
 export const commitBidMovie = <P extends BidsArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      const endpoint = `${Endpoints.bids}?id=${params.id ?? ''}`
+      const endpoint = `${Endpoints.create}?id=${params.id ?? ''}`
       const bid: Bid = await request(endpoint, {
         method: 'post',
         data: params
