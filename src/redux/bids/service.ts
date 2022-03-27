@@ -1,4 +1,5 @@
 export enum Endpoints {
-  bids = '/movie/bid',
-  flush = '/movie/bid/flush',
+  recent = '/bid/recent',
+  create = '/bid/create',
+  flush = '/bid/flush',
 }

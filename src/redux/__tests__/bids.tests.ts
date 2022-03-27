@@ -3,6 +3,7 @@ import { fetchRecentMovieBids, commitBidMovie, flushBidsForMovie } from '@state/
 import reducer, { initialState, setBidsToMovie, addBidToMovie } from '@state/bids/reducer'
 import { Bid } from '@state/bids/types/bids'
 import { BidArgs, BidsArgs } from '@state/bids/types'
+import { request } from '@state/service'
 
 jest.mock('@state/service')
 jest.mock('@w3/calls/nft')
@@ -15,8 +16,8 @@ describe('Movies store', () => {
   let actionForFetchRecentBids: ThunkAction<void>
   let actionForCommitBidMovie: ThunkAction<void>
   let actionForFlushBidsForMovie: ThunkAction<void>
-  let bidMovieArgs: BidsArgs
-  let bidFlushMovieArgs: BidArgs
+  let bidsArgs: BidsArgs
+  let bidArgs: BidArgs
 
   beforeAll(() => {
     // @typescript-eslint/consistent-type-assertions
@@ -59,12 +60,27 @@ describe('Movies store', () => {
       // initialize new spies
       dispatch = jest.fn()
       getState = jest.fn()
-      bidMovieArgs = { bid: 2, account: 'test', id: '1' }
-      bidFlushMovieArgs = { id: '1' }
+      bidsArgs = { bid: 2, account: 'test', id: '1' }
+      bidArgs = { id: '1' }
 
       actionForFetchRecentBids = fetchRecentMovieBids({ id: '1' })
-      actionForCommitBidMovie = commitBidMovie(bidMovieArgs)
-      actionForFlushBidsForMovie = flushBidsForMovie(bidFlushMovieArgs)
+      actionForCommitBidMovie = commitBidMovie(bidsArgs)
+      actionForFlushBidsForMovie = flushBidsForMovie(bidArgs)
+    })
+
+    it('should call movie bids with valid args ', async () => {
+      await actionForFetchRecentBids(dispatch, getState, undefined)
+      expect(request).toHaveBeenCalledWith('/bids/recent', { params: bidArgs})
+    })
+
+    it('should call commit new bid with valid args', async () => {
+      await actionForCommitBidMovie(dispatch, getState, undefined)
+      expect(request).toHaveBeenCalledWith('/bids/create', {params: bidsArgs})
+    })
+
+    it('should call flush bids action with valid args', async () => {
+      await actionForFlushBidsForMovie(dispatch, getState, undefined)
+      expect(request).toHaveBeenCalledWith('/bids/flush', {params: bidArgs})
     })
   })
 })

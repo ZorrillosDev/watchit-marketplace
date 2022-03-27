@@ -84,8 +84,6 @@ export const safePurchaseMovie = <P extends MovieArgs & Web3SafePurchaseArgs>(pa
   }
 }
 
-
-
 /**
  * Search for movies 
  * @param {MoviesSearch} params
