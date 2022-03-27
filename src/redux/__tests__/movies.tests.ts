@@ -1,8 +1,8 @@
 import { ThunkDispatcher, ThunkAction } from '@state/types'
 import { Movie } from '@state/movies/types/movies'
-import { fetchRecentMovies, commitUploadMovie, safePurchaseMovie } from '@state/movies/actions'
-import reducer, { addMovie, initialState, setMovies, setMovie, setUploadProgress } from '@state/movies/reducer'
-import { MovieArgs } from '@state/movies/types'
+import { fetchRecentMovies, commitUploadMovie, safePurchaseMovie, searchMovie } from '@state/movies/actions'
+import reducer, { addMovie, initialState, setMovies, setMovie, setUploadProgress, setSearchResult } from '@state/movies/reducer'
+import { MovieArgs, MoviesSearch } from '@state/movies/types'
 import { Web3SafePurchaseArgs } from '@state/web3/types'
 import { FAKE_MOVIES } from '@src/config'
 import { request } from '@state/service'
@@ -18,7 +18,8 @@ describe('Movies store', () => {
   let actionForFetchRecent: ThunkAction<void>
   let actionForCommitUploadMovie: ThunkAction<void>
   let actionForSafePurchase: ThunkAction<void>
-  let bidFlushMovieArgs: MovieArgs
+  let actionForSearchMovie: ThunkAction<void>
+  let searchMovieParams: MoviesSearch
   let purchaseMovieArgs: MovieArgs & Web3SafePurchaseArgs
 
   beforeAll(() => {
@@ -43,9 +44,10 @@ describe('Movies store', () => {
   })
 
   it('should handle set movie', () => {
-    const current = reducer(initialState, setMovie(movies[0]))
+    // Initial empty movie state
+    const current = reducer(initialState, setMovie({} as any))
 
-    expect(current).toEqual({ ...initialState, ...{ movie: movies[0] } })
+    expect(current).toEqual({ ...initialState, ...{ movie: {} as any } })
     expect(reducer(current, setMovie(movies[0]))).toEqual({
       ...initialState,
       movie: movies[0]
@@ -53,9 +55,10 @@ describe('Movies store', () => {
   })
 
   it('should handle set for movie collection', () => {
-    const current = reducer(initialState, setMovies(movies))
+    // Initial empty movies state
+    const current = reducer(initialState, setMovies([] as any[]))
 
-    expect(current).toEqual({ ...initialState, ...{ collection: movies } })
+    expect(current).toEqual({ ...initialState, ...{ collection: [] } })
     expect(reducer(current, setMovies(movies))).toEqual({
       ...initialState,
       collection: movies
@@ -72,17 +75,30 @@ describe('Movies store', () => {
     })
   })
 
+  it('should handle set for search movies', () => {
+    // Initial empty search result
+    const current = reducer(initialState, setSearchResult([] as any))
+
+    expect(current).toEqual({ ...initialState, ...{ searchResult: []} })
+    expect(reducer(current, setSearchResult(movies))).toEqual({
+      ...initialState,
+      searchResult: movies
+    })
+  })
+
+
   describe('thunk', () => {
     beforeEach(() => {
       // initialize new spies
       dispatch = jest.fn()
       getState = jest.fn()
-      bidFlushMovieArgs = { id: '1' }
+      searchMovieParams = {term: "Batman"}
       purchaseMovieArgs = { id: '1', tokenId: '0x0', value: '1' }
 
       actionForFetchRecent = fetchRecentMovies()
       actionForSafePurchase = safePurchaseMovie(purchaseMovieArgs)
       actionForCommitUploadMovie = commitUploadMovie({} as any)
+      actionForSearchMovie = searchMovie(searchMovieParams)
     })
 
     it('should call recent action with valid args ', async () => {
@@ -93,6 +109,11 @@ describe('Movies store', () => {
     it('should call safe movie purchase action with valid args', async () => {
       await actionForSafePurchase(dispatch, getState, undefined)
       expect(callSafePurchase).toHaveBeenCalledWith(purchaseMovieArgs)
+    })
+
+    it('should call search movie action with valid args', async () => {
+      await actionForSearchMovie(dispatch, getState, undefined)
+      expect(callSafePurchase).toHaveBeenCalledWith(searchMovieParams)
     })
 
     it('should call commit upload movie action with valid args ', async () => {

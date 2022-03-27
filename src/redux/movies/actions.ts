@@ -1,13 +1,38 @@
 import { ThunkAction, ThunkDispatcher } from '@state/types'
-import { Movie, MoviesArgs, MovieArgs } from '@state/movies/types'
-import { setMovies, setMovie, setUploadProgress } from '@state/movies/reducer'
+import { Movie, MoviesArgs, MovieArgs, MoviesSearch } from '@state/movies/types'
+import { setMovies, setMovie, setUploadProgress, setSearchResult } from '@state/movies/reducer'
 import { Web3SafePurchaseArgs } from '@state/web3/types'
 import { callSafePurchase } from '@w3/calls/nft'
 import { flushBidsForMovie } from '@state/bids/actions'
 import { request } from '@state/service'
 import { Endpoints } from './service'
 
-export { setMovies, setMovie, addMovie, setUploadProgress } from '@state/movies/reducer'
+export { setMovies, setMovie, addMovie, setUploadProgress, setSearchResult } from '@state/movies/reducer'
+
+
+/**
+ * Start movie upload
+ * @param {FormData} params
+ * @returns {Promise}
+ */
+ export const commitUploadMovie = <P extends FormData>(params: P): ThunkAction<Promise<void>> => {
+  return async (dispatch: ThunkDispatcher) => {
+    try {
+      await request(Endpoints.create, {
+        method: 'post',
+        data: params,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        onUploadProgress: (p: ProgressEvent) => {
+          dispatch(setUploadProgress((p.loaded / p.total) * 100))
+        }
+      })
+    } catch (e) {
+      // TODO handle error here
+    }
+  }
+}
 
 /**
  * Fetch movie profile`
@@ -59,24 +84,19 @@ export const safePurchaseMovie = <P extends MovieArgs & Web3SafePurchaseArgs>(pa
   }
 }
 
+
+
 /**
- * Start movie upload
- * @param {FormData} params
+ * Search for movies 
+ * @param {MoviesSearch} params
  * @returns {Promise}
  */
-export const commitUploadMovie = <P extends FormData>(params: P): ThunkAction<Promise<void>> => {
+ export const searchMovie = <P extends MoviesSearch>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      await request(Endpoints.create, {
-        method: 'post',
-        data: params,
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        onUploadProgress: (p: ProgressEvent) => {
-          dispatch(setUploadProgress((p.loaded / p.total) * 100))
-        }
-      })
+
+      const moviesCollection: Movie[] = await request(Endpoints.search, { params })
+      dispatch(setSearchResult(moviesCollection))
     } catch (e) {
       // TODO handle error here
     }
