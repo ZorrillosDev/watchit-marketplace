@@ -8,7 +8,7 @@ import { Movie } from '@state/movies/types'
 describe('<SearchItem />', () => {
   it('should render', () => {
     const component = shallow(
-      <SearchItem movie={{ posters: { small: 'test' } } as Movie} />
+      <SearchItem {...{ posters: { small: 'test' } } as Movie} />
     )
     expect(component).toMatchSnapshot()
   })
