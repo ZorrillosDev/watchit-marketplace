@@ -13,7 +13,7 @@ import { IconStar } from '@tabler/icons'
 
 // ===========================|| NOTIFICATIONS - ITEM ||=========================== //
 
-const SearchItem: FC<{ movie: Movie }> = ({ movie }): JSX.Element => {
+const SearchItem: FC<Movie> = ({ ...movie }): JSX.Element => {
   return (
     <SearchItemWrapper item xs={12} display='flex' sx={{ p: '0' }}>
       <Poster image={movie.posters.small} name={movie.title} />
@@ -27,7 +27,7 @@ const SearchItem: FC<{ movie: Movie }> = ({ movie }): JSX.Element => {
             </Grid>
             <Grid item xs={12}>
               <TruncatedTypography lines={4} sx={{ m: 0 }}>
-                {movie.description}
+                {movie.synopsis}
               </TruncatedTypography>
             </Grid>
           </Grid>
