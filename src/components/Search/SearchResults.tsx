@@ -63,9 +63,7 @@ const SearchResults: FC<SearchResultsProps> = (props): JSX.Element => {
                 }}
               >
 
-                {
-                  props.searching && <CircularProgress size={30} />
-                }
+                {props.searching && <CircularProgress size={30} />}
 
                 {
                   !props.searching
@@ -74,9 +72,7 @@ const SearchResults: FC<SearchResultsProps> = (props): JSX.Element => {
                         <Grid container direction='column' spacing={1} sx={{ pl: 1 }}>
                           <SearchContent item xs={12}>
                             <Grid container direction='column' spacing={1}>
-                              {
-                                props.movies.map((movie, i) => <SearchItem movie={movie} key={i} />)
-                              }
+                              {props.movies.map((movie: Movie, i: number) => <SearchItem {...movie} key={i} />)}
                             </Grid>
                           </SearchContent>
                         </Grid>
