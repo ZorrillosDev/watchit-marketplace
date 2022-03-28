@@ -12,20 +12,20 @@ const movieReducer = createSlice({
   name: 'movies',
   initialState,
   reducers: {
-    setMovie(state: MoviesState, action: PayloadAction<Movie>) {
+    setMovie (state: MoviesState, action: PayloadAction<Movie>) {
       state.movie = action.payload
     },
-    setMovies(state: MoviesState, action: PayloadAction<Movie[]>) {
+    setMovies (state: MoviesState, action: PayloadAction<Movie[]>) {
       state.collection = action.payload
     },
-    setSearchResult(state: MoviesState, action: PayloadAction<Movie[]>) {
+    setSearchResult (state: MoviesState, action: PayloadAction<Movie[]>) {
       state.searchResult = action.payload
     },
-    setUploadProgress(state: MoviesState, action: PayloadAction<number>) {
+    setUploadProgress (state: MoviesState, action: PayloadAction<number>) {
       state.progress = action.payload
     },
 
-    addMovie(state: MoviesState, action: PayloadAction<Movie>) {
+    addMovie (state: MoviesState, action: PayloadAction<Movie>) {
       state.collection.push(action.payload)
     }
   }

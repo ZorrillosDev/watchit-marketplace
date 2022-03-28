@@ -20,7 +20,6 @@ interface TransitionsProps extends MuiTransitions {
   direction?: 'left' | 'right' | 'up' | 'down'
 }
 
-
 const Transitions: FC<PropsWithChildren<TransitionsProps>> = (props): JSX.Element => {
   const { children, position, type, direction, ...others } = props
   let positionSX = {} // Handle position based on screen position
