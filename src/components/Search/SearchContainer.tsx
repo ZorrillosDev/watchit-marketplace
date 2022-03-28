@@ -1,41 +1,50 @@
 // TRANSFER MODAL IMPORTS
-import React, { FC } from 'react'
+import React, { FC, useCallback } from 'react'
 
 // PROJECT IMPORTS
 import SearchView from '@components/Search/SearchView'
-import { Movie } from '@state/movies/types'
+import { MoviesActions, MoviesState } from '@state/movies/types'
+import { searchMovie } from '@state/movies/actions'
+import { connect, RootStateOrAny } from 'react-redux'
+import { selectSearchResult } from '@src/redux/movies/selector'
 
 // ===========================|| SEARCH - CONTAINER ||=========================== //
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
-
-export const SearchContainer: FC = (): JSX.Element => {
-  const [searchMovies, setSearchMovies] = React.useState<Movie[]>([])
+const SearchContainer: FC<MoviesActions & MoviesState> = (props): JSX.Element => {
+  const { searchMovie, searchResult } = props
   const [searching, setSearching] = React.useState(false)
   const [open, setOpen] = React.useState(false)
+  // Debounce timeout to avoid search overhead
+  let debounce: ReturnType<typeof setTimeout> | null = null
 
-  const handleClose = (): void => {
-    setOpen(false)
-  }
+  const handleClose = useCallback((): void =>
+    setOpen(false), [open]
+  )
 
-  const handleCancel = (): void => {
+  const handleCancel = useCallback((): void => {
     setOpen(false)
     setSearching(false)
-    setSearchMovies([])
-  }
+  }, [searching, open])
 
-  const onSearch = (text: string): void => {
-    if (!text) return setOpen(false)
+  const onSearch = useCallback((term: string): void => {
+    if (!term) return setOpen(false)
 
+    // Add debounce here
     setSearching(true)
     setOpen(true)
 
-    // TODO add movies here
+    // Debounce/Avoid overhed on search
+    if (debounce) clearTimeout(debounce)
+    debounce = setTimeout(() => {
+      searchMovie({ term })
+    }, 500)
+
     setTimeout(() => {
       setSearching(false)
-      setSearchMovies([])
+      setOpen(false)
     }, 1000)
-  }
+  }, [])
 
   return (
     <SearchView
@@ -45,7 +54,18 @@ export const SearchContainer: FC = (): JSX.Element => {
         onSearch,
         searching,
         handleCancel
-      }} movies={searchMovies}
+      }} movies={searchResult}
     />
   )
 }
+
+const mapDispatchToProps: Partial<MoviesActions> = { searchMovie }
+const mapStateToProps = (state: RootStateOrAny): Partial<MoviesState> => {
+  const searchResult = selectSearchResult(state)
+  return { searchResult }
+}
+
+export const Search = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchContainer)

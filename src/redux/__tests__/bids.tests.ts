@@ -75,7 +75,7 @@ describe('Movies store', () => {
 
     it('should call commit new bid with valid args', async () => {
       await actionForCommitBidMovie(dispatch, getState, undefined)
-      expect(request).toHaveBeenCalledWith(`/bid/create?id=${bidsArgs.id}`, {
+      expect(request).toHaveBeenCalledWith(`/bid/create?id=${bidsArgs?.id ?? ''}`, {
         method: 'post',
         data: bidsArgs
       })

@@ -9,13 +9,12 @@ import { Endpoints } from './service'
 
 export { setMovies, setMovie, addMovie, setUploadProgress, setSearchResult } from '@state/movies/reducer'
 
-
 /**
  * Start movie upload
  * @param {FormData} params
  * @returns {Promise}
  */
- export const commitUploadMovie = <P extends FormData>(params: P): ThunkAction<Promise<void>> => {
+export const commitUploadMovie = <P extends FormData>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
       await request(Endpoints.create, {
@@ -85,15 +84,17 @@ export const safePurchaseMovie = <P extends MovieArgs & Web3SafePurchaseArgs>(pa
 }
 
 /**
- * Search for movies 
+ * Search for movies
  * @param {MoviesSearch} params
  * @returns {Promise}
  */
- export const searchMovie = <P extends MoviesSearch>(params: P): ThunkAction<Promise<void>> => {
+export const searchMovie = <P extends MoviesSearch>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-
-      const moviesCollection: Movie[] = await request(Endpoints.search, { params })
+      const moviesCollection: Movie[] = await request(Endpoints.search, {
+        method: 'post',
+        data: params
+      })
       dispatch(setSearchResult(moviesCollection))
     } catch (e) {
       // TODO handle error here

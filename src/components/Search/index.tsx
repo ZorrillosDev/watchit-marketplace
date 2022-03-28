@@ -1,3 +1,3 @@
 // ===========================|| SEARCH EXPORTS ||=========================== //
 
-export { SearchContainer as default } from '@components/Search/SearchContainer'
+export { Search as default } from '@components/Search/SearchContainer'

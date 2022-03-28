@@ -22,7 +22,6 @@ describe('Bids store', () => {
   let actionForSearchMovie: ThunkAction<void>
   let searchMovieParams: MoviesSearch
   let purchaseMovieArgs: MovieArgs & Web3SafePurchaseArgs
-  let callCreateArgs: {} = {} as any
 
   beforeAll(() => {
     // @typescript-eslint/consistent-type-assertions
@@ -88,13 +87,12 @@ describe('Bids store', () => {
     })
   })
 
-
   describe('thunk', () => {
     beforeEach(() => {
       // initialize new spies
       dispatch = jest.fn()
       getState = jest.fn()
-      searchMovieParams = { term: "Batman" }
+      searchMovieParams = { term: 'Batman' }
       purchaseMovieArgs = { id: '1', tokenId: '0x0', value: '1' }
 
       actionForFetchRecent = fetchRecentMovies()
@@ -124,4 +122,3 @@ describe('Bids store', () => {
     })
   })
 })
-
