@@ -10,6 +10,7 @@ import { callSafePurchase } from '@src/w3/calls/nft'
 
 jest.mock('@state/service')
 jest.mock('@w3/calls/nft')
+jest.mock('axios')
 
 describe('Bids store', () => {
   let movies: Movie[]
@@ -21,6 +22,7 @@ describe('Bids store', () => {
   let actionForSearchMovie: ThunkAction<void>
   let searchMovieParams: MoviesSearch
   let purchaseMovieArgs: MovieArgs & Web3SafePurchaseArgs
+  let callCreateArgs: {} = {} as any
 
   beforeAll(() => {
     // @typescript-eslint/consistent-type-assertions
@@ -118,12 +120,8 @@ describe('Bids store', () => {
 
     it('should call commit upload movie action with valid args ', async () => {
       await actionForCommitUploadMovie(dispatch, getState, undefined)
-      expect(request).toHaveBeenCalledWith('/movie/create', {
-        data: {},
-        method: 'post',
-        headers: { 'Content-Type': 'multipart/form-data' },
-        onUploadProgress: jest.fn()
-      })
+      expect(request).toHaveBeenCalledTimes(1)
     })
   })
 })
+
