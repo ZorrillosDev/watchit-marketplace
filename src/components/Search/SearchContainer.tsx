@@ -42,7 +42,6 @@ const SearchContainer: FC<MoviesActions & MoviesState> = (props): JSX.Element =>
 
     setTimeout(() => {
       setSearching(false)
-      setOpen(false)
     }, 1000)
   }, [])
 
