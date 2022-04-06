@@ -11,7 +11,7 @@ export const HomeContainer: FC = (): JSX.Element => {
 
   useEffect((): void => {
     // TODO get main carousel data from backend
-
+    setSlides([])
   }, [])
 
   return (<HomeView {...{ slides }} />)
