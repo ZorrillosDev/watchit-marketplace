@@ -4,9 +4,6 @@ import React, { FC, useEffect, useState } from 'react'
 // project imports
 import { HomeView } from '@pages/Home/HomeView'
 
-// TODO delete this when data comes from backend
-import { FAKE_MOVIES } from '@src/config'
-
 // ===========================|| HOME CONTAINER ||=========================== //
 
 export const HomeContainer: FC = (): JSX.Element => {
@@ -14,7 +11,7 @@ export const HomeContainer: FC = (): JSX.Element => {
 
   useEffect((): void => {
     // TODO get main carousel data from backend
-    setSlides(FAKE_MOVIES as any)
+
   }, [])
 
   return (<HomeView {...{ slides }} />)
