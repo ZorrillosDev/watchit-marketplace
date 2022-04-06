@@ -34,7 +34,7 @@ const SearchContainer: FC<MoviesActions & MoviesState> = (props): JSX.Element =>
     setSearching(true)
     setOpen(true)
 
-    // Debounce/Avoid overhed on search
+    // Debounce/Avoid overhead on search
     if (debounce) clearTimeout(debounce)
     debounce = setTimeout(() => {
       searchMovie({ term })
