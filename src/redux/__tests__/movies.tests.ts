@@ -113,7 +113,7 @@ describe('Bids store', () => {
 
     it('should call search movie action with valid args', async () => {
       await actionForSearchMovie(dispatch, getState, undefined)
-      expect(request).toHaveBeenCalledWith('/movie/search', { method: 'post', data: searchMovieParams })
+      expect(request).toHaveBeenCalledWith('/movie/search', { params: searchMovieParams })
     })
 
     it('should call commit upload movie action with valid args ', async () => {

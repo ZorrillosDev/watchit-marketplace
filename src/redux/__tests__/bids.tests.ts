@@ -75,7 +75,7 @@ describe('Movies store', () => {
 
     it('should call commit new bid with valid args', async () => {
       await actionForCommitBidMovie(dispatch, getState, undefined)
-      expect(request).toHaveBeenCalledWith(`/bid/create?id=${bidsArgs?.id ?? ''}`, {
+      expect(request).toHaveBeenCalledWith(`/bid/create`, {
         method: 'post',
         data: bidsArgs
       })
@@ -84,8 +84,8 @@ describe('Movies store', () => {
     it('should call flush bids action with valid args', async () => {
       await actionForFlushBidsForMovie(dispatch, getState, undefined)
       expect(request).toHaveBeenCalledWith('/bid/flush', {
-        method: 'post',
-        data: bidArgs
+        method: 'delete',
+        params: bidArgs
       })
     })
   })

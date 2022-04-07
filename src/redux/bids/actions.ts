@@ -30,8 +30,7 @@ export const fetchRecentMovieBids = <P extends BidArgs>(params: P): ThunkAction<
 export const commitBidMovie = <P extends BidsArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      const endpoint = `${Endpoints.create}?id=${params.id ?? ''}`
-      const bid: Bid = await request(endpoint, {
+      const bid: Bid = await request( `${Endpoints.create}`, {
         method: 'post',
         data: params
       })
@@ -51,11 +50,7 @@ export const commitBidMovie = <P extends BidsArgs>(params: P): ThunkAction<Promi
 export const flushBidsForMovie = <P extends BidArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      await request(Endpoints.flush, {
-        method: 'post',
-        data: params
-      })
-
+      await request(Endpoints.flush, { method: 'delete', params })
       dispatch(setBidsToMovie([] as Bid[]))
     } catch (e) {
       // TODO handle error here
