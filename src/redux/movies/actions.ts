@@ -91,10 +91,7 @@ export const safePurchaseMovie = <P extends MovieArgs & Web3SafePurchaseArgs>(pa
 export const searchMovie = <P extends MoviesSearch>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      const moviesCollection: Movie[] = await request(Endpoints.search, {
-        method: 'post',
-        data: params
-      })
+      const moviesCollection: Movie[] = await request(Endpoints.search, { params })
       dispatch(setSearchResult(moviesCollection))
     } catch (e) {
       // TODO handle error here
