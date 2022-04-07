@@ -7,7 +7,6 @@ export const request = async (path: string, args?: AxiosRequestConfig): Promise<
     baseURL: API_ENDPOINT,
     ...args
   })
-  
 
   return res.status >= 200 && res.status < 300
     ? await Promise.resolve(res.data)

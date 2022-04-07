@@ -30,7 +30,7 @@ export const fetchRecentMovieBids = <P extends BidArgs>(params: P): ThunkAction<
 export const commitBidMovie = <P extends BidsArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      const bid: Bid = await request( `${Endpoints.create}`, {
+      const bid: Bid = await request(`${Endpoints.create}`, {
         method: 'post',
         data: params
       })
