@@ -3,11 +3,12 @@ import React, { FC } from 'react'
 import i18n from '@src/i18n'
 import { Button } from '@mui/material'
 import { PixelArtIdenticon } from '@components/Identicon'
-import { useEtherBalance, useEthers } from '@usedapp/core'
+import { useEtherBalance } from '@usedapp/core'
+import { useActivateNetwork } from '@hooks/useActivateNetwork'
 import { Ethers } from '@src/utils'
 
 const WalletButton: FC = React.memo((): JSX.Element => {
-  const { activateBrowserWallet, deactivate, account } = useEthers()
+  const { activateBrowserWallet, deactivate, account } = useActivateNetwork()
   const etherBalance = useEtherBalance(account)
 
   const icon: JSX.Element = account !== undefined
