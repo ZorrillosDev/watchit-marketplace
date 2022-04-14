@@ -1,22 +1,20 @@
 import { InjectedConnector } from '@web3-react/injected-connector'
-import { useEthers } from '@usedapp/core'
+import { useEthers, Web3Ethers } from '@usedapp/core'
 import { supportedChains } from '@src/w3'
 import { useEffect } from 'react'
 
-export function useActivateNetwork() {
+export function useActivateNetwork (): Web3Ethers {
   const { activate, ...rest } = useEthers()
   const injected = new InjectedConnector({ supportedChainIds: supportedChains })
 
-  useEffect(() => {
+  useEffect((): void => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     (async () => {
       if (await injected.isAuthorized()) {
-        activate(injected)
+        await activate(injected)
       }
     })()
   }, [])
 
-
-  return { ...rest }
-
+  return { activate, ...rest }
 }
-
