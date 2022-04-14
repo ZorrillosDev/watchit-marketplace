@@ -18,7 +18,6 @@ import { SxProps, Theme } from '@mui/system'
 import { useNFTHolderOf, useNFTIsApprovedFor } from '@hooks/useNFTContract'
 import { Movie } from '@state/movies/types'
 import { Bid } from '@state/bids/types'
-import { BLACK_HOLE } from '@w3/CONSTANTS'
 import { useEthers } from '@usedapp/core'
 
 // ===========================|| MOVIE - PROFILE - PRICE - VIEW ||=========================== //
@@ -30,11 +29,12 @@ export const MovieProfilePriceView: FC<MovieProfilePriceViewProps> = (props): JS
   const holder = useNFTHolderOf(props.token)
   const approvedBid = useNFTIsApprovedFor(props.account, props.token)
 
-  const currentHolder = holder !== undefined && holder !== BLACK_HOLE ? holder : props.creator
-  const iamCurrentHolder = account?.toLowerCase() === currentHolder.toLowerCase()
   // Has bid available and is not approved?
   const availableToAcceptOffer = props.price > 0 && props.account !== undefined && !approvedBid
   const iamCurrentApprovedBidder = props.account !== undefined && account?.toLowerCase() === props.account.toLowerCase()
+  const iamCurrentHolder = account?.toLowerCase() === holder?.toLowerCase()
+
+
 
   return (
     <Grid item xs={12}>
@@ -61,33 +61,37 @@ export const MovieProfilePriceView: FC<MovieProfilePriceViewProps> = (props): JS
             </Grid>
           </Grid>
         </Grid>
-        <Divider orientation='vertical' sx={{ position: 'absolute', height: '50%' }} />
-        <Grid container width='50%' justifyContent='center' alignItems='center'>
-          <Grid item xs={8} md={6}>
-            <Grid container spacing={1}>
-              <Grid item xs={12}>
-                <Typography variant='body1' fontWeight={500} color='primary' textAlign='left'>
-                  <Translation target='MOVIE_PROFILE_OWNER' />
-                </Typography>
-              </Grid>
-              <Grid item xs={12} display='flex'>
-                <Link href={`https://rinkeby.etherscan.io/address/${currentHolder}`} target='__blank'>
-                  <MovieProfileUser address={currentHolder} />
-                </Link>
+
+        {holder !== undefined ?
+          <>
+            <Divider orientation='vertical' sx={{ position: 'absolute', height: '50%' }} />
+            <Grid container width='50%' justifyContent='center' alignItems='center'>
+              <Grid item xs={8} md={6}>
+                <Grid container spacing={1}>
+                  <Grid item xs={12}>
+                    <Typography variant='body1' fontWeight={500} color='primary' textAlign='left'>
+                      <Translation target='MOVIE_PROFILE_OWNER' />
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} display='flex'>
+                    <Link href={`https://rinkeby.etherscan.io/address/${holder}`} target='__blank'>
+                      <MovieProfileUser address={holder} />
+                    </Link>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </Grid>
+          </> : <></>}
 
         {account === undefined
           ? <></>
-          : !iamCurrentHolder && !approvedBid
-              ? <ModalBid buttonSx={MovieProfileOfferButtonSx} />
-              : iamCurrentHolder && availableToAcceptOffer
-                ? <AcceptOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
-                : approvedBid && iamCurrentApprovedBidder
-                  ? <PayOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
-                  : <></>}
+          : !iamCurrentHolder && !approvedBid && holder !== undefined
+            ? <ModalBid buttonSx={MovieProfileOfferButtonSx} />
+            : iamCurrentHolder && availableToAcceptOffer
+              ? <AcceptOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
+              : approvedBid && iamCurrentApprovedBidder
+                ? <PayOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
+                : <></>}
       </MovieProfilePriceSectionWrapper>
     </Grid>
   )
