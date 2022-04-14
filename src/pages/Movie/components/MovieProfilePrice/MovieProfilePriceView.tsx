@@ -34,8 +34,6 @@ export const MovieProfilePriceView: FC<MovieProfilePriceViewProps> = (props): JS
   const iamCurrentApprovedBidder = props.account !== undefined && account?.toLowerCase() === props.account.toLowerCase()
   const iamCurrentHolder = account?.toLowerCase() === holder?.toLowerCase()
 
-
-
   return (
     <Grid item xs={12}>
       <MovieProfilePriceSectionWrapper>
@@ -53,45 +51,43 @@ export const MovieProfilePriceView: FC<MovieProfilePriceViewProps> = (props): JS
                   {props.price} ETH
                 </Typography>
               </MovieProfilePriceSection>
-              {/* <Grid item xs={12}> */}
-              {/*  <Typography variant='body2' color='text.secondary' textAlign='left'> */}
-              {/*    $ {props.fiatPrice} */}
-              {/*  </Typography> */}
-              {/* </Grid> */}
             </Grid>
           </Grid>
         </Grid>
 
-        {holder !== undefined ?
-          <>
-            <Divider orientation='vertical' sx={{ position: 'absolute', height: '50%' }} />
-            <Grid container width='50%' justifyContent='center' alignItems='center'>
-              <Grid item xs={8} md={6}>
-                <Grid container spacing={1}>
-                  <Grid item xs={12}>
-                    <Typography variant='body1' fontWeight={500} color='primary' textAlign='left'>
-                      <Translation target='MOVIE_PROFILE_OWNER' />
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} display='flex'>
-                    <Link href={`https://rinkeby.etherscan.io/address/${holder}`} target='__blank'>
-                      <MovieProfileUser address={holder} />
-                    </Link>
+        {holder !== undefined
+          ? (
+            <>
+              <Divider orientation='vertical' sx={{ position: 'absolute', height: '50%' }} />
+              <Grid container width='50%' justifyContent='center' alignItems='center'>
+                <Grid item xs={8} md={6}>
+                  <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                      <Typography variant='body1' fontWeight={500} color='primary' textAlign='left'>
+                        <Translation target='MOVIE_PROFILE_OWNER' />
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} display='flex'>
+                      <Link href={`https://rinkeby.etherscan.io/address/${holder}`} target='__blank'>
+                        <MovieProfileUser address={holder} />
+                      </Link>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          </> : <></>}
+            </>
+            )
+          : <></>}
 
         {account === undefined
           ? <></>
           : !iamCurrentHolder && !approvedBid && holder !== undefined
-            ? <ModalBid buttonSx={MovieProfileOfferButtonSx} />
-            : iamCurrentHolder && availableToAcceptOffer
-              ? <AcceptOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
-              : approvedBid && iamCurrentApprovedBidder
-                ? <PayOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
-                : <></>}
+              ? <ModalBid buttonSx={MovieProfileOfferButtonSx} />
+              : iamCurrentHolder && availableToAcceptOffer
+                ? <AcceptOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
+                : approvedBid && iamCurrentApprovedBidder
+                  ? <PayOffer buttonSx={MovieProfileOfferButtonSx} {...props} />
+                  : <></>}
       </MovieProfilePriceSectionWrapper>
     </Grid>
   )
