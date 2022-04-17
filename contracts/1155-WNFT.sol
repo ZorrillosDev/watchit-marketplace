@@ -11,7 +11,7 @@ contract WNFT is ERC1155Upgradeable, AccessControlUpgradeable {
     using Hex for uint256;
 
     uint8 internal constant NFT_SUPPLY = 1;
-    bytes32 public constant NFT_MINTER_ROLE = keccak256("NFT_MINTER_ROLE");
+    bytes32 internal constant NFT_MINTER_ROLE = keccak256("NFT_MINTER_ROLE");
     mapping(uint256 => mapping(address => uint256)) private _nftApprovals;
 
     event ApprovalForCID(address indexed operator, uint256 cid, uint256 approved);
