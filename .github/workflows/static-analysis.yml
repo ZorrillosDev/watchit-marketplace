@@ -7,13 +7,14 @@ on:
   pull_request:
 
 jobs:
-  standard:
-    name: standard.js linting 
+  lint:
+    name: Eslint linting
     runs-on: ubuntu-latest
     steps:
+      - name: Install
+        run: npm ci
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
-      - run: npm install standard
       - run: npm run lint:js
 
   solhint:
