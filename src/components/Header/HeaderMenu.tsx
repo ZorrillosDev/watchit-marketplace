@@ -1,21 +1,21 @@
 // react imports
-import React, { FC } from 'react'
-import { Link } from 'react-router-dom'
+import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 // project imports
-import { WORK, CREATE } from '@navigation/CONSTANTS'
-import i18n from '@src/i18n'
+import { WORK, CREATE } from '@navigation/CONSTANTS';
+import i18n from '@src/i18n';
 import {
   Menu as MenuIcon,
-  ChevronRight as ChevronRightIcon
-} from '@components/Icons'
+  ChevronRight as ChevronRightIcon,
+} from '@components/Icons';
 
 // mui imports
-import WalletButton from '@components/WalletButton'
+import WalletButton from '@components/WalletButton';
 import {
   Hidden, styled, Backdrop, Drawer, Box,
-  Divider, IconButton, Grid, BoxProps
-} from '@mui/material'
+  Divider, IconButton, Grid, BoxProps,
+} from '@mui/material';
 
 // ===========================|| HEADER MENU ||=========================== //
 
@@ -53,7 +53,7 @@ const HeaderMenu: FC<HeaderMenuProps> = (props): JSX.Element => {
             sx={{
               py: 0,
               px: 2,
-              minHeight: { xs: '56px', sm: '64px' }
+              minHeight: { xs: '56px', sm: '64px' },
             }}
           >
             <IconButton
@@ -68,8 +68,8 @@ const HeaderMenu: FC<HeaderMenuProps> = (props): JSX.Element => {
         </Drawer>
       </Hidden>
     </>
-  )
-}
+  );
+};
 
 const HeaderMenuContent: FC = (): JSX.Element => {
   return (
@@ -83,8 +83,8 @@ const HeaderMenuContent: FC = (): JSX.Element => {
         m: 0,
         p: { xs: '1rem 1.5rem', md: 0 },
         '& a': {
-          textDecoration: 'none'
-        }
+          textDecoration: 'none',
+        },
       }}
     >
       <Link to={CREATE}>
@@ -124,8 +124,8 @@ const HeaderMenuContent: FC = (): JSX.Element => {
       </Link>
       <WalletButton />
     </Grid>
-  )
-}
+  );
+};
 
 export const Item = styled(Box)<{ active?: boolean } & BoxProps>(({ active, theme }) => ({
   color: theme.palette.primary.main,
@@ -139,24 +139,24 @@ export const Item = styled(Box)<{ active?: boolean } & BoxProps>(({ active, them
   fontWeight: 400,
   '&:hover': {
     color: theme.palette.primary.dark,
-    textDecoration: 'underline'
+    textDecoration: 'underline',
   },
   ...(
     (active ?? false)
       ? {
-          '&:after': {
-            content: '',
-            position: 'absolute',
-            width: '100%',
-            height: '1px',
-            background: theme.palette.primary.main,
-            bottom: '4px',
-            left: 0,
-            zIndex: 1
-          }
-        }
+        '&:after': {
+          content: '',
+          position: 'absolute',
+          width: '100%',
+          height: '1px',
+          background: theme.palette.primary.main,
+          bottom: '4px',
+          left: 0,
+          zIndex: 1,
+        },
+      }
       : {}
-  )
-}))
+  ),
+}));
 
-export default HeaderMenu
+export default HeaderMenu;

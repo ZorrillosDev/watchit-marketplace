@@ -1,10 +1,10 @@
-import { ThunkAction, ThunkDispatcher } from '@state/types'
-import { addBidToMovie, setBidsToMovie } from '@state/bids/reducer'
-import { Bid, BidArgs, BidsArgs } from '@state/bids/types'
-import { request } from '@state/service'
-import { Endpoints } from './service'
+import { ThunkAction, ThunkDispatcher } from '@state/types';
+import { addBidToMovie, setBidsToMovie } from '@state/bids/reducer';
+import { Bid, BidArgs, BidsArgs } from '@state/bids/types';
+import { request } from '@state/service';
+import { Endpoints } from './service';
 
-export { setBidsToMovie, addBidToMovie } from '@state/bids/reducer'
+export { setBidsToMovie, addBidToMovie } from '@state/bids/reducer';
 
 /**
  * Fetch recent bids for movie
@@ -14,13 +14,13 @@ export { setBidsToMovie, addBidToMovie } from '@state/bids/reducer'
 export const fetchRecentMovieBids = <P extends BidArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      const moviesBids: Bid[] = await request(Endpoints.recent, { params })
-      dispatch(setBidsToMovie(moviesBids))
+      const moviesBids: Bid[] = await request(Endpoints.recent, { params });
+      dispatch(setBidsToMovie(moviesBids));
     } catch (e) {
       // TODO handle error here
     }
-  }
-}
+  };
+};
 
 /**
  * Add bid for movie
@@ -32,15 +32,15 @@ export const commitBidMovie = <P extends BidsArgs>(params: P): ThunkAction<Promi
     try {
       const bid: Bid = await request(`${Endpoints.create}`, {
         method: 'post',
-        data: params
-      })
+        data: params,
+      });
 
-      dispatch(addBidToMovie(bid))
+      dispatch(addBidToMovie(bid));
     } catch (e) {
       // TODO handle error here
     }
-  }
-}
+  };
+};
 
 /**
  * Flush all bids for movie
@@ -50,10 +50,10 @@ export const commitBidMovie = <P extends BidsArgs>(params: P): ThunkAction<Promi
 export const flushBidsForMovie = <P extends BidArgs>(params: P): ThunkAction<Promise<void>> => {
   return async (dispatch: ThunkDispatcher) => {
     try {
-      await request(Endpoints.flush, { method: 'delete', params })
-      dispatch(setBidsToMovie([] as Bid[]))
+      await request(Endpoints.flush, { method: 'delete', params });
+      dispatch(setBidsToMovie([] as Bid[]));
     } catch (e) {
       // TODO handle error here
     }
-  }
-}
+  };
+};

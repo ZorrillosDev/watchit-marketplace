@@ -1,16 +1,16 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // MUI IMPORTS
 import {
   styled, Table, TableHead, Typography,
-  TableCell, TableBody, TableRow, TableProps, TableContainer, Paper, Box, Divider
-} from '@mui/material'
+  TableCell, TableBody, TableRow, TableProps, TableContainer, Paper, Box, Divider,
+} from '@mui/material';
 
 // PROJECT IMPORTS
-import MovieProfileUser from '@pages/Movie/components/MovieProfileUser'
-import { Translation } from '@src/i18n'
-import { ArtTrack } from '@components/Icons'
+import MovieProfileUser from '@pages/Movie/components/MovieProfileUser';
+import { Translation } from '@src/i18n';
+import { ArtTrack } from '@components/Icons';
 
 // ===========================|| MOVIE - PROFILE - ACTIVITY - TABLE ||=========================== //
 
@@ -43,10 +43,10 @@ const MovieProfileActivityTable: FC<MovieProfileActivityTableProps> = ({ rows })
             {
                         (rows != null) && (rows.length > 0)
                           ? (
-                              rows.map((row, index) => {
-                                return <MovieProfileActivityTableRow {...row} key={index} />
-                              })
-                            )
+                            rows.map((row, index) => {
+                              return <MovieProfileActivityTableRow {...row} key={index} />;
+                            })
+                          )
                           : (
                             <TableRow>
                               <TableCell colSpan={4}>
@@ -62,14 +62,14 @@ const MovieProfileActivityTable: FC<MovieProfileActivityTableProps> = ({ rows })
                                 </Box>
                               </TableCell>
                             </TableRow>
-                            )
+                          )
                     }
           </TableBody>
         </MovieProfileActivityTableWrapper>
       </TableContainer>
     </>
-  )
-}
+  );
+};
 
 const MovieProfileActivityTableRow: FC<ActivityTableRow> = (props): JSX.Element => {
   return (
@@ -88,18 +88,18 @@ const MovieProfileActivityTableRow: FC<ActivityTableRow> = (props): JSX.Element 
         {/* Acquired for 4.1 ETH <Typography variant='body1' sx={{ display: 'inline' }}>($ 6,940.54)</Typography> */}
       </TableCell>
     </TableRow>
-  )
-}
+  );
+};
 
-export default MovieProfileActivityTable
+export default MovieProfileActivityTable;
 
 const MovieProfileActivityTableWrapper = styled(Table)<TableProps>(({ theme }) => ({
   th: {
-    fontWeight: 600
+    fontWeight: 600,
   },
   'th, td': {
     borderColor: `${theme.palette.divider} !important`,
     fontSize: '0.9rem',
-    whiteSpace: 'nowrap'
-  }
-}))
+    whiteSpace: 'nowrap',
+  },
+}));

@@ -1,16 +1,16 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // MUI IMPORTS
 import {
   Box,
   Grid,
   styled,
-  Typography, BoxProps, darken, Container, TextField, Button, Link, Divider
-} from '@mui/material'
+  Typography, BoxProps, darken, Container, TextField, Button, Link, Divider,
+} from '@mui/material';
 
 // PROJECT IMPORTS
-import LogoWhite from '@assets/img/watchit_logo_white.svg'
+import LogoWhite from '@assets/img/watchit_logo_white.svg';
 
 // ===========================|| FOOTER ||=========================== //
 
@@ -131,10 +131,10 @@ const Footer: FC = (): JSX.Element => {
         </Grid>
       </Container>
     </FooterWrapper>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;
 
 export const FooterWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   width: '100%',
@@ -147,10 +147,10 @@ export const FooterWrapper = styled(Box)<BoxProps>(({ theme }) => ({
     opacity: 0.6,
     textDecoration: 'none',
     '&:hover': {
-      textDecoration: 'underline'
-    }
-  }
-}))
+      textDecoration: 'underline',
+    },
+  },
+}));
 
 export const FooterLogoWrapper = styled(Box)<BoxProps>(() => ({
   width: '10rem',
@@ -163,9 +163,9 @@ export const FooterLogoWrapper = styled(Box)<BoxProps>(() => ({
     top: '-2.5rem',
     left: 0,
     width: '100%',
-    height: 'auto'
-  }
-}))
+    height: 'auto',
+  },
+}));
 
 export const FooterSubscriptionWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   width: '100%',
@@ -175,7 +175,7 @@ export const FooterSubscriptionWrapper = styled(Box)<BoxProps>(({ theme }) => ({
     backgroundColor: Object.is(theme.palette.mode, 'light')
       ? darken(theme.palette.primary.dark, 0.6)
       : darken(theme.palette.background.default, 0.2),
-    borderColor: theme.palette.primary.light
+    borderColor: theme.palette.primary.light,
   },
   button: {
     position: 'absolute',
@@ -186,6 +186,6 @@ export const FooterSubscriptionWrapper = styled(Box)<BoxProps>(({ theme }) => ({
     boxShadow: 'none',
     backgroundColor: Object.is(theme.palette.mode, 'light')
       ? darken(theme.palette.primary.dark, 0.5)
-      : darken(theme.palette.background.default, 0.3)
-  }
-}))
+      : darken(theme.palette.background.default, 0.3),
+  },
+}));

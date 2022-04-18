@@ -1,8 +1,8 @@
 // react imports
-import React, { FC, ReactElement } from 'react'
+import React, { FC, ReactElement } from 'react';
 
 // mui imports
-import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 
 // ===========================|| CUSTOM ICON LOG OUT ||=========================== //
 
@@ -31,5 +31,5 @@ export const IconLogOut: FC<SvgIconProps> = (props): ReactElement => {
         S274.956,42.299,207.299,42.299z'
       />
     </SvgIcon>
-  )
-}
+  );
+};

@@ -1,15 +1,15 @@
 // REACT IMPORTS
-import React, { FC, useState } from 'react'
+import React, { FC, useState } from 'react';
 
 // MUI IMPORTS
-import { Container, Grid, styled, Typography, GridProps, useMediaQuery } from '@mui/material'
+import { Container, Grid, styled, Typography, GridProps, useMediaQuery } from '@mui/material';
 
 // PROJECT IMPORTS
-import MovieCreateForm from '@pages/Create/components/MovieCreateForm'
-import MovieCreatePreview from '@pages/Create/components/MovieCreatePreview'
-import { useTheme } from '@mui/material/styles'
-import Footer from '@components/Footer'
-import { Translation } from '@src/i18n'
+import MovieCreateForm from '@pages/Create/components/MovieCreateForm';
+import MovieCreatePreview from '@pages/Create/components/MovieCreatePreview';
+import { useTheme } from '@mui/material/styles';
+import Footer from '@components/Footer';
+import { Translation } from '@src/i18n';
 
 // ===========================|| MOVIE - CREATE - VIEW ||=========================== //
 
@@ -19,12 +19,12 @@ export interface MovieCreateViewProps {
 }
 
 export const MovieCreateView: FC<MovieCreateViewProps> = (props): JSX.Element => {
-  const theme = useTheme()
-  const [title, setTitle] = useState('')
-  const [price, setPrice] = useState(0)
-  const [poster, setPoster] = useState('')
-  const [film, setFilm] = useState('')
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const theme = useTheme();
+  const [title, setTitle] = useState('');
+  const [price, setPrice] = useState(0);
+  const [poster, setPoster] = useState('');
+  const [film, setFilm] = useState('');
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   // Allow set a "bridge" between sibling components
   const createFormProps = {
@@ -36,8 +36,8 @@ export const MovieCreateView: FC<MovieCreateViewProps> = (props): JSX.Element =>
     setFilm,
     title,
     setTitle,
-    ...props
-  }
+    ...props,
+  };
 
   return (
     <>
@@ -78,11 +78,11 @@ export const MovieCreateView: FC<MovieCreateViewProps> = (props): JSX.Element =>
       </Container>
       <Footer />
     </>
-  )
-}
+  );
+};
 
-const MovieCreateStickyElement = styled(Grid)<GridProps>(({ theme }) => ({
+const MovieCreateStickyElement = styled(Grid)<GridProps>(() => ({
   width: '100%',
   position: 'sticky',
-  top: '50px'
-}))
+  top: '50px',
+}));

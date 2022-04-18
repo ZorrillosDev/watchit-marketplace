@@ -1,18 +1,18 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // MUI IMPORTS
 import {
   AccordionDetails,
   AccordionSummary, Divider,
-  Grid, Typography
-} from '@mui/material'
+  Grid, Typography,
+} from '@mui/material';
 
 // PROJECT IMPORTS
-import { Translation } from '@src/i18n'
-import { IconChevronDown, IconList } from '@tabler/icons'
-import MovieProfileAccordion from '@pages/Movie/components/MovieProfileAccordion'
-import MovieProfileOffersTable, { MovieProfileOffersTableProps } from '@pages/Movie/components/MovieProfileOffersTable'
+import { Translation } from '@src/i18n';
+import { IconChevronDown, IconList } from '@tabler/icons';
+import MovieProfileAccordion from '@pages/Movie/components/MovieProfileAccordion';
+import MovieProfileOffersTable, { MovieProfileOffersTableProps } from '@pages/Movie/components/MovieProfileOffersTable';
 
 // ===========================|| MOVIE - PROFILE - OFFERS - VIEW ||=========================== //
 
@@ -36,5 +36,5 @@ export const MovieProfileOffersView: FC<MovieProfileOffersTableProps> = (props):
         </AccordionDetails>
       </MovieProfileAccordion>
     </Grid>
-  )
-}
+  );
+};

@@ -1,15 +1,15 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // MUI IMPORTS
 import {
   Box, Chip, ChipProps, styled,
-  Typography, TypographyProps
-} from '@mui/material'
+  Typography, TypographyProps,
+} from '@mui/material';
 
 // PROJECT IMPORTS
-import { PixelArtIdenticon } from '@components/Identicon'
-import { String } from '@src/utils'
+import { PixelArtIdenticon } from '@components/Identicon';
+import { String } from '@src/utils';
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
@@ -30,10 +30,10 @@ const MovieProfileUser: FC<{ address: string, full?: boolean }> = (props): JSX.E
       aria-haspopup='true'
       color='primary'
     />
-  )
-}
+  );
+};
 
-export default MovieProfileUser
+export default MovieProfileUser;
 
 const MovieProfileUserChip = styled(Chip)<ChipProps>(() => ({
   height: '48px',
@@ -47,13 +47,13 @@ const MovieProfileUserChip = styled(Chip)<ChipProps>(() => ({
   '.MuiChip-label, p:last-of-type': {
     margin: 0,
     width: '100%',
-    overflow: 'visible'
-  }
-}))
+    overflow: 'visible',
+  },
+}));
 
 const MovieProfileAddressTypography = styled(Typography)<TypographyProps>(() => ({
   width: '100%',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
-  textOverflow: 'ellipsis'
-}))
+  textOverflow: 'ellipsis',
+}));

@@ -1,36 +1,36 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Movie, MoviesState } from '@state/movies/types'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Movie, MoviesState } from '@state/movies/types';
 
 export const initialState: MoviesState = {
   progress: 0,
   movie: {} as any,
   collection: [] as any,
-  searchResult: [] as any
-}
+  searchResult: [] as any,
+};
 
 const movieReducer = createSlice({
   name: 'movies',
   initialState,
   reducers: {
-    setMovie (state: MoviesState, action: PayloadAction<Movie>) {
-      state.movie = action.payload
+    setMovie(state: MoviesState, action: PayloadAction<Movie>) {
+      state.movie = action.payload;
     },
-    setMovies (state: MoviesState, action: PayloadAction<Movie[]>) {
-      state.collection = action.payload
+    setMovies(state: MoviesState, action: PayloadAction<Movie[]>) {
+      state.collection = action.payload;
     },
-    setSearchResult (state: MoviesState, action: PayloadAction<Movie[]>) {
-      state.searchResult = action.payload
+    setSearchResult(state: MoviesState, action: PayloadAction<Movie[]>) {
+      state.searchResult = action.payload;
     },
-    setUploadProgress (state: MoviesState, action: PayloadAction<number>) {
-      state.progress = action.payload
+    setUploadProgress(state: MoviesState, action: PayloadAction<number>) {
+      state.progress = action.payload;
     },
 
-    addMovie (state: MoviesState, action: PayloadAction<Movie>) {
-      state.collection.push(action.payload)
-    }
-  }
-})
+    addMovie(state: MoviesState, action: PayloadAction<Movie>) {
+      state.collection.push(action.payload);
+    },
+  },
+});
 
-const { actions, reducer } = movieReducer
-export const { setMovies, setMovie, addMovie, setUploadProgress, setSearchResult } = actions
-export default reducer
+const { actions, reducer } = movieReducer;
+export const { setMovies, setMovie, addMovie, setUploadProgress, setSearchResult } = actions;
+export default reducer;

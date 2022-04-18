@@ -1,4 +1,4 @@
-import { Web3SafePurchaseArgs } from '@state/web3/types'
+import { Web3SafePurchaseArgs } from '@state/web3/types';
 
 export interface MovieArgs {
   id?: string

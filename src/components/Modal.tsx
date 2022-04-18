@@ -1,28 +1,28 @@
 // REACT IMPORTS
-import React, { FC, ReactElement, useState } from 'react'
+import React, { FC, ReactElement, useState, createContext } from 'react';
 
 // MUI IMPORTS
 import {
   Box, Modal as ModalMui, BoxProps,
-  Backdrop, Theme, styled
-} from '@mui/material'
+  Backdrop, Theme, styled,
+} from '@mui/material';
 
-import { SxProps } from '@mui/system'
+import { SxProps } from '@mui/system';
 
 // THIRD PARTY IMPORTS
-import { IconX } from '@tabler/icons'
+import { IconX } from '@tabler/icons';
 
 // PROJECT IMPORTS
-import scroller from '@styles/scroller'
+import scroller from '@styles/scroller';
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable  @typescript-eslint/prefer-optional-chain */
 
 // ===========================|| MODAL ||=========================== //
-
-export const LoadingContext = React.createContext({
-  handleSetCanClose: (v: boolean): void => {}
-})
+/* eslint-disable  @typescript-eslint/no-unused-vars */
+export const LoadingContext = createContext({
+  handleSetCanClose: (v: boolean): void => {},
+});
 
 interface ModalProps {
   isOpen: boolean
@@ -36,13 +36,13 @@ interface ModalProps {
 }
 
 const Modal: FC<ModalProps> = ({ Icon, ...props }): JSX.Element => {
-  const [canClose, setCanClose] = useState(Object.is(props.canClose, false) ? props.canClose as boolean : true)
+  const [canClose, setCanClose] = useState(Object.is(props.canClose, false) ? props.canClose as boolean : true);
 
   const canCloseContext = ({
     handleSetCanClose: (v: boolean): void => {
-      setCanClose(v)
-    }
-  })
+      setCanClose(v);
+    },
+  });
 
   return (
     <LoadingContext.Provider value={canCloseContext}>
@@ -52,7 +52,7 @@ const Modal: FC<ModalProps> = ({ Icon, ...props }): JSX.Element => {
           alignItems: 'center',
           justifyContent: 'center',
           '.MuiBackdrop-root': { pointerEvents: canClose ? 'all' : 'none' },
-          ...props.sx
+          ...props.sx,
         }}
         open={props.isOpen}
         onClose={props.onClose}
@@ -76,13 +76,13 @@ const Modal: FC<ModalProps> = ({ Icon, ...props }): JSX.Element => {
                     {props.children}
                   </ModalScroller>
                 </ModalContent>
-                )
+              )
               : <></>
         }
       </ModalMui>
     </LoadingContext.Provider>
-  )
-}
+  );
+};
 
 const ModalContent = styled(Box)<BoxProps>(({ theme }) => ({
   maxHeight: 'calc(100% - 1rem)',
@@ -92,9 +92,9 @@ const ModalContent = styled(Box)<BoxProps>(({ theme }) => ({
     height: '100%',
     maxHeight: '100%',
     width: '100%',
-    borderRadius: '0 !important'
-  }
-}))
+    borderRadius: '0 !important',
+  },
+}));
 
 const ModalScroller = styled(Box)<BoxProps>(({ theme }) => ({
   overflowX: 'hidden',
@@ -104,9 +104,9 @@ const ModalScroller = styled(Box)<BoxProps>(({ theme }) => ({
   maxHeight: 'calc(100vh - 1rem)',
   [theme.breakpoints.up('sm')]: {
     ...scroller(theme),
-    margin: '0 !important'
-  }
-}))
+    margin: '0 !important',
+  },
+}));
 
 export const ModalClose = styled(Box)<BoxProps>(({ theme }) => ({
   position: 'fixed',
@@ -124,14 +124,14 @@ export const ModalClose = styled(Box)<BoxProps>(({ theme }) => ({
     width: '1.2rem !important',
     height: '1.2rem !important',
     color: '#fff',
-    fill: '#fff'
+    fill: '#fff',
   },
   [theme.breakpoints.down('sm')]: {
     top: '0.9rem',
     right: '1.5rem',
     width: '2rem!important',
-    height: '2rem!important'
-  }
-}))
+    height: '2rem!important',
+  },
+}));
 
-export default Modal
+export default Modal;

@@ -1,11 +1,11 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react';
 
 // MUI IMPORTS
 import {
   Accordion, AccordionDetails, AccordionSummary, SwitchProps,
-  Box, styled, Typography, BoxProps, Switch
-} from '@mui/material'
+  Box, styled, Typography, BoxProps, Switch,
+} from '@mui/material';
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
@@ -19,11 +19,11 @@ export interface InputSwitchProps {
 }
 
 export const InputSwitch: FC<InputSwitchProps> = (props): JSX.Element => {
-  const [checked, setChecked] = React.useState(props.defaultChecked ?? false)
+  const [checked, setChecked] = useState(props.defaultChecked ?? false);
 
   const handleChange = (event: any): void => {
-    setChecked(event.target.checked)
-  }
+    setChecked(event.target.checked);
+  };
 
   return (
     <InputSwitchWrapper>
@@ -45,16 +45,16 @@ export const InputSwitch: FC<InputSwitchProps> = (props): JSX.Element => {
         </AccordionDetails>
       </Accordion>
     </InputSwitchWrapper>
-  )
-}
+  );
+};
 
 const InputSwitchWrapper = styled(Box)<BoxProps>(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',
-  width: '100%'
-}))
+  width: '100%',
+}));
 
 const InputSwitchElement = styled(Switch)<SwitchProps>(({ theme }) => ({
   width: 42,
@@ -70,37 +70,37 @@ const InputSwitchElement = styled(Switch)<SwitchProps>(({ theme }) => ({
       '& + .MuiSwitch-track': {
         backgroundColor: theme.palette.primary.main,
         opacity: 1,
-        border: 0
+        border: 0,
       },
       '&.Mui-disabled + .MuiSwitch-track': {
-        opacity: 0.5
-      }
+        opacity: 0.5,
+      },
     },
     '&.Mui-focusVisible .MuiSwitch-thumb': {
       color: theme.palette.primary.main,
-      border: '6px solid #fff'
+      border: '6px solid #fff',
     },
     '&.Mui-disabled .MuiSwitch-thumb': {
       color:
         theme.palette.mode === 'light'
           ? theme.palette.grey[100]
-          : theme.palette.grey[600]
+          : theme.palette.grey[600],
     },
     '&.Mui-disabled + .MuiSwitch-track': {
-      opacity: theme.palette.mode === 'light' ? 0.7 : 0.3
-    }
+      opacity: theme.palette.mode === 'light' ? 0.7 : 0.3,
+    },
   },
   '& .MuiSwitch-thumb': {
     boxSizing: 'border-box',
     width: 22,
-    height: 22
+    height: 22,
   },
   '& .MuiSwitch-track': {
     borderRadius: 26 / 2,
     backgroundColor: theme.palette.mode === 'light' ? '#E9E9EA' : '#39393D',
     opacity: 1,
     transition: theme.transitions.create(['background-color'], {
-      duration: 500
-    })
-  }
-}))
+      duration: 500,
+    }),
+  },
+}));

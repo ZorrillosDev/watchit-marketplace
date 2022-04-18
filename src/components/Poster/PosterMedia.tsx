@@ -1,9 +1,9 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // MUI IMPORTS
-import { styled, CardMedia, CardContent, CardContentProps, Theme } from '@mui/material'
-import { SxProps } from '@mui/system'
+import { styled, CardMedia, CardContent, CardContentProps, Theme } from '@mui/material';
+import { SxProps } from '@mui/system';
 
 // ===========================|| POSTER - MEDIA ||=========================== //
 
@@ -21,8 +21,8 @@ export const PosterMedia: FC<PosterMediaProps> = (props): JSX.Element => {
         sx={{ pointerEvents: 'none', userSelect: 'none' }}
       />
     </PosterMediaContent>
-  )
-}
+  );
+};
 
 export const PosterMediaContent = styled(CardContent)<CardContentProps>(() => ({
   padding: '0.5rem !important',
@@ -37,6 +37,6 @@ export const PosterMediaContent = styled(CardContent)<CardContentProps>(() => ({
     maxHeight: '100%',
     maxWidth: '100%',
     borderRadius: '6px',
-    width: '65%'
-  }
-}))
+    width: '65%',
+  },
+}));

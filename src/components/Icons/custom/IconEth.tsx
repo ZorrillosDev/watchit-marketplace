@@ -1,8 +1,8 @@
 // react imports
-import React, { FC, ReactElement } from 'react'
+import React, { FC, ReactElement } from 'react';
 
 // mui imports
-import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 
 // ===========================|| CUSTOM ICON ETH ||=========================== //
 
@@ -15,5 +15,5 @@ export const IconEth: FC<SvgIconProps> = (props): ReactElement => {
         transform='translate(-0.563)' fill='#164c5d'
       />
     </SvgIcon>
-  )
-}
+  );
+};

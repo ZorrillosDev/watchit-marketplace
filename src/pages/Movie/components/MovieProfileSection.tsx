@@ -1,11 +1,11 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // MUI IMPORTS
 import {
   Box, BoxProps,
-  Grid, styled, Typography
-} from '@mui/material'
+  Grid, styled, Typography,
+} from '@mui/material';
 
 // ===========================|| MOVIE - PROFILE - SECTION ||=========================== //
 
@@ -15,6 +15,21 @@ export interface MovieProfileSectionProps {
   iconEnd: JSX.Element
   component?: FC
 }
+
+
+export const MovieProfileSectionWrapper = styled(Box)<BoxProps>(({ theme }) => ({
+  width: '100%',
+  border: '1px solid',
+  borderColor: theme.palette.divider,
+  borderRadius: theme.shape.borderRadius,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: '1rem',
+  position: 'relative',
+  color: theme.palette.primary.main,
+}));
+
 
 const MovieProfileSection: FC<MovieProfileSectionProps> = (props): JSX.Element => {
   return (
@@ -31,20 +46,7 @@ const MovieProfileSection: FC<MovieProfileSectionProps> = (props): JSX.Element =
       </Grid>
       {props.iconEnd}
     </MovieProfileSectionWrapper>
-  )
-}
+  );
+};
 
-export default MovieProfileSection
-
-export const MovieProfileSectionWrapper = styled(Box)<BoxProps>(({ theme }) => ({
-  width: '100%',
-  border: '1px solid',
-  borderColor: theme.palette.divider,
-  borderRadius: theme.shape.borderRadius,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  padding: '1rem',
-  position: 'relative',
-  color: theme.palette.primary.main
-}))
+export default MovieProfileSection;

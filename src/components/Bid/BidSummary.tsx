@@ -1,14 +1,14 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // MUI IMPORTS
-import { Typography } from '@mui/material'
+import { Typography } from '@mui/material';
 
 // THIRD PARTY IMPORTS
-import Big from 'big.js'
+import Big from 'big.js';
 
 // PROJECT IMPORTS
-import { SummarySeparator, SummaryWrapper, SummaryRow } from '@components/Summary'
+import { SummarySeparator, SummaryWrapper, SummaryRow } from '@components/Summary';
 
 // ===========================|| BID - SUMMARY ||=========================== //
 
@@ -51,7 +51,7 @@ const BidSummary: FC<BidSummaryProps> = (props) => {
         </Typography>
       </SummaryRow>
     </SummaryWrapper>
-  )
-}
+  );
+};
 
-export default BidSummary
+export default BidSummary;

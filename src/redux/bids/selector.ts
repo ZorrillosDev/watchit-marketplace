@@ -1,4 +1,4 @@
-import { RootStateOrAny } from 'react-redux'
-import { Bid } from './types'
+import { RootStateOrAny } from 'react-redux';
+import { Bid } from './types';
 
-export const selectBidCollection = (state: RootStateOrAny): Bid[] => state.bids.bids
+export const selectBidCollection = (state: RootStateOrAny): Bid[] => state.bids.bids;

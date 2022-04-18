@@ -1,14 +1,14 @@
-import React, { FC } from 'react'
-import { Route, Switch } from 'react-router'
-import Index from '@pages/Home'
-import Explore from '@pages/Explore'
-import Festival from '@pages/Festival'
-import Sell from '@pages/Sell'
-import Work from '@pages/Work'
-import MovieProfile from '@pages/Movie'
-import MovieCreate from '@pages/Create'
-import { DefaultLayout } from '@layouts/default'
-import { ROOT, EXPLORE, FESTIVAL, SELL, WORK, MOVIE, CREATE } from '@navigation/CONSTANTS'
+import React, { FC } from 'react';
+import { Route, Switch } from 'react-router';
+import Index from '@pages/Home';
+import Explore from '@pages/Explore';
+import Festival from '@pages/Festival';
+import Sell from '@pages/Sell';
+import Work from '@pages/Work';
+import MovieProfile from '@pages/Movie';
+import MovieCreate from '@pages/Create';
+import { DefaultLayout } from '@layouts/default';
+import { ROOT, EXPLORE, FESTIVAL, SELL, WORK, MOVIE, CREATE } from '@navigation/CONSTANTS';
 
 export const Routing: FC = (): JSX.Element => {
   return (
@@ -41,7 +41,7 @@ export const Routing: FC = (): JSX.Element => {
       <Route
         path={MOVIE}
         render={
-          (e) => (
+          () => (
             <DefaultLayout>
               <MovieProfile />
             </DefaultLayout>
@@ -54,5 +54,5 @@ export const Routing: FC = (): JSX.Element => {
         </DefaultLayout>
       </Route>
     </Switch>
-  )
-}
+  );
+};

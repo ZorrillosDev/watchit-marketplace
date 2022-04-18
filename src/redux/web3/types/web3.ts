@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from 'ethers';
 
 export interface Web3CallResult {
   blockHash: string

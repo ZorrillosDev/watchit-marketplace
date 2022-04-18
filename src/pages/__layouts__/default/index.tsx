@@ -1,11 +1,11 @@
 // react imports
-import React, { FC, PropsWithChildren, ReactElement } from 'react'
+import React, { FC, PropsWithChildren, ReactElement } from 'react';
 
 // project imports
-import Header from '@src/components/Header'
+import Header from '@src/components/Header';
 
 // mui imports
-import { Box } from '@mui/material'
+import { Box } from '@mui/material';
 
 // ===========================|| DEFAULT LAYOUT ||=========================== //
 
@@ -15,5 +15,5 @@ export const DefaultLayout: FC<PropsWithChildren<any>> = ({ children }): ReactEl
       <Header />
       {children}
     </Box>
-  )
-}
+  );
+};

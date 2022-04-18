@@ -1,29 +1,29 @@
 // react imports
-import React, { FC } from 'react'
-import { Link } from 'react-router-dom'
+import React, { FC, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 // project imports
-import Menu from '@components/Header/HeaderMenu'
-import LogoPng from '@assets/icons/icon.png'
-import Search from '@components/Search'
+import Menu from '@components/Header/HeaderMenu';
+import LogoPng from '@assets/icons/icon.png';
+import Search from '@components/Search';
 
 // mui imports
-import { useTheme } from '@mui/material/styles'
+import { useTheme } from '@mui/material/styles';
 import {
   Toolbar, AppBar, Box,
-  useMediaQuery, Container
-} from '@mui/material'
+  useMediaQuery, Container,
+} from '@mui/material';
 
 // ===========================|| HEADER - VIEW ||=========================== //
 
 const HeaderView: FC = (): JSX.Element => {
-  const theme = useTheme()
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false)
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+  const theme = useTheme();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleToggleMenu = (): void => {
-    setIsMenuOpen(!isMenuOpen)
-  }
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
     <>
@@ -31,7 +31,7 @@ const HeaderView: FC = (): JSX.Element => {
         sx={{
           transform: !isMobile || (isMenuOpen && isMobile) ? 'none !important' : 'auto',
           visibility: !isMobile || (isMenuOpen && isMobile) ? 'visible' : 'unset',
-          backgroundColor: (theme) => theme.palette.background.default
+          backgroundColor: (theme) => theme.palette.background.default,
         }}
       >
         <Container>
@@ -48,7 +48,7 @@ const HeaderView: FC = (): JSX.Element => {
         </Container>
       </AppBar>
     </>
-  )
-}
+  );
+};
 
-export default HeaderView
+export default HeaderView;

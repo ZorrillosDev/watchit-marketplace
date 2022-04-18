@@ -1,22 +1,22 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // MUI IMPORTS
 import {
   CardContent, Grid, Paper, Popper, Typography,
-  styled, GridProps, CircularProgress
-} from '@mui/material'
+  styled, GridProps, CircularProgress,
+} from '@mui/material';
 
 // THIRD PARTY IMPORTS
-import { VirtualElement } from '@popperjs/core'
+import { VirtualElement } from '@popperjs/core';
 
 // PROJECT IMPORTS
-import Transitions from '@components/Transitions'
-import { MainCard } from '@components/Cards'
-import scroller from '@styles/scroller'
-import { Movie } from '@state/movies/types'
-import { SxProps, Theme } from '@mui/system'
-import SearchItem from '@components/Search/SearchItem'
+import Transitions from '@components/Transitions';
+import { MainCard } from '@components/Cards';
+import scroller from '@styles/scroller';
+import { Movie } from '@state/movies/types';
+import { SxProps, Theme } from '@mui/system';
+import SearchItem from '@components/Search/SearchItem';
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
@@ -44,10 +44,10 @@ const SearchResults: FC<SearchResultsProps> = (props): JSX.Element => {
           {
             name: 'offset',
             options: {
-              offset: [0, 5]
-            }
-          }
-        ]
+              offset: [0, 5],
+            },
+          },
+        ],
       }}
     >
       {({ TransitionProps }) => (
@@ -59,7 +59,7 @@ const SearchResults: FC<SearchResultsProps> = (props): JSX.Element => {
                   p: '16px 0 16px 10px !important',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
                 }}
               >
 
@@ -76,12 +76,12 @@ const SearchResults: FC<SearchResultsProps> = (props): JSX.Element => {
                             </Grid>
                           </SearchContent>
                         </Grid>
-                        )
+                      )
                       : (
                         <Typography textAlign='center' width={1}>
                           No items found
                         </Typography>
-                        )
+                      )
                     : <></>
                 }
               </CardContent>
@@ -90,23 +90,23 @@ const SearchResults: FC<SearchResultsProps> = (props): JSX.Element => {
         </Transitions>
       )}
     </Popper>
-  )
-}
+  );
+};
 
 const SearchCardSx: SxProps<Theme> = {
   borderRadius: '10px',
   boxShadow: 'rgba(0,0,0,0.16) 0px 4px 16px',
   '&:hover': {
-    boxShadow: 'rgba(0,0,0,0.16) 0px 4px 16px'
-  }
-}
+    boxShadow: 'rgba(0,0,0,0.16) 0px 4px 16px',
+  },
+};
 
 const SearchContent = styled(Grid)<GridProps>(({ theme }) => ({
   height: 1,
   maxHeight: 'calc(100vh - 205px)',
   overflowX: 'hidden',
   padding: '0px !important',
-  ...scroller(theme)
-}))
+  ...scroller(theme),
+}));
 
-export default SearchResults
+export default SearchResults;

@@ -1,8 +1,8 @@
 // react imports
-import React, { FC, ReactElement } from 'react'
+import React, { FC, ReactElement } from 'react';
 
 // mui imports
-import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 
 // ===========================|| CUSTOM ICON DIAMOND ||=========================== //
 
@@ -16,5 +16,5 @@ export const IconDiamond: FC<SvgIconProps> = (props): ReactElement => {
       <path d='m245.602 482.926 87.52-324.078h-176.253z' />
       <path d='m.154 158.277 198.415 262.267-72.436-262.267z' />
     </SvgIcon>
-  )
-}
+  );
+};

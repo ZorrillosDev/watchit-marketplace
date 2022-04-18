@@ -1,10 +1,10 @@
 // react imports
-import React from 'react'
+import React from 'react';
 
 // ===========================|| EXPLORE ||=========================== //
 
 const Explore = (): JSX.Element => {
-  return <span>Explore</span>
-}
+  return <span>Explore</span>;
+};
 
-export default Explore
+export default Explore;

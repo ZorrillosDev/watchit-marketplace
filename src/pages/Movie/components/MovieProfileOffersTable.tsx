@@ -1,18 +1,18 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // MUI IMPORTS
 import {
   styled, Table, TableHead, TableCell,
-  TableBody, TableRow, TableProps, Paper, TableContainer, Box, Typography
-} from '@mui/material'
+  TableBody, TableRow, TableProps, Paper, TableContainer, Box, Typography,
+} from '@mui/material';
 
 // PROJECT IMPORTS
-import { String } from '@src/utils'
-import { Bolt } from '@components/Icons'
-import { Translation } from '@src/i18n'
-import { Movie } from '@state/movies/types'
-import { Bid } from '@state/bids/types'
+import { String } from '@src/utils';
+import { Bolt } from '@components/Icons';
+import { Translation } from '@src/i18n';
+import { Movie } from '@state/movies/types';
+import { Bid } from '@state/bids/types';
 
 // ===========================|| MOVIE - PROFILE - OFFERS - TABLE ||=========================== //
 
@@ -37,11 +37,11 @@ const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({ rows }): JS
               </TableHead>
               <TableBody>
                 {rows.map((row, index) => {
-                  return <MovieProfileOffersTableRow {...row} key={index} />
+                  return <MovieProfileOffersTableRow {...row} key={index} />;
                 })}
               </TableBody>
             </MovieProfileOffersTableWrapper>
-            )
+          )
           : (
             <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' sx={{ p: 4 }}>
               <Bolt sx={{ pb: 2, fontSize: '3.3rem' }} />
@@ -51,11 +51,11 @@ const MovieProfileOffersTable: FC<MovieProfileOffersTableProps> = ({ rows }): JS
                 />
               </Typography>
             </Box>
-            )
+          )
       }
     </TableContainer>
-  )
-}
+  );
+};
 
 const MovieProfileOffersTableRow: FC<Bid> = (props): JSX.Element => {
   return (
@@ -70,19 +70,19 @@ const MovieProfileOffersTableRow: FC<Bid> = (props): JSX.Element => {
         {props.created_at}
       </TableCell>
     </TableRow>
-  )
-}
+  );
+};
 
-export default MovieProfileOffersTable
+export default MovieProfileOffersTable;
 
 const MovieProfileOffersTableWrapper = styled(Table)<TableProps>(({ theme }) => ({
   'th,td': {
     color: theme.palette.primary.main,
     fontSize: '0.85rem',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
   },
   th: {
     borderColor: `${theme.palette.divider} !important`,
-    fontWeight: 600
-  }
-}))
+    fontWeight: 600,
+  },
+}));

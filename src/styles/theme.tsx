@@ -51,10 +51,10 @@ import {
   THEME_DARK_COLOR_GREY_600,
   THEME_DARK_COLOR_GREY_700,
   THEME_DARK_COLOR_GREY_900,
-  THEME_SHAPE_BORDER_RADIUS
-} from '@styles/CONSTANTS'
-import React from 'react'
-import { ComponentsOverrides, PaletteMode } from '@mui/material'
+  THEME_SHAPE_BORDER_RADIUS,
+} from '@styles/CONSTANTS';
+import { createContext } from 'react';
+import { ComponentsOverrides, PaletteMode } from '@mui/material';
 
 /* eslint-disable  @typescript-eslint/consistent-type-assertions */
 
@@ -64,81 +64,81 @@ export const globalComponentOverrides = {
       html: {
         margin: 0,
         padding: 0,
-        height: '100%'
+        height: '100%',
       } as ComponentsOverrides['MuiCssBaseline'],
       body: {
         margin: 0,
         padding: 0,
-        height: '100%'
+        height: '100%',
       } as ComponentsOverrides['MuiCssBaseline'],
       '#root': {
         margin: 0,
         padding: 0,
-        height: '100%'
-      } as ComponentsOverrides['MuiCssBaseline']
-    }
+        height: '100%',
+      } as ComponentsOverrides['MuiCssBaseline'],
+    },
   },
   MuiButtonBase: {
     styleOverrides: {
       root: {
         textTransform: 'none !important',
-        borderRadius: `${THEME_SHAPE_BORDER_RADIUS}px !important`
-      } as ComponentsOverrides['MuiButtonBase']
-    }
+        borderRadius: `${THEME_SHAPE_BORDER_RADIUS}px !important`,
+      } as ComponentsOverrides['MuiButtonBase'],
+    },
   },
   MuiButton: {
     styleOverrides: {
       root: {
         fontWeight: 500,
         textTransform: 'capitalize',
-        borderRadius: '4px'
-      } as ComponentsOverrides['MuiButton']
-    }
+        borderRadius: '4px',
+      } as ComponentsOverrides['MuiButton'],
+    },
   },
   MuiPaper: {
     defaultProps: {
-      elevation: 0
+      elevation: 0,
     },
     styleOverrides: {
       root: {
-        backgroundImage: 'none'
+        backgroundImage: 'none',
       } as ComponentsOverrides['MuiPaper'],
       rounded: {
-        borderRadius: `${THEME_SHAPE_BORDER_RADIUS}px`
-      }
-    }
+        borderRadius: `${THEME_SHAPE_BORDER_RADIUS}px`,
+      },
+    },
   },
   MuiCardContent: {
     styleOverrides: {
       root: {
-        padding: '16px'
-      }
-    }
+        padding: '16px',
+      },
+    },
   },
   MuiCardActions: {
     styleOverrides: {
       root: {
-        padding: '24px'
-      }
-    }
+        padding: '24px',
+      },
+    },
   },
   MuiChip: {
     styleOverrides: {
       root: {
         '&.MuiChip-deletable .MuiChip-deleteIcon': {
-          color: 'inherit'
-        }
-      }
-    }
+          color: 'inherit',
+        },
+      },
+    },
   },
   MuiContainer: {
     styleOverrides: {
       root: {
-        maxWidth: '1500px !important'
-      }
-    }
-  }
-}
+        maxWidth: '1500px !important',
+      },
+    },
+  },
+};
 
 export const globalOverrides = {
   mixins: {
@@ -146,12 +146,12 @@ export const globalOverrides = {
       minHeight: '48px',
       padding: '8px',
       '@media (min-width: 600px)': {
-        minHeight: '48px'
+        minHeight: '48px',
       },
       '@media (max-width: 600px)': {
-        padding: '8px 16px'
-      }
-    }
+        padding: '8px 16px',
+      },
+    },
   },
   breakpoints: {
     values: {
@@ -159,10 +159,10 @@ export const globalOverrides = {
       sm: 600,
       md: 960,
       lg: 1280,
-      xl: 1920
-    }
-  }
-}
+      xl: 1920,
+    },
+  },
+};
 
 export const themeOverrides = (mode: string): object => ({
   ...globalOverrides,
@@ -172,12 +172,12 @@ export const themeOverrides = (mode: string): object => ({
       styleOverrides: {
         root: {
           color: Object.is(mode, 'light') ? THEME_COLOR_GREY_900 : THEME_DARK_COLOR_GREY_900,
-          padding: '24px'
+          padding: '24px',
         },
         title: {
-          fontSize: '1.125rem'
-        }
-      }
+          fontSize: '1.125rem',
+        },
+      },
     },
     MuiListItemButton: {
       styleOverrides: {
@@ -189,36 +189,36 @@ export const themeOverrides = (mode: string): object => ({
             color: Object.is(mode, 'light') ? THEME_COLOR_SECONDARY_DARK : THEME_DARK_COLOR_SECONDARY_MAIN,
             backgroundColor: Object.is(mode, 'light') ? THEME_COLOR_SECONDARY_LIGHT : THEME_DARK_COLOR_SECONDARY_LIGHT,
             '&:hover': {
-              backgroundColor: Object.is(mode, 'light') ? THEME_COLOR_SECONDARY_LIGHT : THEME_DARK_COLOR_SECONDARY_LIGHT
+              backgroundColor: Object.is(mode, 'light') ? THEME_COLOR_SECONDARY_LIGHT : THEME_DARK_COLOR_SECONDARY_LIGHT,
             },
             '& .MuiListItemIcon-root': {
-              color: Object.is(mode, 'light') ? THEME_COLOR_SECONDARY_DARK : THEME_DARK_COLOR_SECONDARY_MAIN
-            }
+              color: Object.is(mode, 'light') ? THEME_COLOR_SECONDARY_DARK : THEME_DARK_COLOR_SECONDARY_MAIN,
+            },
           },
           '&:hover': {
             backgroundColor: Object.is(mode, 'light') ? THEME_COLOR_SECONDARY_LIGHT : THEME_DARK_COLOR_SECONDARY_LIGHT,
             color: Object.is(mode, 'light') ? THEME_COLOR_SECONDARY_DARK : THEME_DARK_COLOR_SECONDARY_MAIN,
             '& .MuiListItemIcon-root': {
-              color: Object.is(mode, 'light') ? THEME_COLOR_SECONDARY_DARK : THEME_DARK_COLOR_SECONDARY_MAIN
-            }
-          }
-        }
-      }
+              color: Object.is(mode, 'light') ? THEME_COLOR_SECONDARY_DARK : THEME_DARK_COLOR_SECONDARY_MAIN,
+            },
+          },
+        },
+      },
     },
     MuiListItemIcon: {
       styleOverrides: {
         root: {
           color: Object.is(mode, 'light') ? THEME_COLOR_GREY_700 : THEME_DARK_COLOR_GREY_700,
-          minWidth: '36px'
-        }
-      }
+          minWidth: '36px',
+        },
+      },
     },
     MuiListItemText: {
       styleOverrides: {
         primary: {
-          color: Object.is(mode, 'light') ? THEME_COLOR_GREY_900 : THEME_DARK_COLOR_GREY_900
-        }
-      }
+          color: Object.is(mode, 'light') ? THEME_COLOR_GREY_900 : THEME_DARK_COLOR_GREY_900,
+        },
+      },
     },
     MuiInputBase: {
       styleOverrides: {
@@ -226,24 +226,24 @@ export const themeOverrides = (mode: string): object => ({
           color: Object.is(mode, 'light') ? THEME_COLOR_GREY_900 : THEME_DARK_COLOR_GREY_900,
           '&::placeholder': {
             color: Object.is(mode, 'light') ? THEME_COLOR_GREY_500 : THEME_DARK_COLOR_GREY_500,
-            fontSize: '0.875rem'
-          }
-        }
-      }
+            fontSize: '0.875rem',
+          },
+        },
+      },
     },
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
           borderRadius: `${THEME_SHAPE_BORDER_RADIUS}px`,
           '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: Object.is(mode, 'light') ? THEME_COLOR_GREY_300 : THEME_DARK_COLOR_GREY_300
+            borderColor: Object.is(mode, 'light') ? THEME_COLOR_GREY_300 : THEME_DARK_COLOR_GREY_300,
           },
           '&:hover $notchedOutline': {
-            borderColor: Object.is(mode, 'light') ? THEME_COLOR_PRIMARY_LIGHT : THEME_DARK_COLOR_PRIMARY_LIGHT
+            borderColor: Object.is(mode, 'light') ? THEME_COLOR_PRIMARY_LIGHT : THEME_DARK_COLOR_PRIMARY_LIGHT,
           },
           '&.MuiInputBase-multiline': {
-            padding: 1
-          }
+            padding: 1,
+          },
         },
         input: {
           fontWeight: 500,
@@ -253,60 +253,60 @@ export const themeOverrides = (mode: string): object => ({
           '&.MuiInputBase-inputSizeSmall': {
             padding: '10px 14px',
             '&.MuiInputBase-inputAdornedStart': {
-              paddingLeft: 0
-            }
-          }
+              paddingLeft: 0,
+            },
+          },
         },
         inputAdornedStart: {
-          paddingLeft: 4
+          paddingLeft: 4,
         },
         notchedOutline: {
-          borderRadius: `${THEME_SHAPE_BORDER_RADIUS}px`
-        }
-      }
+          borderRadius: `${THEME_SHAPE_BORDER_RADIUS}px`,
+        },
+      },
     },
     MuiSlider: {
       styleOverrides: {
         root: {
           '&.Mui-disabled': {
-            color: Object.is(mode, 'light') ? THEME_COLOR_GREY_700 : THEME_DARK_COLOR_GREY_700
-          }
+            color: Object.is(mode, 'light') ? THEME_COLOR_GREY_700 : THEME_DARK_COLOR_GREY_700,
+          },
         },
         mark: {
           backgroundColor: Object.is(mode, 'light') ? THEME_BACKGROUND_PAPER : THEME_DARK_BACKGROUND_PAPER,
-          width: '4px'
+          width: '4px',
         },
         valueLabel: {
-          color: Object.is(mode, 'light') ? THEME_COLOR_PRIMARY_LIGHT : THEME_DARK_COLOR_PRIMARY_LIGHT
-        }
-      }
+          color: Object.is(mode, 'light') ? THEME_COLOR_PRIMARY_LIGHT : THEME_DARK_COLOR_PRIMARY_LIGHT,
+        },
+      },
     },
     MuiDivider: {
       styleOverrides: {
         root: {
           borderColor: Object.is(mode, 'light') ? THEME_COLOR_GREY_200 : THEME_DARK_COLOR_GREY_200,
-          opacity: Object.is(mode, 'light') ? 1 : 0.2
-        }
-      }
+          opacity: Object.is(mode, 'light') ? 1 : 0.2,
+        },
+      },
     },
     MuiAvatar: {
       styleOverrides: {
         root: {
           color: Object.is(mode, 'light') ? THEME_COLOR_PRIMARY_DARK : '#fff',
-          background: Object.is(mode, 'light') ? THEME_COLOR_PRIMARY_LIGHT : THEME_DARK_COLOR_PRIMARY_LIGHT
-        }
-      }
+          background: Object.is(mode, 'light') ? THEME_COLOR_PRIMARY_LIGHT : THEME_DARK_COLOR_PRIMARY_LIGHT,
+        },
+      },
     },
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
           color: Object.is(mode, 'light') ? THEME_BACKGROUND_PAPER : THEME_DARK_BACKGROUND_PAPER,
-          background: Object.is(mode, 'light') ? THEME_COLOR_GREY_700 : THEME_DARK_COLOR_GREY_700
-        }
-      }
-    }
-  }
-})
+          background: Object.is(mode, 'light') ? THEME_COLOR_GREY_700 : THEME_DARK_COLOR_GREY_700,
+        },
+      },
+    },
+  },
+});
 
 export const typography = (mode: string): any => ({
   typography: {
@@ -314,62 +314,62 @@ export const typography = (mode: string): any => ({
     h6: {
       fontWeight: 500,
       fontSize: '0.75rem',
-      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_900 : THEME_DARK_COLOR_GREY_900
+      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_900 : THEME_DARK_COLOR_GREY_900,
     },
     h5: {
       fontSize: '0.875rem',
       fontWeight: 500,
-      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_900 : THEME_DARK_COLOR_GREY_900
+      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_900 : THEME_DARK_COLOR_GREY_900,
     },
     h4: {
       fontSize: '1.1rem',
       fontWeight: 600,
-      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_900 : THEME_DARK_COLOR_GREY_900
+      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_900 : THEME_DARK_COLOR_GREY_900,
     },
     h3: {
       fontSize: '1.2rem',
       fontWeight: 600,
-      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_900 : THEME_DARK_COLOR_GREY_900
+      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_900 : THEME_DARK_COLOR_GREY_900,
     },
     h2: {
       fontSize: '1.75rem',
       fontWeight: 700,
-      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_900 : THEME_DARK_COLOR_GREY_900
+      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_900 : THEME_DARK_COLOR_GREY_900,
     },
     h1: {
       fontSize: '2rem',
       fontWeight: 700,
-      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_900 : THEME_DARK_COLOR_GREY_900
+      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_900 : THEME_DARK_COLOR_GREY_900,
     },
     subtitle1: {
       fontSize: '0.875rem',
       fontWeight: 500,
-      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_900 : THEME_DARK_COLOR_GREY_900
+      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_900 : THEME_DARK_COLOR_GREY_900,
     },
     subtitle2: {
       fontSize: '0.75rem',
       fontWeight: 400,
-      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_500 : THEME_DARK_COLOR_GREY_500
+      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_500 : THEME_DARK_COLOR_GREY_500,
     },
     caption: {
       fontSize: '0.75rem',
       fontWeight: 400,
-      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_500 : THEME_DARK_COLOR_GREY_500
+      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_500 : THEME_DARK_COLOR_GREY_500,
     },
     body1: {
       fontSize: '0.875rem',
       fontWeight: 400,
-      lineHeight: '1.334em'
+      lineHeight: '1.334em',
     },
     body2: {
       letterSpacing: '0em',
       fontSize: '1rem',
       fontWeight: 400,
       lineHeight: '1.5em',
-      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_700 : THEME_DARK_COLOR_GREY_700
-    }
-  }
-})
+      color: Object.is(mode, 'light') ? THEME_COLOR_GREY_700 : THEME_DARK_COLOR_GREY_700,
+    },
+  },
+});
 
 export const defaultTheme = Object.assign({}, themeOverrides('light'), typography('light'),
   {
@@ -378,27 +378,27 @@ export const defaultTheme = Object.assign({}, themeOverrides('light'), typograph
       primary: {
         light: THEME_COLOR_PRIMARY_LIGHT,
         main: THEME_COLOR_PRIMARY_MAIN,
-        dark: THEME_COLOR_PRIMARY_DARK
+        dark: THEME_COLOR_PRIMARY_DARK,
       },
       secondary: {
         light: THEME_COLOR_SECONDARY_LIGHT,
         main: THEME_COLOR_SECONDARY_MAIN,
-        dark: THEME_COLOR_SECONDARY_DARK
+        dark: THEME_COLOR_SECONDARY_DARK,
       },
       warning: {
         light: THEME_COLOR_WARNING_LIGHT,
         main: THEME_COLOR_WARNING_MAIN,
-        dark: THEME_COLOR_WARNING_DARK
+        dark: THEME_COLOR_WARNING_DARK,
       },
       success: {
         light: THEME_COLOR_SUCCESS_LIGHT,
         main: THEME_COLOR_SUCCESS_MAIN,
-        dark: THEME_COLOR_SUCCESS_DARK
+        dark: THEME_COLOR_SUCCESS_DARK,
       },
       error: {
         light: THEME_COLOR_ERROR_LIGHT,
         main: THEME_COLOR_ERROR_MAIN,
-        dark: THEME_COLOR_ERROR_DARK
+        dark: THEME_COLOR_ERROR_DARK,
       },
       grey: {
         50: THEME_COLOR_GREY_50,
@@ -408,23 +408,23 @@ export const defaultTheme = Object.assign({}, themeOverrides('light'), typograph
         500: THEME_COLOR_GREY_500,
         600: THEME_COLOR_GREY_600,
         700: THEME_COLOR_GREY_700,
-        900: THEME_COLOR_GREY_900
+        900: THEME_COLOR_GREY_900,
       },
       text: {
         primary: THEME_COLOR_GREY_700,
-        secondary: THEME_COLOR_GREY_500
+        secondary: THEME_COLOR_GREY_500,
       },
       divider: THEME_COLOR_GREY_200,
       background: {
         default: THEME_BACKGROUND_DEFAULT,
-        paper: THEME_BACKGROUND_PAPER
-      }
+        paper: THEME_BACKGROUND_PAPER,
+      },
     },
     shape: {
-      borderRadius: THEME_SHAPE_BORDER_RADIUS
-    }
-  }
-)
+      borderRadius: THEME_SHAPE_BORDER_RADIUS,
+    },
+  },
+);
 
 export const darkTheme = Object.assign({}, themeOverrides('dark'), typography('dark'),
   {
@@ -433,27 +433,27 @@ export const darkTheme = Object.assign({}, themeOverrides('dark'), typography('d
       primary: {
         light: THEME_DARK_COLOR_PRIMARY_LIGHT,
         main: THEME_DARK_COLOR_PRIMARY_MAIN,
-        dark: THEME_DARK_COLOR_PRIMARY_DARK
+        dark: THEME_DARK_COLOR_PRIMARY_DARK,
       },
       secondary: {
         light: THEME_DARK_COLOR_SECONDARY_LIGHT,
         main: THEME_DARK_COLOR_SECONDARY_MAIN,
-        dark: THEME_DARK_COLOR_SECONDARY_DARK
+        dark: THEME_DARK_COLOR_SECONDARY_DARK,
       },
       warning: {
         light: THEME_DARK_COLOR_WARNING_LIGHT,
         main: THEME_DARK_COLOR_WARNING_MAIN,
-        dark: THEME_DARK_COLOR_WARNING_DARK
+        dark: THEME_DARK_COLOR_WARNING_DARK,
       },
       success: {
         light: THEME_DARK_COLOR_SUCCESS_LIGHT,
         main: THEME_DARK_COLOR_SUCCESS_MAIN,
-        dark: THEME_DARK_COLOR_SUCCESS_DARK
+        dark: THEME_DARK_COLOR_SUCCESS_DARK,
       },
       error: {
         light: THEME_DARK_COLOR_ERROR_LIGHT,
         main: THEME_DARK_COLOR_ERROR_MAIN,
-        dark: THEME_DARK_COLOR_ERROR_DARK
+        dark: THEME_DARK_COLOR_ERROR_DARK,
       },
       grey: {
         50: THEME_DARK_COLOR_GREY_50,
@@ -463,22 +463,22 @@ export const darkTheme = Object.assign({}, themeOverrides('dark'), typography('d
         500: THEME_DARK_COLOR_GREY_500,
         600: THEME_DARK_COLOR_GREY_600,
         700: THEME_DARK_COLOR_GREY_700,
-        900: THEME_DARK_COLOR_GREY_900
+        900: THEME_DARK_COLOR_GREY_900,
       },
       text: {
         primary: THEME_DARK_COLOR_GREY_700,
-        secondary: THEME_DARK_COLOR_GREY_500
+        secondary: THEME_DARK_COLOR_GREY_500,
       },
       divider: THEME_DARK_COLOR_GREY_200,
       background: {
         default: THEME_DARK_BACKGROUND_DEFAULT,
-        paper: THEME_DARK_BACKGROUND_PAPER
-      }
+        paper: THEME_DARK_BACKGROUND_PAPER,
+      },
     },
     shape: {
-      borderRadius: THEME_SHAPE_BORDER_RADIUS
-    }
-  }
-)
+      borderRadius: THEME_SHAPE_BORDER_RADIUS,
+    },
+  },
+);
 
-export const ColorModeContext = React.createContext({ toggleColorMode: () => {} })
+export const ColorModeContext = createContext({ toggleColorMode: () => { } });

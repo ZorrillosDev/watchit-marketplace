@@ -1,5 +1,5 @@
 // MUI IMPORTS
-import { styled, Typography, TypographyProps } from '@mui/material'
+import { styled, Typography, TypographyProps } from '@mui/material';
 
 // ===========================|| TRUNCATED TYPOGRAPHY ||=========================== //
 
@@ -9,7 +9,7 @@ export const TruncatedTypography = styled(Typography)<TypographyProps & { lines:
   display: '-webkit-box',
   width: '100%',
   WebkitLineClamp: lines,
-  WebkitBoxOrient: 'vertical'
-}))
+  WebkitBoxOrient: 'vertical',
+}));
 
-export default TruncatedTypography
+export default TruncatedTypography;

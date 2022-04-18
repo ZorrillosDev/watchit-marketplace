@@ -1,1 +1,1 @@
-export { HomeRecent as default } from './HomeRecentContainer'
+export { HomeRecent as default } from './HomeRecentContainer';

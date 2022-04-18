@@ -10,8 +10,8 @@ export namespace Random {
    * @param {number} max
    * @return {*}  {number}
    */
-  export function getRandomNumberBetween (min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min + 1) + min)
+  export function getRandomNumberBetween(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
   /**
@@ -21,8 +21,8 @@ export namespace Random {
    * @param {string[]} elementList
    * @return {*}  {string}
    */
-  export function getRandomValueFromArray (elementList: string[]): string {
-    const random = Math.floor(Math.random() * elementList.length)
-    return elementList[random]
+  export function getRandomValueFromArray(elementList: string[]): string {
+    const random = Math.floor(Math.random() * elementList.length);
+    return elementList[random];
   }
 }

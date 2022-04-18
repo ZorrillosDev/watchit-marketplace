@@ -8,8 +8,8 @@ export namespace String {
    * @return {boolean} invalid or valid string
    */
   export const invalidString = (text: string): boolean => {
-    return (!text || /^\s*$/.test(text) || text.length === 0)
-  }
+    return (!text || /^\s*$/.test(text) || text.length === 0);
+  };
 
   /**
    * Minify hash to '0x000...000'
@@ -18,8 +18,8 @@ export namespace String {
    * @return {boolean} invalid or valid string
    */
   export const minifyHash = (hash: string, length: number = 4): string => {
-    return `${hash.substr(0, length)}...${hash.substr(hash.length - 3)}`
-  }
+    return `${hash.substr(0, length)}...${hash.substr(hash.length - 3)}`;
+  };
 
   /**
    * Generate hex from string
@@ -43,18 +43,18 @@ export namespace String {
       '#ff9800',
       '#ff5722',
       '#795548',
-      '#607d8b'
-    ]
+      '#607d8b',
+    ];
 
-    let hash = 0
-    if (text.length === 0) return '#e51c23'
+    let hash = 0;
+    if (text.length === 0) return '#e51c23';
     for (let i = 0; i < text.length; i++) {
-      hash = text.charCodeAt(i) + ((hash << 5) - hash)
-      hash = hash & hash
+      hash = text.charCodeAt(i) + ((hash << 5) - hash);
+      hash = hash & hash;
     }
 
-    hash = ((hash % colors.length) + colors.length) % colors.length
-    return colors[hash]
-  }
+    hash = ((hash % colors.length) + colors.length) % colors.length;
+    return colors[hash];
+  };
 
 }
