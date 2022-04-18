@@ -31,7 +31,7 @@ const App: FC = (): JSX.Element => {
     },
   }), []);
 
-  const theme = React.useMemo(() => {
+  const theme = useMemo(() => {
     const config = Object.is(mode, 'light')
       ? defaultTheme
       : darkTheme;

@@ -1,6 +1,5 @@
-import { Contract } from '@ethersproject/contracts';
 import { WNFT } from '@w3/CONSTANTS';
-import { BigNumber, ethers } from 'ethers';
+import { BigNumber, ethers, Contract  } from 'ethers';
 import { getDefaultProvider, getNetworkSettings } from '@src/w3';
 import { Web3SafePurchaseArgs, Web3SetApprovalForArgs } from '@state/web3/types';
 
