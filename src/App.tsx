@@ -2,7 +2,7 @@
 import React, { FC, useEffect } from 'react'
 import { withRouter } from 'react-router'
 import { Provider } from 'react-redux'
-import { ConnectedRouter } from 'connected-react-router/immutable'
+import { ConnectedRouter } from 'connected-react-router'
 
 // project imports
 import { Routing } from '@src/navigation'

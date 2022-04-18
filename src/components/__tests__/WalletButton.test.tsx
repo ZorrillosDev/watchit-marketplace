@@ -11,23 +11,26 @@ import { config } from '@src/w3/'
 
 jest.mock('@usedapp/core')
 
+const useEthersType = {
+  active: true,
+  connector: undefined,
+  error: undefined,
+  library: undefined,
+  chainId: undefined,
+  account: '0x0',
+  setError: jest.fn(),
+  deactivate: jest.fn(),
+  activateBrowserWallet: jest.fn(),
+  activate: jest.fn(),
+  isLoading: false,
+  switchNetwork: jest.fn()
+}
+
 /* eslint-disable no-undef */
 describe('<WalletButton/>', () => {
   beforeEach(() => {
     jest.spyOn(web3Core, 'useEthers')
-      .mockImplementation(() => ({
-        active: false,
-        connector: undefined,
-        error: undefined,
-        library: undefined,
-        chainId: undefined,
-        account: undefined,
-        setError: jest.fn(),
-        deactivate: jest.fn(),
-        activateBrowserWallet: jest.fn(),
-        activate: jest.fn()
-      })
-      )
+      .mockImplementation(() => ({ ...useEthersType }))
   })
 
   it('should render', () => {
@@ -48,21 +51,11 @@ describe('<WalletButton/>', () => {
 
   it('should display wallet connection if success with metamask', () => {
     jest.spyOn(web3Core, 'useEthers')
-      .mockImplementation(() => ({
-        active: true,
-        connector: undefined,
-        error: undefined,
-        library: undefined,
-        chainId: undefined,
-        account: '0x0',
-        setError: jest.fn(),
-        deactivate: jest.fn(),
-        activateBrowserWallet: jest.fn(),
-        activate: jest.fn()
-      })
-      )
+      .mockImplementation(() => ({ ...useEthersType }))
 
     const walletButtonComponent = mount(<WalletButton />)
     expect(walletButtonComponent.find(PixelArtIdenticon).length).toBe(1)
   })
 })
+
+

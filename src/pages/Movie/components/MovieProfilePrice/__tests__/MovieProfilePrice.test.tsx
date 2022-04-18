@@ -29,16 +29,18 @@ describe('<MovieProfilePrice />', () => {
   beforeEach(() => {
     jest.spyOn(web3Core, 'useEthers')
       .mockImplementation(() => ({
+        active: true,
         connector: undefined,
-        library: undefined,
         error: undefined,
-        active: false,
+        library: undefined,
         chainId: undefined,
-        deactivate: jest.fn(),
-        account: undefined,
-        activate: jest.fn(),
+        account: '0x0',
         setError: jest.fn(),
-        activateBrowserWallet: jest.fn()
+        deactivate: jest.fn(),
+        activateBrowserWallet: jest.fn(),
+        activate: jest.fn(),
+        isLoading: false,
+        switchNetwork: jest.fn()
       })
       )
   })
