@@ -1,12 +1,12 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // MUI IMPORTS
-import { Box, Grid, styled, Typography, CardContent, CardContentProps } from '@mui/material'
+import { Box, Grid, styled, Typography, CardContent, CardContentProps } from '@mui/material';
 
 // PROJECT IMPORTS
-import HeartCounter from '@components/HeartCounter'
-import TruncatedTypography from '@components/TruncatedTypography'
+import HeartCounter from '@components/HeartCounter';
+import TruncatedTypography from '@components/TruncatedTypography';
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
@@ -50,13 +50,13 @@ export const PosterFooter: FC<PosterFooterProps> = (props): JSX.Element => {
         </Grid>
       </Grid>
     </PosterFooterWrapper>
-  )
-}
+  );
+};
 
 export const PosterFooterWrapper = styled(CardContent)<CardContentProps>(() => ({
   padding: '0.1rem 0.9rem !important',
   svg: {
     width: '0.9rem',
-    height: '0.9rem'
-  }
-}))
+    height: '0.9rem',
+  },
+}));

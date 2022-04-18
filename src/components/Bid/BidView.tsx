@@ -1,18 +1,18 @@
 // REACT IMPORTS
-import React, { FC, useState } from 'react'
+import React, { FC, useState } from 'react';
 
 // MUI IMPORTS
-import { Box, BoxProps, Button, Grid, styled, TextField, Theme, Typography } from '@mui/material'
-import { LoadingButton } from '@mui/lab'
+import { Box, BoxProps, Button, Grid, styled, TextField, Theme, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 
 // PROJECT IMPORTS
-import Modal from '@components/Modal'
-import { Translation } from '@src/i18n'
-import { SxProps } from '@mui/system'
-import BidSummary from '@components/Bid/BidSummary'
-import { useEtherBalance, useEthers } from '@usedapp/core'
-import { BigNumber } from 'ethers'
-import { Ethers } from '@src/utils'
+import Modal from '@components/Modal';
+import { Translation } from '@src/i18n';
+import { SxProps } from '@mui/system';
+import BidSummary from '@components/Bid/BidSummary';
+import { useEtherBalance, useEthers } from '@usedapp/core';
+import { BigNumber } from 'ethers';
+import { Ethers } from '@src/utils';
 
 // ===========================|| BID - VIEW ||=========================== //
 
@@ -23,12 +23,12 @@ export interface ModalBidViewProps {
 }
 
 const BidView: FC<ModalBidViewProps> = (props): JSX.Element => {
-  const { account } = useEthers()
-  const balance: BigNumber | undefined = useEtherBalance(account)
-  const [bidAmount, setBidAmount] = useState(0)
-  const [isOpen, setOpen] = useState(false)
-  const onClose = (): void => setOpen(false)
-  const onOpen = (): void => setOpen(true)
+  const { account } = useEthers();
+  const balance: BigNumber | undefined = useEtherBalance(account);
+  const [bidAmount, setBidAmount] = useState(0);
+  const [isOpen, setOpen] = useState(false);
+  const onClose = (): void => setOpen(false);
+  const onOpen = (): void => setOpen(true);
 
   return (
     <>
@@ -77,16 +77,16 @@ const BidView: FC<ModalBidViewProps> = (props): JSX.Element => {
         </ModalBidContent>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default BidView
+export default BidView;
 
 const ModalBidContent = styled(Box)<BoxProps>(({ theme }) => ({
   width: '100%',
   maxWidth: '22rem',
   padding: '1.5rem 1.5rem 1.5rem 2rem',
   [theme.breakpoints.down('sm')]: {
-    maxWidth: '100%'
-  }
-}))
+    maxWidth: '100%',
+  },
+}));

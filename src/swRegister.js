@@ -1,9 +1,9 @@
-import { Workbox } from 'workbox-window'
+import { Workbox } from 'workbox-window';
 
-export default function registerServiceWorker () {
+export default function registerServiceWorker() {
   // Check if the serviceWorker Object exists in the navigator object ( means if browser supports SW )
   if ('serviceWorker' in navigator) {
-    const wb = new Workbox('sw.js')
+    const wb = new Workbox('sw.js');
 
     wb.addEventListener('installed', event => {
       /**
@@ -14,10 +14,10 @@ export default function registerServiceWorker () {
       if (event.isUpdate) {
         // eslint-disable-next-line no-undef
         if (confirm('New app update is available!. Click OK to refresh')) {
-          window.location.reload()
+          window.location.reload();
         }
       }
-    })
-    wb.register()
+    });
+    wb.register();
   }
 }

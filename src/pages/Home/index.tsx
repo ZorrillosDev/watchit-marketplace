@@ -1,1 +1,1 @@
-export { HomeContainer as default } from '@pages/Home/HomeContainer'
+export { HomeContainer as default } from '@pages/Home/HomeContainer';

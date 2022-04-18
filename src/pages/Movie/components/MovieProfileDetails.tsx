@@ -1,18 +1,18 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // MUI IMPORTS
 import {
   AccordionDetails,
   AccordionSummary, Divider,
-  Grid, Typography
-} from '@mui/material'
+  Grid, Typography,
+} from '@mui/material';
 
 // PROJECT IMPORTS
-import { Translation } from '@src/i18n'
-import { IconChevronDown, IconListDetails } from '@tabler/icons'
-import MovieProfileAccordion from '@pages/Movie/components/MovieProfileAccordion'
-import { Movie } from '@state/movies/types'
+import { Translation } from '@src/i18n';
+import { IconChevronDown, IconListDetails } from '@tabler/icons';
+import MovieProfileAccordion from '@pages/Movie/components/MovieProfileAccordion';
+import { Movie } from '@state/movies/types';
 
 // ===========================|| MOVIE - PROFILE - OFFERS - VIEW ||=========================== //
 
@@ -50,8 +50,8 @@ export const MovieProfileDetails: FC<Movie> = (props): JSX.Element => {
         </AccordionDetails>
       </MovieProfileAccordion>
     </Grid>
-  )
-}
+  );
+};
 
 const MovieProfileDetailRow: FC<MovieProfileDetailRowProps> = (props): JSX.Element => {
   return (
@@ -63,7 +63,7 @@ const MovieProfileDetailRow: FC<MovieProfileDetailRowProps> = (props): JSX.Eleme
         {props.value}
       </Typography>
     </Grid>
-  )
-}
+  );
+};
 
-export default MovieProfileDetails
+export default MovieProfileDetails;

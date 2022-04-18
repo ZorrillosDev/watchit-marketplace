@@ -1,49 +1,49 @@
 // TRANSFER MODAL IMPORTS
-import React, { FC, useCallback } from 'react'
+import React, { FC, useCallback, useState } from 'react';
 
 // PROJECT IMPORTS
-import SearchView from '@components/Search/SearchView'
-import { MoviesActions, MoviesState } from '@state/movies/types'
-import { searchMovie } from '@state/movies/actions'
-import { connect, RootStateOrAny } from 'react-redux'
-import { selectSearchResult } from '@src/redux/movies/selector'
+import SearchView from '@components/Search/SearchView';
+import { MoviesActions, MoviesState } from '@state/movies/types';
+import { searchMovie } from '@state/movies/actions';
+import { connect, RootStateOrAny } from 'react-redux';
+import { selectSearchResult } from '@src/redux/movies/selector';
 
 // ===========================|| SEARCH - CONTAINER ||=========================== //
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 const SearchContainer: FC<MoviesActions & MoviesState> = (props): JSX.Element => {
-  const { searchMovie, searchResult } = props
-  const [searching, setSearching] = React.useState(false)
-  const [open, setOpen] = React.useState(false)
+  const { searchMovie, searchResult } = props;
+  const [searching, setSearching] = useState(false);
+  const [open, setOpen] = useState(false);
   // Debounce timeout to avoid search overhead
-  let debounce: ReturnType<typeof setTimeout> | null = null
+  let debounce: ReturnType<typeof setTimeout> | null = null;
 
   const handleClose = useCallback((): void =>
-    setOpen(false), [open]
-  )
+    setOpen(false), [open],
+  );
 
   const handleCancel = useCallback((): void => {
-    setOpen(false)
-    setSearching(false)
-  }, [searching, open])
+    setOpen(false);
+    setSearching(false);
+  }, [searching, open]);
 
   const onSearch = useCallback((term: string): void => {
-    if (!term) return setOpen(false)
+    if (!term) return setOpen(false);
 
     // Add debounce here
-    setSearching(true)
-    setOpen(true)
+    setSearching(true);
+    setOpen(true);
 
     // Debounce/Avoid overhead on search
-    if (debounce) clearTimeout(debounce)
+    if (debounce) clearTimeout(debounce);
     debounce = setTimeout(() => {
-      searchMovie({ term })
-    }, 500)
+      searchMovie({ term });
+    }, 500);
 
     setTimeout(() => {
-      setSearching(false)
-    }, 1000)
-  }, [])
+      setSearching(false);
+    }, 1000);
+  }, []);
 
   return (
     <SearchView
@@ -52,19 +52,19 @@ const SearchContainer: FC<MoviesActions & MoviesState> = (props): JSX.Element =>
         handleClose,
         onSearch,
         searching,
-        handleCancel
+        handleCancel,
       }} movies={searchResult}
     />
-  )
-}
+  );
+};
 
-const mapDispatchToProps: Partial<MoviesActions> = { searchMovie }
+const mapDispatchToProps: Partial<MoviesActions> = { searchMovie };
 const mapStateToProps = (state: RootStateOrAny): Partial<MoviesState> => {
-  const searchResult = selectSearchResult(state)
-  return { searchResult }
-}
+  const searchResult = selectSearchResult(state);
+  return { searchResult };
+};
 
 export const Search = connect(
   mapStateToProps,
-  mapDispatchToProps
-)(SearchContainer)
+  mapDispatchToProps,
+)(SearchContainer);

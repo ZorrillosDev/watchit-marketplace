@@ -1,15 +1,15 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // MUI IMPORTS
-import { Grid, GridProps, styled, Typography } from '@mui/material'
+import { Grid, GridProps, styled, Typography } from '@mui/material';
 
 // PROJECT IMPORTS
-import { Color } from '@src/utils'
-import { Movie } from '@state/movies/types'
-import TruncatedTypography from '@components/TruncatedTypography'
-import Poster from '@components/Poster'
-import { IconStar } from '@tabler/icons'
+import { Color } from '@src/utils';
+import { Movie } from '@state/movies/types';
+import TruncatedTypography from '@components/TruncatedTypography';
+import Poster from '@components/Poster';
+import { IconStar } from '@tabler/icons';
 
 // ===========================|| NOTIFICATIONS - ITEM ||=========================== //
 
@@ -49,29 +49,29 @@ const SearchItem: FC<Movie> = ({ ...movie }): JSX.Element => {
         </Grid>
       </Grid>
     </SearchItemWrapper>
-  )
-}
+  );
+};
 
 const SearchItemWrapper = styled(Grid)<GridProps>(({ theme }) => ({
   cursor: 'pointer',
   padding: '16px',
   '& > .MuiCard-root': {
-    width: '6rem'
+    width: '6rem',
   },
   '& svg': {
     display: 'inline',
     width: '1rem',
     height: '1rem',
     marginRight: '0.25rem',
-    transform: 'translateY(3px)'
+    transform: 'translateY(3px)',
   },
   '&:hover': {
-    background: Color.addAlpha(theme.palette.primary.light, 0.3)
+    background: Color.addAlpha(theme.palette.primary.light, 0.3),
   },
   '&:last-of-type': {
     borderBottomRightRadius: theme.shape.borderRadius,
-    borderBottomLeftRadius: theme.shape.borderRadius
-  }
-}))
+    borderBottomLeftRadius: theme.shape.borderRadius,
+  },
+}));
 
-export default SearchItem
+export default SearchItem;

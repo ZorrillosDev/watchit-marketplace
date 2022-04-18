@@ -1,4 +1,4 @@
-import { MovieArgs } from '@src/redux/movies/types'
+import { MovieArgs } from '@src/redux/movies/types';
 
 export interface BidArgs extends MovieArgs {}
 export interface BidsArgs extends MovieArgs {

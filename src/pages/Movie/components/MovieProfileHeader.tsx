@@ -1,21 +1,21 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // MUI IMPORTS
-import { Avatar, Button, ButtonProps, Grid, styled, Theme, Typography, Zoom } from '@mui/material'
+import { Avatar, Button, ButtonProps, Grid, styled, Theme, Typography, Zoom } from '@mui/material';
 
 // THIRD PARTY
-import { IconHeart, IconShare } from '@tabler/icons'
+import { IconHeart, IconShare } from '@tabler/icons';
 
 // PROJECT IMPORTS
-import { Fingerprint } from '@components/Icons'
-import { LightTooltip } from '@components/Tooltip'
-import { Translation } from '@src/i18n'
-import { SxProps } from '@mui/system'
+import { Fingerprint } from '@components/Icons';
+import { LightTooltip } from '@components/Tooltip';
+import { Translation } from '@src/i18n';
+import { SxProps } from '@mui/system';
 
 // ===========================|| MOVIE - PROFILE - HEADER ||=========================== //
 
-const MovieProfileHeader: FC<{sx?: SxProps<Theme>}> = ({ sx }): JSX.Element => {
+const MovieProfileHeader: FC<{ sx?: SxProps<Theme> }> = ({ sx }): JSX.Element => {
   return (
     <Grid item xs={12} display='flex' alignItems='center' justifyContent='space-between' sx={sx}>
       <LightTooltip TransitionComponent={Zoom} title={<Translation target='MOVIE_PROFILE_HEADER_FINGERPRINT' />}>
@@ -45,10 +45,10 @@ const MovieProfileHeader: FC<{sx?: SxProps<Theme>}> = ({ sx }): JSX.Element => {
         </Grid>
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
-export default MovieProfileHeader
+export default MovieProfileHeader;
 
 const MovieProfileButton = styled(Button)<ButtonProps>(({ theme }) => ({
   padding: '0.5rem',
@@ -60,11 +60,11 @@ const MovieProfileButton = styled(Button)<ButtonProps>(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     padding: '0.5rem !important',
     p: {
-      display: 'none'
+      display: 'none',
     },
     svg: {
       width: '24px !important',
-      height: '24px !important'
-    }
-  }
-}))
+      height: '24px !important',
+    },
+  },
+}));

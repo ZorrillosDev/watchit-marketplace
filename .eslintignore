@@ -1,0 +1,14 @@
+dist
+.eslintrc.js
+webpack.config.babel.js
+hardhat.config.js
+package.json
+.gitignore
+/src/i18n
+/coverage/**
+/jscpd/**
+/webpack/**/*.js
+/test/**/*.js
+/deploy/*.js
+/tasks/*.js
+/utils/*.js

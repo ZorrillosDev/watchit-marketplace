@@ -1,38 +1,38 @@
 // react imports
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // swiper imports
-import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/swiper-bundle.min.css'
-import 'swiper/swiper.min.css'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper-bundle.min.css';
+import 'swiper/swiper.min.css';
 import SwiperCore, {
   Autoplay,
-  Navigation
-} from 'swiper'
+  Navigation,
+} from 'swiper';
 
 // project imports
-import { styled, Grid, Container, ContainerProps, useMediaQuery } from '@mui/material'
-import Poster from '@components/Poster'
-import { useTheme } from '@mui/material/styles'
+import { styled, Grid, Container, ContainerProps, useMediaQuery } from '@mui/material';
+import Poster from '@components/Poster';
+import { useTheme } from '@mui/material/styles';
 
 // ===========================|| HOME SLIDER ||=========================== //
 
-SwiperCore.use([Navigation, Autoplay])
+SwiperCore.use([Navigation, Autoplay]);
 
 export interface HomeSliderProps {
   slides: any[]
 }
 
 const HomeSlider: FC<HomeSliderProps> = ({ slides }): JSX.Element => {
-  const theme = useTheme()
-  const movies = new Array(slides.length / 2).fill(0)
-  const moviesLength = movies.length
+  const theme = useTheme();
+  const movies = new Array(slides.length / 2).fill(0);
+  const moviesLength = movies.length;
 
-  let sliderColumns = 2
-  sliderColumns = useMediaQuery(theme.breakpoints.up('sm')) ? 3 : sliderColumns
-  sliderColumns = useMediaQuery(theme.breakpoints.up('md')) ? 4 : sliderColumns
-  sliderColumns = useMediaQuery(theme.breakpoints.up('lg')) ? 6 : sliderColumns
-  sliderColumns = useMediaQuery(theme.breakpoints.up('xl')) ? 6 : sliderColumns
+  let sliderColumns = 2;
+  sliderColumns = useMediaQuery(theme.breakpoints.up('sm')) ? 3 : sliderColumns;
+  sliderColumns = useMediaQuery(theme.breakpoints.up('md')) ? 4 : sliderColumns;
+  sliderColumns = useMediaQuery(theme.breakpoints.up('lg')) ? 6 : sliderColumns;
+  sliderColumns = useMediaQuery(theme.breakpoints.up('xl')) ? 6 : sliderColumns;
 
   return (
     <HomeSliderWrapper>
@@ -41,7 +41,7 @@ const HomeSlider: FC<HomeSliderProps> = ({ slides }): JSX.Element => {
         slidesPerView={sliderColumns}
         navigation
         autoplay={{
-          delay: 5000
+          delay: 5000,
         }}
       >
         {
@@ -57,23 +57,23 @@ const HomeSlider: FC<HomeSliderProps> = ({ slides }): JSX.Element => {
                   </Grid>
                 </Grid>
               </SwiperSlide>
-            )
+            );
           })
         }
       </Swiper>
     </HomeSliderWrapper>
-  )
-}
+  );
+};
 
 export const HomeSliderWrapper = styled(Container)<ContainerProps>(({ theme }) => ({
   display: 'block',
   position: 'relative',
   transition: 'all 0.5s ease-in-out',
   '& .swiper-container': {
-    height: '100%'
+    height: '100%',
   },
   '& .swiper': {
-    height: '100%'
+    height: '100%',
   },
   '& .swiper-button-next, & .swiper-button-prev': {
     width: '40px',
@@ -85,17 +85,17 @@ export const HomeSliderWrapper = styled(Container)<ContainerProps>(({ theme }) =
     '&:after': {
       color: theme.palette.primary.dark,
       fontSize: '1rem',
-      fontWeight: 'bold'
-    }
+      fontWeight: 'bold',
+    },
   },
   '& .MuiAvatar-root': {
     width: '30px',
-    height: '30px'
+    height: '30px',
   },
   '& svg': {
     width: '1rem',
-    height: '1rem'
-  }
-}))
+    height: '1rem',
+  },
+}));
 
-export default HomeSlider
+export default HomeSlider;

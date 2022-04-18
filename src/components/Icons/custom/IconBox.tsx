@@ -1,8 +1,8 @@
 // react imports
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // mui imports
-import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon'
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 
 // ===========================|| CUSTOM ICON BOX ||=========================== //
 
@@ -14,5 +14,5 @@ export const IconBox: FC<SvgIconProps> = (props): JSX.Element => {
       <polygon points='440,115.4 353.8,66.3 154,181.7 165.4,187.6 240.2,230.8 314.6,187.9' />
       <polygon points='138.9,264.3 103.1,245.9 103.1,188.7 29.3,146.2 29.3,369.3 222.4,480.8 222.4,257.7 138.9,209.6' />
     </SvgIcon>
-  )
-}
+  );
+};

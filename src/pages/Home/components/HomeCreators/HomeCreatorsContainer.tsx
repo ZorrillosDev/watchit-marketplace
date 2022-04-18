@@ -1,32 +1,32 @@
 // REACT IMPORTS
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect } from 'react';
 
 // MUI IMPORTS
 import {
   Grid,
   Typography,
-  Container
-} from '@mui/material'
+  Container,
+} from '@mui/material';
 
 // PROJECT IMPORTS
 // TODO delete this when data comes from backend
-import { fetchCreators } from '@state/users/actions'
-import { connect, RootStateOrAny } from 'react-redux'
-import { selectCreations } from '@state/users/selector'
-import { User, UserState, UsersActions } from '@state/users/types'
-import { HomeCreatorsView } from './HomeCreatorsView'
+import { fetchCreators } from '@state/users/actions';
+import { connect, RootStateOrAny } from 'react-redux';
+import { selectCreations } from '@state/users/selector';
+import { User, UserState, UsersActions } from '@state/users/types';
+import { HomeCreatorsView } from './HomeCreatorsView';
 
 // ===========================|| HOME - CREATORS ||=========================== //
 
 const HomeCreatorsContainer: FC<UserState & UsersActions> = (props): JSX.Element => {
   const {
     creators,
-    fetchCreators
-  } = props
+    fetchCreators,
+  } = props;
 
   useEffect(() => {
-    fetchCreators()
-  }, [])
+    fetchCreators();
+  }, []);
 
   return (
     <Container>
@@ -41,7 +41,7 @@ const HomeCreatorsContainer: FC<UserState & UsersActions> = (props): JSX.Element
             {
               creators !== undefined
                 ? creators.map((user: User, i: number) => {
-                  return <HomeCreatorsView user={user} key={i} />
+                  return <HomeCreatorsView user={user} key={i} />;
                 })
                 : <></>
             }
@@ -49,16 +49,16 @@ const HomeCreatorsContainer: FC<UserState & UsersActions> = (props): JSX.Element
         </Grid>
       </Grid>
     </Container>
-  )
-}
+  );
+};
 
-const mapDispatchToProps: Partial<UsersActions> = { fetchCreators }
+const mapDispatchToProps: Partial<UsersActions> = { fetchCreators };
 const mapStateToProps = (state: RootStateOrAny): UserState => {
-  const creators = selectCreations(state)
-  return { creators }
-}
+  const creators = selectCreations(state);
+  return { creators };
+};
 
 export const HomeCreators = connect(
   mapStateToProps,
-  mapDispatchToProps
-)(HomeCreatorsContainer)
+  mapDispatchToProps,
+)(HomeCreatorsContainer);

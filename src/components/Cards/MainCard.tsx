@@ -1,11 +1,12 @@
 // REACT IMPORTS
-import React, { ReactElement } from 'react'
+import React, { ReactElement, forwardRef } from 'react';
 
 // MUI IMPORTS
-import { Card, CardContent, CardHeader, CardProps, Divider, Theme, useTheme } from '@mui/material'
-import { SxProps } from '@mui/system'
+import { Card, CardContent, CardHeader, CardProps, Divider, Theme, useTheme } from '@mui/material';
+import { SxProps } from '@mui/system';
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
+/* eslint-disable  react/display-name */
 
 // ===========================|| CARD - MAIN ||=========================== //
 
@@ -20,9 +21,9 @@ export interface MainCardProps extends Omit<CardProps, 'title'> {
   title?: ReactElement | string
 }
 
-const MainCard = React.forwardRef<HTMLDivElement, MainCardProps>((props, ref) => {
-  const theme = useTheme()
-  const { border, content, contentSx, boxShadow, title, ...p } = props
+export const MainCard = forwardRef<HTMLDivElement, MainCardProps>((props, ref) => {
+  const theme = useTheme();
+  const { border, content, contentSx, boxShadow, title, ...p } = props;
 
   return (
     <Card
@@ -32,9 +33,9 @@ const MainCard = React.forwardRef<HTMLDivElement, MainCardProps>((props, ref) =>
         border: border ? '1px solid' : 'none',
         borderColor: theme.palette.primary.light,
         ':hover': {
-          boxShadow: boxShadow ? p.shadow ?? '0 2px 14px 0 rgb(32 40 45 / 8%)' : 'inherit'
+          boxShadow: boxShadow ? p.shadow ?? '0 2px 14px 0 rgb(32 40 45 / 8%)' : 'inherit',
         },
-        ...p.sx
+        ...p.sx,
       }}
     >
       {/* card header and action */}
@@ -57,7 +58,7 @@ const MainCard = React.forwardRef<HTMLDivElement, MainCardProps>((props, ref) =>
       )}
       {!content && p.children}
     </Card>
-  )
-})
+  );
+});
 
-export default MainCard
+export default MainCard;

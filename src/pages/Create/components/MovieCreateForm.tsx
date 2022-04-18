@@ -1,25 +1,25 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react';
 
 // THIRD PARTY IMPORTS
-import * as yup from 'yup'
+import * as yup from 'yup';
 
 // MUI IMPORTS
 import {
   Box, BoxProps, Button, Grid, styled,
-  Typography, TypographyProps, Zoom
-} from '@mui/material'
+  Typography, TypographyProps, Zoom,
+} from '@mui/material';
 
 // PROJECT IMPORTS
-import { File } from '@src/utils'
-import { Formik } from 'formik'
-import { Translation } from '@src/i18n'
-import { InputSwitch } from '@components/Inputs'
-import ImagePicker from '@components/ImagePicker'
-import { InputTextField } from '@components/Inputs/InputTextField'
-import { useEthers } from '@usedapp/core'
-import { LightTooltip } from '@components/Tooltip'
-import MovieCreateModalProgress from '@pages/Create/components/MovieCreateModalProgress'
+import { File } from '@src/utils';
+import { Formik } from 'formik';
+import { Translation } from '@src/i18n';
+import { InputSwitch } from '@components/Inputs';
+import ImagePicker from '@components/ImagePicker';
+import { InputTextField } from '@components/Inputs/InputTextField';
+import { useEthers } from '@usedapp/core';
+import { LightTooltip } from '@components/Tooltip';
+import MovieCreateModalProgress from '@pages/Create/components/MovieCreateModalProgress';
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
@@ -37,26 +37,26 @@ export interface ModalBalanceFormProps {
 }
 
 const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
-  const [open, setOpen] = React.useState(false)
-  const handleOpen = (): void => { setOpen(true) }
-  const handleClose = (): void => { setOpen(false) }
-  const { account } = useEthers()
+  const [open, setOpen] = useState(false);
+  const handleOpen = (): void => { setOpen(true); };
+  const handleClose = (): void => { setOpen(false); };
+  const { account } = useEthers();
   const validationSchema = yup.object({
     film: yup.mixed()
       .required()
       .test('fileType', 'Supported Video Formats', (value: any) =>
-        value?.name && ['webm', 'mp4'].includes(value.name.split('.').pop())
+        value?.name && ['webm', 'mp4'].includes(value.name.split('.').pop()),
       ),
     poster: yup.mixed()
       .required()
       .test('fileType', 'Supported Image Format', (value) =>
-        value?.name && ['jpeg', 'png', 'jpg', 'gif'].includes(value.name.split('.').pop())
+        value?.name && ['jpeg', 'png', 'jpg', 'gif'].includes(value.name.split('.').pop()),
       ),
     title: yup.string().required().min(2).trim(),
     synopsis: yup.string().required().min(4).trim(),
     price: yup.number().positive().min(0.01).required(),
-    trailer_code: yup.string().min(4).trim()
-  })
+    trailer_code: yup.string().min(4).trim(),
+  });
 
   const initialValues = {
     film: undefined,
@@ -64,8 +64,8 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
     title: '',
     synopsis: '',
     price: 0,
-    trailer_code: ''
-  }
+    trailer_code: '',
+  };
 
   return (
     <Formik
@@ -89,11 +89,11 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
                 preview={props.film} accept='video/webm, video/mp4' isImageFullWidth name='film'
                 helpText={<Translation target='MOVIE_CREATE_FILM_HELP_TEXT' />}
                 handleChange={async (e) => {
-                  formik.handleChange(e)
-                  const file = e.target.files[0]
-                  const cover = await File.getVideoCover(file)
-                  props.setFilm(URL.createObjectURL(cover))
-                  formik.setFieldValue('film', file)
+                  formik.handleChange(e);
+                  const file = e.target.files[0];
+                  const cover = await File.getVideoCover(file);
+                  props.setFilm(URL.createObjectURL(cover));
+                  formik.setFieldValue('film', file);
                 }}
               />
             </Grid>
@@ -105,10 +105,10 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
                 name='poster'
                 helpText={<Translation target='MOVIE_CREATE_POSTER_HELP_TEXT' />}
                 handleChange={(e) => {
-                  formik.handleChange(e)
-                  const file = e.target.files[0]
-                  props.setPoster(URL.createObjectURL(file))
-                  formik.setFieldValue('poster', file)
+                  formik.handleChange(e);
+                  const file = e.target.files[0];
+                  props.setPoster(URL.createObjectURL(file));
+                  formik.setFieldValue('poster', file);
                 }}
               />
             </Grid>
@@ -119,8 +119,8 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
                 helperText={<Translation target='MOVIE_CREATE_NAME_HELP_TEXT' />}
                 error={Boolean(formik.errors.title)}
                 onChange={(e) => {
-                  props.setTitle(e.target.value)
-                  formik.setFieldValue('title', e.target.value)
+                  props.setTitle(e.target.value);
+                  formik.setFieldValue('title', e.target.value);
                 }}
               />
             </Grid>
@@ -142,9 +142,9 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
                   variant='standard'
                   error={Boolean(formik.errors.price)}
                   onChange={(e: any) => {
-                    formik.handleChange(e)
-                    props.setPrice(e.target.value)
-                    formik.setFieldValue('price', e.target.value)
+                    formik.handleChange(e);
+                    props.setPrice(e.target.value);
+                    formik.setFieldValue('price', e.target.value);
                   }}
                 />
                 <MovieCreateBidText variant='body2'>ETH</MovieCreateBidText>
@@ -189,23 +189,23 @@ const MovieCreateForm: FC<ModalBalanceFormProps> = (props): JSX.Element => {
         </Box>
       )}
     </Formik>
-  )
-}
+  );
+};
 
 const MovieCreateBidWrapper = styled(Box)<BoxProps>(() => ({
   width: '100%',
   position: 'relative',
   input: {
-    paddingRight: '3rem'
-  }
-}))
+    paddingRight: '3rem',
+  },
+}));
 
 const MovieCreateBidText = styled(Typography)<TypographyProps>(({ theme }) => ({
   position: 'absolute',
   right: 0,
   color: theme.palette.text.primary,
   fontWeight: 600,
-  bottom: '26px'
-}))
+  bottom: '26px',
+}));
 
-export default MovieCreateForm
+export default MovieCreateForm;

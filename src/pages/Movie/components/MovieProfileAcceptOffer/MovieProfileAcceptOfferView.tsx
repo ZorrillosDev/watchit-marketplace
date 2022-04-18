@@ -1,18 +1,18 @@
 // REACT IMPORTS
-import React, { FC, useState } from 'react'
+import React, { FC, useState } from 'react';
 
 // MUI IMPORTS
-import { Box, BoxProps, Button, Grid, styled, Alert, Theme, Typography } from '@mui/material'
-import { LoadingButton } from '@mui/lab'
-import { SxProps } from '@mui/system'
+import { Box, BoxProps, Button, Grid, styled, Alert, Theme, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { SxProps } from '@mui/system';
 
 // PROJECT IMPORTS
-import Modal from '@components/Modal'
-import { Translation } from '@src/i18n'
-import { String } from '@src/utils'
-import { Web3Actions, Web3State } from '@state/web3/types'
-import { Movie } from '@state/movies/types'
-import { Bid } from '@src/redux/bids/types'
+import Modal from '@components/Modal';
+import { Translation } from '@src/i18n';
+import { String } from '@src/utils';
+import { Web3Actions, Web3State } from '@state/web3/types';
+import { Movie } from '@state/movies/types';
+import { Bid } from '@src/redux/bids/types';
 
 // ===========================|| ACCEPT OFFER - VIEW ||=========================== //
 
@@ -21,13 +21,13 @@ export type MovieProfileAcceptOfferViewProps = {
   handleAcceptOffer: () => void
   buttonSx?: SxProps<Theme>
   compact?: boolean
-} & Web3State & Web3Actions & Movie & Bid
+} & Web3State & Web3Actions & Movie & Bid;
 
 const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props): JSX.Element => {
-  const [isOpen, setOpen] = useState(false)
-  const onClose = (): void => setOpen(false)
-  const onOpen = (): void => setOpen(true)
-  const isCompact = props.compact === true ? 'small' : 'large'
+  const [isOpen, setOpen] = useState(false);
+  const onClose = (): void => setOpen(false);
+  const onOpen = (): void => setOpen(true);
+  const isCompact = props.compact === true ? 'small' : 'large';
 
   return (
     <>
@@ -71,13 +71,13 @@ const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props
                       <Translation target='MOVIE_ACCEPT_OFFER_SUCCESS' />
                       <strong> Tx: {String.minifyHash(props.result.transactionHash)} </strong>
                     </Alert>
-                    )
+                  )
                   : props.result.status === 0
                     ? (
                       <Alert severity='error'>
                         <Translation target='MOVIE_ACCEPT_OFFER_ERROR' />
                       </Alert>
-                      )
+                    )
                     : (
                       <LoadingButton
                         variant='contained'
@@ -89,7 +89,7 @@ const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props
                       >
                         <Translation target='MOVIE_PROFILE_PRICE_ACCEPT_OFFER' />
                       </LoadingButton>
-                      )
+                    )
               }
 
             </Grid>
@@ -97,16 +97,16 @@ const MovieProfileAcceptOfferView: FC<MovieProfileAcceptOfferViewProps> = (props
         </AcceptOfferContent>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default MovieProfileAcceptOfferView
+export default MovieProfileAcceptOfferView;
 
 const AcceptOfferContent = styled(Box)<BoxProps>(({ theme }) => ({
   width: '100%',
   maxWidth: '23rem',
   padding: '1.5rem 1.5rem 1.5rem 2rem',
   [theme.breakpoints.down('sm')]: {
-    maxWidth: '100%'
-  }
-}))
+    maxWidth: '100%',
+  },
+}));

@@ -12,9 +12,9 @@ export namespace Color {
   */
   export const addAlpha = (color: string, opacity: number): string => {
     // coerce values so ti is between 0 and 1.
-    const _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255)
-    return color + _opacity.toString(16).toUpperCase()
-  }
+    const alpha = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
+    return color + alpha.toString(16).toUpperCase();
+  };
 
   /**
   * Return random colors for
@@ -22,11 +22,11 @@ export namespace Color {
   * @return {*}  {string}
   */
   export const getRandomColor = (): string => {
-    const letters = '0123456789ABCDEF'
-    let color = '#'
+    const letters = '0123456789ABCDEF';
+    let color = '#';
     for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)]
+      color += letters[Math.floor(Math.random() * 16)];
     }
-    return color
-  }
+    return color;
+  };
 }

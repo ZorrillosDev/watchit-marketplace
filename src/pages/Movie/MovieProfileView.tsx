@@ -1,24 +1,24 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // MUI IMPORTS
 import {
-  Container, Grid, Link, styled, Typography, TypographyProps
-} from '@mui/material'
+  Container, Grid, Link, styled, Typography, TypographyProps,
+} from '@mui/material';
 
 // PROJECT IMPORTS
-import { MovieProfileSectionWrapper } from '@pages/Movie/components/MovieProfileSection'
-import MovieProfileHeader from '@pages/Movie/components/MovieProfileHeader'
-import MovieProfilePrice from '@pages/Movie/components/MovieProfilePrice'
-import MovieProfileUser from '@pages/Movie/components/MovieProfileUser'
-import MovieProfileOffers from '@pages/Movie/components/MovieProfileOffers'
-import Poster from '@components/Poster'
-import TruncatedTypography from '@components/TruncatedTypography'
-import Footer from '@components/Footer'
-import { Translation } from '@src/i18n'
-import { Movie } from '@state/movies/types'
-import MovieProfileDetails from '@pages/Movie/components/MovieProfileDetails'
-import MovieProfileActivityTable from '@pages/Movie/components/MovieProfileActivityTable'
+import { MovieProfileSectionWrapper } from '@pages/Movie/components/MovieProfileSection';
+import MovieProfileHeader from '@pages/Movie/components/MovieProfileHeader';
+import MovieProfilePrice from '@pages/Movie/components/MovieProfilePrice';
+import MovieProfileUser from '@pages/Movie/components/MovieProfileUser';
+import MovieProfileOffers from '@pages/Movie/components/MovieProfileOffers';
+import Poster from '@components/Poster';
+import TruncatedTypography from '@components/TruncatedTypography';
+import Footer from '@components/Footer';
+import { Translation } from '@src/i18n';
+import { Movie } from '@state/movies/types';
+import MovieProfileDetails from '@pages/Movie/components/MovieProfileDetails';
+import MovieProfileActivityTable from '@pages/Movie/components/MovieProfileActivityTable';
 
 // ===========================|| MOVIE - PROFILE - VIEW ||=========================== //
 
@@ -102,12 +102,12 @@ export const MovieProfileView: FC<Movie> = (props): JSX.Element => {
       </Container>
       <Footer />
     </>
-  )
-}
+  );
+};
 
 const MovieProfileCreatorTypography = styled(Typography)<TypographyProps>(() => ({
   position: 'absolute',
   right: '1.4rem',
   top: '1.4rem',
-  fontWeight: 500
-}))
+  fontWeight: 500,
+}));

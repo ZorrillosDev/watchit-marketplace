@@ -1,10 +1,10 @@
 // react imports
-import React from 'react'
+import React from 'react';
 
 // ===========================|| WORK ||=========================== //
 
 const Work = (): JSX.Element => {
-  return <span>How it work</span>
-}
+  return <span>How it work</span>;
+};
 
-export default Work
+export default Work;

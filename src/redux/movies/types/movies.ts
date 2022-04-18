@@ -25,10 +25,10 @@ export const GenresList = [
   'News',
   'Reality-TV',
   'Talk-Show',
-  'Game-Show'
-] as const
+  'Game-Show',
+] as const;
 
-export type Genres = typeof GenresList[number]
+export type Genres = typeof GenresList[number];
 
 export interface Images {
   small: string

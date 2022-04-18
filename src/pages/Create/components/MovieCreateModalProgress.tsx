@@ -1,16 +1,16 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // MUI IMPORTS
 import {
   Backdrop, Box, BoxProps, Fade, Grid,
   GridProps, LinearProgress, LinearProgressProps,
-  Modal, styled, Typography
-} from '@mui/material'
+  Modal, styled, Typography,
+} from '@mui/material';
 
 // PROJECT IMPORTS
-import { Translation } from '@src/i18n'
-import LogoPng from '@assets/icons/icon.png'
+import { Translation } from '@src/i18n';
+import LogoPng from '@assets/icons/icon.png';
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
@@ -30,7 +30,7 @@ interface MovieCreateUploadModalLogoProps {
 }
 
 const MovieCreateModalProgress: FC<MovieCreateModalProgressProps> = (props): JSX.Element => {
-  const loaded = ((props?.progress ?? 0) === 100)
+  const loaded = ((props?.progress ?? 0) === 100);
 
   return (
     <Modal
@@ -40,8 +40,8 @@ const MovieCreateModalProgress: FC<MovieCreateModalProgressProps> = (props): JSX
       BackdropComponent={Backdrop}
       BackdropProps={{
         sx: {
-          pointerEvents: ((props?.progress ?? 0) === 100) ? 'all' : 'none'
-        }
+          pointerEvents: ((props?.progress ?? 0) === 100) ? 'all' : 'none',
+        },
       }}
     >
       <Fade in={props.open}>
@@ -67,7 +67,7 @@ const MovieCreateModalProgress: FC<MovieCreateModalProgressProps> = (props): JSX
                       </Typography>
                     </Grid>
                   </>
-                  )
+                )
                 : (
                   <>
                     <Grid item xs={12}>
@@ -84,13 +84,13 @@ const MovieCreateModalProgress: FC<MovieCreateModalProgressProps> = (props): JSX
                       </Typography>
                     </Grid>
                   </>
-                  )
+                )
           }
         </MovieCreateUploadModalContent>
       </Fade>
     </Modal>
-  )
-}
+  );
+};
 
 const MovieCreateUploadModalContent = styled(Grid)<GridProps>(({ theme }) => ({
   position: 'absolute',
@@ -100,37 +100,37 @@ const MovieCreateUploadModalContent = styled(Grid)<GridProps>(({ theme }) => ({
   width: '400px',
   backgroundColor: theme.palette.background.paper,
   borderRadius: '1rem',
-  padding: '2rem'
-}))
+  padding: '2rem',
+}));
 
 const MovieCreateUploadModalLogo = styled(Box)<BoxProps & MovieCreateUploadModalLogoProps >(({ animated }) => ({
   maxWidth: '10rem',
   '@keyframes spin': {
     '0%, 15%': {
-      transform: 'rotate(0)'
+      transform: 'rotate(0)',
     },
     '100%': {
-      transform: 'rotate(360deg)'
-    }
+      transform: 'rotate(360deg)',
+    },
   },
-  animation: animated ? 'spin 2000ms cubic-bezier(.175, .885, .32, 1.275) infinite' : 'none'
-}))
+  animation: animated ? 'spin 2000ms cubic-bezier(.175, .885, .32, 1.275) infinite' : 'none',
+}));
 
-const MovieCreateUploadModalProgress = styled(LinearProgress)<LinearProgressProps>(({ theme }) => ({
+const MovieCreateUploadModalProgress = styled(LinearProgress)<LinearProgressProps>(() => ({
   borderRadius: '2px',
   '.MuiLinearProgress-bar': {
     background: 'linear-gradient(90deg, red 0%, yellow 15%, lime 30%, cyan 50%, blue 65%, magenta 80%, red 100%)',
     backgroundSize: '200%',
     '@keyframes moveGradient': {
       '0%': {
-        backgroundPosition: '0% 0%'
+        backgroundPosition: '0% 0%',
       },
       '100%': {
-        backgroundPosition: '-200% 0%'
-      }
+        backgroundPosition: '-200% 0%',
+      },
     },
-    animation: 'moveGradient 5s linear infinite'
-  }
-}))
+    animation: 'moveGradient 5s linear infinite',
+  },
+}));
 
-export default MovieCreateModalProgress
+export default MovieCreateModalProgress;

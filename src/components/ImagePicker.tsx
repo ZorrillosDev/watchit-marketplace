@@ -1,19 +1,19 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // THIRD PARTY IMPORTS
-import { IconUpload } from '@tabler/icons'
+import { IconUpload } from '@tabler/icons';
 
 // MUI IMPORTS
-import { FormControl, Typography } from '@mui/material'
+import { FormControl, Typography } from '@mui/material';
 
 // PROJECT IMPORTS
 import {
   InputFileButton, InputFileElement, InputFileIcon,
-  InputFileLabel, InputFileLabelText
-} from '@components/Inputs'
-import { Translation } from '@src/i18n'
-import Poster from '@components/Poster'
+  InputFileLabel, InputFileLabelText,
+} from '@components/Inputs';
+import { Translation } from '@src/i18n';
+import Poster from '@components/Poster';
 
 /* eslint-disable  @typescript-eslint/strict-boolean-expressions */
 
@@ -33,8 +33,8 @@ export interface ImagePickerProps {
 
 const ImagePicker: FC<ImagePickerProps> = (props): JSX.Element => {
   const handleButtonClick = (e: any): void => {
-    e.target.parentElement.click()
-  }
+    e.target.parentElement.click();
+  };
 
   return (
     <FormControl error={props.error} variant='standard' sx={{ width: 1 }}>
@@ -55,7 +55,7 @@ const ImagePicker: FC<ImagePickerProps> = (props): JSX.Element => {
               <>
                 <Poster image={props.preview} name={`${props.id}_image`} />
               </>
-              )
+            )
             : (
               <>
                 <InputFileIcon>
@@ -68,11 +68,11 @@ const ImagePicker: FC<ImagePickerProps> = (props): JSX.Element => {
                   <Translation target='MOVIE_CREATE_FILE_BUTTON' />
                 </InputFileButton>
               </>
-              )
+            )
         }
       </InputFileLabel>
     </FormControl>
-  )
-}
+  );
+};
 
-export default ImagePicker
+export default ImagePicker;

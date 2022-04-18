@@ -1,1 +1,1 @@
-export { HomeCreators as default } from './HomeCreatorsContainer'
+export { HomeCreators as default } from './HomeCreatorsContainer';

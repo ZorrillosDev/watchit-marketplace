@@ -1,1 +1,1 @@
-export { MovieProfile as default } from '@pages/Movie/MovieProfileContainer'
+export { MovieProfile as default } from '@pages/Movie/MovieProfileContainer';

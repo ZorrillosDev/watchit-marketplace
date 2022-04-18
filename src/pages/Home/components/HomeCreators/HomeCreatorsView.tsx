@@ -1,17 +1,17 @@
 // REACT IMPORTS
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 // MUI IMPORTS
 import {
   Grid,
-  Box, styled, Chip, ChipProps
-} from '@mui/material'
+  Box, styled, Chip, ChipProps,
+} from '@mui/material';
 
 // PROJECT IMPORTS
-import TruncatedTypography from '@components/TruncatedTypography'
-import { User } from '@state/users/types'
-import { PixelArtIdenticon } from '@components/Identicon'
-import { String } from '@src/utils'
+import TruncatedTypography from '@components/TruncatedTypography';
+import { User } from '@state/users/types';
+import { PixelArtIdenticon } from '@components/Identicon';
+import { String } from '@src/utils';
 
 // ===========================|| HOME - CREATORS ||=========================== //
 export const HomeCreatorsView: FC<{ user: User }> = ({ user }): JSX.Element => {
@@ -37,10 +37,10 @@ export const HomeCreatorsView: FC<{ user: User }> = ({ user }): JSX.Element => {
         color='primary'
       />
     </Grid>
-  )
-}
+  );
+};
 
-const HomeCreatorChip = styled(Chip)<ChipProps>(({ theme }) => ({
+const HomeCreatorChip = styled(Chip)<ChipProps>(() => ({
   height: '48px',
   width: '100%',
   alignItems: 'center',
@@ -51,6 +51,6 @@ const HomeCreatorChip = styled(Chip)<ChipProps>(({ theme }) => ({
   justifyContent: 'flex-start',
   cursor: 'pointer',
   '.MuiChip-label, p': {
-    margin: 0
-  }
-}))
+    margin: 0,
+  },
+}));
