@@ -56,8 +56,8 @@
     "@types/jest": "^26.0.24",
     "@types/mocha": "^9.0.0",
     "@types/node": "^16.7.10",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.2",
+    "@types/react": "^16.14.8",
+    "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.16",
     "@types/react-router": "^5.1.16",
     "@types/react-router-dom": "^5.1.7",
@@ -75,7 +75,7 @@
     "chai": "^4.3.4",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "compression-webpack-plugin": "^8.0.0",
-    "connected-react-router-immutable": "^2.0.0-alpha.6",
+    "connected-react-router": "^6.9.2",
     "copy-webpack-plugin": "^9.0.0",
     "core-js": "~3.7.0",
     "cross-env": "^7.0.3",
@@ -141,12 +141,12 @@
     "workbox-webpack-plugin": "^6.4.2",
     "workbox-window": "^6.4.2"
   },
-  "browser": {
-    "crypto": false
-  },
   "resolutions": {
     "@types/react": "17.0.2",
     "@types/react-dom": "17.0.2"
+  },
+  "browser": {
+    "crypto": false
   },
   "dependencies": {
     "@dicebear/adventurer-neutral": "^4.10.0",
@@ -159,6 +159,7 @@
     "@emotion/cache": "^11.4.0",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+    "@ethersproject/contracts": "^5.6.0",
     "@mui/icons-material": "^5.0.1",
     "@mui/lab": "^5.0.0-alpha.49",
     "@mui/material": "^5.0.2",
@@ -167,13 +168,12 @@
     "@openzeppelin/test-helpers": "^0.5.11",
     "@reduxjs/toolkit": "^1.6.1",
     "@tabler/icons": "^1.44.0",
-    "@usedapp/core": "^0.11.0",
+    "@usedapp/core": "1.0.0",
     "@web3-react/injected-connector": "^6.0.7",
     "acorn-import-assertions": "^1.7.6",
     "axios": "^0.25.0",
     "big.js": "^6.1.1",
     "circular-dependency-plugin": "^5.2.2",
-    "connected-react-router": "^6.9.1",
     "crypto": "^1.0.1",
     "crypto-js": "^4.1.1",
     "dotenv": "^10.0.0",
