@@ -15,9 +15,8 @@ import { selectBidCollection } from '@state/bids/selector';
 type MovieProfilePriceProps = Movie & BidState;
 export const MovieProfilePriceContainer: FC<MovieProfilePriceProps> = (props): JSX.Element => {
   const { bids } = props;
-
   // Replace current price for highest bid if exists
-  const bid = Array.from(bids.sort((a, b) => b.bid - a.bid));
+  const bid = Array.from(bids).sort((a, b) => b.bid - a.bid);
   const highestBid: Bid = bid.shift() as Bid; // Get first from sorted bids
   const price = highestBid?.bid ?? props.price;
 
