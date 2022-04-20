@@ -43,6 +43,9 @@ describe('<WalletButton/>', () => {
   });
 
   it('should display english translation', () => {
+    jest.spyOn(web3Core, 'useEthers')
+      .mockImplementation(() => ({ ...useEthersType, account: undefined }));
+
     const walletButtonComponent = mount(<WalletButton />);
     const button = walletButtonComponent.find(Button);
     expect(walletButtonComponent.find(AccountBalanceWallet).length).toBe(1);
