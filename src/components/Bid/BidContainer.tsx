@@ -36,9 +36,6 @@ const BidContainer: FC<BidContainerProps> = (props): JSX.Element => {
       id,
       bid,
     });
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
   }, [account]);
 
   return <BidView {...{ buttonSx, isLoading, handleSetBid }} />;
