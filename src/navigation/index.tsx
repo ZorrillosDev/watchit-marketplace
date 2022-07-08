@@ -8,7 +8,9 @@ import Work from '@pages/Work';
 import MovieProfile from '@pages/Movie';
 import MovieCreate from '@pages/Create';
 import { DefaultLayout } from '@layouts/default';
-import { ROOT, EXPLORE, FESTIVAL, SELL, WORK, MOVIE, CREATE } from '@navigation/CONSTANTS';
+import { ROOT, EXPLORE, FESTIVAL, SELL, WORK, MOVIE, CREATE, PROFILE, SETTINGS } from '@navigation/CONSTANTS';
+import ProfileEdit from '@pages/ProfileEdit';
+import Profile from '@pages/Profile';
 
 export const Routing: FC = (): JSX.Element => {
   return (
@@ -36,6 +38,16 @@ export const Routing: FC = (): JSX.Element => {
       <Route exact path={WORK}>
         <DefaultLayout>
           <Work />
+        </DefaultLayout>
+      </Route>
+      <Route exact path={PROFILE}>
+        <DefaultLayout>
+          <Profile />
+        </DefaultLayout>
+      </Route>
+      <Route exact path={SETTINGS}>
+        <DefaultLayout>
+          <ProfileEdit />
         </DefaultLayout>
       </Route>
       <Route

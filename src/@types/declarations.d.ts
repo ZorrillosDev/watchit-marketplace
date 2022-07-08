@@ -11,6 +11,7 @@ declare module '@pages/Index' {
 }
 
 declare module '*.png'
+declare module '*.jpg'
 declare module '*.svg' {
   import React = require('react');
   const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;

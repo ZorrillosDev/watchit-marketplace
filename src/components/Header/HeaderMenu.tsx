@@ -11,7 +11,7 @@ import {
 } from '@components/Icons';
 
 // mui imports
-import WalletButton from '@components/WalletButton';
+import Wallet from '@components/Wallet';
 import {
   Hidden, styled, Backdrop, Drawer, Box,
   Divider, IconButton, Grid, BoxProps,
@@ -122,7 +122,7 @@ const HeaderMenuContent: FC = (): JSX.Element => {
           {i18n.t('GLOBAL_WORK')}
         </Item>
       </Link>
-      <WalletButton />
+      <Wallet />
     </Grid>
   );
 };

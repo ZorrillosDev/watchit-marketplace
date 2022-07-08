@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import WalletButton from '@components/WalletButton';
+import WalletButton from '@components/Wallet/WalletButton';
 import * as web3Core from '@usedapp/core';
 import 'jest-styled-components';
 import { Button } from '@mui/material';
@@ -36,7 +36,7 @@ describe('<WalletButton/>', () => {
   it('should render', () => {
     const walletButtonComponent = shallow(
       <DAppProvider config={config}>
-        <WalletButton />
+        <WalletButton activateBrowserWallet={() => {}} onClick={() => {}} />
       </DAppProvider>,
     );
     expect(walletButtonComponent).toMatchSnapshot();
@@ -46,7 +46,7 @@ describe('<WalletButton/>', () => {
     jest.spyOn(web3Core, 'useEthers')
       .mockImplementation(() => ({ ...useEthersType, account: undefined }));
 
-    const walletButtonComponent = mount(<WalletButton />);
+    const walletButtonComponent = mount(<WalletButton activateBrowserWallet={() => {}} onClick={() => {}} />);
     const button = walletButtonComponent.find(Button);
     expect(walletButtonComponent.find(AccountBalanceWallet).length).toBe(1);
     expect(button.text()).toBe('Connect wallet');
@@ -56,7 +56,7 @@ describe('<WalletButton/>', () => {
     jest.spyOn(web3Core, 'useEthers')
       .mockImplementation(() => ({ ...useEthersType }));
 
-    const walletButtonComponent = mount(<WalletButton />);
+    const walletButtonComponent = mount(<WalletButton activateBrowserWallet={() => {}} onClick={() => {}} />);
     expect(walletButtonComponent.find(PixelArtIdenticon).length).toBe(1);
   });
 });
